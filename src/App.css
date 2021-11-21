@@ -1,18 +1,1 @@
-.loginBody {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #ccc;
-  flex-direction: column;
-}
 
-.connexionBody {
-  background-color: #aaa;
-  width: 50%;
-  height: 80%;
-  text-align: center;
-  border-radius: 5px;
-  margin-top: 20vh;
-  margin-bottom: 20vh;
-  padding: 5vh;
-}

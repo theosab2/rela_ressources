@@ -1,0 +1,15 @@
+.HeaderBody {
+  background-color: #ddd;
+  font-size: 20px;
+  display: flex;
+}
+
+.NavigationBody {
+  text-decoration: none;
+  margin: 7vw;
+  color: #000;
+}
+
+.nav-active {
+  font-weight: 800;
+}

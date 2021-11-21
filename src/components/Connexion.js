@@ -1,17 +1,21 @@
+import Header from "./Header";
+import Navigation from "./Navigation";
 
-const list = [
+/*const list = [
     {
-        name:'to',
-        sexe:'masculin'
+        login:'to',
+      pass:'1234'
     },
     {
-     name:'pe',
-     sexe:'feminin'
+     login:'pe',
+     pass:'1234'
     },
-]
-function Connexion() {
+]*/
+const Connexion = () => {
+  <Navigation/>
     return (
       <div className="connexionBody">
+        <Header/>
           <h1>Connexion</h1>
           <h3>Login</h3>
           <input type="text"></input>
@@ -19,13 +23,15 @@ function Connexion() {
           <input type="password"></input>
           <br/>
           <input type="submit" value="Connexion"></input>
-          <ul>
-            {list.map((myList,index) =>(
-                <li key={`${myList}-${index}`}>{myList.sexe == "masculin" ? myList.name + " est un garçon" : myList.name + " est une fille"}</li>
-            ))}
-          </ul>
+
       </div>
     );
   }
   
+/*<ul>
+  {list.map((myList,index) =>(
+      <li key={`${myList}-${index}`}>{myList.sexe == "masculin" ? myList.name + " est un garçon" : myList.name + " est une fille"}</li>
+  ))}
+</ul>*/
+
   export default Connexion;
