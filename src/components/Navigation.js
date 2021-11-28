@@ -4,18 +4,21 @@ import "../styles/header.css"
 
 const Navigation = () => {
     return (
-        <div >
-            <NavLink exact to="/Home" activeClassName="nav-active" className="NavigationBody">
+        <div className="NavigationBody">
+            <NavLink exact to="/Home" activeClassName="nav-active" className="NavLink">
+                Gouv-Info
+            </NavLink>
+            <NavLink exact to="/Home" activeClassName="nav-active" className="NavLink">
                 Accueil
             </NavLink>
-            <NavLink exact to="/Login" activeClassName="nav-active" className="NavigationBody">
-                Login
+            <NavLink exact to="/Login" activeClassName="nav-active" className="NavLink">
+                Inscription / Connexion
             </NavLink>
-            <NavLink exact to ='../Connexion' activeClassName="nav-active"  className="NavigationBody">
-                Connexion
+            <NavLink exact to="/Admin" activeClassName="nav-active" className="NavLink">
+                Administration
             </NavLink>
-            <NavLink exact to ='../Inscription' activeClassName="nav-active"  className="NavigationBody">
-                Inscription
+            <NavLink exact to="/Profil" activeClassName="nav-active" className="NavLink">
+               Profil
             </NavLink>
         </div>
     )

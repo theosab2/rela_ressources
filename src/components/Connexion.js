@@ -14,16 +14,19 @@ import Navigation from "./Navigation";
 const Connexion = () => {
   <Navigation/>
     return (
-      <div className="connexionBody">
+      <div>
         <Header/>
-          <h1>Connexion</h1>
-          <h3>Login</h3>
-          <input type="text"></input>
-          <h3>Mot de passe</h3>
-          <input type="password"></input>
-          <br/>
-          <input type="submit" value="Connexion"></input>
-
+        <div className="connexionBody">
+          <div>
+            <h1>Connexion</h1>
+            <h3>Login</h3>
+            <input type="text"></input>
+            <h3>Mot de passe</h3>
+            <input type="password"></input>
+            <br/>
+            <input type="submit" value="Connexion"></input>
+          </div>
+        </div>
       </div>
     );
   }

@@ -5,11 +5,43 @@
 }
 
 .NavigationBody {
-  text-decoration: none;
-  margin: 7vw;
-  color: #000;
+  display: flex;
+  justify-content: space-around;
 }
 
 .nav-active {
   font-weight: 800;
+  font-size: 50px;
+}
+
+.loginBody {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  font-size: 20px;
+}
+
+.NavLink {
+  text-decoration: none;
+  color: #000;
+  margin: 20px;
+}
+
+.NavLinkHeader {
+  margin-left: 100px;
+}
+
+.connexionBody {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.inscriptionBody {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
