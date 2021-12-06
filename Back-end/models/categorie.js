@@ -5,4 +5,4 @@ const categorieSchema = mongoose.Schema({
   categorieIsActive: { type: String, required: true},
 });
 
-module.exports = mongoose.model('article', categorieSchema);
+module.exports = mongoose.model('Categorie', categorieSchema);

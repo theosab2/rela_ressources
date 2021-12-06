@@ -10,4 +10,4 @@ const articleSchema = mongoose.Schema({
   articleAttachement: { type: Boolean, required: true },
 });
 
-module.exports = mongoose.model('article', articleSchema);
+module.exports = mongoose.model('Article', articleSchema);
