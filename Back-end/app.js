@@ -39,7 +39,7 @@ module.exports = function (app, server) {
     app.get('/test', (req, res, next) => {
         res.status(200).json({ hello: 'world' })
     })
-    
+
     //Permet de créer un compte si le compte n'existe pas, ou de connecter la personne si le compte existe
     app.get('/auth/:username', (req, res, next) => {
         //console.log('Pseudo écrit : ' +req.params.username)
@@ -55,7 +55,7 @@ module.exports = function (app, server) {
                             info: 'Nouvel utilisateur enregistré',
                             username: req.params.username
                         })
-                        sAccount.updateOne({ username: req.params.username},{connected: true,lastConnection: Date.now()});
+                        sAccount.updateOne({ username: req.params.username }, { connected: true, lastConnection: Date.now() });
                         username = req.params.username;
                     }).catch((error) => {
                         //console.log(error);
@@ -64,7 +64,7 @@ module.exports = function (app, server) {
                 }
                 else {
                     console.log('L\'utilisateur existe')
-                    sAccount.updateOne({ username: req.params.username},{connected: true,lastConnection: Date.now()},{
+                    sAccount.updateOne({ username: req.params.username }, { connected: true, lastConnection: Date.now() }, {
                         returnNewDocument: true,
                         new: true,
                         strict: false
@@ -76,8 +76,8 @@ module.exports = function (app, server) {
             .catch(error => res.status(404).json({ error }));
     });
     //Je n'arrive pas a enregistrer de nouveau message dans mongoDB/ body parser à résolu le problème
-    app.post('/sendMsg', (req, res, next) =>{
-        const user = new sUser({...req.body});
+    app.post('/sendMsg', (req, res, next) => {
+        const user = new sUser({ ...req.body });
         user.save().then(() => {
             res.status(201).json({
                 info: 'Nouveaux message de : ' + req.body.username,
@@ -88,14 +88,14 @@ module.exports = function (app, server) {
         })
     });
 
-    app.get('/msgByUser/:username', (req,res,next)=>{
-        sUser.count({username :req.params.username})
-        .then(data => {
-            res.status(201).json({
-                count : data
+    app.get('/msgByUser/:username', (req, res, next) => {
+        sUser.count({ username: req.params.username })
+            .then(data => {
+                res.status(201).json({
+                    count: data
+                })
+
             })
-           
-        })
     })
 
     /**
@@ -105,39 +105,37 @@ module.exports = function (app, server) {
     io.on('connection', (socket) => {
         console.log(`Connecté au client ${socket.id}`)
         io.emit('notification', { type: 'new_user', data: socket.id });
-        
+
         // Listener sur la déconnexion
         socket.on('disconnect', () => {
-          console.log(`user ${socket.id} disconnected`);
-          io.emit('notification', { type: 'removed_user', data: socket.id });
+            console.log(`user ${socket.id} disconnected`);
+            io.emit('notification', { type: 'removed_user', data: socket.id });
         });
         //Besoin d'une fonction recursive pour trier les message dans l'autre, j'aurai du faire 2 model 16h29
         socket.on('command', (data) => {
-        switch (data.command) {
-            case 'refresh':
-            sUser.find({}, "username message")
-            .then(msgData => {
-                io.emit('dataMsg', {data: msgData});
-            })
-                .catch((error) => {
-                console.log(error);
-                res.status(400).json({ error })
-            })
-            case 'allUser':
-                sAccount.find({})
-                .then(username => {
-                    io.emit('allUser', {username: username})
-                })
-            case 'msgByUser':
+            switch (data.command) {
+                case 'refresh':
+                    sUser.find({}, "username message")
+                        .then(msgData => {
+                            io.emit('dataMsg', { data: msgData });
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                            res.status(400).json({ error })
+                        })
+                case 'allUser':
+                    sAccount.find({})
+                        .then(username => {
+                            io.emit('allUser', { username: username })
+                        })
+                case 'msgByUser':
+                    break;
+                default:
+                    break;
+            }
 
-            break;
-        
-            default:
-            break;
-        }
-    
         });
-    
-    
-      })
+
+
+    })
 }
