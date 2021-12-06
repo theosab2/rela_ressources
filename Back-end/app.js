@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const sUser = require('./models/user');
-const sAccount = require('./models/account');
+const sAccount = require('./models/role');
 // export one function that gets called once as the server is being initialized
 module.exports = function (app, server) {
     let username = '';
