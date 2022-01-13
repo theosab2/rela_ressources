@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const roleSchema = mongoose.Schema({
-  roleName: { type: String, required: true},
+  roleName: { type: String, required: true, unique:true},
   type: { type: Number, required: true },
 });
 
