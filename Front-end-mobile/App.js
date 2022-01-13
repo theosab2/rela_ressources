@@ -5,7 +5,7 @@ import Footer from './components/footer';
 import Header from './components/header';
 import Home from './components/home';
 
-export default function App() {
+const App = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header} >
@@ -37,3 +37,5 @@ const styles = StyleSheet.create({
       flex: 1,
   }
 });
+
+export default App;

@@ -1,15 +1,13 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 
-export default class Footer extends Component {
-    render() {
+const Footer = () => {
         return (
             <View style={styles.container}>
                 <Text>Footer</Text>
             </View>
         )
     }
-}
 
 const styles = StyleSheet.create({
     container: {
@@ -19,3 +17,5 @@ const styles = StyleSheet.create({
       alignItems: 'center',
     },
   });
+
+  export default Footer;

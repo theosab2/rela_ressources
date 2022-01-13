@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 
-export default class Header extends Component {
-    render() {
+const Header = () => {
         return (
             <View style={styles.container}>
                 <Text>Header</Text>
@@ -11,7 +10,6 @@ export default class Header extends Component {
             </View>
         )
     }
-}
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -21,3 +19,5 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
       },
 })
+
+export default Header;

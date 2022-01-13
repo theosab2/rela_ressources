@@ -1,19 +1,29 @@
 import React, { Component } from 'react'
-import { StyleSheet,Text, View } from 'react-native'
+import { StyleSheet,Text, View , ScrollView} from 'react-native'
+import Card from './card'
 
-export default class Home extends Component {
-    render() {
+const Home = () => {
         return (
-            <View style={styles.containers}>
-                <Text>Home</Text>
-            </View>
+            <ScrollView style={styles.containers}>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+                <Card/>
+            </ScrollView>
         )
     }
-}
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#FFFFFF'
+        
       },
 })
 
+export default Home;
