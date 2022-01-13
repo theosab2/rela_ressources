@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   },
   home: {
       flex: 8,
-      },
+  },
   footer: {
       flex: 1,
   }
