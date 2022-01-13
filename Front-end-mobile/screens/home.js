@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet,Text, View , ScrollView} from 'react-native'
 import Card from '../components/card'
+import CreateAccount from './createAccount'
 import Login from './login'
 
 const Home = () => {
@@ -9,7 +10,7 @@ const Home = () => {
                 style={styles.containers}
                 contentContainerStyle={{flex:1,justifyContent:'center', alignItems:'center'}}
             >
-                <Login/>
+                <CreateAccount/>
             </ScrollView>
         )
     }
