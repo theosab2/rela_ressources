@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Footer from './components/footer';
 import Header from './components/header';
-import Home from './components/home';
+import Home from './screens/home';
 
 const App = () => {
   return (

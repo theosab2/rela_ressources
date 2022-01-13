@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet,Text, View , ScrollView} from 'react-native'
-import Card from './card'
+import Card from '../components/card'
 import Login from './login'
 
 const Home = () => {
