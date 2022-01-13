@@ -3,6 +3,10 @@ import {View, StyleSheet} from 'react-native';
 import {CheckBox, Input, Icon, Button, Text} from 'react-native-elements';
 
 const CreateAccount = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [validPassword, setValidPassword] = useState('');
+    const [saveLogin, setSaveLogin] = useState(false);
     return (
         <View>
             <Text
@@ -26,6 +30,19 @@ const CreateAccount = () => {
                 placeholder="Password"
                 onChangeText={password => setPassword(password)}
                 defaultValue= {password}
+                leftIcon={
+                    <Icon
+                      name='unlock'
+                      type='evilicon'
+                      color='#517fa4'
+                    />
+                  }
+            />
+            <Input
+                secureTextEntry={true}
+                placeholder="ValidPassword"
+                onChangeText={validPassword => setValidPassword(password)}
+                defaultValue= {validPassword}
                 leftIcon={
                     <Icon
                       name='unlock'
