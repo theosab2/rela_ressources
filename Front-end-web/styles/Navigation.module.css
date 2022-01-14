@@ -1,0 +1,7 @@
+.navBarContent {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 10rem;
+  box-shadow: 1px 1px 3px #555;
+}
