@@ -6,7 +6,7 @@ import React ,{ useState } from "react";
 
 export default function Inscription(){
 
-        const [pseudo, setUsername] = useState(null);
+        const [pseudo, setUsername] = useState('');
         const [name, setName] = useState('');
         const [firstname, setFirstname] = useState('');
         const [email, setEmail] = useState('');
