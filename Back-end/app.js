@@ -5,13 +5,15 @@ const bodyParser = require('body-parser');
 
 module.exports = function (app, server) {
     
-    mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_URL}/${process.env.DB_NAME}?retryWrites=true&w=majority`,
-    {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    })
-    .then(() => console.log('DB is OK'))
-    .catch(() => console.log('DB failed'));
+    setTimeout(() => {console.log("Attempting database connexion...")
+        mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_URL}/${process.env.DB_NAME}?retryWrites=true&w=majority`,
+        {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        })
+        .then(() => console.log('Database connection : SUCCESS'))
+        .catch((exception) => {console.log('Database connection : FAILURE');console.log('Exception :',exception);});
+    }, 100); //Timeout to log DB connection status after listened port's log
 
     app.use((req, res, next) => {
         res.setHeader('Access-Control-Allow-Origin', '*');
