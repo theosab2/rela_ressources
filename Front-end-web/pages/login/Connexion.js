@@ -3,7 +3,6 @@ import style from "../../styles/Inscription.module.css"
 import Link from "next/link"
 import Head from "next/head"
 import React ,{ useState } from "react";
-import { Button as ButtonAntd} from 'antd';
 
 export default function Connexion(){
 
