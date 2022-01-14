@@ -1,13 +1,37 @@
+//import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Footer from './components/footer';
-import Header from './components/header';
 import Home from './screens/home';
+import Login from './screens/login';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import CreateAccount from './screens/createAccount';
+
+const Stack = createStackNavigator();
 
 const App = () => {
   return (
-    <View style={styles.container}>
+    <>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name='Home'
+            component={Home}
+          />
+          <Stack.Screen
+            name='Login'
+            component={Login}
+          />
+          <Stack.Screen
+            name='createAccount'
+            component={CreateAccount}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+      <StatusBar style="auto" />
+    </>
+    /*<View style={styles.container}>
       <View style={styles.header} >
         <Header/>
       </View>
@@ -18,7 +42,7 @@ const App = () => {
         <Footer/>
       </View>
       <StatusBar style="auto" />
-    </View>
+    </View>*/
   );
 }
 
