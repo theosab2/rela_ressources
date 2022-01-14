@@ -20,7 +20,7 @@ const router = express.Router();
 //====================================//
 
 //===== Global routes =====//
-router.get('/', (req, res, next) => {
+router.get('/test', (req, res, next) => {
     res.status(200).json({ message:"L'API à répondu correctement" });
 });
 
@@ -29,58 +29,13 @@ router.get('/', (req, res, next) => {
     //Inscription
     router.post('/auth/register', async function(req, res, next){
         var userCreationQueryResult = await _userQueryService.createUser(req.body.user)
-        res.status(200).json(userCreationQueryResult);
+        res.status(userCreationQueryResult.statusCode).json(userCreationQueryResult);
     });
 
     //Connexion
-    router.post('/auth/login/:identifier', async function(req, res, next){
-        var authenticationResult = {
-            status:null,
-            message:null,
-            user:null
-        }
-        var passwordProvided = req.body.password;
-        var identifier = req.params.identifier;
-
-        var identifierType = await _userApplicationService.detectIdentifierType(req.params.identifier)
-        console.log("identifierType :",identifierType);
-
-        switch (identifierType.typeName) {
-            case "Email":
-                var userId = await _userQueryService.getUserIdFromEmail(identifier)
-            break;
-            case "Phone":
-                var userId = await _userQueryService.getUserIdFromPhone(identifier);
-            break;
-            case "Username":
-                var userId = await _userQueryService.getUserIdFromUsername(identifier);
-            break;
-            default:
-                var userId = null;
-            break;
-        }
-
-        var passwordIsValid = await _userQueryService.checkPassword(userId,passwordProvided)
-        console.log("passwordIsValid :",passwordIsValid)
-
-        
-        if(passwordIsValid){
-            //Retourne l'utilisateur connecté
-            var userFromConnectionAttempt = await _userQueryService.connectUser(userId);
-            authenticationResult = {
-                status:"SUCCESS",
-                message:"User \'"+userFromConnectionAttempt.username+"\' successfully connected",
-                user:userFromConnectionAttempt
-            }
-        }
-        else{
-            authenticationResult = {
-                status:"FAILURE",
-                message:"Can't connect to user (id=\'"+userId+"\') : Invalid password",
-            }
-        }
-
-        res.status(200).json(authenticationResult);
+    router.post('/auth/login', async function(req, res, next){
+        var authenticationResult = await _userApplicationService.handleAuthenticationRequest(req.body.identifier,req.body.password);
+        res.status(authenticationResult.statusCode).json(authenticationResult);
     });
 
 //TODO: Route connexion

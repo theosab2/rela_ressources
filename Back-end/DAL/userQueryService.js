@@ -1,6 +1,9 @@
 //mongoose
 const mongoose = require('mongoose');
 
+//Import B.L.L associée
+const _userApplicationService = require("../BLL/userApplicationService");
+
 //Import du modèle relatif
 const mUser = require('../models/user');
 
@@ -169,7 +172,7 @@ const mUser = require('../models/user');
                 return ({
                     status:"CANNOT_CONFIRM",
                     statusCode:202,
-                    message: "Le nouvel utilisateur : \'"+userObject.username+"\' n'a pas été trouvé dans la base de données après sa création"
+                    message: "L'enregistrement semble s'être correctement déroulé mais le nouvel utilisateur : \'"+userObject.username+"\' n'a pas été trouvé dans la base de données après son enregistrement"
                 });
             } 
         } 
@@ -183,6 +186,7 @@ const mUser = require('../models/user');
         } 
     };
 
+    //Connecte l'utilisateur et le retourne:
     module.exports.connectUser = async (userId) => {
         console.log("D.A.L [connectUser]");
         console.log("[connectUser] (paramètres) 'userId' :",userId);
