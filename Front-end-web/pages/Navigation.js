@@ -9,8 +9,8 @@ export default function Navigation(){
             <a> 
             <Image
                 src="/../public/Image/logo-gouvernement.jpeg" // Route of the image file
-                height={120} // Desired size with correct aspect ratio
-                width={120} // Desired size with correct aspect ratio
+                height={80} // Desired size with correct aspect ratio
+                width={80} // Desired size with correct aspect ratio
                 alt="Logo gouvernement français"
             />
             </a>
@@ -28,8 +28,8 @@ export default function Navigation(){
             <a> 
             <Image
                 src="/../public/Image/logo-gouvernement.jpeg" // Route of the image file
-                height={70} // Desired size with correct aspect ratio
-                width={70} // Desired size with correct aspect ratio
+                height={40} // Desired size with correct aspect ratio
+                width={40} // Desired size with correct aspect ratio
                 alt="Image profil"
             />
             </a>
