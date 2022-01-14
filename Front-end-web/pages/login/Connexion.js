@@ -3,6 +3,7 @@ import style from "../../styles/Inscription.module.css"
 import Link from "next/link"
 import Head from "next/head"
 import React ,{ useState } from "react";
+import { Button as ButtonAntd} from 'antd';
 
 export default function Connexion(){
 
@@ -12,6 +13,23 @@ export default function Connexion(){
     const display = async () =>{
         console.log(identifiant)
         console.log(mdp)
+
+            const res = await fetch(
+                'http://10.176.131.75:3000/auth/login/'+identifiant, {
+                    method:'POST',
+                    headers:{
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json'
+                    },body:JSON.stringify({
+                        'password':mdp,
+                    })
+        });res = await res.json();
+        if(res.status == 'FAILURE'){
+          console.log('Erreur de connexion')
+        }
+        else{
+          console.log('Connexion')
+        }
     }
 
     return(
@@ -21,7 +39,7 @@ export default function Connexion(){
         </Head>
         <Navigation></Navigation>
         <div className={style.InscriptionContainer}>
-            <div className={style.InscriptionSubContainer}>
+            <div className={style.ConnexionSubContainer}>
                 <Link href="./Inscription">
                 <a className={style.InscriptionLink}>
                     Je n'ai pas de compte
@@ -40,7 +58,7 @@ export default function Connexion(){
                         <input type="checkbox" className={style.CheckBoxInscription}></input>
                         <label className={style.LabelInscription}>Rester connecter ?</label>
                     </div>
-                    <input type="submit" onClick={display} className={style.SubmitInscription}></input>
+                    <button type="button" onClick={display} className={style.SubmitInscription}>Connexion</button>
                 </form>
             </div>
         </div>

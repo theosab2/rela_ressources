@@ -1,9 +1,11 @@
 .navBarContent {
-  position: relative;
+  position: fixed;
+  width: 100%;
   z-index: 5;
   display: flex;
   justify-content: space-around;
   align-items: center;
   height: 5rem;
   box-shadow: 1px 1px 3px #555;
+  background-color: #fff;
 }

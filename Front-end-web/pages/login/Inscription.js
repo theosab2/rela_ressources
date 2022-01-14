@@ -121,7 +121,7 @@ export default function Inscription(){
                         <label htmlFor="condition">J'accepte les conditions d'utilisation</label>
                     </div>
                     <button type="submit" className={style.SubmitInscription} onClick={display}>
-                        Inscrption
+                        Inscription
                     </button>
                 </form>
             </div>
