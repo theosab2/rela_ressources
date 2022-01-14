@@ -11,16 +11,48 @@ const CreateAccount = () => {
     const [validPassword, setValidPassword] = useState('');
     const [accept, setAccept] = useState(false);
     const [phone, setPhone] = useState('');
-    const [location, setLocation] = useState('')
+    const [ville, setVille] = useState('');
+    const [zipcode,setZipcode] = useState('');
+    const [region, setRegion] = useState('');
 
-    const display = () => {
+    const display = async () => {
         if(accept){
             console.log(`${username} ${name} ${firstname} ${email} ${phone} ${password} ${location}`)
         }
         else{
             console.log('conditions non acceptées')
         }
-        
+        const api = await fetch('http://10.176.133.46:3000/auth/register', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            user: {
+              username: username,
+              firstname: firstname,
+              name: name,
+              password: password,
+              phone: phone,
+              email: email,
+              isActive: false,
+              role: 'user',
+              location: {
+                ville: 'CESI',
+                region: location,
+                zip: '76300'
+              }
+            }
+          })
+        }); 
+        const res = await api.json();
+        if(res.status == 'FAILURE'){
+          console.log('Le nom d\'utilisateurs existe deja')
+        }
+        else{
+          console.log('Compte crée')
+        }
     }
 
     return (
@@ -58,7 +90,7 @@ const CreateAccount = () => {
             <Input
                 placeholder="Téléphone"
                 containerStyle={{width: "100%"}}
-                onChangeText={Phone => setPhone(phone)}
+                onChangeText={phone => setPhone(phone)}
                 defaultValue= {phone}
                 leftIcon={
                   <Icon
@@ -119,10 +151,10 @@ const CreateAccount = () => {
                   }
             />
             <Input
-                placeholder="Région"
+                placeholder="Ville"
                 containerStyle={{width: "100%"}}
-                onChangeText={location => setLocation(location)}
-                defaultValue= {location}
+                onChangeText={ville => setVille(ville)}
+                defaultValue= {ville}
                 leftIcon={
                   <Icon
                     name='location'
@@ -131,6 +163,33 @@ const CreateAccount = () => {
                   />
                 }
             />
+            <Input
+                placeholder="Code postal"
+                containerStyle={{width: "100%"}}
+                onChangeText={zipcode => setZipcode(zipcode)}
+                defaultValue= {zipcode}
+                leftIcon={
+                  <Icon
+                    name='location'
+                    type='evilicon'
+                    color='#517fa4'
+                  />
+                }
+            />
+            <Input
+                placeholder="Région"
+                containerStyle={{width: "100%"}}
+                onChangeText={region => setRegion(region)}
+                defaultValue= {region}
+                leftIcon={
+                  <Icon
+                    name='location'
+                    type='evilicon'
+                    color='#517fa4'
+                  />
+                }
+            />
+
             <CheckBox
                 center
                 title="J'accepte les conditions d'utilisations"
