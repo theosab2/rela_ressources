@@ -95,7 +95,7 @@ const mUser = require('../models/user');
 
     module.exports.createUser = async (userObject) => {
         console.log("D.A.L [createUser]");
-        console.log("[createUser] (paramètres) 'userObject' :",userObject);
+        console.log("      [createUser] (paramètres) 'userObject' :",userObject);
 
         try //Vérification de l'existence du nom d'utilisateur dans la base de données
         {   
@@ -106,6 +106,7 @@ const mUser = require('../models/user');
             console.log(exception);
             return({
                 status:"CONTROL_FAILURE",
+                statusCode:500,
                 message: "Une erreur est survenue durant la vérification de l'existence du nom d'utilisateur : \'"+userObject.username+"\' dans la base de données",
                 exception:exception
             })
@@ -121,6 +122,7 @@ const mUser = require('../models/user');
             {   
                 return ({
                     status:"EXCEPTION",
+                    statusCode:500,
                     message: "Une erreur est survenue durant la création du modèle pour le nouvel utilisateur : \'"+userObject.username+"\'",
                     exception:exception
                 })
@@ -134,6 +136,7 @@ const mUser = require('../models/user');
             {   
                 return ({
                     status:"EXCEPTION",
+                    statusCode:500,
                     message: "Une erreur est survenue durant l'enregistrement du modèle dans la base de données pour le nouvel utilisateur : \'"+userObject.username+"\'",
                     exception:exception
                 })
@@ -147,7 +150,8 @@ const mUser = require('../models/user');
             {   
                 return({
                     status:"CONTROL_FAILURE",
-                    message: "Une erreur est survenue durant la vérification de l'existence du nom d'utilisateur : \'"+userObject.username+"\' dans la base de données",
+                    statusCode:500,
+                    message: "Une erreur est survenue durant la vérification de l'existence du nom d'utilisateur : \'"+userObject.username+"\' dans la base de données après sa création",
                     exception:exception
                 })
             }
@@ -156,13 +160,15 @@ const mUser = require('../models/user');
             {   
                 return ({
                     status:"SUCCESS",
+                    statusCode:201,
                     message: "Utilisateur : \'"+userObject.username+"\' Créé avec succès"
                 });
             }
             else //Le nom d'utilisateur n'a pas été trouvé dans la BDD
             {   
                 return ({
-                    status:"FAILURE",
+                    status:"CANNOT_CONFIRM",
+                    statusCode:202,
                     message: "Le nouvel utilisateur : \'"+userObject.username+"\' n'a pas été trouvé dans la base de données après sa création"
                 });
             } 
@@ -171,6 +177,7 @@ const mUser = require('../models/user');
         {
             return ({
                 status:"FAILURE",
+                statusCode:500,
                 message: "Le nom d'utilisateur : \'"+userObject.username+"\' existe déjà dans la base de données"
             });
         } 
