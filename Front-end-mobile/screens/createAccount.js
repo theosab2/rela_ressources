@@ -16,12 +16,7 @@ const CreateAccount = () => {
     const [region, setRegion] = useState('');
 
     const display = async () => {
-        if(accept){
-            console.log(`${username} ${name} ${firstname} ${email} ${phone} ${password} ${location}`)
-        }
-        else{
-            console.log('conditions non acceptées')
-        }
+      if(accept){
         const api = await fetch('http://10.176.133.46:3000/auth/register', {
           method: 'POST',
           headers: {
@@ -39,9 +34,9 @@ const CreateAccount = () => {
               isActive: false,
               role: 'user',
               location: {
-                ville: 'CESI',
-                region: location,
-                zip: '76300'
+                ville: ville,
+                region: region,
+                zip: zipcode
               }
             }
           })
@@ -53,6 +48,10 @@ const CreateAccount = () => {
         else{
           console.log('Compte crée')
         }
+      }
+      else{
+        console.log('conditions non acceptées')
+      }
     }
 
     return (
