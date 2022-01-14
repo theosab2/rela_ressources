@@ -1,0 +1,55 @@
+.InscriptionContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100rem;
+}
+
+.InscriptionSubContainer {
+  padding-top: 2rem;
+  background-color: #ddd;
+  width: 75%;
+  height: 100rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.FormInscription {
+  display: flex;
+  flex-direction: column;
+  width: 35%;
+}
+
+.InputInscrption {
+  border: none;
+  box-shadow: 1px 1px 1px #ccc;
+  border-radius: 10px;
+  height: 2rem;
+  margin: 5px;
+}
+
+.LabelInscription {
+  font-weight: 600;
+}
+
+.SubmitInscription {
+  border: none;
+  height: 2rem;
+  background-color: #2c75ff;
+  padding: 3px;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 15px;
+  margin-top: 2rem;
+}
+
+.CheckBoxInscription {
+  margin-top: 2rem;
+}
+
+.InscriptionLink {
+  margin: 1rem;
+  text-decoration: underline;
+}

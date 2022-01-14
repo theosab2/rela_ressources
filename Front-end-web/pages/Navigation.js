@@ -24,7 +24,7 @@ export default function Navigation(){
             <Link href="/home/Home">
             <a> Parametre</a>
             </Link>
-            <Link href="/home/Home">
+            <Link href="/login/Inscription">
             <a> 
             <Image
                 src="/../public/Image/logo-gouvernement.jpeg" // Route of the image file

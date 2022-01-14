@@ -1,4 +1,6 @@
 .navBarContent {
+  position: relative;
+  z-index: 5;
   display: flex;
   justify-content: space-around;
   align-items: center;
