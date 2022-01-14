@@ -3,11 +3,17 @@ import Head from "next/head";
 import style from "../../styles/Inscription.module.css"
 import Link from "next/link"; 
 
+export const getStaticProps = async () =>{
+    const res = await fetch();
+}
+
 export default function Inscription(){
+
     const submitUser = async (event) =>{
         event.preventDefault();
         alert('Your name is '+event.target.name.value)
     }
+
     return (
         <>
         <Head>
