@@ -3,8 +3,8 @@ import { Text, View, StyleSheet } from 'react-native'
 
 const Footer = () => {
         return (
-            <View style={styles.container}>
-                <Text>Footer</Text>
+            <View>
+                <Text>Conditions d'utilisation - Politiques de confidentialitée</Text>
             </View>
         )
     }

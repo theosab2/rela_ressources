@@ -20,12 +20,12 @@ const Stack = createStackNavigator();
 const App = () => {
   return (
     <>
-    <Text>Coucou</Text>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
             name='Home'
             component={Home}
+            cardStyle={{flex: 1}}
           />
           <Stack.Screen
             name='Login'
@@ -54,19 +54,7 @@ const App = () => {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFFFFF'
-  },
-  header: {
-    flex: 1,    
-  },
-  home: {
-      flex: 8,
-  },
-  footer: {
-      flex: 1,
-  }
+
 });
 
 export default App;
