@@ -4,93 +4,199 @@ const mongoose = require('mongoose');
 //Import B.L.L associée
 const _userApplicationService = require("../BLL/userApplicationService");
 
+//Import B.L.L global
+const _queryParserService = require("../BLL/global/queryParserService");
+
 //Import du modèle relatif
 const mUser = require('../models/user');
 
-//#region [Query ressources]
+//#region [QUERY RESSOURCES]
+    //#region [QUERY DATA]
 
-    //return User from provided ID
-    module.exports.getUserById = async (id) => {
-        console.log("D.A.L [getUserById]");
-        console.log("[getUserById] (paramètres) 'ID' :",id);
-        try {
-            var data = await mUser.findById(id);
-            return data ? data : {message:"utilisateur non-trouvé"};
-        } 
-        catch (error) {
-            return {message:"une erreur est survenue",error};
-        }     
-    };
+        //return body template for users query
+        module.exports.getQueryTemplate = async () => {
+            console.log("D.A.L [getQueryTemplate]");
+            console.log("[getQueryTemplate] ()");
 
-    //return UserId from provided email address
-    module.exports.getUserIdFromEmail = async (email) => {
-        console.log("D.A.L [getUserIdFromEmail]");
-        console.log("[getUserIdFromEmail] (paramètres) 'email' :",email);
-        try {
-            email =  '^'+email+'$';
-            var data = await mUser.findOne({'email':{'$regex': email,$options:'i'}});
-            return data ? data._id : {message:"utilisateur non-trouvé"};
-        } 
-        catch (error) {
-            return {message:"une erreur est survenue",error};
-        }     
-    };
+            //Initialisation de la variable de retour
+            var template = {
+                
+            }
 
-    //return UserId from provided phone number
-    module.exports.getUserIdFromPhone = async (phone) => {
-        console.log("D.A.L [getUserIdFromPhone]");
-        console.log("[getUserIdFromPhone] (paramètres) 'phone' :",phone);
-        try {
-            var data = await mUser.findOne({phone:phone});
-            return data ? data._id : {message:"utilisateur non-trouvé"};
-        } 
-        catch (error) {
-            return {message:"une erreur est survenue",error};
-        }     
-    };
+            //Remplissage de la variable de retour
+            for (const [key, value] of Object.entries(mUser.schema.paths)) {
+                template[key] = 
+                    {
+                        "type":value.instance,
+                        "required":(value.options.required == true),
+                        "unique":(value.options.unique == true)
+                    };
+            }
 
-    //return UserId from provided username
-    module.exports.getUserIdFromUsername = async (username) => {
-        console.log("D.A.L [getUserIdFromUsername]");
-        console.log("[getUserIdFromUsername] (paramètres) 'username' :",username);
-        try {
-            username =  '^'+username+'$';
-            var data = await mUser.findOne({'username':{'$regex': username,$options:'i'}});
-            return data ? data._id : {message:"utilisateur non-trouvé"};
-        } 
-        catch (error) {
-            return {message:"une erreur est survenue",error};
-        }     
-    };
+            return template;
+        };
 
-    //return Boolean representing existence of the provided username in database
-    module.exports.checkUsernameExistence = async (username) => {
-        console.log("D.A.L [checkUsernameExistence]");
-        console.log("[checkUsernameExistence] (paramètres) 'username' :",username);
-        try {
-            //Case-insensitive query
-            username =  '^'+username+'$';
-            var data = await mUser.count({'username':{'$regex': username,$options:'i'}});
-            return data > 0;
-        } 
-        catch (error) {
-            return error;
-        }     
-    };
+        //return users filtered by query
+        module.exports.queryUsers = async (query = {}) => {
+            console.log("D.A.L [queryUsers]");
+            console.log("[queryUsers] (paramètres) 'query' :",query);
 
-    //return Boolean representing existence of the conbination userId in database
-    module.exports.checkPassword = async (userId,passwordProvided) => {
-        console.log("D.A.L [checkPassword]");
-        console.log("[checkPassword] (paramètres) 'userId' :",userId,'passwordProvided',passwordProvided);
+            //TODO application service check query template
+            
+        
+            if(query === {})
+            {   //Pas de query, on renvoit tous les utilisateurs en base de données (même format de retour)
+                return this.getAllUsers();
+            }
+            else
+            {   //On prend en compte la query transmise à l'API
+                parsedQuery = await _queryParserService.parseObjectQuery(query);
+                console.log("parsed query", parsedQuery);
+                
+                try {
+                    var data = await mUser.find().where(query);
+                    return data 
+                    ?
+                        {
+                            users:data,
+                            count:data.length
+                        } 
+                    : 
+                        {
+                            message:"aucun utilisateur trouvé en base de données correspondant à la query renseignée"
+                        };
+                } 
+                catch (error) {
+                    return {message:"une erreur est survenue",error};
+                }  
+            }
 
-        try {
-            var checkResult = ((await mUser.count({_id:userId,password:passwordProvided})) > 0);
-            return checkResult
-        } 
-        catch (error) {
-            return false;
-        }     
-    };
+            
+                
+            
+        };
+    //#endregion
+
+    //#region [GET DATA]
+
+        //return all users
+        module.exports.getAllUsers = async () => {
+            console.log("D.A.L [getAllUsers]");
+            console.log("[getAllUsers] ()");
+            try {
+                var data = await mUser.find();
+                return data 
+                ? 
+                    {
+                        users:data,
+                        count:data.length
+                    } 
+                : 
+                    {
+                        message:"aucun utilisateur enregistré en base de données"
+                    };
+            } 
+            catch (error) {
+                return {message:"une erreur est survenue",error};
+            }     
+        };
+
+        //return User from provided ID
+        module.exports.getUserById = async (id) => {
+            console.log("D.A.L [getUserById]");
+            console.log("[getUserById] (paramètres) 'ID' :",id);
+            try {
+                var data = await mUser.findById(id);
+                return data 
+                ? 
+                    {
+                        user:data,
+                    } 
+                : 
+                    {
+                        message:"utilisateur non-trouvé"
+                    };
+            } 
+            catch (error) {
+                return {message:"une erreur est survenue",error};
+            }     
+        };
+
+        //return UserId from provided email address
+        module.exports.getUserIdFromEmail = async (email) => {
+            console.log("D.A.L [getUserIdFromEmail]");
+            console.log("[getUserIdFromEmail] (paramètres) 'email' :",email);
+            try {
+                email =  '^'+email+'$';
+                var data = await mUser.findOne({'email':{'$regex': email,$options:'i'}});
+                return data ? data._id : {message:"utilisateur non-trouvé"};
+            } 
+            catch (error) {
+                return {message:"une erreur est survenue",error};
+            }     
+        };
+
+        //return UserId from provided phone number
+        module.exports.getUserIdFromPhone = async (phone) => {
+            console.log("D.A.L [getUserIdFromPhone]");
+            console.log("[getUserIdFromPhone] (paramètres) 'phone' :",phone);
+            try {
+                var data = await mUser.findOne({phone:phone});
+                return data ? data._id : {message:"utilisateur non-trouvé"};
+            } 
+            catch (error) {
+                return {message:"une erreur est survenue",error};
+            }     
+        };
+
+        //return UserId from provided username
+        module.exports.getUserIdFromUsername = async (username) => {
+            console.log("D.A.L [getUserIdFromUsername]");
+            console.log("[getUserIdFromUsername] (paramètres) 'username' :",username);
+            try {
+                username =  '^'+username+'$';
+                var data = await mUser.findOne({'username':{'$regex': username,$options:'i'}});
+                return data ? data._id : {message:"utilisateur non-trouvé"};
+            } 
+            catch (error) {
+                return {message:"une erreur est survenue",error};
+            }     
+        };
+
+    //#endregion
+
+    //#region [CHECK DATA]
+
+        //return Boolean representing existence of the provided username in database
+        module.exports.checkUsernameExistence = async (username) => {
+            console.log("D.A.L [checkUsernameExistence]");
+            console.log("[checkUsernameExistence] (paramètres) 'username' :",username);
+            try {
+                //Case-insensitive query
+                username =  '^'+username+'$';
+                var data = await mUser.count({'username':{'$regex': username,$options:'i'}});
+                return data > 0;
+            } 
+            catch (error) {
+                return {message:"une erreur est survenue",error};
+            }     
+        };
+
+        //return Boolean representing existence of the conbination userId in database
+        module.exports.checkPassword = async (userId,passwordProvided) => {
+            console.log("D.A.L [checkPassword]");
+            console.log("[checkPassword] (paramètres) 'userId' :",userId,'passwordProvided',passwordProvided);
+
+            try {
+                var checkResult = ((await mUser.count({_id:userId,password:passwordProvided})) > 0);
+                return checkResult
+            } 
+            catch (error) {
+                return {message:"une erreur est survenue",error};
+            }     
+        };
+
+    //#endregion
 
 //#endregion
 
