@@ -62,3 +62,10 @@
 .dropdown:hover .dropdown_content {
   display: block;
 }
+
+.navTitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}

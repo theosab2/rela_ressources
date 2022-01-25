@@ -7,13 +7,15 @@ export default function Navigation() {
     <div className={style.navBarContent}>
       <Link href="/home/Home">
         <a>
-          <Image
-            src="/../public/Image/logo-gouvernement.jpeg" // Route of the image file
-            height={80} // Desired size with correct aspect ratio
-            width={80} // Desired size with correct aspect ratio
-            alt="Logo gouvernement français"
-          />
-          Ressources Relationnel
+          <div className={style.navTitle}>
+            <Image
+              src="/../public/Image/logo-gouvernement.jpeg" // Route of the image file
+              height={80} // Desired size with correct aspect ratio
+              width={80} // Desired size with correct aspect ratio
+              alt="Logo gouvernement français"
+            />
+            Ressources Relationnelles
+          </div>
         </a>
       </Link>
       <div className={style.dropdown}>

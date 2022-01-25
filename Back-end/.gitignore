@@ -1,5 +1,2 @@
-.DS_STORE
 node_modules
-/Back-end/.env
-/Front-end-mobile/node_modules
-/Front-end-web/node_modules
+.env

@@ -8,7 +8,10 @@ export default function Home() {
       <Navigation></Navigation>
       <div className={style.HomeContainer}>
         <div className={style.HomeSubContainer}>
-          <Post></Post>
+          <Post
+            articleTitle="je suis un titre"
+            articleProfilUrl="/../public/Image/photo-banc.jpg"
+          ></Post>
         </div>
       </div>
     </>
