@@ -1,8 +1,19 @@
 import Link from "next/link";
 import Image from "next/image";
 import style from "../styles/Navigation.module.css";
+import { setCookies, getCookie } from "cookies-next";
+import { useEffect, useState } from "react";
 
 export default function Navigation() {
+  const [userCookie, setUserCookie] = useState(getCookie("token"));
+
+  useEffect(() => {
+    if (userCookie != undefined) {
+      setUserCookie(JSON.parse(userCookie));
+      console.log(userCookie);
+    }
+  }, []);
+
   return (
     <div className={style.navBarContent}>
       <Link href="/home/Home">
@@ -14,7 +25,7 @@ export default function Navigation() {
               width={80} // Desired size with correct aspect ratio
               alt="Logo gouvernement français"
             />
-            Ressources Relationnelles
+            <p className={style.textTitre}>Ressources Relationnelles</p>
           </div>
         </a>
       </Link>
@@ -41,12 +52,15 @@ export default function Navigation() {
       </div>
       <Link href="/login/Inscription">
         <a>
-          <Image
-            src="/../public/Image/logo-gouvernement.jpeg" // Route of the image file
-            height={40} // Desired size with correct aspect ratio
-            width={40} // Desired size with correct aspect ratio
-            alt="Image profil"
-          />
+          <div className={style.navTitle}>
+            <Image
+              src="/../public/Image/logo-gouvernement.jpeg" // Route of the image file
+              height={40} // Desired size with correct aspect ratio
+              width={40} // Desired size with correct aspect ratio
+              alt="Image profil"
+            />
+            <p>{userCookie ? userCookie.username : "non connecté"}</p>
+          </div>
         </a>
       </Link>
     </div>

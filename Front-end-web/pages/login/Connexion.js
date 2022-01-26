@@ -3,6 +3,8 @@ import style from "../../styles/Inscription.module.css";
 import Link from "next/link";
 import Head from "next/head";
 import React, { useState } from "react";
+import { setCookies, getCookie } from "cookies-next";
+import Inscription from "./Inscription";
 
 export default function Connexion() {
   const [identifiant, setIdentifiant] = useState("");
@@ -12,7 +14,7 @@ export default function Connexion() {
     console.log(identifiant);
     console.log(mdp);
 
-    const res = await fetch("http://10.176.131.75:3000/auth/login", {
+    let res = await fetch("http://localhost:3001/auth/login", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -28,12 +30,17 @@ export default function Connexion() {
       console.log("Erreur de connexion");
     } else {
       console.log("Connexion");
-      getServerSideProps();
+      console.log(res.user);
+      getServerSideProps(res.user);
+      if (res.user.role == "user" && res.user.isActive == false) {
+      }
     }
   };
 
-  const getServerSideProps = () => {
-    setCookies("token", "ABCD", { expires: 1 / 24 });
+  const getServerSideProps = (user) => {
+    setCookies("token", user, 24 * 3600);
+    console.log(getCookie("token"));
+    window.location.href = "/home/Home";
   };
 
   return (

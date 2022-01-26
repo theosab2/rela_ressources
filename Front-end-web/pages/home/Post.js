@@ -4,11 +4,13 @@ import Image from "next/image";
 export default function Post(props) {
   return (
     <div className={style.ArticleContainer}>
-      <div className={style.ArticleSubContainer}>
+      <div
+        className={style.ArticleSubContainer}
+        style={{ position: "relative", width: "36vw", height: "45vh" }}
+      >
         <Image
           src={"/../public/Image/photo-banc.jpg"}
-          width={600}
-          height={380}
+          layout="fill"
           className={style.postImage}
         />
       </div>
@@ -24,6 +26,7 @@ export default function Post(props) {
             width={50}
             height={50}
             className={style.profilPost}
+            quality={5}
           />
         </div>
       </div>
