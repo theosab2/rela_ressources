@@ -1,4 +1,3 @@
-//Devrait ce nommer message, pas eu le temps de le modifier
 const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({

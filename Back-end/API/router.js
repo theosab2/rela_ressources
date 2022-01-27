@@ -48,14 +48,39 @@ router.get('/test', (req, res, next) => {
 //===== Comment =====//
 
 //===== User =====//
+    //#region [QUERY]
+
+        //Get query object template
+        router.get('/users/query', async function(req, res, next){
+            var data = await _userQueryService.getQueryTemplate();
+            console.log("template awaited for query : \n",data);
+            res.status(200).json(data);
+        });
+
+        //Get list of users from query in request body
+        router.post('/users/query', async function(req, res, next){
+            var data = await _userQueryService.queryUsers(req.body);
+            //console.log("users awaited from query : \n",data);
+            res.status(200).json(data);
+        });
+
+    //#endregion
 
     //#region [GET]
+
+        //Get all users
+        router.get('/users/all', async function(req, res, next){
+            var data = await _userQueryService.getAllUsers();
+            console.log("users awaited : \n",data);
+            res.status(200).json(data);
+        });
+
 
         //Get user by ID
         router.get('/user/:id', async function(req, res, next){
             var data = await _userQueryService.getUserById(req.params.id);
             console.log("user-data awaited : \n",data);
-            res.status(200).json({ user:data });
+            res.status(200).json(data);
         });
 
     //#endregion
