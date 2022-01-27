@@ -113,11 +113,12 @@ const mUser = require('../models/user');
                     data
                 : 
                 {
+                    error:true,
                     message:"utilisateur non-trouvé"
                 };
             } 
             catch (error) {
-                return {message:"une erreur est survenue",error};
+                return {message:"une erreur est survenue",error:error};
             }     
         };
 
@@ -167,6 +168,20 @@ const mUser = require('../models/user');
     //#region [CHECK DATA]
 
         //return Boolean representing existence of the provided username in database
+        module.exports.checkUserIdExistence = async (userId) => {
+            console.log("D.A.L [checkUserIdExistence]");
+            console.log("[checkUserIdExistence] (paramètres) 'userId' :",userId);
+            try {
+                var data = await (mUser.findById(userId)).count();
+                console.log(data);
+                return data > 0;
+            } 
+            catch (error) {
+                return {message:"une erreur est survenue",error};
+            }     
+        };
+
+        //return Boolean representing existence of the provided username in database
         module.exports.checkUsernameExistence = async (username) => {
             console.log("D.A.L [checkUsernameExistence]");
             console.log("[checkUsernameExistence] (paramètres) 'username' :",username);
@@ -199,8 +214,9 @@ const mUser = require('../models/user');
 
 //#endregion
 
-//#region [Update ressources]
+//#region [UPDATE RESSOURCES]
 
+    //Crée un nouvel utilisateur
     module.exports.createUser = async (userObject) => {
         console.log("D.A.L [createUser]");
         console.log("      [createUser] (paramètres) 'userObject' :",userObject);
@@ -303,7 +319,6 @@ const mUser = require('../models/user');
 
         var userConnected = await this.getUserById(userId);
         return userConnected
-        
     };
 
     //Déconnecte l'utilisateur et retourne:
@@ -350,6 +365,59 @@ const mUser = require('../models/user');
             return ({
                 status:"EXCEPTION",
                 statusCode:500,
+                message: "L'utilisateur : (ID)=\'"+userId+"\' n'a pas été trouvé dans la base de données",
+            })
+        }
+    };
+
+    module.exports.updateUser = async (userId,userObject = {}) => {
+        console.log("D.A.L [updateUser]");
+        console.log("      [updateUser] (paramètres) 'userId' :",userId,"'userObject' :",userObject);
+
+        if(userObject == {} || userObject == undefined || userObject == null){
+            return({
+                status:"BAD_REQUEST",
+                statusCode:400,
+                message: "Mise à jour de l'utilisateur impossible : Objet \'user\' introuvable dans le body de la requête",
+                expected:"Format du body attendu : {user:{...}}",
+                exception:exception
+            })
+        }
+
+        //Récupération des in
+        var userIdExist = await this.checkUserIdExistence(userId);
+        console.log(userIdExist);
+
+        //Si les deux noms d'utilisateur correspondent 
+        if(userIdExist)
+        {
+            try 
+            {
+                await mUser.updateOne(
+                    {_id:userId},
+                    userObject
+                )
+                return({
+                    status:"SUCCESS",
+                    statusCode:201,
+                    message: "L'utilisateur : (ID)=\'"+userId+"\' a été mis à jour avec succès",
+                })
+            } 
+            catch (exception) 
+            {
+                return({
+                    status:"EXCEPTION",
+                    statusCode:500,
+                    message: "Une erreur est survenue durant la mise à jour de l'utilisateur : (ID)=\'"+userId+"\'",
+                    exception:exception
+                })
+            }
+        }
+        else
+        {
+            return({
+                status:"NOT_FOUND",
+                statusCode:404,
                 message: "L'utilisateur : (ID)=\'"+userId+"\' n'a pas été trouvé dans la base de données",
             })
         }

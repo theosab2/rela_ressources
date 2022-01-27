@@ -93,6 +93,16 @@ router.get('/test', (req, res, next) => {
         //TODO: post methods
     //#endregion
 
+    //#region [PUT]
+
+        //Déconnexion
+        router.put('/user/:userId', async function(req, res, next){
+            var updateResult = await _userQueryService.updateUser(req.params.userId,req.body.user);
+            res.status(updateResult.statusCode).json(updateResult);
+        });
+
+    //#endregion
+
 //===== Role =====//
 
 module.exports = router;
