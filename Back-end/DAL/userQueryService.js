@@ -11,6 +11,7 @@ const _queryParserService = require("../BLL/global/queryParserService");
 const mUser = require('../models/user');
 
 //#region [QUERY RESSOURCES]
+    
     //#region [QUERY DATA]
 
         //return body template for users query
@@ -63,7 +64,7 @@ const mUser = require('../models/user');
                         } 
                     : 
                         {
-                            message:"aucun utilisateur trouvé en base de données correspondant à la query renseignée"
+                            message:"aucun utilisateur trouvé en base de données correspondant à la query"
                         };
                 } 
                 catch (error) {
@@ -109,13 +110,11 @@ const mUser = require('../models/user');
                 var data = await mUser.findById(id);
                 return data 
                 ? 
-                    {
-                        user:data,
-                    } 
+                    data
                 : 
-                    {
-                        message:"utilisateur non-trouvé"
-                    };
+                {
+                    message:"utilisateur non-trouvé"
+                };
             } 
             catch (error) {
                 return {message:"une erreur est survenue",error};
@@ -174,7 +173,7 @@ const mUser = require('../models/user');
             try {
                 //Case-insensitive query
                 username =  '^'+username+'$';
-                var data = await mUser.count({'username':{'$regex': username,$options:'i'}});
+                var data = await mUser.count({'username':{'$regex': username,$options:'im'}});
                 return data > 0;
             } 
             catch (error) {
@@ -182,7 +181,7 @@ const mUser = require('../models/user');
             }     
         };
 
-        //return Boolean representing existence of the conbination userId in database
+        //return Boolean representing existence of the conbination userId <-> password in database
         module.exports.checkPassword = async (userId,passwordProvided) => {
             console.log("D.A.L [checkPassword]");
             console.log("[checkPassword] (paramètres) 'userId' :",userId,'passwordProvided',passwordProvided);
@@ -305,6 +304,55 @@ const mUser = require('../models/user');
         var userConnected = await this.getUserById(userId);
         return userConnected
         
+    };
+
+    //Déconnecte l'utilisateur et retourne:
+    module.exports.disconnectUser = async (userId) => {
+        console.log("D.A.L [disconnectUser]");
+        console.log("[disconnectUser] (paramètres) 'userId' :",userId);
+
+        var user = await this.getUserById(userId);
+        console.log(user);
+        if(user.username){
+            if(user.isConnected == true){
+                try {
+                    await mUser.updateOne(
+                        {_id:userId},
+                        {isConnected:false}
+                    )
+                    return ({
+                        status:"SUCCESS",
+                        statusCode:201,
+                        message: "La déconnexion de l'utilisateur : \'"+user.username+"\' s'est déroulée avec succès"
+                    })
+                } 
+                catch (exception) 
+                {
+                    return ({
+                        status:"EXCEPTION",
+                        statusCode:500,
+                        message: "Une erreur est survenue durant la déconnexion de l'utilisateur : \'"+user.username+"\'",
+                        exception:exception
+                    })
+                }
+            }
+            else
+            {
+                return ({
+                    status:"NO_CHANGE",
+                    statusCode:200,
+                    message: "L'utilisateur : \'"+user.username+"\' est déjà flaggé \'déconnecté\' dans la base de données",
+                })
+            }
+        }
+        else
+        {
+            return ({
+                status:"EXCEPTION",
+                statusCode:500,
+                message: "L'utilisateur : (ID)=\'"+userId+"\' n'a pas été trouvé dans la base de données",
+            })
+        }
     };
 
 //#endregion

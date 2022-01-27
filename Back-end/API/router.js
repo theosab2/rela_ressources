@@ -38,8 +38,11 @@ router.get('/test', (req, res, next) => {
         res.status(authenticationResult.statusCode).json(authenticationResult);
     });
 
-//TODO: Route connexion
-//TODO: Route deconnexion
+    //Déconnexion
+    router.post('/auth/logout/:userId', async function(req, res, next){
+        var logoutResult = await _userQueryService.disconnectUser(req.params.userId);
+        res.status(logoutResult.statusCode).json(logoutResult);
+    });
 
 //===== Article =====//
 
@@ -48,6 +51,7 @@ router.get('/test', (req, res, next) => {
 //===== Comment =====//
 
 //===== User =====//
+
     //#region [QUERY]
 
         //Get query object template
