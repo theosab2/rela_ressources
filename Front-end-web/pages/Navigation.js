@@ -3,16 +3,25 @@ import Image from "next/image";
 import style from "../styles/Navigation.module.css";
 import { setCookies, getCookie } from "cookies-next";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import Modal from "antd/lib/modal/Modal";
 
 export default function Navigation() {
   const [userCookie, setUserCookie] = useState(getCookie("token"));
+  const router = useRouter();
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     if (userCookie != undefined) {
       setUserCookie(JSON.parse(userCookie));
       console.log(userCookie);
     }
+    if (router.asPath == "/") {
+      router.push("home/Home");
+    }
   }, []);
+
+  console.log(router.asPath);
 
   return (
     <div className={style.navBarContent}>
@@ -40,7 +49,7 @@ export default function Navigation() {
         </button>
         <div className={style.dropdown_content}>
           <Link href="/home/Home">
-            <a> Créer un post</a>
+            <a> Fil d'actualité</a>
           </Link>
           <Link href="/home/Home">
             <a> Ressources enregistrer</a>
@@ -50,6 +59,8 @@ export default function Navigation() {
           </Link>
         </div>
       </div>
+      <p style={{ fontSize: "20px" }}>Je suis le titre de la navigation</p>
+
       <Link href="/login/Inscription">
         <a>
           <div className={style.navTitle}>

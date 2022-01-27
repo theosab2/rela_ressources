@@ -26,7 +26,6 @@ export default function Post(props) {
             width={50}
             height={50}
             className={style.profilPost}
-            quality={5}
           />
         </div>
       </div>

@@ -12,6 +12,18 @@ export default function Home() {
             articleTitle="je suis un titre"
             articleProfilUrl="/../public/Image/photo-banc.jpg"
           ></Post>
+          <Post
+            articleTitle="je suis un titre"
+            articleProfilUrl="/../public/Image/photo-banc.jpg"
+          ></Post>{" "}
+          <Post
+            articleTitle="je suis un titre"
+            articleProfilUrl="/../public/Image/photo-banc.jpg"
+          ></Post>{" "}
+          <Post
+            articleTitle="je suis un titre"
+            articleProfilUrl="/../public/Image/photo-banc.jpg"
+          ></Post>
         </div>
       </div>
     </>
