@@ -61,7 +61,6 @@ export default function Connexion() {
 
   const getServerSideProps = (user) => {
     setCookies("token", user, 24 * 3600);
-    console.log(getCookie("token"));
     window.location.href = "/home/Home";
   };
 
