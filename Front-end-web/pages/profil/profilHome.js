@@ -23,13 +23,19 @@ export default function profilHome() {
               alt="Logo gouvernement français"
             />
             <div>Nom</div>
+            <input type="text"></input>
             <div>Prenom</div>
+            <input type="text"></input>
             <div>Pseudonyme</div>
+            <input type="text"></input>
           </div>
           <div className={style.contentright}>
             <div>Adresse mail</div>
+            <input type="text"></input>
             <div>Pays</div>
+            <input type="text"></input>
             <div>Date de naissance</div>
+            <input type="text"></input>
           </div>
         </div>
         <div className={style.empty}></div>
