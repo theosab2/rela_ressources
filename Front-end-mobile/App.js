@@ -14,28 +14,31 @@ import Login from './screens/login';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import CreateAccount from './screens/createAccount';
+import Header from './components/header';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 const Stack = createStackNavigator();
+
+const Drawer = createDrawerNavigator();
 
 const App = () => {
   return (
     <>
       <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
+        <Drawer.Navigator initialRouteName='Home'>
+          <Drawer.Screen
             name='Home'
             component={Home}
-            cardStyle={{flex: 1}}
           />
-          <Stack.Screen
+          <Drawer.Screen
             name='Login'
             component={Login}
           />
-          <Stack.Screen
+          <Drawer.Screen
             name='createAccount'
             component={CreateAccount}
           />
-        </Stack.Navigator>
+        </Drawer.Navigator>
       </NavigationContainer>
     </>
     /*<View style={styles.container}>
@@ -55,6 +58,9 @@ const App = () => {
 
 const styles = StyleSheet.create({
 
+  text: {
+    color: "black",
+  }
 });
 
 export default App;
