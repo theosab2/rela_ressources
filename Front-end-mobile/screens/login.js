@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import {CheckBox, Input, Icon, Button, Text} from 'react-native-elements';
 
 
-const Login = () => {
+const Login = ( {navigation} ) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [saveLogin, setSaveLogin] = useState(false);
@@ -53,7 +53,7 @@ const Login = () => {
                     buttonStyle={styles.buttonStyle}
                     titleStyle={{ fontWeight: 'bold', fontSize: 12 }}
                     containerStyle={styles.buttonContainerStyle}
-                    onPress={() => console.log('aye')}
+                    onPress={() => navigation.navigate('Home')}
 
                 />
                 <Button
@@ -63,7 +63,7 @@ const Login = () => {
                     buttonStyle={styles.buttonStyle}
                     titleStyle={{ fontWeight: 'bold', fontSize: 12 }}
                     containerStyle={styles.buttonContainerStyle}
-                    onPress={() => console.log('aye')}
+                    onPress={() => navigation.navigate('createAccount')}
 
                 />
             </View>

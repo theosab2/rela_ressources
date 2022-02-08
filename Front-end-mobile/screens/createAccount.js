@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
 import {CheckBox, Input, Icon, Button, Text} from 'react-native-elements';
 
-const CreateAccount = () => {
+const CreateAccount = ( {navigation} ) => {
     const [username, setUsername] = useState('')
     const [name, setName] = useState('');
     const [firstname, setFirstname] = useState('');
@@ -17,7 +17,7 @@ const CreateAccount = () => {
 
     const display = async () => {
       if(accept){
-        const api = await fetch('http://10.176.133.46:3000/auth/register', {
+        const api = await fetch('http://192.168.30.65:3000/auth/register', {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -47,6 +47,7 @@ const CreateAccount = () => {
         }
         else{
           console.log('Compte crée')
+          navigation.navigate('Login')
         }
       }
       else{
@@ -204,7 +205,7 @@ const CreateAccount = () => {
                     buttonStyle={styles.buttonStyle2}
                     titleStyle={{ fontWeight: 'bold', fontSize: 12, color: "black" }}
                     containerStyle={styles.buttonContainerStyle}
-                    onPress={() => console.log('aye')}
+                    onPress={() => navigation.navigate('Login')}
 
                 />
                 <Button

@@ -1,9 +1,15 @@
 import React, { Component } from 'react'
-import { StyleSheet,Text, View } from 'react-native'
+import { StyleSheet,Text, View, TouchableOpacity } from 'react-native'
 
-const Card = () => {
+
+const Card = (props) => {
         return (
-            <View style={styles.container}>
+            <TouchableOpacity 
+                style={styles.container}
+                onPress={() => 
+                    props.navigation.navigate('Login')
+                }
+            >
                 <View>
                     <Text>User</Text>
                 </View>
@@ -17,7 +23,7 @@ const Card = () => {
                     <Text>ICO1</Text>
                     <Text>ICO2</Text>
                 </View>
-            </View>
+            </TouchableOpacity>
         )
     }
 const styles = StyleSheet.create({
