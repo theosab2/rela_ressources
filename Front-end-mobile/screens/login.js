@@ -63,7 +63,9 @@ const Login = ( {navigation} ) => {
                     buttonStyle={styles.buttonStyle}
                     titleStyle={{ fontWeight: 'bold', fontSize: 12 }}
                     containerStyle={styles.buttonContainerStyle}
-                    onPress={() => navigation.navigate('createAccount')}
+                    onPress={() => {
+                        navigation.navigate('createAccount')
+                    }}
 
                 />
             </View>
