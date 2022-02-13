@@ -6,17 +6,21 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Modal from "antd/lib/modal/Modal";
 import cookie from "cookie";
+import Home from "./home/Home";
+import createPost from "./crudPost/createPost";
 
 export default function Navigation(image) {
   const [userCookie, setUserCookie] = useState(getCookie("token"));
+  const [isLoading, setLoading] = useState(true);
   const router = useRouter();
-  const [showModal, setShowModal] = useState(false);
-
+  const navTitle = "Accueil";
   useEffect(() => {
-    if (userCookie != undefined) {
+    if (userCookie) {
+      setLoading(true);
       setUserCookie(userCookie);
-      console.log(userCookie);
+      setLoading(false);
     }
+
     if (router.asPath == "/") {
       router.push("/");
     }
@@ -24,10 +28,64 @@ export default function Navigation(image) {
 
   const deconnexionUtilisateur = () => {
     removeCookies("token");
-    router.push("/Home");
+    router.push("home/Home");
   };
 
-  console.log(router.asPath);
+  if (isLoading)
+    return (
+      <div className={style.navBarContent}>
+        <Link href="/home/Home">
+          <a>
+            <div className={style.navTitle}>
+              <Image
+                src="/../public/Image/logo-gouvernement.jpeg" // Route of the image file
+                height={80} // Desired size with correct aspect ratio
+                width={80} // Desired size with correct aspect ratio
+                alt="Logo gouvernement français"
+              />
+              <p className={style.textTitre}>Ressources Relationnelles</p>
+            </div>
+          </a>
+        </Link>
+        <div className={style.dropdown}>
+          <button className={style.dropbtn}>
+            <Image
+              src="/../public/Image/burger-menu.png" // Route of the image file
+              height={50} // Desired size with correct aspect ratio
+              width={50} // Desired size with correct aspect ratio
+              alt="Menu"
+            />
+          </button>
+          <div className={style.dropdown_content}>
+            <Link href="/home/Home">
+              <a> Fil d'actualité</a>
+            </Link>
+            <Link href="/home/Home">
+              <a> Ressources enregistrer</a>
+            </Link>
+          </div>
+        </div>
+        <p style={{ fontSize: "20px" }}>{navTitle}</p>
+        <div className={style.dropdown}>
+          <Image
+            src={"/../public/Image/connexion.png"} // Route of the image file
+            height={60} // Desired size with correct aspect ratio
+            width={60} // Desired size with correct aspect ratio
+            alt="Image profil"
+            className={style.imageProfil}
+          />
+          <div className={style.dropdown_content}>
+            <Link href="/login/Connexion">
+              <a>
+                <div className={style.navTitle}>
+                  <p className={style.deconnexion}>Connexion</p>
+                </div>
+              </a>
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
 
   return (
     <div className={style.navBarContent}>
@@ -60,12 +118,16 @@ export default function Navigation(image) {
           <Link href="/home/Home">
             <a> Ressources enregistrer</a>
           </Link>
+
           <Link href="../profil/profilHome">
             <a> Profil</a>
           </Link>
+          <Link href="../crudPost/createPost">
+            <a> Créer un post</a>
+          </Link>
         </div>
       </div>
-      <p style={{ fontSize: "20px" }}>Je suis le titre de la navigation</p>
+      <p style={{ fontSize: "20px" }}>{navTitle}</p>
       <div className={style.dropdown}>
         <Image
           src={
@@ -82,7 +144,7 @@ export default function Navigation(image) {
           {userCookie ? (
             <div className={style.navTitle}>
               <p onClick={deconnexionUtilisateur} className={style.deconnexion}>
-                {"Déconnexion"}
+                Déconnexion
               </p>
             </div>
           ) : (

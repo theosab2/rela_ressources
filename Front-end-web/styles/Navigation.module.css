@@ -5,7 +5,8 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  height: 5rem;
+  height: 15vh;
+  min-height: 90px;
   box-shadow: 1px 1px 3px #555;
   background-color: #fff;
 }

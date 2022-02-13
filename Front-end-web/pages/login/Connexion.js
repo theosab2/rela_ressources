@@ -73,7 +73,6 @@ export default function Connexion() {
       <div className={style.InscriptionContainer}>
         <div className={style.ConnexionSubContainer}>
           <Image
-            loader={sanityIoImageLoader}
             src={"/../public/Image/connexion.png"}
             atl={"icon connexion"}
             width={250}
