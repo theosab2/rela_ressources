@@ -1,37 +1,34 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
-import { Avatar } from 'react-native-elements'
+import { Avatar, Button } from 'react-native-elements'
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-const Header = () => {
+const Header = (props, {navigation}) => {
+    console.log(navigation);
         return (
             <View style={styles.container}>
                 <Avatar
-                    containerStyle={styles.headerComponent}
                     size={55}
                     icon={{ name:'navicon', type:'evilicon', size: 55}}
                     onPress={ () =>{console.log('Menu')}}
-                    
                 />
+                <Text>{props.title}</Text>
                 <Avatar
-                    containerStyle={styles.headerComponent}
                     size={55}
                     icon={{ name:'user', type:'evilicon', size: 55}}
-                    onPress={ () =>{console.log('Account')}}
+                    onPress={ () => navigation.navigate('Login')}
                 />
             </View>
         )
     }
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#B0B0B0',
         justifyContent: 'space-between',
         alignItems: 'center',
         flexDirection: 'row',
+        width: '100%'
     },
-    headerComponent: {
-        marginTop: 30
-    }
 })
 
 export default Header;
