@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {View, StyleSheet} from 'react-native';
 import {CheckBox, Input, Icon, Button, Text} from 'react-native-elements';
+import { color } from 'react-native-reanimated';
 
 
 const Login = ( {navigation} ) => {
@@ -44,6 +45,7 @@ const Login = ( {navigation} ) => {
                 checked={saveLogin}
                 onPress={() => setSaveLogin(!saveLogin)}
                 containerStyle = {styles.checkbox}
+                checkedColor = '#869ECE'
             />
             <View style={styles.buttons}>
                 <Button
@@ -63,7 +65,9 @@ const Login = ( {navigation} ) => {
                     buttonStyle={styles.buttonStyle}
                     titleStyle={{ fontWeight: 'bold', fontSize: 12 }}
                     containerStyle={styles.buttonContainerStyle}
-                    onPress={() => navigation.navigate('createAccount')}
+                    onPress={() => {
+                        navigation.navigate('createAccount')
+                    }}
 
                 />
             </View>
@@ -84,11 +88,15 @@ const styles = StyleSheet.create({
     },
     buttons: {
         flexDirection: "row",
-        justifyContent:"center"
+        justifyContent:"center",
     },
     buttonStyle: {
-        backgroundColor: 'rgba(111, 202, 186, 1)',
+        backgroundColor: '#869ECE',
         borderRadius: 5,
+    },
+    buttonStyle: {
+        backgroundColor: '#869ECE',
+        
     },
     buttonContainerStyle: {
         margin: 10,
