@@ -18,6 +18,8 @@ import Header from './components/header';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
+import CreatePost from './screens/createPost';
+import PostSaved from './screens/postSaved';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -38,32 +40,87 @@ const StackAccount = () => {
     </Stack.Navigator>
   )
 }
-const TabNavigation = () => {
+const TabNavigation = ({navigation}) => {
   return(
     <Tab.Navigator
+      initialRouteName='home'
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
+        tabBarIcon: ({ focused, color}) => {
           let iconName;
-
-          if (route.name === 'Home') {
+          if (route.name === 'home') {
             iconName = focused
-              ? 'ios-information-circle'
-              : 'ios-information-circle-outline';
+              ? 'newspaper'
+              : 'newspaper-outline';
+          }
+          if (route.name === 'createPost'){
+            iconName = focused
+              ? 'add-circle'
+              : 'add-circle-outline';
+          } 
+          if (route.name === 'postSaved'){
+            iconName = focused
+              ? 'folder-open'
+              : 'folder-outline';
           } 
 
           // You can return any component that you like here!
-          return <Icon name='paperclip'
-          type='evilicon'
+          return <Icon name={iconName}
+          type='ionicon'
           color={color} />;
         },
-        tabBarActiveTintColor: 'tomato',
-        tabBarInactiveTintColor: 'gray',
+        tabBarActiveTintColor: '#2F4077',
+        tabBarInactiveTintColor: '#869ECE',
       })}
     >
       <Tab.Screen name='home'
         component={Home}
         options={{
+          headerLeft: props => (<Icon name='menu'
+          type='ionicon'
+          color='#869ECE'
+          size={40}
+          onPress={() => navigation.openDrawer()}/>),
+          headerRight: () => (<Icon name='person-circle-outline'
+          type='ionicon'
+          color='#869ECE'
+          size={40}
+          onPress={() => navigation.navigate('Login')}/>),
           title: 'Fil d\'actus'
+        }}
+      />
+      <Tab.Screen name='createPost'
+        component={CreatePost}
+        options={{
+          headerLeft: props => (<Icon name='menu'
+          type='ionicon'
+          color='#869ECE'
+          size={40}
+          onPress={() => navigation.openDrawer()}/>),
+          headerRight: () => (<Icon name='person-circle-outline'
+          type='ionicon'
+          color='#869ECE'
+          size={40}
+          onPress={() => navigation.navigate('Login')}/>),
+          title: 'Créer une ressource'
+        }}
+      />
+      <Tab.Screen name='postSaved'
+        component={PostSaved}
+        options={{
+          headerLeft: () => (<Icon name='menu'
+          type='ionicon'
+          color='#869ECE'
+          size={40}
+          onPress={() => navigation.openDrawer()}/>),
+          headerRight: () => (<Icon name='person-circle-outline'
+          type='ionicon'
+          color='#869ECE'
+          size={40}
+          onPress={() => navigation.navigate('Login')}/>),
+          title: 'Vos ressources'
+        }}
+        screenOptions= {{
+          
         }}
       />
     </Tab.Navigator>
@@ -76,14 +133,16 @@ const DrawerNavigation = () => {
             name='Home'
             component={TabNavigation}
             options={{
-              title: 'Ressource Relationnelle'
+              title: 'Accueil',
+              headerShown: false
             }}
           />
           <Drawer.Screen
             name='Login'
             component={StackAccount}
             options={{
-              title: "Ressource Relationnelle"
+              title: "Compte",
+              headerShown: false
             }}
           />
         </Drawer.Navigator>
