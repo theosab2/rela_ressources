@@ -1,9 +1,10 @@
 import { setCookies, getCookie, removeCookies } from "cookies-next";
 import { useEffect, useState } from "react";
-
-function utils() {
+import Moderation from "./administration/Moderation";
+export default function utils() {
   const [userCookie, setUserCookie] = useState(getCookie("token"));
   const [isLoading, setLoading] = useState(true);
+  let [pageAdmin, setPagAdmin] = useState("");
 
   useEffect(() => {
     if (userCookie) {
@@ -19,5 +20,3 @@ function utils() {
     return userCookie;
   }
 }
-
-export default utils;
