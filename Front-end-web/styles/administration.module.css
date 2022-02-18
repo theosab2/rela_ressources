@@ -133,3 +133,32 @@
   color: #ddd;
   cursor: pointer;
 }
+
+.AdminModifRoleContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.AdminModifRoleContainer label {
+  font-size: 20px;
+}
+
+.AdminModifRoleContainer input[type="text"] {
+  width: 35vw;
+  height: 4vh;
+  margin-bottom: 2vh;
+  border: 1px solid #555;
+  border-radius: 10px;
+}
+
+.AdminModifRoleContainer input[type="button"] {
+  width: 20vw;
+  height: 4vh;
+  border-radius: 10px;
+  font-size: 20px;
+  margin: auto;
+  background-color: #000091;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}

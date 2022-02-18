@@ -5,7 +5,6 @@ export default function (props) {
   let [adminPage, setAdminPage] = useState("");
 
   function handleChange(event) {
-    console.log(event.target);
     // Here, we invoke the callback with the new value
     props.onChange(event.target.value);
   }
