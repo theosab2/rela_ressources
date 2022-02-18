@@ -71,8 +71,21 @@
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
+.navTitleProfil {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
 .navTitle p {
   margin-left: 1rem;
+  padding: 10px;
+}
+
+.navTitleProfil p:hover {
+  background-color: #bbb;
 }
 
 .textTitre {
@@ -88,4 +101,12 @@
 
 .imageProfil {
   border-radius: 100%;
+}
+
+.searchBar {
+  width: 15vw;
+  height: 4vh;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  background-color: #ddd;
 }

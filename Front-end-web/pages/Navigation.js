@@ -28,7 +28,11 @@ export default function Navigation(image) {
 
   const deconnexionUtilisateur = () => {
     removeCookies("token");
-    router.push("home/Home");
+    router.push("/home/Home");
+  };
+
+  const moderationUtilisateur = () => {
+    router.push("/administration/Moderation");
   };
 
   if (isLoading)
@@ -127,6 +131,19 @@ export default function Navigation(image) {
           </Link>
         </div>
       </div>
+      <div>
+        <button className={style.searchIcon}>
+          <img
+            src="./../public/Image/magnifying-glass-solid.svg"
+            alt="search"
+          />
+        </button>
+        <input
+          type="text"
+          placeholder="Rechercher"
+          className={style.searchBar}
+        ></input>
+      </div>
       <p style={{ fontSize: "20px" }}>{navTitle}</p>
       <div className={style.dropdown}>
         <Image
@@ -142,9 +159,12 @@ export default function Navigation(image) {
         />
         <div className={style.dropdown_content}>
           {userCookie ? (
-            <div className={style.navTitle}>
+            <div className={style.navTitleProfil}>
               <p onClick={deconnexionUtilisateur} className={style.deconnexion}>
                 Déconnexion
+              </p>
+              <p onClick={moderationUtilisateur} className={style.deconnexion}>
+                Moderation
               </p>
             </div>
           ) : (
