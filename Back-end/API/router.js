@@ -350,5 +350,82 @@ const router = express.Router();
 
 // ========================================================== //
 
+//#region [COMMENT]
+
+    //#region [SCHEMA]
+
+        //Get comment model schema
+        router.get('/comment/schema', async function(req, res, next){
+            var data = await _commentQueryService.getCommentSchema();
+            res.status(200).json(data);
+        });
+
+        //Get comment model detailled schema
+        router.get('/comment/schema/detailled', async function(req, res, next){
+            var data = await _commentQueryService.getDetailledCommentSchema();
+            res.status(200).json(data);
+        });
+
+    //#endregion
+
+    //#region [QUERY]
+
+        //Get query object template
+        router.get('/comments/query', async function(req, res, next){
+            var data = await _commentQueryService.getQueryTemplate();
+            res.status(200).json(data);
+        });
+
+        //Get list of comments from query in request body
+        router.post('/comments/query', async function(req, res, next){
+            var data = await _commentQueryService.queryComments(req.body);
+            res.status(200).json(data);
+        });
+
+    //#endregion
+
+    //#region [GET RESSOURCES]
+
+        //Get all comments
+        router.get('/comments/all', async function(req, res, next){
+            var data = await _commentQueryService.getAllComments();
+            res.status(200).json(data);
+        });
+
+
+        //Get comment by ID
+        router.get('/comment/:id', async function(req, res, next){
+            var data = await _commentQueryService.getCommentById(req.params.id);
+            res.status(200).json(data);
+        });
+
+    //#endregion
+
+    //#region [UPDATE RESSOURCES]
+
+        //Création d'un comment
+        router.post('/comment/create', async function(req, res, next){
+            var commentCreationQueryResult = await _commentQueryService.createComment(req.body.comment)
+            res.status(commentCreationQueryResult.statusCode).json(commentCreationQueryResult);
+        });
+
+        //Suppression d'un comment
+        router.post('/comment/delete/:commentId', async function(req, res, next){ // Sera à modifier, on ne supprime pas une entité, on la désactive (mev)
+            var deleteResult = await _commentQueryService.deleteComment(req.params.commentId);
+            res.status(deleteResult.statusCode).json(deleteResult);
+        });
+
+        //Mise à jour d'un comment
+        router.put('/comment/:commentId', async function(req, res, next){
+            var updateResult = await _commentQueryService.updateComment(req.params.commentId,req.body.comment);
+            res.status(updateResult.statusCode).json(updateResult);
+        });
+
+    //#endregion
+
+//#endregion
+
+// ========================================================== //
+
 module.exports = router;
 
