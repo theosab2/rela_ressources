@@ -53,7 +53,7 @@ export default function () {
             <button></button>
             <button></button>
           </div>
-          <div className={style.createContainer}>{pageRenderAdmin("je")}</div>
+          <div className={style.createContainer}>{pageRenderAdmin()}</div>
           <div className={style.empty}></div>
         </div>
       </>

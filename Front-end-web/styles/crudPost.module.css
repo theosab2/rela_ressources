@@ -55,8 +55,9 @@
   background-color: #eee;
   display: flex;
   flex: 3;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+  flex-direction: column;
 }
 
 .ContainerDesc {
@@ -82,8 +83,10 @@
 }
 
 .imagePreview {
-  width: 30vw;
-  height: 30vh;
+  width: auto;
+  height: auto;
+  max-width: 40%;
+  max-height: 80%;
 }
 
 .buttonSubmit {

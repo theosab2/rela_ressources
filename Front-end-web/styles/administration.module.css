@@ -112,7 +112,8 @@
   float: inline-end;
   font-size: 40px;
   font-weight: bold;
-  padding: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
 }
 
 .close:hover,
@@ -156,9 +157,22 @@
   height: 4vh;
   border-radius: 10px;
   font-size: 20px;
-  margin: auto;
   background-color: #000091;
   color: #fff;
   border: none;
   cursor: pointer;
+  margin: auto;
+}
+
+.modalUpdateRole {
+  margin: 0 auto;
+  background-color: #ccc;
+  display: flex;
+  justify-content: center;
+  width: 40vw;
+  height: 500px;
+  padding: 10px;
+  border-radius: 10px;
+  border: solid 5px #aaa;
+  box-shadow: 0px 0px 3px#000;
 }
