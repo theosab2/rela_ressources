@@ -20,11 +20,11 @@ const router = express.Router();
 //====================================//
 
 //===== Global routes =====//
-router.get('/test', (req, res, next) => {
-    res.status(200).json({ message:"L'API à répondu correctement" });
-});
+    router.get('/test', (req, res, next) => {
+        res.status(200).json({ message:"L'API à répondu correctement" });
+    });
 
-//===== Inscription / Authentification / Déconnexion =====//
+//#region [AUTH]
 
     //Inscription
     router.post('/auth/register', async function(req, res, next){
@@ -43,39 +43,125 @@ router.get('/test', (req, res, next) => {
         var logoutResult = await _userQueryService.disconnectUser(req.params.userId);
         res.status(logoutResult.statusCode).json(logoutResult);
     });
+    
+//#endregion
 
-//===== Article =====//
+//#region [ARTICLE]
 
-//===== Category =====//
+    //#region [SCHEMA]
 
-//===== Comment =====//
+        //Get article model schema
+        router.get('/article/schema', async function(req, res, next){
+            var data = await _articleQueryService.getArticleSchema();
+            res.status(200).json(data);
+        });
 
-//===== User =====//
+        //Get article model schema
+        router.get('/article/schema/detailled', async function(req, res, next){
+            var data = await _articleQueryService.getDetailledArticleSchema();
+            res.status(200).json(data);
+        });
+
+    //#endregion
+
+    //#region [QUERY]
+
+        //Get query object template
+        router.get('/articles/query', async function(req, res, next){
+            var data = await _articleQueryService.getQueryTemplate();
+            res.status(200).json(data);
+        });
+
+        //Get list of articles from query in request body
+        router.post('/articles/query', async function(req, res, next){
+            var data = await _articleQueryService.queryArticles(req.body);
+            res.status(200).json(data);
+        });
+
+    //#endregion
+
+    //#region [GET RESSOURCES]
+
+        //Get all articles
+        router.get('/articles/all', async function(req, res, next){
+            var data = await _articleQueryService.getAllArticles();
+            res.status(200).json(data);
+        });
+
+
+        //Get article by ID
+        router.get('/article/:id', async function(req, res, next){
+            var data = await _articleQueryService.getArticleById(req.params.id);
+            res.status(200).json(data);
+        });
+
+    //#endregion
+
+    //#region [UPDATE RESSOURCES]
+
+        //Création d'un article
+        router.post('/article/create', async function(req, res, next){
+            var articleCreationQueryResult = await _articleQueryService.createArticle(req.body.article)
+            res.status(articleCreationQueryResult.statusCode).json(articleCreationQueryResult);
+        });
+
+        //Suppression d'un article
+        router.post('/article/delete/:articleId', async function(req, res, next){ // Sera à modifier, on ne supprime pas une entité, on la désactive (mev)
+            var deleteResult = await _articleQueryService.deleteArticle(req.params.articleId);
+            res.status(deleteResult.statusCode).json(deleteResult);
+        });
+
+        //Mise à jour d'un article
+        router.put('/article/:articleId', async function(req, res, next){
+            var updateResult = await _articleQueryService.updateArticle(req.params.articleId,req.body.article);
+            res.status(updateResult.statusCode).json(updateResult);
+        });
+
+    //#endregion
+
+//#endregion
+
+// ========================================================== //
+
+//#region [USER]
+
+    //#region [SCHEMA]
+
+        //Get user model schema
+        router.get('/user/schema', async function(req, res, next){
+            var data = await _userQueryService.getUserSchema();
+            res.status(200).json(data);
+        });
+
+        //Get user model schema
+        router.get('/user/schema/detailled', async function(req, res, next){
+            var data = await _userQueryService.getDetailledUserSchema();
+            res.status(200).json(data);
+        });
+
+    //#endregion
 
     //#region [QUERY]
 
         //Get query object template
         router.get('/users/query', async function(req, res, next){
             var data = await _userQueryService.getQueryTemplate();
-            console.log("template awaited for query : \n",data);
             res.status(200).json(data);
         });
 
         //Get list of users from query in request body
         router.post('/users/query', async function(req, res, next){
             var data = await _userQueryService.queryUsers(req.body);
-            //console.log("users awaited from query : \n",data);
             res.status(200).json(data);
         });
 
     //#endregion
 
-    //#region [GET]
+    //#region [GET RESSOURCES]
 
         //Get all users
         router.get('/users/all', async function(req, res, next){
             var data = await _userQueryService.getAllUsers();
-            console.log("users awaited : \n",data);
             res.status(200).json(data);
         });
 
@@ -83,17 +169,28 @@ router.get('/test', (req, res, next) => {
         //Get user by ID
         router.get('/user/:id', async function(req, res, next){
             var data = await _userQueryService.getUserById(req.params.id);
-            console.log("user-data awaited : \n",data);
             res.status(200).json(data);
         });
 
     //#endregion
 
-    //#region [POST]
-        //TODO: post methods
+    //#region [UPDATE RESSOURCES]
+
+        //Suppression d'un utilisateur
+        router.post('/user/delete/:userId', async function(req, res, next){ // Sera à modifier, on ne supprime pas une entité, on la désactive (mev)
+            var deleteResult = await _userQueryService.deleteUser(req.params.userId);
+            res.status(deleteResult.statusCode).json(deleteResult);
+        });
+
+        //Mise à jour d'un utilisateur
+        router.put('/user/:userId', async function(req, res, next){
+            var updateResult = await _userQueryService.updateUser(req.params.userId,req.body.user);
+            res.status(updateResult.statusCode).json(updateResult);
+        });
+
     //#endregion
 
-//===== Role =====//
+//#endregion
 
 module.exports = router;
 
