@@ -6,29 +6,11 @@
             //TODO external method
             if(typeof(value) ==  typeof(""))
             {
-                var UPPERVAL = value.toUpperCase();
+                var LIKE = await this.parseParameter_Like(value);
 
-                //TODO external method
-                var LIKE = 
-                    UPPERVAL.includes("[LIKE]")
-                ;
+                var CASE_INSENSITIVE = await this.parseParameter_CaseInsensitive(value);
 
-                //TODO external method
-                var CASE_INSENSITIVE = 
-                    UPPERVAL.includes("[CASE_INSENSITIVE]") ||
-                    UPPERVAL.includes("[CASE INSENSITIVE]") ||
-                    UPPERVAL.includes("[CI]")
-                ;
-
-                //TODO external method
-                var IS_NOT_NULL =   
-                    UPPERVAL.includes("[IS NOT NULL]") ||
-                    UPPERVAL.includes("[IS_NOT_NULL]") ||
-                    UPPERVAL.includes("[NOT NULL]") ||
-                    UPPERVAL.includes("[NOT_NULL]") ||
-                    UPPERVAL.includes("[!NULL]")
-                ;
-
+                var IS_NOT_NULL = await this.parseParameter_IsNotNull(value);
 
                 //TODO suppression des paramètres entre crochets
 
@@ -91,11 +73,47 @@
                 }
             }
         }
+        console.log(query);
         return query;
     };
 
+    //Detect parameter "Is not null" inside input string, return boolean
     module.exports.parseParameter_IsNotNull = async (input) => {
+        
+        var UPPERVAL = input.toUpperCase();
+        var parameterDetected = 
+        (
+            UPPERVAL.includes("[IS NOT NULL]") ||
+            UPPERVAL.includes("[IS_NOT_NULL]") ||
+            UPPERVAL.includes("[NOT NULL]") ||
+            UPPERVAL.includes("[NOT_NULL]") ||
+            UPPERVAL.includes("[!NULL]")
+        )
+        return parameterDetected;
+    };
 
+    //Detect parameter "Case insensitive" inside input string, return boolean
+    module.exports.parseParameter_CaseInsensitive = async (input) => {
+        
+        var UPPERVAL = input.toUpperCase();
+        var parameterDetected = 
+        (
+            UPPERVAL.includes("[CASE_INSENSITIVE]") ||
+            UPPERVAL.includes("[CASE INSENSITIVE]") ||
+            UPPERVAL.includes("[CI]")
+        )
+        return parameterDetected;
+    };
+
+    //Detect parameter "Like" inside input string, return boolean
+    module.exports.parseParameter_Like = async (input) => {
+        
+        var UPPERVAL = input.toUpperCase();
+        var parameterDetected = 
+        (
+            UPPERVAL.includes("[LIKE]")
+        )
+        return parameterDetected;
     };
 
 //#endregion
