@@ -7,7 +7,6 @@ export default function ProfilUpdate() {
   const userCookie = utils();
   if (userCookie != false) {
     const userInfo = JSON.parse(userCookie);
-
     return (
       <>
         <div className={style.contentleft}>

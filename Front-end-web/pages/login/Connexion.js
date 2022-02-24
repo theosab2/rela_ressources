@@ -48,7 +48,8 @@ export default function Connexion() {
       }),
     });
     res = await res.json();
-    if (res.status == "FAILURE") {
+    if (res.status != "SUCCESS") {
+      console.log(res);
       window.location.href = "/login/Connexion";
     } else {
       console.log("Connexion");

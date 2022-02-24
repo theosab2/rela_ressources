@@ -13,6 +13,15 @@ import utils from "../utils";
 export default function profilHome() {
   let [profilPage, setProfilPage] = useState("");
 
+  const showModal = () => {
+    console.log("saucisse");
+    document.getElementById("myModal").style.display = "block";
+  };
+
+  const closeModal = () => {
+    document.getElementById("myModal").style.display = "none";
+  };
+
   function pageRenderProfil() {
     switch (profilPage) {
       case "ProfilUpdate":
@@ -54,11 +63,18 @@ export default function profilHome() {
             >
               Historique de mes publication
             </button>
-            <button onClick={() => null}>Supprimer mon compte</button>
-            <button onClick={deconnexionUtilisateur}>Déconnexion</button>
+            <button onClick={showModal}>Supprimer mon compte</button>
+            <button onClick={showModal}>Déconnexion</button>
           </div>
           <div className={style.content}>{pageRenderProfil()}</div>
           <div className={style.empty}></div>
+        </div>
+        <div id="myModal" className={style.modal}>
+          <div className={style.modal_content}>
+            <span className={style.close} onClick={closeModal}>
+              &times;
+            </span>
+          </div>
         </div>
       </>
     );
