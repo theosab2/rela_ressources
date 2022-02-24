@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export default function () {
-  const chowImg = () => {
+  const showModal = () => {
     document.getElementById("myModal").style.display = "block";
   };
 
@@ -34,7 +34,7 @@ export default function () {
                 <td>
                   <Image
                     className={style.chowIcon}
-                    onClick={chowImg}
+                    onClick={showModal}
                     src="/../public/Image/eye-solid.svg"
                     height="30px"
                     width="30px"
@@ -55,7 +55,7 @@ export default function () {
                     src="/../public/Image/eye-solid.svg"
                     height="30px"
                     width="30px"
-                    onClick={chowImg}
+                    onClick={showModal}
                   />
                 </td>
                 <td>
@@ -73,7 +73,7 @@ export default function () {
                     src="/../public/Image/eye-solid.svg"
                     height="30px"
                     width="30px"
-                    onClick={chowImg}
+                    onClick={showModal}
                   />
                 </td>
                 <td>

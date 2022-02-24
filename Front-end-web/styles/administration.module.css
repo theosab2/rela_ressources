@@ -76,15 +76,17 @@
 }
 
 .tabHistorique input {
-  background-color: #f55;
   color: #fff;
-  width: 50%;
-  height: 20px;
+  width: 100%;
   margin: 10px;
 }
 
 .tabHistorique input[value="Approuver"] {
   background-color: #2c2;
+}
+
+.tabHistorique input[value="Supprimer"] {
+  background-color: #f55;
 }
 
 .modal {
@@ -175,4 +177,63 @@
   border-radius: 10px;
   border: solid 5px #aaa;
   box-shadow: 0px 0px 3px#000;
+}
+
+.buttonModerateUser {
+  background-color: #000091;
+  font-size: 20px;
+  color: #fff;
+  height: 5vh;
+  width: 10vw;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.buttonModerateUser:hover {
+  box-shadow: 0px 0px 5px #000;
+}
+
+.modalModerate {
+  margin: 0 auto;
+  background-color: #ccc;
+  display: flex;
+  justify-content: center;
+  width: 40vw;
+  height: 500px;
+  padding: 10px;
+  border-radius: 10px;
+  border: solid 5px #aaa;
+  box-shadow: 0px 0px 3px#000;
+}
+
+.modalModerateInput {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.modalModerateInput input {
+  height: 3vh;
+  width: 18vw;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px #000;
+  font-size: 15px;
+}
+
+.modalModerateInput select {
+  height: 3vh;
+  width: 18vw;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px #000;
+  font-size: 15px;
+}
+
+.modalModerateInput input[type="submit"] {
+  font-size: 20px;
+  background-color: #000091;
+  color: #fff;
 }

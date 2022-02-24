@@ -14,12 +14,19 @@ export default function profilHome() {
   let [profilPage, setProfilPage] = useState("");
 
   const showModal = () => {
-    console.log("saucisse");
     document.getElementById("myModal").style.display = "block";
   };
 
   const closeModal = () => {
     document.getElementById("myModal").style.display = "none";
+  };
+
+  const showModalDeleteAccount = () => {
+    document.getElementById("myModalDeleteAccount").style.display = "block";
+  };
+
+  const closeModalDeleteAccount = () => {
+    document.getElementById("myModalDeleteAccount").style.display = "none";
   };
 
   function pageRenderProfil() {
@@ -63,18 +70,43 @@ export default function profilHome() {
             >
               Historique de mes publication
             </button>
-            <button onClick={showModal}>Supprimer mon compte</button>
+            <button onClick={showModalDeleteAccount}>
+              Supprimer mon compte
+            </button>
             <button onClick={showModal}>Déconnexion</button>
           </div>
-          <div className={style.content}>{pageRenderProfil()}</div>
-          <div className={style.empty}></div>
-        </div>
-        <div id="myModal" className={style.modal}>
-          <div className={style.modal_content}>
-            <span className={style.close} onClick={closeModal}>
-              &times;
-            </span>
+          <div className={style.content}>
+            <div id="myModal" className={style.modal}>
+              <div className={style.modalDisconected}>
+                <span className={style.close} onClick={closeModal}>
+                  &times;
+                </span>
+                <p>Déconnexion ?</p>
+                <div className={style.modalButtonContent}>
+                  <input
+                    type="button"
+                    value="Valider"
+                    onClick={deconnexionUtilisateur}
+                  ></input>
+                  <input type="button" value="Annuler"></input>
+                </div>
+              </div>
+            </div>
+            <div id="myModalDeleteAccount" className={style.modalDeleteAccount}>
+              <div className={style.modalDisconected}>
+                <span className={style.close} onClick={closeModalDeleteAccount}>
+                  &times;
+                </span>
+                <p>Supprimer mon compte ?</p>
+                <div className={style.modalButtonContent}>
+                  <input type="button" value="Valider"></input>
+                  <input type="button" value="Annuler"></input>
+                </div>
+              </div>
+            </div>
+            {pageRenderProfil()}
           </div>
+          <div className={style.empty}></div>
         </div>
       </>
     );

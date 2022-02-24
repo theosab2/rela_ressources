@@ -224,20 +224,57 @@
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
-  padding-top: 15vh; /* Location of the box */
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
+  padding-top: 15vh;
+  width: 120%; /* Full width */
+  height: 120%; /* Full height */
   background-color: rgb(0, 0, 0); /* Fallback color */
   background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
-.modal_content {
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-image: url(../public/Image/Bateau_2.jpg);
-  margin-left: 75vh;
-  width: auto;
-  height: 70vh;
+.modalDisconected {
+  margin: 0 auto;
+  background-color: #ccc;
+  display: flex;
+  align-items: center;
+  width: 40vw;
+  height: 180px;
+  border-radius: 10px;
+  border: solid 5px #aaa;
+  box-shadow: 0px 0px 3px#000;
+  flex-direction: column;
+}
+
+.modalButtonContent {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.modalDisconected input:hover {
+  cursor: pointer;
+  box-shadow: 0px 0px 7px #000;
+}
+
+.modalDisconected input[value="Annuler"] {
+  height: 5vh;
+  width: 15vw;
+  background-color: #f55;
+  border: none;
+  color: #fff;
+  border-radius: 10px;
+  font-size: 20px;
+}
+
+.modalDisconected input[value="Valider"] {
+  height: 5vh;
+  width: 15vw;
+  background-color: #009500;
+  border: none;
+  color: #fff;
+  border-radius: 10px;
+  font-size: 20px;
 }
 
 .close {
@@ -245,8 +282,7 @@
   float: inline-end;
   font-size: 40px;
   font-weight: bold;
-  padding-right: 10px;
-  padding-bottom: 10px;
+  padding-right: 35vw;
 }
 
 .close:hover,
@@ -254,4 +290,15 @@
   color: #333;
   text-decoration: none;
   cursor: pointer;
+}
+
+.modalDeleteAccount {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 15vh;
+  width: 120%; /* Full width */
+  height: 120%; /* Full height */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }

@@ -7,6 +7,7 @@ import Moderation from "./Moderation";
 import AdminRole from "./AdminRole";
 import utils from "../utils";
 import AdminRoleModif from "./AdminRoleModif";
+import ModerationUser from "./ModerationUser";
 
 export default function () {
   let [adminPage, setAdminPage] = useState("");
@@ -29,8 +30,8 @@ export default function () {
       case "AdminRoleModif":
         return <AdminRoleModif></AdminRoleModif>;
         break;
-      case "jesaispasencore":
-        return <></>;
+      case "ModerationUser":
+        return <ModerationUser></ModerationUser>;
         break;
       default:
         return <Moderation></Moderation>;
@@ -49,8 +50,11 @@ export default function () {
             <button onClick={() => setAdminPage((adminPage = "AdminRole"))}>
               Modifier les rôles
             </button>
-
-            <button></button>
+            <button
+              onClick={() => setAdminPage((adminPage = "ModerationUser"))}
+            >
+              Modération des utilisateurs
+            </button>
             <button></button>
           </div>
           <div className={style.createContainer}>{pageRenderAdmin()}</div>

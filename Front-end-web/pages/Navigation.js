@@ -126,12 +126,7 @@ export default function Navigation(image) {
           </div>
         </div>
         <div>
-          <button className={style.searchIcon}>
-            <img
-              src="./../public/Image/magnifying-glass-solid.svg"
-              alt="search"
-            />
-          </button>
+          <button className={style.searchIcon}></button>
           <input
             type="text"
             placeholder="Rechercher"
