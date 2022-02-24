@@ -48,6 +48,77 @@ const router = express.Router();
 
 // ========================================================== //
 
+//#region [USER]
+
+    //#region [SCHEMA]
+
+        //Get user model schema
+        router.get('/user/schema', async function(req, res, next){
+            var data = await _userQueryService.getUserSchema();
+            res.status(200).json(data);
+        });
+
+        //Get user model schema
+        router.get('/user/schema/detailled', async function(req, res, next){
+            var data = await _userQueryService.getDetailledUserSchema();
+            res.status(200).json(data);
+        });
+
+    //#endregion
+
+    //#region [QUERY]
+
+        //Get query object template
+        router.get('/users/query', async function(req, res, next){
+            var data = await _userQueryService.getQueryTemplate();
+            res.status(200).json(data);
+        });
+
+        //Get list of users from query in request body
+        router.post('/users/query', async function(req, res, next){
+            var data = await _userQueryService.queryUsers(req.body);
+            res.status(200).json(data);
+        });
+
+    //#endregion
+
+    //#region [GET RESSOURCES]
+
+        //Get all users
+        router.get('/users/all', async function(req, res, next){
+            var data = await _userQueryService.getAllUsers();
+            res.status(200).json(data);
+        });
+
+
+        //Get user by ID
+        router.get('/user/:id', async function(req, res, next){
+            var data = await _userQueryService.getUserById(req.params.id);
+            res.status(200).json(data);
+        });
+
+    //#endregion
+
+    //#region [UPDATE RESSOURCES]
+
+        //Suppression d'un utilisateur
+        router.post('/user/delete/:userId', async function(req, res, next){ // Sera à modifier, on ne supprime pas une entité, on la désactive (mev)
+            var deleteResult = await _userQueryService.deleteUser(req.params.userId);
+            res.status(deleteResult.statusCode).json(deleteResult);
+        });
+
+        //Mise à jour d'un utilisateur
+        router.put('/user/:userId', async function(req, res, next){
+            var updateResult = await _userQueryService.updateUser(req.params.userId,req.body.user);
+            res.status(updateResult.statusCode).json(updateResult);
+        });
+
+    //#endregion
+
+//#endregion
+
+// ========================================================== //
+
 //#region [ARTICLE]
 
     //#region [SCHEMA]
@@ -202,19 +273,19 @@ const router = express.Router();
 
 // ========================================================== //
 
-//#region [USER]
+//#region [CATEGORY]
 
     //#region [SCHEMA]
 
-        //Get user model schema
-        router.get('/user/schema', async function(req, res, next){
-            var data = await _userQueryService.getUserSchema();
+        //Get category model schema
+        router.get('/category/schema', async function(req, res, next){
+            var data = await _categoryQueryService.getCategorySchema();
             res.status(200).json(data);
         });
 
-        //Get user model schema
-        router.get('/user/schema/detailled', async function(req, res, next){
-            var data = await _userQueryService.getDetailledUserSchema();
+        //Get category model detailled schema
+        router.get('/category/schema/detailled', async function(req, res, next){
+            var data = await _categoryQueryService.getDetailledCategorySchema();
             res.status(200).json(data);
         });
 
@@ -223,14 +294,14 @@ const router = express.Router();
     //#region [QUERY]
 
         //Get query object template
-        router.get('/users/query', async function(req, res, next){
-            var data = await _userQueryService.getQueryTemplate();
+        router.get('/categories/query', async function(req, res, next){
+            var data = await _categoryQueryService.getQueryTemplate();
             res.status(200).json(data);
         });
 
-        //Get list of users from query in request body
-        router.post('/users/query', async function(req, res, next){
-            var data = await _userQueryService.queryUsers(req.body);
+        //Get list of categories from query in request body
+        router.post('/categories/query', async function(req, res, next){
+            var data = await _categoryQueryService.queryCategories(req.body);
             res.status(200).json(data);
         });
 
@@ -238,16 +309,16 @@ const router = express.Router();
 
     //#region [GET RESSOURCES]
 
-        //Get all users
-        router.get('/users/all', async function(req, res, next){
-            var data = await _userQueryService.getAllUsers();
+        //Get all categories
+        router.get('/categories/all', async function(req, res, next){
+            var data = await _categoryQueryService.getAllCategories();
             res.status(200).json(data);
         });
 
 
-        //Get user by ID
-        router.get('/user/:id', async function(req, res, next){
-            var data = await _userQueryService.getUserById(req.params.id);
+        //Get category by ID
+        router.get('/category/:id', async function(req, res, next){
+            var data = await _categoryQueryService.getCategoryById(req.params.id);
             res.status(200).json(data);
         });
 
@@ -255,21 +326,29 @@ const router = express.Router();
 
     //#region [UPDATE RESSOURCES]
 
-        //Suppression d'un utilisateur
-        router.post('/user/delete/:userId', async function(req, res, next){ // Sera à modifier, on ne supprime pas une entité, on la désactive (mev)
-            var deleteResult = await _userQueryService.deleteUser(req.params.userId);
+        //Création d'un category
+        router.post('/category/create', async function(req, res, next){
+            var categoryCreationQueryResult = await _categoryQueryService.createCategory(req.body.category)
+            res.status(categoryCreationQueryResult.statusCode).json(categoryCreationQueryResult);
+        });
+
+        //Suppression d'un category
+        router.post('/category/delete/:categoryId', async function(req, res, next){ // Sera à modifier, on ne supprime pas une entité, on la désactive (mev)
+            var deleteResult = await _categoryQueryService.deleteCategory(req.params.categoryId);
             res.status(deleteResult.statusCode).json(deleteResult);
         });
 
-        //Mise à jour d'un utilisateur
-        router.put('/user/:userId', async function(req, res, next){
-            var updateResult = await _userQueryService.updateUser(req.params.userId,req.body.user);
+        //Mise à jour d'un category
+        router.put('/category/:categoryId', async function(req, res, next){
+            var updateResult = await _categoryQueryService.updateCategory(req.params.categoryId,req.body.category);
             res.status(updateResult.statusCode).json(updateResult);
         });
 
     //#endregion
 
 //#endregion
+
+// ========================================================== //
 
 module.exports = router;
 

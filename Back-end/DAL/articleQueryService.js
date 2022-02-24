@@ -210,7 +210,7 @@ const mArticle = require('../models/article');
 //#region [UPDATE RESSOURCES]
 
     //Crée un nouvel utilisateur
-    module.exports.createArticle = async (articleObject) => {
+    module.exports.createArticle = async (articleObject = null) => {
         console.log("D.A.L [createArticle] (paramètres) 'articleObject' :",articleObject);
 
         if(articleObject == {} || articleObject == undefined || articleObject == null){
@@ -309,7 +309,7 @@ const mArticle = require('../models/article');
     };
 
     //Mets à jour l'article et renvoi le résultat de la mise à jour
-    module.exports.updateArticle = async (articleId,articleObject = {}) => {
+    module.exports.updateArticle = async (articleId,articleObject = null) => {
         console.log("D.A.L [updateArticle] (paramètres) 'articleId' :",articleId,"'articleObject' :",articleObject);
 
         if(articleObject == {} || articleObject == undefined || articleObject == null){
@@ -318,7 +318,6 @@ const mArticle = require('../models/article');
                 statusCode:400,
                 message: "Mise à jour de l'utilisateur impossible : Objet \'article\' introuvable dans le body de la requête",
                 requiredFormat:"Format du body attendu : {article:{...article informations...}}",
-                exception:exception
             })
         }
 

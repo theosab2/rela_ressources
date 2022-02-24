@@ -209,7 +209,7 @@ const mRole = require('../models/role');
 //#region [UPDATE RESSOURCES]
 
     //Crée un nouvel utilisateur
-    module.exports.createRole = async (roleObject) => {
+    module.exports.createRole = async (roleObject = null) => {
         console.log("D.A.L [createRole] (paramètres) 'roleObject' :",roleObject);
 
         if(roleObject == {} || roleObject == undefined || roleObject == null){
@@ -308,7 +308,7 @@ const mRole = require('../models/role');
     };
 
     //Mets à jour le role et renvoi le résultat de la mise à jour
-    module.exports.updateRole = async (roleId,roleObject = {}) => {
+    module.exports.updateRole = async (roleId,roleObject = null) => {
         console.log("D.A.L [updateRole] (paramètres) 'roleId' :",roleId,"'roleObject' :",roleObject);
 
         if(roleObject == {} || roleObject == undefined || roleObject == null){
@@ -317,7 +317,6 @@ const mRole = require('../models/role');
                 statusCode:400,
                 message: "Mise à jour de l'utilisateur impossible : Objet \'role\' introuvable dans le body de la requête",
                 requiredFormat:"Format du body attendu : {role:{...role informations...}}",
-                exception:exception
             })
         }
 
