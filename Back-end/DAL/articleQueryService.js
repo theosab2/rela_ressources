@@ -212,6 +212,15 @@ const mArticle = require('../models/article');
     //Crée un nouvel utilisateur
     module.exports.createArticle = async (articleObject) => {
         console.log("D.A.L [createArticle] (paramètres) 'articleObject' :",articleObject);
+
+        if(articleObject == {} || articleObject == undefined || articleObject == null){
+            return({
+                status:"BAD_REQUEST",
+                statusCode:400,
+                message: "Mise à jour de l'utilisateur impossible : Objet \'article\' introuvable dans le body de la requête",
+                requiredFormat:"Format du body attendu : {article:{...article informations...}}",
+            })
+        }
         
         try //Vérification de l'existence du nom de l'article dans la base de données
         {   

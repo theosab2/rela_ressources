@@ -295,6 +295,15 @@ const mUser = require('../models/user');
     module.exports.createUser = async (userObject) => {
         console.log("D.A.L [createUser] (paramètres) 'userObject' :",userObject);
 
+        if(userObject == {} || userObject == undefined || userObject == null){
+            return({
+                status:"BAD_REQUEST",
+                statusCode:400,
+                message: "Mise à jour de l'utilisateur impossible : Objet \'user\' introuvable dans le body de la requête",
+                requiredFormat:"Format du body attendu : {user:{...user informations...}}",
+            })
+        }
+
         try //Vérification de l'existence du nom d'utilisateur dans la base de données
         {   
             var usernameAlreadyExist = await this.checkUsernameExistence(userObject.username);
