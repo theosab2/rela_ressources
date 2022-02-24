@@ -7,7 +7,7 @@ const articleSchema = mongoose.Schema({
   articleCategory: { type: String, required: true },
   articleTag: { type: String, required: false },
   articleIsModerate: { type: Boolean, required: true },
-  articleAttachement: { type: Blob, required: false }
+  articleAttachement: { type: Boolean, required: false }
 });
 
 module.exports = mongoose.model('Article', articleSchema);
