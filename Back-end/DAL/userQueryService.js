@@ -521,7 +521,6 @@ const mUser = require('../models/user');
                 statusCode:400,
                 message: "Mise à jour de l'utilisateur impossible : Objet \'user\' introuvable dans le body de la requête",
                 requiredFormat:"Format du body attendu : {user:{...user informations...}}",
-                exception:exception
             })
         }
 
