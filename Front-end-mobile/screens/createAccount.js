@@ -17,41 +17,54 @@ const CreateAccount = ({navigation}) => {
 
   const display = async () => {
     if (accept) {
-      const api = await fetch('http://192.168.30.65:3000/auth/register', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          user: {
-            username: username,
-            firstname: firstname,
-            name: name,
-            password: password,
-            phone: phone,
-            email: email,
-            isActive: false,
-            role: 'user',
-            location: {
-              ville: ville,
-              region: region,
-              zip: zipcode,
-            },
+      console.log(username);
+      try{
+        const api = await fetch('http://10.176.132.89:3001/auth/register', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
           },
-        }),
-      });
-      const res = await api.json();
-      if (res.status == 'FAILURE') {
-        console.log("Le nom d'utilisateurs existe deja");
-      } else {
-        console.log('Compte crée');
-        navigation.navigate('Login');
+          body: JSON.stringify({
+            user: {
+              username: username,
+              firstname: firstname,
+              name: name,
+              password: password,
+              phone: phone,
+              email: email,
+              isActive: false,
+              role: 'user',
+              location: {
+                ville: ville,
+                region: region,
+                zip: zipcode,
+              },
+            },
+          }),
+        });
+        const res = await api.json();
+        if(res.statusCode === 500){
+          console.log(res.message)
+        }else if(res.statusCode === 200){
+          console.log(res.message)
+          goToLogin()
+        }else if(res.statusCode === 201){
+          console.log('compte crée')
+          goToLogin()
+        }
+      }catch(err){
+        console.log(err)
       }
     } else {
       console.log('conditions non acceptées');
     }
+
   };
+
+  const goToLogin = () => {
+    navigation.navigate('Login');
+  }
 
   return (
     <ScrollView contentContainerStyles={styles.container}>
@@ -142,7 +155,7 @@ const CreateAccount = ({navigation}) => {
           buttonStyle={styles.buttonStyle2}
           titleStyle={{fontWeight: 'bold', fontSize: 12, color: 'black'}}
           containerStyle={styles.buttonContainerStyle}
-          onPress={() => navigation.navigate('Login')}
+          onPress={goToLogin}
         />
         <Button
           title="Créer un compte"
