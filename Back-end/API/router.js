@@ -15,111 +15,127 @@ const _userApplicationService = require("../BLL/userApplicationService");
 //===============================//
 
 //===== Initialisation du router =====//
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 //====================================//
 
 //===== Global routes =====//
-    router.get('/test', (req, res, next) => {
-        res.status(200).json({ message:"L'API à répondu correctement" });
-    });
+router.get("/test", (req, res, next) => {
+  res.status(200).json({ message: "L'API à répondu correctement" });
+});
 
 //#region [AUTH]
 
-    //Inscription
-    router.post('/auth/register', async function(req, res, next){
-        var userCreationQueryResult = await _userQueryService.createUser(req.body.user)
-        res.status(userCreationQueryResult.statusCode).json(userCreationQueryResult);
-    });
+//Inscription
+router.post("/auth/register", async function (req, res, next) {
+  var userCreationQueryResult = await _userQueryService.createUser(
+    req.body.user
+  );
+  res.status(userCreationQueryResult.statusCode).json(userCreationQueryResult);
+});
 
-    //Connexion
-    router.post('/auth/login', async function(req, res, next){
-        var authenticationResult = await _userApplicationService.handleAuthenticationRequest(req.body.identifier,req.body.password);
-        res.status(authenticationResult.statusCode).json(authenticationResult);
-    });
+//Connexion
+router.post("/auth/login", async function (req, res, next) {
+  var authenticationResult =
+    await _userApplicationService.handleAuthenticationRequest(
+      req.body.identifier,
+      req.body.password
+    );
+  res.status(authenticationResult.statusCode).json(authenticationResult);
+});
 
-    //Déconnexion
-    router.post('/auth/logout/:userId', async function(req, res, next){
-        var logoutResult = await _userQueryService.disconnectUser(req.params.userId);
-        res.status(logoutResult.statusCode).json(logoutResult);
-    });
-    
+//Déconnexion
+router.post("/auth/logout/:userId", async function (req, res, next) {
+  var logoutResult = await _userQueryService.disconnectUser(req.params.userId);
+  res.status(logoutResult.statusCode).json(logoutResult);
+});
+
 //#endregion
 
 // ========================================================== //
 
 //#region [ARTICLE]
 
-    //#region [SCHEMA]
+//#region [SCHEMA]
 
-        //Get article model schema
-        router.get('/article/schema', async function(req, res, next){
-            var data = await _articleQueryService.getArticleSchema();
-            res.status(200).json(data);
-        });
+//Get article model schema
+router.get("/article/schema", async function (req, res, next) {
+  var data = await _articleQueryService.getArticleSchema();
+  res.status(200).json(data);
+});
 
-        //Get article model detailled schema
-        router.get('/article/schema/detailled', async function(req, res, next){
-            var data = await _articleQueryService.getDetailledArticleSchema();
-            res.status(200).json(data);
-        });
+//Get article model detailled schema
+router.get("/article/schema/detailled", async function (req, res, next) {
+  var data = await _articleQueryService.getDetailledArticleSchema();
+  res.status(200).json(data);
+});
 
-    //#endregion
+//#endregion
 
-    //#region [QUERY]
+//#region [QUERY]
 
-        //Get query object template
-        router.get('/articles/query', async function(req, res, next){
-            var data = await _articleQueryService.getQueryTemplate();
-            res.status(200).json(data);
-        });
+//Get query object template
+router.get("/articles/query", async function (req, res, next) {
+  var data = await _articleQueryService.getQueryTemplate();
+  res.status(200).json(data);
+});
 
-        //Get list of articles from query in request body
-        router.post('/articles/query', async function(req, res, next){
-            var data = await _articleQueryService.queryArticles(req.body);
-            res.status(200).json(data);
-        });
+//Get list of articles from query in request body
+router.post("/articles/query", async function (req, res, next) {
+  var data = await _articleQueryService.queryArticles(req.body);
+  res.status(200).json(data);
+});
 
-    //#endregion
+//#endregion
 
-    //#region [GET RESSOURCES]
+//#region [GET RESSOURCES]
 
-        //Get all articles
-        router.get('/articles/all', async function(req, res, next){
-            var data = await _articleQueryService.getAllArticles();
-            res.status(200).json(data);
-        });
+//Get all articles
+router.get("/articles/all", async function (req, res, next) {
+  var data = await _articleQueryService.getAllArticles();
+  res.status(200).json(data);
+});
 
+//Get article by ID
+router.get("/article/:id", async function (req, res, next) {
+  var data = await _articleQueryService.getArticleById(req.params.id);
+  res.status(200).json(data);
+});
 
-        //Get article by ID
-        router.get('/article/:id', async function(req, res, next){
-            var data = await _articleQueryService.getArticleById(req.params.id);
-            res.status(200).json(data);
-        });
+//#endregion
 
-    //#endregion
+//#region [UPDATE RESSOURCES]
 
-    //#region [UPDATE RESSOURCES]
+//Création d'un article
+router.post("/article/create", async function (req, res, next) {
+  console.log("test de log");
+  var articleCreationQueryResult = await _articleQueryService.createArticle(
+    req.body.article
+  );
+  res
+    .status(articleCreationQueryResult.statusCode)
+    .json(articleCreationQueryResult);
+});
 
-        //Création d'un article
-        router.post('/article/create', async function(req, res, next){
-            var articleCreationQueryResult = await _articleQueryService.createArticle(req.body.article)
-            res.status(articleCreationQueryResult.statusCode).json(articleCreationQueryResult);
-        });
+//Suppression d'un article
+router.post("/article/delete/:articleId", async function (req, res, next) {
+  // Sera à modifier, on ne supprime pas une entité, on la désactive (mev)
+  var deleteResult = await _articleQueryService.deleteArticle(
+    req.params.articleId
+  );
+  res.status(deleteResult.statusCode).json(deleteResult);
+});
 
-        //Suppression d'un article
-        router.post('/article/delete/:articleId', async function(req, res, next){ // Sera à modifier, on ne supprime pas une entité, on la désactive (mev)
-            var deleteResult = await _articleQueryService.deleteArticle(req.params.articleId);
-            res.status(deleteResult.statusCode).json(deleteResult);
-        });
+//Mise à jour d'un article
+router.put("/article/:articleId", async function (req, res, next) {
+  var updateResult = await _articleQueryService.updateArticle(
+    req.params.articleId,
+    req.body.article
+  );
+  res.status(updateResult.statusCode).json(updateResult);
+});
 
-        //Mise à jour d'un article
-        router.put('/article/:articleId', async function(req, res, next){
-            var updateResult = await _articleQueryService.updateArticle(req.params.articleId,req.body.article);
-            res.status(updateResult.statusCode).json(updateResult);
-        });
-
-    //#endregion
+//#endregion
 
 //#endregion
 
@@ -127,76 +143,81 @@ const router = express.Router();
 
 //#region [ROLE]
 
-    //#region [SCHEMA]
+//#region [SCHEMA]
 
-        //Get role model schema
-        router.get('/role/schema', async function(req, res, next){
-            var data = await _roleQueryService.getRoleSchema();
-            res.status(200).json(data);
-        });
+//Get role model schema
+router.get("/role/schema", async function (req, res, next) {
+  var data = await _roleQueryService.getRoleSchema();
+  res.status(200).json(data);
+});
 
-        //Get role model detailled schema
-        router.get('/role/schema/detailled', async function(req, res, next){
-            var data = await _roleQueryService.getDetailledRoleSchema();
-            res.status(200).json(data);
-        });
+//Get role model detailled schema
+router.get("/role/schema/detailled", async function (req, res, next) {
+  var data = await _roleQueryService.getDetailledRoleSchema();
+  res.status(200).json(data);
+});
 
-    //#endregion
+//#endregion
 
-    //#region [QUERY]
+//#region [QUERY]
 
-        //Get query object template
-        router.get('/roles/query', async function(req, res, next){
-            var data = await _roleQueryService.getQueryTemplate();
-            res.status(200).json(data);
-        });
+//Get query object template
+router.get("/roles/query", async function (req, res, next) {
+  var data = await _roleQueryService.getQueryTemplate();
+  res.status(200).json(data);
+});
 
-        //Get list of roles from query in request body
-        router.post('/roles/query', async function(req, res, next){
-            var data = await _roleQueryService.queryRoles(req.body);
-            res.status(200).json(data);
-        });
+//Get list of roles from query in request body
+router.post("/roles/query", async function (req, res, next) {
+  var data = await _roleQueryService.queryRoles(req.body);
+  res.status(200).json(data);
+});
 
-    //#endregion
+//#endregion
 
-    //#region [GET RESSOURCES]
+//#region [GET RESSOURCES]
 
-        //Get all roles
-        router.get('/roles/all', async function(req, res, next){
-            var data = await _roleQueryService.getAllRoles();
-            res.status(200).json(data);
-        });
+//Get all roles
+router.get("/roles/all", async function (req, res, next) {
+  var data = await _roleQueryService.getAllRoles();
+  res.status(200).json(data);
+});
 
+//Get role by ID
+router.get("/role/:id", async function (req, res, next) {
+  var data = await _roleQueryService.getRoleById(req.params.id);
+  res.status(200).json(data);
+});
 
-        //Get role by ID
-        router.get('/role/:id', async function(req, res, next){
-            var data = await _roleQueryService.getRoleById(req.params.id);
-            res.status(200).json(data);
-        });
+//#endregion
 
-    //#endregion
+//#region [UPDATE RESSOURCES]
 
-    //#region [UPDATE RESSOURCES]
+//Création d'un role
+router.post("/role/create", async function (req, res, next) {
+  var roleCreationQueryResult = await _roleQueryService.createRole(
+    req.body.role
+  );
+  res.status(roleCreationQueryResult.statusCode).json(roleCreationQueryResult);
+});
 
-        //Création d'un role
-        router.post('/role/create', async function(req, res, next){
-            var roleCreationQueryResult = await _roleQueryService.createRole(req.body.role)
-            res.status(roleCreationQueryResult.statusCode).json(roleCreationQueryResult);
-        });
+//Suppression d'un role
+router.post("/role/delete/:roleId", async function (req, res, next) {
+  // Sera à modifier, on ne supprime pas une entité, on la désactive (mev)
+  var deleteResult = await _roleQueryService.deleteRole(req.params.roleId);
+  res.status(deleteResult.statusCode).json(deleteResult);
+});
 
-        //Suppression d'un role
-        router.post('/role/delete/:roleId', async function(req, res, next){ // Sera à modifier, on ne supprime pas une entité, on la désactive (mev)
-            var deleteResult = await _roleQueryService.deleteRole(req.params.roleId);
-            res.status(deleteResult.statusCode).json(deleteResult);
-        });
+//Mise à jour d'un role
+router.put("/role/:roleId", async function (req, res, next) {
+  var updateResult = await _roleQueryService.updateRole(
+    req.params.roleId,
+    req.body.role
+  );
+  res.status(updateResult.statusCode).json(updateResult);
+});
 
-        //Mise à jour d'un role
-        router.put('/role/:roleId', async function(req, res, next){
-            var updateResult = await _roleQueryService.updateRole(req.params.roleId,req.body.role);
-            res.status(updateResult.statusCode).json(updateResult);
-        });
-
-    //#endregion
+//#endregion
 
 //#endregion
 
@@ -204,72 +225,74 @@ const router = express.Router();
 
 //#region [USER]
 
-    //#region [SCHEMA]
+//#region [SCHEMA]
 
-        //Get user model schema
-        router.get('/user/schema', async function(req, res, next){
-            var data = await _userQueryService.getUserSchema();
-            res.status(200).json(data);
-        });
+//Get user model schema
+router.get("/user/schema", async function (req, res, next) {
+  var data = await _userQueryService.getUserSchema();
+  res.status(200).json(data);
+});
 
-        //Get user model schema
-        router.get('/user/schema/detailled', async function(req, res, next){
-            var data = await _userQueryService.getDetailledUserSchema();
-            res.status(200).json(data);
-        });
+//Get user model schema
+router.get("/user/schema/detailled", async function (req, res, next) {
+  var data = await _userQueryService.getDetailledUserSchema();
+  res.status(200).json(data);
+});
 
-    //#endregion
+//#endregion
 
-    //#region [QUERY]
+//#region [QUERY]
 
-        //Get query object template
-        router.get('/users/query', async function(req, res, next){
-            var data = await _userQueryService.getQueryTemplate();
-            res.status(200).json(data);
-        });
+//Get query object template
+router.get("/users/query", async function (req, res, next) {
+  var data = await _userQueryService.getQueryTemplate();
+  res.status(200).json(data);
+});
 
-        //Get list of users from query in request body
-        router.post('/users/query', async function(req, res, next){
-            var data = await _userQueryService.queryUsers(req.body);
-            res.status(200).json(data);
-        });
+//Get list of users from query in request body
+router.post("/users/query", async function (req, res, next) {
+  var data = await _userQueryService.queryUsers(req.body);
+  res.status(200).json(data);
+});
 
-    //#endregion
+//#endregion
 
-    //#region [GET RESSOURCES]
+//#region [GET RESSOURCES]
 
-        //Get all users
-        router.get('/users/all', async function(req, res, next){
-            var data = await _userQueryService.getAllUsers();
-            res.status(200).json(data);
-        });
+//Get all users
+router.get("/users/all", async function (req, res, next) {
+  var data = await _userQueryService.getAllUsers();
+  res.status(200).json(data);
+});
 
+//Get user by ID
+router.get("/user/:id", async function (req, res, next) {
+  var data = await _userQueryService.getUserById(req.params.id);
+  res.status(200).json(data);
+});
 
-        //Get user by ID
-        router.get('/user/:id', async function(req, res, next){
-            var data = await _userQueryService.getUserById(req.params.id);
-            res.status(200).json(data);
-        });
+//#endregion
 
-    //#endregion
+//#region [UPDATE RESSOURCES]
 
-    //#region [UPDATE RESSOURCES]
+//Suppression d'un utilisateur
+router.post("/user/delete/:userId", async function (req, res, next) {
+  // Sera à modifier, on ne supprime pas une entité, on la désactive (mev)
+  var deleteResult = await _userQueryService.deleteUser(req.params.userId);
+  res.status(deleteResult.statusCode).json(deleteResult);
+});
 
-        //Suppression d'un utilisateur
-        router.post('/user/delete/:userId', async function(req, res, next){ // Sera à modifier, on ne supprime pas une entité, on la désactive (mev)
-            var deleteResult = await _userQueryService.deleteUser(req.params.userId);
-            res.status(deleteResult.statusCode).json(deleteResult);
-        });
+//Mise à jour d'un utilisateur
+router.put("/user/:userId", async function (req, res, next) {
+  var updateResult = await _userQueryService.updateUser(
+    req.params.userId,
+    req.body.user
+  );
+  res.status(updateResult.statusCode).json(updateResult);
+});
 
-        //Mise à jour d'un utilisateur
-        router.put('/user/:userId', async function(req, res, next){
-            var updateResult = await _userQueryService.updateUser(req.params.userId,req.body.user);
-            res.status(updateResult.statusCode).json(updateResult);
-        });
-
-    //#endregion
+//#endregion
 
 //#endregion
 
 module.exports = router;
-

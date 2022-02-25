@@ -2,29 +2,6 @@ import style from "../../styles/Home.module.css";
 import Image from "next/image";
 
 export default function Post(props) {
-  const display = async () => {
-    const res = await fetch("http://10.176.131.75:3000/auth/register", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        user: {
-          username: pseudo,
-          firstname: firstname,
-          name: name,
-        },
-      }),
-    });
-    res = await res.json();
-    if (res.status == "FAILURE") {
-      console.log("Le nom d'utilisateurs existe deja");
-    } else {
-      console.log("Compte crée");
-    }
-  };
-
   return (
     <div className={style.ArticleContainer}>
       <div
