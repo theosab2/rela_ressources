@@ -10,27 +10,28 @@ const _typeValidationService = require("../BLL/global/typeValidationService");
 //L'identifier d'un utilisateur peut être : le N° de téléphone, l'adresse e-mail ou le pseudo
 //Cette fonction permet donc de reconnaitre quel est le type de l'identifier en paramètre
 module.exports.detectIdentifierType = async (identifier) => {
-    console.log("B.L.L [detectIdentifierType]");
-    console.log("[detectIdentifierType] (paramètres) 'identifier' :",identifier);
+    console.log("B.L.L [detectIdentifierType] (paramètres) 'identifier' :",identifier);
 
     var isPhoneNumber = await _typeValidationService.isPhoneNumber(identifier);
     var isEmail = await _typeValidationService.isEmail(identifier);
 
     if(isPhoneNumber && !isEmail){ //Phone
+        console.log("B.L.L [detectIdentifierType] (return) 'typeName' :","Phone");
         return {typeName:"Phone"}
     }
     if(isEmail && !isPhoneNumber){ //Email
+        console.log("B.L.L [detectIdentifierType] (return) 'typeName' :","Email");
         return {typeName:"Email"}
     }
     if(!isEmail && !isPhoneNumber){ //Username
+        console.log("B.L.L [detectIdentifierType] (return) 'typeName' :","Username");
         return {typeName:"Username"}
     }
 };
 
 //Prise en main d'une requête d'authentification
 module.exports.handleAuthenticationRequest = async (identifier,passwordProvided) => {
-    console.log("B.L.L [handleAuthenticationRequest]");
-    console.log("[handleAuthenticationRequest] (paramètres) 'identifier' :",identifier,"passwordProvided :",passwordProvided);
+    console.log("B.L.L [handleAuthenticationRequest] (paramètres) 'identifier' :",identifier,"passwordProvided :",passwordProvided);
 
     //Déclaration de la variable de retour et de sa structure
     var authenticationResult = {
@@ -40,8 +41,10 @@ module.exports.handleAuthenticationRequest = async (identifier,passwordProvided)
         user:{}
     }
 
+    //Si l'identifier n'a pas été reçu ou est vide    
     if(identifier == undefined || identifier == null || identifier == "")
     {
+        console.log("B.L.L [handleAuthenticationRequest] (return) 'err-missing-entry' : 'identifier' is missing");
         return{
             status:"MISSING_ENTRY",
             statusCode:400,
@@ -50,8 +53,10 @@ module.exports.handleAuthenticationRequest = async (identifier,passwordProvided)
         }
     }
 
+    //Si le mot de passe n'a pas été reçu ou qu'il est vide
     if(passwordProvided == undefined || passwordProvided == null || passwordProvided == "")
     {
+        console.log("B.L.L [handleAuthenticationRequest] (return) 'err-missing-entry' : 'password' is missing");
         return{
             status:"MISSING_ENTRY",
             statusCode:400,

@@ -7,8 +7,8 @@
  */
 
 import 'react-native-gesture-handler';
-import React, {useState} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, LogBox } from 'react-native';
 import Home from './screens/home';
 import Login from './screens/login';
 import { NavigationContainer } from '@react-navigation/native';
@@ -160,7 +160,15 @@ const DrawerNavigation = ({navigation,route}) => {
         </Drawer.Navigator>
   )
 }
-const App = ({navigation,route}) => {
+
+const App = () => {
+
+  useEffect(() => {
+    LogBox.ignoreLogs([
+      "[react-native-gesture-handler] ",
+    ]);
+  })
+  
   return (
     <>
       <NavigationContainer>

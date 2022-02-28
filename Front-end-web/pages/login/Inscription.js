@@ -15,7 +15,7 @@ export default function Inscription() {
 
   const display = async () => {
     console.log(pseudo);
-    const res = await fetch("http://10.176.131.75:3000/auth/register", {
+    const res = await fetch("http://localhost:3000/auth/register", {
       method: "POST",
       headers: {
         Accept: "application/json",

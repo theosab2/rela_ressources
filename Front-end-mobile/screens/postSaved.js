@@ -10,9 +10,9 @@ const PostSaved = ({route}) => {
 
       />
     </View>
-  )
-}
+  );
+};
 
-export default PostSaved
+export default PostSaved;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

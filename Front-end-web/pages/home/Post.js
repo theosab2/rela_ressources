@@ -18,6 +18,11 @@ export default function Post(props) {
         <div>
           <Image src={"/../public/Image/up.png"} width={20} height={20} />
           <Image src={"/../public/Image/down.png"} width={20} height={20} />
+          <Image
+            src={"/../public/Image/plus-solid.svg"}
+            width={20}
+            height={20}
+          />
         </div>
         <div>{props.articleTitle}</div>
         <div className={style.profilPostContainer}>

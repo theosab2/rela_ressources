@@ -1,0 +1,239 @@
+.empty {
+  background-color: #222;
+  border: 1px solid #000;
+  color: #fff;
+  display: flex;
+  flex: 1;
+  height: 100vh;
+}
+
+.moderationMenu {
+  background-color: #ddd;
+  border: 1px solid #000;
+  color: #000;
+  font-size: 20px;
+  display: flex;
+  flex: 1;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.createContainer {
+  background-color: #fff;
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  flex: 5;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 10%;
+}
+.pageCreate {
+  min-height: 100vh;
+  height: 100vh;
+  padding-top: 30vh;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.tabHistorique * {
+  border: none;
+  margin: none;
+  border-collapse: collapse;
+}
+.tabHistorique table {
+  border-top-left-radius: 10px;
+}
+
+.tabHistorique thead {
+  font-size: 20px;
+  text-align: center;
+  color: #fff;
+  background-color: #000;
+  border-top-left-radius: 15px;
+}
+
+.tabHistorique thead tr th {
+  padding: 10px;
+  border: none;
+}
+
+.tabHistorique tbody {
+  font-size: 20px;
+  text-align: center;
+  color: #000;
+  background-color: #ddd;
+  border-top-left-radius: 15px;
+}
+
+.tabHistorique tbody td {
+  padding: 20px;
+}
+
+.tabHistorique input {
+  color: #fff;
+  width: 100%;
+  margin: 10px;
+}
+
+.tabHistorique input[value="Approuver"] {
+  background-color: #2c2;
+}
+
+.tabHistorique input[value="Supprimer"] {
+  background-color: #f55;
+}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 15vh; /* Location of the box */
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+.modal_content {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url(../public/Image/Bateau_2.jpg);
+  margin-left: 75vh;
+  width: auto;
+  height: 70vh;
+}
+
+.close {
+  color: #000;
+  float: inline-end;
+  font-size: 40px;
+  font-weight: bold;
+  padding-right: 10px;
+  padding-bottom: 10px;
+}
+
+.close:hover,
+.close:focus {
+  color: #333;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.chowIcon {
+  cursor: pointer;
+}
+
+.modifierRole {
+  width: 150px;
+  height: 50px;
+  background-color: #2c2;
+  color: #ddd;
+  cursor: pointer;
+}
+
+.AdminModifRoleContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.AdminModifRoleContainer label {
+  font-size: 20px;
+}
+
+.AdminModifRoleContainer input[type="text"] {
+  width: 35vw;
+  height: 4vh;
+  margin-bottom: 2vh;
+  border: 1px solid #555;
+  border-radius: 10px;
+}
+
+.AdminModifRoleContainer input[type="button"] {
+  width: 20vw;
+  height: 4vh;
+  border-radius: 10px;
+  font-size: 20px;
+  background-color: #000091;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  margin: auto;
+}
+
+.modalUpdateRole {
+  margin: 0 auto;
+  background-color: #ccc;
+  display: flex;
+  justify-content: center;
+  width: 40vw;
+  height: 500px;
+  padding: 10px;
+  border-radius: 10px;
+  border: solid 5px #aaa;
+  box-shadow: 0px 0px 3px#000;
+}
+
+.buttonModerateUser {
+  background-color: #000091;
+  font-size: 20px;
+  color: #fff;
+  height: 5vh;
+  width: 10vw;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.buttonModerateUser:hover {
+  box-shadow: 0px 0px 5px #000;
+}
+
+.modalModerate {
+  margin: 0 auto;
+  background-color: #ccc;
+  display: flex;
+  justify-content: center;
+  width: 40vw;
+  height: 500px;
+  padding: 10px;
+  border-radius: 10px;
+  border: solid 5px #aaa;
+  box-shadow: 0px 0px 3px#000;
+}
+
+.modalModerateInput {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.modalModerateInput input {
+  height: 3vh;
+  width: 18vw;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px #000;
+  font-size: 15px;
+}
+
+.modalModerateInput select {
+  height: 3vh;
+  width: 18vw;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px #000;
+  font-size: 15px;
+}
+
+.modalModerateInput input[type="submit"] {
+  font-size: 20px;
+  background-color: #000091;
+  color: #fff;
+}
