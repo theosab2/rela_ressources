@@ -1,10 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { Button } from 'react-native-elements/dist/buttons/Button'
+import { createIconSetFromFontello } from 'react-native-vector-icons'
 
-const PostSaved = () => {
+const PostSaved = ({route}) => {
   return (
     <View>
-      <Text>PostSaved</Text>
+      <Button title="Coucou 2 le retour"
+
+      />
     </View>
   )
 }

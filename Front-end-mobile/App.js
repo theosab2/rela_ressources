@@ -7,7 +7,7 @@
  */
 
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, {useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Home from './screens/home';
 import Login from './screens/login';
@@ -20,12 +20,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
 import CreatePost from './screens/createPost';
 import PostSaved from './screens/postSaved';
+import { Button } from 'react-native-elements/dist/buttons/Button';
+import { useEffect } from 'react';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
-const StackAccount = () => {
+const StackAccount = ({navigation, route}) => {
   return(
     <Stack.Navigator 
       screenOptions={{
@@ -40,7 +42,18 @@ const StackAccount = () => {
     </Stack.Navigator>
   )
 }
-const TabNavigation = ({navigation}) => {
+const TabNavigation = ({navigation, route}) => {
+  const [connected, setConnect] = useState(false);
+  console.log(route);
+  React.useEffect(() => {
+    if(route.params?.post){
+      setConnect(true);
+    }
+  },[route.params?.post]);
+
+  const connexion = () => {
+    console.log(connected)
+  }
   return(
     <Tab.Navigator
       initialRouteName='home'
@@ -119,14 +132,12 @@ const TabNavigation = ({navigation}) => {
           onPress={() => navigation.navigate('Login')}/>),
           title: 'Vos ressources'
         }}
-        screenOptions= {{
-          
-        }}
+        
       />
     </Tab.Navigator>
   )
 }
-const DrawerNavigation = () => {
+const DrawerNavigation = ({navigation,route}) => {
   return(
     <Drawer.Navigator initialRouteName='Home'>
           <Drawer.Screen
@@ -134,8 +145,9 @@ const DrawerNavigation = () => {
             component={TabNavigation}
             options={{
               title: 'Accueil',
-              headerShown: false
+              headerShown: false,
             }}
+            
           />
           <Drawer.Screen
             name='Login'
@@ -148,26 +160,13 @@ const DrawerNavigation = () => {
         </Drawer.Navigator>
   )
 }
-
-const App = () => {
+const App = ({navigation,route}) => {
   return (
     <>
       <NavigationContainer>
         <DrawerNavigation/>
       </NavigationContainer>
     </>
-    /*<View style={styles.container}>
-      <View style={styles.header} >
-        <Header/>
-      </View>
-      <View style={styles.home} >
-        <Home/>
-      </View>
-      <View style={styles.footer} >
-        <Footer/>
-      </View>
-      <StatusBar style="auto" />
-    </View>*/
   );
 }
 
