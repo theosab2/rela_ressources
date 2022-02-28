@@ -21,7 +21,6 @@ import { Icon } from 'react-native-elements';
 import CreatePost from './screens/createPost';
 import PostSaved from './screens/postSaved';
 import { Button } from 'react-native-elements/dist/buttons/Button';
-import { useEffect } from 'react';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
