@@ -14,6 +14,7 @@ import Login from './screens/login';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import CreateAccount from './screens/createAccount';
+import Account from './screens/account';
 import Header from './components/header';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -21,13 +22,40 @@ import { Icon } from 'react-native-elements';
 import CreatePost from './screens/createPost';
 import PostSaved from './screens/postSaved';
 import { Button } from 'react-native-elements/dist/buttons/Button';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
 const StackAccount = ({navigation, route}) => {
-  return(
+  const [userId, setUserId] = useState(null);
+
+
+  const getData = async () => {
+    try {
+      const userId = await AsyncStorage.getItem('@userId');
+      setUserId(userId != null ? userId : null)
+    } catch(e) {
+    }
+  }
+  getData()
+
+  console.log('coucou ' + userId);
+  if(userId != null){
+    return(
+      <Stack.Navigator 
+        screenOptions={{
+          headerShown: false
+      }}>
+        <Stack.Screen name='account' 
+        component={Account} 
+        />
+      </Stack.Navigator>
+    )
+  }
+  else{
+      return(
     <Stack.Navigator 
       screenOptions={{
         headerShown: false
@@ -40,6 +68,8 @@ const StackAccount = ({navigation, route}) => {
       />
     </Stack.Navigator>
   )
+
+  }
 }
 const TabNavigation = ({navigation, route}) => {
   const [connected, setConnect] = useState(false);

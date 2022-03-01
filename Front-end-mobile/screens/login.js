@@ -6,7 +6,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const Login = ({navigation}) => {
-  const [email, setEmail] = useState('');
+  // Identifier can set by email,username or phone number 's user
+  const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [saveLogin, setSaveLogin] = useState();
 
@@ -26,11 +27,8 @@ const Login = ({navigation}) => {
     }
   }
   const dataAuth = async () => {
-    console.log("before localStorage email = " + email);
-    console.log("before localStorage password = " + password);
-
     try {
-      await AsyncStorage.setItem('@userEmail', email);
+      await AsyncStorage.setItem('@userEmail', identifier);
       await AsyncStorage.setItem('@userPassword', password);
 
       console.log(await AsyncStorage.getItem('@userEmail'));
@@ -43,12 +41,19 @@ const Login = ({navigation}) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            identifier: email,
+            identifier: identifier,
             password: password
         })
       })
       const res = await login.json();
       await AsyncStorage.setItem('@userId', res.user._id);
+      if(res.status === 'SUCCESS'){
+        navigation.navigate('Home');
+      }
+      else{
+        console.log(res.message);
+      }
+      
     } catch (e) {
       console.log(e);
     }
@@ -61,9 +66,9 @@ const Login = ({navigation}) => {
         Connexion
       </Text>
       <Input
-        placeholder="Email"
-        onChangeText={email => setEmail(email)}
-        defaultValue={email}
+        placeholder="Username,Email or phone number"
+        onChangeText={identifier => setIdentifier(identifier)}
+        defaultValue={identifier}
         leftIcon={<Icon name="envelope" type="evilicon" color="#517fa4" />}
       />
       <Input
