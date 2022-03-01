@@ -69,27 +69,41 @@ module.exports.handleAuthenticationRequest = async (identifier,passwordProvided)
     var identifierType = await this.detectIdentifierType(identifier)
 
     //Récupération de l'id en fonction du type d'identifier reçu
+    //On verifie ici si l'identifier existe
     switch (identifierType.typeName) {
         case "Email":
-            var userId = await _userQueryService.getUserIdFromEmail(identifier)
+            var userIdRequest = await _userQueryService.getUserIdFromEmail(identifier)
         break;
         case "Phone":
-            var userId = await _userQueryService.getUserIdFromPhone(identifier);
+            var userIdRequest = await _userQueryService.getUserIdFromPhone(identifier);
         break;
         case "Username":
-            var userId = await _userQueryService.getUserIdFromUsername(identifier);
+            var userIdRequest = await _userQueryService.getUserIdFromUsername(identifier);
         break;
         default:
-            var userId = null;
+            var userIdRequest = null;
         break;
     }
 
+    if(userIdRequest.status == "FAILURE")
+    {
+        return{
+            status:"FAILURE",
+            statusCode:401,
+            identifierProvided:{
+                type:identifierType.typeName,
+                value:identifier
+            },
+            message:"identifier provided does not exist in database",
+        }
+    }
+
     //Récupération de la validité du mot de passe entré pour l'utilisateur reconnu par l'identifier entré
-    var passwordIsValid = await _userQueryService.checkPassword(userId,passwordProvided)
+    var passwordIsValid = await _userQueryService.checkPassword(userIdRequest.id,passwordProvided)
     
     if(passwordIsValid){ //Le mot de passe entré est correct
         //Retourne l'utilisateur connecté
-        var userFromConnectionAttempt = await _userQueryService.connectUser(userId);
+        var userFromConnectionAttempt = await _userQueryService.connectUser(userIdRequest.id);
         authenticationResult = {
             status:"SUCCESS",
             statusCode:200,

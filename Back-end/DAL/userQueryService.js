@@ -151,8 +151,7 @@ const mUser = require('../models/user');
 
         //return User from provided ID
         module.exports.getUserById = async (id) => {
-            console.log("D.A.L [getUserById]");
-            console.log("[getUserById] (paramètres) 'ID' :",id);
+            console.log("D.A.L [getUserById] (paramètres) 'ID' :",id);
             try {
                 var data = await mUser.findById(id);
                 return data 
@@ -171,42 +170,88 @@ const mUser = require('../models/user');
 
         //return UserId from provided email address
         module.exports.getUserIdFromEmail = async (email) => {
-            console.log("D.A.L [getUserIdFromEmail]");
-            console.log("[getUserIdFromEmail] (paramètres) 'email' :",email);
+            console.log("D.A.L [getUserIdFromEmail] (paramètres) 'email' :",email);
             try {
                 email =  '^'+email+'$';
                 var data = await mUser.findOne({'email':{'$regex': email,$options:'i'}});
-                return data ? data._id : {message:"utilisateur non-trouvé"};
+                return data._id != undefined
+                ? 
+                {
+                    status:"SUCCESS",
+                    message:"utilisateur trouvé",
+                    id:data._id
+                }
+                :
+                {
+                    status:"FAILURE",
+                    message:"utilisateur non-trouvé",
+                    id:null
+                }
             } 
             catch (error) {
-                return {message:"une erreur est survenue",error};
+                return{
+                    status:"FAILURE",
+                    message:"une erreur est survenue",
+                    error:error
+                }
             }     
         };
 
         //return UserId from provided phone number
         module.exports.getUserIdFromPhone = async (phone) => {
-            console.log("D.A.L [getUserIdFromPhone]");
-            console.log("[getUserIdFromPhone] (paramètres) 'phone' :",phone);
+            console.log("D.A.L [getUserIdFromPhone] (paramètres) 'phone' :",phone);
             try {
                 var data = await mUser.findOne({phone:phone});
-                return data ? data._id : {message:"utilisateur non-trouvé"};
+                return data._id != undefined
+                ? 
+                {
+                    status:"SUCCESS",
+                    message:"utilisateur trouvé",
+                    id:data._id
+                }
+                :
+                {
+                    status:"FAILURE",
+                    message:"utilisateur non-trouvé",
+                    id:null
+                }
             } 
             catch (error) {
-                return {message:"une erreur est survenue",error};
+                return{
+                    status:"FAILURE",
+                    message:"une erreur est survenue",
+                    error:error
+                }
             }     
         };
 
         //return UserId from provided username
         module.exports.getUserIdFromUsername = async (username) => {
-            console.log("D.A.L [getUserIdFromUsername]");
-            console.log("[getUserIdFromUsername] (paramètres) 'username' :",username);
+            console.log("D.A.L [getUserIdFromUsername] (paramètres) 'username' :",username);
             try {
-                username =  '^'+username+'$';
-                var data = await mUser.findOne({'username':{'$regex': username,$options:'i'}});
-                return data ? data._id : {message:"utilisateur non-trouvé"};
+                username =  username;
+                var data = await mUser.findOne({username:username});
+                console.log(data);
+                return data._id != undefined
+                ? 
+                {
+                    status:"SUCCESS",
+                    message:"utilisateur trouvé",
+                    id:data._id
+                }
+                :
+                {
+                    status:"FAILURE",
+                    message:"utilisateur non-trouvé",
+                    id:null
+                }
             } 
             catch (error) {
-                return {message:"une erreur est survenue",error};
+                return{
+                    status:"FAILURE",
+                    message:"une erreur est survenue",
+                    error:error
+                }
             }     
         };
 
@@ -617,8 +662,7 @@ const mUser = require('../models/user');
 
     //Connecte l'utilisateur et le retourne:
     module.exports.connectUser = async (userId) => {
-        console.log("D.A.L [connectUser]");
-        console.log("[connectUser] (paramètres) 'userId' :",userId);
+        console.log("D.A.L [connectUser] (paramètres) 'userId' :",userId);
         
         await mUser.updateOne(
             {_id:userId},
@@ -631,8 +675,7 @@ const mUser = require('../models/user');
 
     //Déconnecte l'utilisateur et retourne le résultat de la déconnexion:
     module.exports.disconnectUser = async (userId) => {
-        console.log("D.A.L [disconnectUser]");
-        console.log("[disconnectUser] (paramètres) 'userId' :",userId);
+        console.log("D.A.L [disconnectUser] (paramètres) 'userId' :",userId);
 
         var user = await this.getUserById(userId);
         console.log(user);
