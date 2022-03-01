@@ -2,11 +2,59 @@ import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {CheckBox, Input, Icon, Button, Text} from 'react-native-elements';
 import {color} from 'react-native-reanimated';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [saveLogin, setSaveLogin] = useState(false);
+  const [saveLogin, setSaveLogin] = useState();
+
+  const getDataDebug = async () => {
+    try {
+      const api = await fetch('http://192.168.1.80:3001/users/all', {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      });
+      const res = await api.json();
+      console.log(res);
+    } catch (e) {
+      
+    }
+  }
+  const dataAuth = async () => {
+    console.log("before localStorage email = " + email);
+    console.log("before localStorage password = " + password);
+
+    try {
+      await AsyncStorage.setItem('@userEmail', email);
+      await AsyncStorage.setItem('@userPassword', password);
+
+      console.log(await AsyncStorage.getItem('@userEmail'));
+      console.log(await AsyncStorage.getItem('@userPassword'));
+
+      const login = await fetch('http://192.168.1.80:3001/auth/login', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            identifier: email,
+            password: password
+        })
+      })
+      const res = await login.json();
+      await AsyncStorage.setItem('@userId', res.user._id);
+    } catch (e) {
+      console.log(e);
+    }
+
+  }
+
   return (
     <View style={styles.container}>
       <Text h2 style={styles.h1}>
@@ -41,7 +89,7 @@ const Login = ({navigation}) => {
           buttonStyle={styles.buttonStyle}
           titleStyle={{fontWeight: 'bold', fontSize: 12}}
           containerStyle={styles.buttonContainerStyle}
-          onPress={() => navigation.navigate('Home')}
+          onPress={dataAuth}
         />
         <Button
           title="Créer un compte"

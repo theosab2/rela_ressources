@@ -19,7 +19,7 @@ const CreateAccount = ({navigation}) => {
     if (accept) {
       console.log(username);
       try{
-        const api = await fetch('http://10.176.132.89:3001/auth/register', {
+        const api = await fetch('http://192.168.1.80:3001/auth/register', {
           method: 'POST',
           headers: {
             Accept: 'application/json',
