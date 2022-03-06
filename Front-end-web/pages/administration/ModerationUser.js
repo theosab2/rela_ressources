@@ -32,8 +32,6 @@ export default function () {
     getUser();
   }, []);
 
-  function displayUser(props) {}
-
   return (
     <>
       <div className={style.createContainer}>

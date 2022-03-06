@@ -7,11 +7,15 @@ import { GetServerSideProps } from "next";
 import Home from "./home/Home";
 
 export default function Index() {
-  return <Navigation>{Children}</Navigation>;
+  return (
+    <>
+      <Navigation></Navigation>
+      <Home></Home>
+    </>
+  );
 }
 
 export const getServerSideProps = async (context) => {
-  console.log("test");
   console.log(context.req.cookies);
   return { props: {} };
 };

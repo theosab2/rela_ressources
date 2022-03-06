@@ -22,7 +22,6 @@ export default function createPost() {
   };
 
   const display = async () => {
-    console.log("aaa");
     const res = await fetch("http://localhost:3001/article/create", {
       method: "POST",
       headers: {
@@ -47,15 +46,6 @@ export default function createPost() {
     }
   };
 
-  //Fonction à utiliser pour ul=pload le fichier sur le serveur
-  /*const uploadToServer = async (event) => {
-    const body = new FormData();
-    body.append("file", image);
-    const response = await fetch("/api/file", {
-      method: "POST",
-      body,
-    });
-  };*/
   const userCookie = utils();
   if (userCookie != false) {
     return (
@@ -63,7 +53,6 @@ export default function createPost() {
         <Navigation></Navigation>
         <div className={style.pageCreate}>
           <div className={style.empty}></div>
-
           <form className={style.createContainer}>
             <div>
               <p>Création d'un post </p>

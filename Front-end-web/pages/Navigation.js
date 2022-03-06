@@ -58,7 +58,7 @@ export default function Navigation(image) {
             <Link href="/home/Home">
               <a> Fil d'actualité</a>
             </Link>
-            <Link href="/home/Home">
+            <Link href="/home/RessourceSave">
               <a> Ressources enregistrer</a>
             </Link>
           </div>
@@ -113,7 +113,8 @@ export default function Navigation(image) {
             <Link href="/home/Home">
               <a> Fil d'actualité</a>
             </Link>
-            <Link href="/home/Home">
+
+            <Link href="/home/RessourceSave">
               <a> Ressources enregistrer</a>
             </Link>
 

@@ -22,47 +22,23 @@ export default function (props) {
     <>
       <div className={style.createContainer}>
         <div className={style.tabRole}>
-          <table>
-            <thead>
-              <tr>
-                <th>Nom</th>
-                <th>Role</th>
-                <th>Modifer</th>
+          <table className={style.tableSave}>
+            <thead className={style.theadSave}>
+              <tr className={style.trSave}>
+                <th className={style.thSave}>Nom</th>
+                <th className={style.thSave}>Role</th>
+                <th className={style.thSave}>Modifer</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>12/09/2000</td>
-                <td>Je suis un titre</td>
-                <td>
+            <tbody className={style.tbodySave}>
+              <tr className={style.trSave}>
+                <td className={style.tdSave}>12/09/2000</td>
+                <td className={style.tdSave}>Je suis un titre</td>
+                <td className={style.tdSave}>
                   <input
                     type="button"
                     value={"Valider"}
                     onClick={() => openModal(21)}
-                    className={style.modifierRole}
-                  ></input>
-                </td>
-              </tr>
-              <tr>
-                <td>12/09/2000</td>
-                <td>Je suis un titre</td>
-                <td>
-                  <input
-                    type="button"
-                    value={"Valider"}
-                    onClick={() => openModal(18)}
-                    className={style.modifierRole}
-                  ></input>
-                </td>
-              </tr>
-              <tr>
-                <td>12/09/2000</td>
-                <td>Je suis un titre</td>
-                <td>
-                  <input
-                    type="button"
-                    value={"Valider"}
-                    onClick={() => openModal(7)}
                     className={style.modifierRole}
                   ></input>
                 </td>

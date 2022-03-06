@@ -1,17 +1,14 @@
 import style from "../../styles/Home.module.css";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Post(props) {
   return (
     <div className={style.ArticleContainer}>
-      <div
-        className={style.ArticleSubContainer}
-        style={{ position: "relative", width: "36vw", height: "45vh" }}
-      >
-        <Image
-          src={"/../public/Image/photo-banc.jpg"}
-          layout="fill"
-          className={style.postImage}
+      <div className={style.ArticleSubContainer}>
+        <img
+          src="/Image/bateau_2.jpg"
+          className={style.ArticleImageContainer}
         />
       </div>
       <div className={style.ArticleFooter}>
@@ -24,15 +21,17 @@ export default function Post(props) {
             height={20}
           />
         </div>
-        <div>{props.articleTitle}</div>
-        <div className={style.profilPostContainer}>
-          <Image
-            src={props.articleProfilUrl}
-            width={50}
-            height={50}
-            className={style.profilPost}
-          />
-        </div>
+        <Link href={`../crudPost/${props.userId}`}>{props.articleTitle}</Link>
+        {props.articleProfilUrl && (
+          <div className={style.profilPostContainer}>
+            <Image
+              src={props.articleProfilUrl}
+              width={50}
+              height={50}
+              className={style.profilPost}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
