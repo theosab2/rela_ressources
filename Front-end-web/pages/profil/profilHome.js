@@ -104,6 +104,7 @@ export default function profilHome() {
                 </div>
               </div>
             </div>
+
             {pageRenderProfil()}
           </div>
           <div className={style.empty}></div>

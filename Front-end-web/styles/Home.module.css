@@ -256,8 +256,9 @@
   width: 90%;
   border-collapse: collapse;
   overflow: hidden;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 5px #000;
   border-radius: 10px;
+  z-index: 1;
 }
 
 .theadSave {

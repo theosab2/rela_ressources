@@ -21,7 +21,6 @@ export default function Home() {
   useEffect(() => {
     getUser();
   }, []);
-
   return (
     <>
       <Navigation></Navigation>
@@ -30,6 +29,7 @@ export default function Home() {
           {allArticle &&
             allArticle.map((articleInfo) => (
               <Post
+                allArticleDetail={articleInfo}
                 articleTitle={articleInfo.articleName}
                 articleUrl="/../public/Image/up.png"
                 userId={articleInfo.articleUser}

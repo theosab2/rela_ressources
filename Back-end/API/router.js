@@ -182,7 +182,6 @@ router.get("/article/:id", async function (req, res, next) {
 
 //Création d'un article
 router.post("/article/create", async function (req, res, next) {
-  console.log("test de log");
   var articleCreationQueryResult = await _articleQueryService.createArticle(
     req.body.article
   );
