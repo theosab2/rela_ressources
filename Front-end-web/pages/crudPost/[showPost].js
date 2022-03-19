@@ -7,8 +7,30 @@ import { useState, useEffect } from "react";
 export default function (props) {
   const router = useRouter();
   const { showPost } = router.query;
-  console.log(showPost);
   const [user, setUser] = useState(null);
+
+  const display = async () => {
+    const res = await fetch("http://localhost:3001/comment/create", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        comment: {
+          commentArticle: "test",
+          commentContent: "test",
+          commentUser: "61e180f2f42a5ffe793e0ec8",
+        },
+      }),
+    });
+    res = await res.json();
+    if (res.status != "SUCESS") {
+      console.log("Erreur");
+    } else {
+      console.log("Réussite");
+    }
+  };
 
   const getUser = async () =>
     fetch("http://localhost:3001/user/" + showPost, {
@@ -25,17 +47,17 @@ export default function (props) {
 
   useEffect(() => {
     getUser();
-  }, []);
+  }, [showPost]);
 
   if (user != null) {
     return (
       <>
         <Navigation></Navigation>
-        <div className={style.pageCreate}>
+        <div className={style.pageComment}>
           <div className={style.empty}></div>
           <div className={style.DetailArticle}>
-            <div className={style.ArticleContainer}>
-              <div className={style.ArticleSubContainer}>
+            <div className={style.ArticleContainerComment}>
+              <div className={style.ArticleSubContainerComment}>
                 <div className={style.ArticleHeader}>
                   <div className={style.userWhoCreatePost}>
                     <Image
@@ -51,7 +73,7 @@ export default function (props) {
                 </div>
                 <img
                   src="/Image/bateau_2.jpg"
-                  className={style.ArticleImageContainer}
+                  className={style.ArticleImageContainerComment}
                 />
               </div>
               <div className={style.ArticleFooter}>
@@ -95,7 +117,7 @@ export default function (props) {
               <p>Ajouter un commentaire</p>
               <form className={style.CommentInputContainer}>
                 <input type="text"></input>
-                <input type="submit" value="valider"></input>
+                <input type="submit" value="valider" onClick={display}></input>
               </form>
             </div>
           </div>

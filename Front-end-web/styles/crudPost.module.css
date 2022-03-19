@@ -10,8 +10,7 @@
 }
 
 .empty {
-  background-color: #222;
-  border: 1px solid #000;
+  background-color: #ddd;
   color: #fff;
   display: flex;
   flex: 1;
@@ -106,6 +105,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-shadow: 0px 0px 10px #000;
+  padding-top: 16vh;
+  z-index: 1;
 }
 
 .ArticleContainer {
@@ -122,6 +124,20 @@
   position: relative;
   display: flex;
   justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: 0px 0px 5px #444;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.ArticleSubContainerComment {
+  position: relative;
+  display: flex;
   align-items: center;
   width: 100%;
   height: 100%;
@@ -172,6 +188,13 @@
   height: auto;
   max-width: 50%;
   max-height: 80%;
+}
+
+.ArticleImageContainerComment {
+  width: auto;
+  height: auto;
+  max-width: 50%;
+  max-height: 100%;
 }
 
 .ArticleFooter {
@@ -238,4 +261,23 @@
   background-color: #000091;
   color: #fff;
   font-size: 20px;
+}
+
+.pageComment {
+  min-height: 100vh;
+  height: 100vh;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.ArticleContainerComment {
+  width: 50vw;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
