@@ -4,32 +4,23 @@ import Image from "next/dist/client/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import utils from "../utils";
+import cookieManager from "../utils/cookieManager";
+import articleManager from "../utils/articleManager";
 
 export default function () {
-  const [allArticle, setAllArticle] = useState(null);
+  let allArticle;
+  let array = [];
 
-  const getUser = async () =>
-    fetch("http://localhost:3001/articles/all", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setAllArticle(data.articles);
-      });
-
-  useEffect(() => {
-    getUser();
-  }, []);
-
-  const userCookie = utils();
+  allArticle = articleManager();
+  const userCookie = cookieManager();
 
   if (allArticle != null) {
     const userInfo = JSON.parse(userCookie);
-    console.log(userInfo._id);
-    allArticle.map((articleInfo) => console.log(articleInfo.articleUser));
+    allArticle.forEach((element) => {
+      if (element.articleUser == userInfo._id) {
+        array.push(element);
+      }
+    });
     return (
       <div>
         <Navigation></Navigation>
@@ -54,12 +45,16 @@ export default function () {
               </thead>
               <tbody className={style.tbodySave}>
                 {allArticle &&
-                  allArticle.map(({ key, articleInfo }) => (
-                    <tr key={key} className={style.trSave}>
-                      <td className={style.tdSave}>50</td>
-                      <td className={style.tdSave}>Je suis un titre</td>
+                  array.map((articleInfo) => (
+                    <tr className={style.trSave}>
+                      <td className={style.tdSave}>{articleInfo._id}</td>
+                      <td className={style.tdSave}>
+                        {articleInfo.articleName}
+                      </td>
                       <td className={style.tdSave}>Image</td>
-                      <td className={style.tdSave}>Catégorie</td>
+                      <td className={style.tdSave}>
+                        {articleInfo.articleCategory}
+                      </td>
                       <td className={style.tdSave}>
                         <Image
                           className={style.chowIcon}

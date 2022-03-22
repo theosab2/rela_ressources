@@ -138,6 +138,15 @@
   border-radius: 10px;
   border: none;
 }
+.SupprimerRole {
+  width: 100px;
+  height: 4vh;
+  background-color: #f00;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 10px;
+  border: none;
+}
 
 .AdminModifRoleContainer {
   display: flex;

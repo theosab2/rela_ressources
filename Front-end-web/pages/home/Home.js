@@ -2,25 +2,12 @@ import Navigation from "../Navigation";
 import style from "../../styles/Home.module.css";
 import Post from "../home/Post";
 import { useState, useEffect } from "react";
+import articleManager from "../utils/articleManager";
 
 export default function Home() {
-  const [allArticle, setAllArticle] = useState(null);
+  let allArticle;
+  allArticle = articleManager();
 
-  const getUser = async () =>
-    fetch("http://localhost:3001/articles/all", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setAllArticle(data.articles);
-      });
-
-  useEffect(() => {
-    getUser();
-  }, []);
   return (
     <>
       <Navigation></Navigation>
