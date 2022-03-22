@@ -23,6 +23,18 @@ export default function Post(props) {
     getUser();
   }, []);
 
+  function ajouterFav(event) {
+    console.log(event);
+  }
+
+  function upVote(event) {
+    console.log(event);
+  }
+
+  function downVote(event) {
+    console.log(event);
+  }
+
   if (user != null) {
     return (
       <div className={style.ArticleContainer}>
@@ -41,16 +53,30 @@ export default function Post(props) {
         </div>
         <div className={style.ArticleFooter}>
           <div>
-            <Image src={"/../public/Image/up.png"} width={20} height={20} />
-            <Image src={"/../public/Image/down.png"} width={20} height={20} />
+            <Image
+              src={"/../public/Image/up.png"}
+              width={25}
+              height={25}
+              onClick={upVote}
+              className={style.upVote}
+            />
+            <Image
+              src={"/../public/Image/down.png"}
+              width={25}
+              height={25}
+              onClick={downVote}
+              className={style.downVote}
+            />
           </div>
 
           {props.allArticleDetail.articleContent}
 
           <Image
+            className={style.ajoutFav}
             src={"/../public/Image/plus-solid.svg"}
-            width={20}
-            height={20}
+            width={25}
+            height={25}
+            onClick={ajouterFav}
           />
           <Link href={`../crudPost/${props.allArticleDetail.articleUser}`}>
             <Image

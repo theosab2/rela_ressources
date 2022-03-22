@@ -80,26 +80,23 @@ export default function (props) {
                 <div>
                   <Image
                     src={"/../public/Image/up.png"}
-                    width={20}
-                    height={20}
+                    width={25}
+                    height={25}
+                    className={style.upVote}
                   />
                   <Image
                     src={"/../public/Image/down.png"}
-                    width={20}
-                    height={20}
+                    width={25}
+                    height={25}
+                    className={style.downVote}
                   />
                 </div>
 
                 <Image
+                  className={style.ajoutFav}
                   src={"/../public/Image/plus-solid.svg"}
-                  width={20}
-                  height={20}
-                />
-                <Image
-                  src={"/../public/Image/commentaire.png"}
-                  width={40}
-                  height={35}
-                  className={style.LinkPost}
+                  width={25}
+                  height={25}
                 />
                 {props.articleProfilUrl && (
                   <div className={style.profilPostContainer}>

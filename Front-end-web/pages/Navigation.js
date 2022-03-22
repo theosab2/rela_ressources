@@ -58,9 +58,6 @@ export default function Navigation(image) {
             <Link href="/home/Home">
               <a> Fil d'actualité</a>
             </Link>
-            <Link href="/home/RessourceSave">
-              <a> Ressources enregistrer</a>
-            </Link>
           </div>
         </div>
         <p style={{ fontSize: "20px" }}>{navTitle}</p>
@@ -87,19 +84,6 @@ export default function Navigation(image) {
   } else
     return (
       <div className={style.navBarContent}>
-        <Link href="/home/Home">
-          <a>
-            <div className={style.navTitle}>
-              <Image
-                src="/../public/Image/logo-gouvernement.jpeg" // Route of the image file
-                height={80} // Desired size with correct aspect ratio
-                width={80} // Desired size with correct aspect ratio
-                alt="Logo gouvernement français"
-              />
-              <p className={style.textTitre}>Ressources Relationnelles</p>
-            </div>
-          </a>
-        </Link>
         <div className={style.dropdown}>
           <button className={style.dropbtn}>
             <Image
@@ -117,7 +101,9 @@ export default function Navigation(image) {
             <Link href="/home/RessourceSave">
               <a> Ressources enregistrer</a>
             </Link>
-
+            <Link href="/home/MesRessource">
+              <a>Mes Ressources</a>
+            </Link>
             <Link href="../profil/profilHome">
               <a> Profil</a>
             </Link>
@@ -126,14 +112,20 @@ export default function Navigation(image) {
             </Link>
           </div>
         </div>
-        <div>
-          <button className={style.searchIcon}></button>
-          <input
-            type="text"
-            placeholder="Rechercher"
-            className={style.searchBar}
-          ></input>
-        </div>
+        <Link href="/home/Home">
+          <a>
+            <div className={style.navTitle}>
+              <Image
+                src="/../public/Image/logo-gouvernement.jpeg" // Route of the image file
+                height={80} // Desired size with correct aspect ratio
+                width={80} // Desired size with correct aspect ratio
+                alt="Logo gouvernement français"
+              />
+              <p className={style.textTitre}>Ressources Relationnelles</p>
+            </div>
+          </a>
+        </Link>
+
         <p style={{ fontSize: "20px" }}>{navTitle}</p>
         <div className={style.dropdown}>
           <Image
@@ -148,33 +140,17 @@ export default function Navigation(image) {
             className={style.imageProfil}
           />
           <div className={style.dropdown_content}>
-            {userCookie ? (
-              <div className={style.navTitleProfil}>
-                <p
-                  onClick={deconnexionUtilisateur}
-                  className={style.deconnexion}
-                >
-                  Déconnexion
-                </p>
-                <p
-                  onClick={moderationUtilisateur}
-                  className={style.deconnexion}
-                >
-                  Moderation
-                </p>
-              </div>
-            ) : (
-              <Link href="/login/Connexion">
-                <a>
-                  <div className={style.navTitle}>
-                    <p className={style.deconnexion}>Connexion</p>
-                  </div>
-                </a>
-              </Link>
-            )}
-            <p>{userCookie ? userCookie.username : ""}</p>
+            <div className={style.navTitleProfil}>
+              <p onClick={deconnexionUtilisateur} className={style.deconnexion}>
+                Déconnexion
+              </p>
+              <p onClick={moderationUtilisateur} className={style.deconnexion}>
+                Moderation
+              </p>
+            </div>
           </div>
         </div>
+        <p> {userCookie.username}</p>
       </div>
     );
 }

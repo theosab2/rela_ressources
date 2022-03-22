@@ -1,6 +1,8 @@
 import Navigation from "../Navigation";
 import style from "../../styles/Home.module.css";
 import Image from "next/dist/client/image";
+import Link from "next/link";
+
 export default function () {
   const showModal = () => {
     document.getElementById("myModal").style.display = "block";
@@ -15,12 +17,19 @@ export default function () {
       <div className={style.contentRessourceSave}>
         <div className={style.empty}></div>
         <div className={style.subContentRessourceSave}>
+          <p>Recherche :</p>
+          <input
+            type="search"
+            className={style.searchFav}
+            placeholder="Titre/Type/Catégorie/Créateur"
+          ></input>
           <table className={style.tableSave}>
             <thead className={style.theadSave}>
               <tr className={style.trSave}>
                 <th className={style.thSave}>Createur</th>
                 <th className={style.thSave}>Titre</th>
                 <th className={style.thSave}>Type</th>
+                <th className={style.thSave}>Catégorie</th>
                 <th className={style.thSave}>Publication</th>
               </tr>
             </thead>
@@ -29,6 +38,7 @@ export default function () {
                 <td className={style.tdSave}>Jean</td>
                 <td className={style.tdSave}>Je suis un titre</td>
                 <td className={style.tdSave}>Image</td>
+                <td className={style.tdSave}>Catégorie</td>
                 <td className={style.tdSave}>
                   <Image
                     className={style.chowIcon}

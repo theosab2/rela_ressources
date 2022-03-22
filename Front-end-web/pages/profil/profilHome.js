@@ -88,7 +88,11 @@ export default function profilHome() {
                     value="Valider"
                     onClick={deconnexionUtilisateur}
                   ></input>
-                  <input type="button" value="Annuler"></input>
+                  <input
+                    type="button"
+                    value="Annuler"
+                    onClick={closeModal}
+                  ></input>
                 </div>
               </div>
             </div>
@@ -100,7 +104,11 @@ export default function profilHome() {
                 <p>Supprimer mon compte ?</p>
                 <div className={style.modalButtonContent}>
                   <input type="button" value="Valider"></input>
-                  <input type="button" value="Annuler"></input>
+                  <input
+                    type="button"
+                    value="Annuler"
+                    onClick={closeModalDeleteAccount}
+                  ></input>
                 </div>
               </div>
             </div>

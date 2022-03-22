@@ -9,37 +9,17 @@ export default function ProfilParam() {
     return (
       <div className={style.paramContainer}>
         <div className={style.paramGenContainer}>
-          <h3>Paramètres généraux</h3>
-          <div>
-            <p>
-              Je ne souhaite pas communiquer mes informations de localisation
-            </p>
-            <input type="checkbox"></input>
-          </div>
-          <div>
-            <p>
-              Je ne souhaite pas affiner les publication en fonction de mon
-              historique
-            </p>
-            <input type="checkbox"></input>
+          <h3>Modifier mot de passe</h3>
+          <div className={style.changePass}>
+            <label>Ancien mot de passe</label>
+            <input type="password"></input>
+            <label>Nouveau mot de passe</label>
+            <input type="password"></input>
+            <label>Confirmer nouveau mot de passe</label>
+            <input type="password"></input>
+            <input type="submit" value="Valider"></input>
           </div>
         </div>
-        <div className={style.prefContainer}>
-          <h3>Preférences</h3>
-          <div>
-            <p>Autoriser le visionnage de contenu sensible</p>
-            <input type="checkbox"></input>
-          </div>
-          <div>
-            <p>Partager mon nom et prénom</p>
-            <input type="checkbox"></input>
-          </div>
-          <div>
-            <p>Partager ma localisation</p>
-            <input type="checkbox"></input>
-          </div>
-        </div>
-        <a>Politique de confidentialité</a>
       </div>
     );
   } else return <div> Loading...</div>;
