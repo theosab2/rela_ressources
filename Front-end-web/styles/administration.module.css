@@ -110,6 +110,10 @@
   border-radius: 5px;
 }
 
+.tabHistorique input[type="submit"]:focus {
+  box-shadow: 0px 0px 5px #000;
+}
+
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */

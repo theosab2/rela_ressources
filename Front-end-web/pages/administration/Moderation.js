@@ -10,13 +10,22 @@ export default function () {
   allArticle = articleManager();
   console.log(allArticle);
 
-  const showModal = () => {
-    document.getElementById("myModal").style.display = "block";
-  };
-
-  const closeModal = () => {
-    document.getElementById("myModal").style.display = "none";
-  };
+  async function modererArticle(id, bool) {
+    console.log(id);
+    let res = await fetch("http://localhost:3001/article/" + id, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        article: {
+          articleIsApproved: bool,
+        },
+      }),
+    });
+    res = await res.json();
+  }
 
   return (
     <>
@@ -25,7 +34,7 @@ export default function () {
           <table>
             <thead>
               <tr>
-                <th>Date publication</th>
+                <th>Approbation</th>
                 <th>Titre publication</th>
                 <th>Nom du publicateur</th>
                 <th>Catégorie</th>
@@ -36,36 +45,48 @@ export default function () {
             <tbody>
               {allArticle &&
                 allArticle.map((articleInfo) => (
-                  <tr>
-                    <td>12/09/2000</td>
+                  <tr key={articleInfo._id}>
+                    <td>
+                      {articleInfo.articleIsApproved
+                        ? "Approuvé"
+                        : "Désaprouvé"}
+                    </td>
                     <td>{articleInfo.articleName}</td>
                     <td>{articleInfo.articleContent}</td>
                     <td>{articleInfo.articleCategory}</td>
                     <td>
                       <Link href={`../crudPost/${articleInfo._id}`}>
-                        <Image
-                          className={style.chowIcon}
-                          src="/../public/Image/eye-solid.svg"
-                          height="30px"
-                          width="30px"
-                        />
+                        <a>
+                          <Image
+                            className={style.chowIcon}
+                            src="/../public/Image/eye-solid.svg"
+                            height="30px"
+                            width="30px"
+                          />
+                        </a>
                       </Link>
                     </td>
                     <td>
-                      <input type="button" value="Approuver"></input>
-                      <input type="button" value="Supprimer"></input>
+                      <form>
+                        <input
+                          type="submit"
+                          value={
+                            articleInfo.articleIsApproved
+                              ? "Désaprouver"
+                              : "Approuver"
+                          }
+                          onClick={() =>
+                            articleInfo.articleIsApproved
+                              ? modererArticle(articleInfo._id, false)
+                              : modererArticle(articleInfo._id, true)
+                          }
+                        ></input>
+                      </form>
                     </td>
                   </tr>
                 ))}
             </tbody>
           </table>
-        </div>
-        <div id="myModal" className={style.modal}>
-          <div className={style.modal_content}>
-            <span className={style.close} onClick={closeModal}>
-              &times;
-            </span>
-          </div>
         </div>
       </div>
     </>

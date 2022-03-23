@@ -39,8 +39,8 @@ export default function () {
     res = await res.json();
   };
 
-  async function activeChange(val, bool) {
-    let res = await fetch("http://localhost:3001/category/" + val, {
+  async function activeChange(id, bool) {
+    let res = await fetch("http://localhost:3001/category/" + id, {
       method: "PUT",
       headers: {
         Accept: "application/json",
