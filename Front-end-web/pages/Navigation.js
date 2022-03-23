@@ -145,7 +145,7 @@ export default function Navigation(image) {
                 Déconnexion
               </p>
               <p onClick={moderationUtilisateur} className={style.deconnexion}>
-                Moderation
+                Administration
               </p>
             </div>
           </div>

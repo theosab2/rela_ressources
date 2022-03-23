@@ -38,7 +38,7 @@ export default function () {
         return <AjouterCategorie></AjouterCategorie>;
         break;
       default:
-        return <Moderation></Moderation>;
+        return <AjouterCategorie></AjouterCategorie>;
     }
   }
   const userCookie = utils();
