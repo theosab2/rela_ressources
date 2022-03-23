@@ -8,6 +8,7 @@ export default function (props) {
   const router = useRouter();
   const { showPost } = router.query;
   const [user, setUser] = useState(null);
+  const [article, setArticle] = useState(null);
 
   const display = async () => {
     const res = await fetch("http://localhost:3001/comment/create", {
@@ -32,8 +33,25 @@ export default function (props) {
     }
   };
 
+  const getArticle = async () =>
+    fetch("http://localhost:3001/article/" + showPost, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setArticle(data);
+        console.log(data);
+      });
+
+  useEffect(() => {
+    getArticle();
+  }, []);
+
   const getUser = async () =>
-    fetch("http://localhost:3001/user/" + showPost, {
+    fetch("http://localhost:3001/user/" + article.articleUser, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -47,7 +65,7 @@ export default function (props) {
 
   useEffect(() => {
     getUser();
-  }, [showPost]);
+  }, []);
 
   if (user != null) {
     return (

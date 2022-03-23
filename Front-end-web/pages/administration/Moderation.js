@@ -2,8 +2,14 @@ import Navigation from "../Navigation";
 import style from "../../styles/administration.module.css";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import articleManager from "../utils/articleManager";
+import Link from "next/link";
 
 export default function () {
+  let allArticle;
+  allArticle = articleManager();
+  console.log(allArticle);
+
   const showModal = () => {
     document.getElementById("myModal").style.display = "block";
   };
@@ -22,65 +28,35 @@ export default function () {
                 <th>Date publication</th>
                 <th>Titre publication</th>
                 <th>Nom du publicateur</th>
+                <th>Catégorie</th>
                 <th>Voir publication</th>
                 <th>Supprimer la publication</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>12/09/2000</td>
-                <td>Je suis un titre</td>
-                <td>Jean</td>
-                <td>
-                  <Image
-                    className={style.chowIcon}
-                    onClick={showModal}
-                    src="/../public/Image/eye-solid.svg"
-                    height="30px"
-                    width="30px"
-                  />
-                </td>
-                <td>
-                  <input type="button" value="Approuver"></input>
-                  <input type="button" value="Supprimer"></input>
-                </td>
-              </tr>
-              <tr>
-                <td>12/09/2000</td>
-                <td>Je suis un titre</td>
-                <td>Pierre</td>
-                <td>
-                  <Image
-                    className={style.chowIcon}
-                    src="/../public/Image/eye-solid.svg"
-                    height="30px"
-                    width="30px"
-                    onClick={showModal}
-                  />
-                </td>
-                <td>
-                  <input type="button" value="Approuver"></input>
-                  <input type="button" value="Supprimer"></input>
-                </td>
-              </tr>
-              <tr>
-                <td>12/09/2000</td>
-                <td>Je suis un titre</td>
-                <td>Thierry</td>
-                <td>
-                  <Image
-                    className={style.chowIcon}
-                    src="/../public/Image/eye-solid.svg"
-                    height="30px"
-                    width="30px"
-                    onClick={showModal}
-                  />
-                </td>
-                <td>
-                  <input type="button" value="Approuver"></input>
-                  <input type="button" value="Supprimer"></input>
-                </td>
-              </tr>
+              {allArticle &&
+                allArticle.map((articleInfo) => (
+                  <tr>
+                    <td>12/09/2000</td>
+                    <td>{articleInfo.articleName}</td>
+                    <td>{articleInfo.articleContent}</td>
+                    <td>{articleInfo.articleCategory}</td>
+                    <td>
+                      <Link href={`../crudPost/${articleInfo._id}`}>
+                        <Image
+                          className={style.chowIcon}
+                          src="/../public/Image/eye-solid.svg"
+                          height="30px"
+                          width="30px"
+                        />
+                      </Link>
+                    </td>
+                    <td>
+                      <input type="button" value="Approuver"></input>
+                      <input type="button" value="Supprimer"></input>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
