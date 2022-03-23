@@ -320,6 +320,8 @@ router.get("/user/schema/detailled", async function (req, res, next) {
 
 //#endregion
 
+//#region [QUERY]
+
 //Get query object template
 router.get("/categories/query", async function (req, res, next) {
   var data = await _categoryQueryService.getQueryTemplate();
@@ -340,15 +342,12 @@ router.post("/users/query", async function (req, res, next) {
 
 //#endregion
 
+//#region [GET RESSOURCES]
+
+
 //Get all categories
 router.get("/categories/all", async function (req, res, next) {
   var data = await _categoryQueryService.getAllCategories();
-  res.status(200).json(data);
-});
-
-//Get all users
-router.get("/users/all", async function (req, res, next) {
-  var data = await _userQueryService.getAllUsers();
   res.status(200).json(data);
 });
 
@@ -367,9 +366,7 @@ router.post("/category/create", async function (req, res, next) {
   var categoryCreationQueryResult = await _categoryQueryService.createCategory(
     req.body.category
   );
-  res
-    .status(categoryCreationQueryResult.statusCode)
-    .json(categoryCreationQueryResult);
+  res.status(categoryCreationQueryResult.statusCode).json(categoryCreationQueryResult);
 });
 
 //Suppression d'un category
