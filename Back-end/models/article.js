@@ -1,13 +1,33 @@
 const mongoose = require('mongoose');
 
 const articleSchema = mongoose.Schema({
-  articleName: { type: String, required: true, unique: true },
-  articleContent: { type: String, required: true},
-  articleUser: { type: String, required: true },
-  articleCategory: { type: String, required: true },
-  articleTag: { type: String, required: false },
-  articleIsModerate: { type: Boolean, required: true },
-  articleAttachement: { type: Boolean, required: false }
+  articleTitle: { type: String, required: false, unique: true },
+  articleDescription: { type: String, required: false},
+  articleTag_TTids:
+  [
+    {type: String,required:false}
+  ],
+
+  articleCategory_TTids:
+  [
+    { type: String, required: false }
+  ],
+
+  articleContent_ids:
+  [
+    { type: String, required: false }
+  ],
+
+  articleComment_ids:
+  [
+    { type: String, required: false }
+  ],
+
+  articleCreator:{type:String,required:false},
+  articleNbLikes:{type:Number,required:true,default:0},
+  articleNbDislikes:{type:Number,required:true,default:0},
+  articleImage:{type:String,required:false},
+  articleIsApproved:{type:Boolean,required:true,default:false}
 });
 
 module.exports = mongoose.model('Article', articleSchema);
