@@ -194,7 +194,7 @@ export default function () {
               type="submit"
               value="Valider"
               className={style.buttonValiderCategorie}
-              onClick={() => supprimerCategorie}
+              onClick={supprimerCategorie}
             ></input>
           </div>
         </form>
