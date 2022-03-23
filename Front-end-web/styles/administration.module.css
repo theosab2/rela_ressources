@@ -24,7 +24,7 @@
   margin-top: 50px;
   box-shadow: 0px 0px 5px #000;
   width: 90%;
-  height: 3vh;
+  height: 90%;
   border-radius: 5px;
 }
 
@@ -102,6 +102,12 @@
 
 .tabHistorique input[value="Supprimer"] {
   background-color: #f55;
+}
+
+.tabHistorique input[type="submit"] {
+  padding: 5px;
+  background-color: #000091;
+  border-radius: 5px;
 }
 
 .modal {
@@ -288,11 +294,12 @@
 }
 
 .inputTextCategorie {
-  width: 10vw;
-  height: 3vh;
+  width: 15vw;
+  height: 5vh;
   border: none;
   border-radius: 5px;
   box-shadow: 0px 0px 5px #000;
+  font-size: large;
 }
 
 .buttonValiderCategorie {
@@ -307,4 +314,12 @@
 .ajouterCategorie {
   display: flex;
   flex-direction: row;
+}
+
+.categorieSelect {
+  width: 15vw;
+  height: 3vh;
+  margin: 10px;
+  box-shadow: 0 0 5px #000;
+  border-radius: 5px;
 }
