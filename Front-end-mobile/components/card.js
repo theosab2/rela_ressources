@@ -4,10 +4,7 @@ import { Icon, Badge } from 'react-native-elements';
 
 const Card = props => {
   const [pseudo, setPseudo] = useState('');
-  const [image, setImage] = useState(require('../test_content/waiting.jpg'))
-
-  
-
+  const [imageTmp,setImageTmp] = useState(require('../test_content/waiting.jpg'))
   useEffect(() => {
     const getPseudoUser = async() => {
       const api = await fetch('http://192.168.1.80:3001/user/' + props.data.articleCreator, {
@@ -20,6 +17,19 @@ const Card = props => {
       const res = await api.json();
       setPseudo(res.username);
     }
+    const getImage = async () => {
+      try {
+        console.log('lien ',props.data)
+        if(props.data.articleImage != '' || props.data.articleImage != null || props.data.articleImage != undefined ){
+          setImageTmp({uri : props.data.articleImage})
+        }
+        console.log(imageTmp)
+      } catch (e) {
+        console.log('error')
+        console.log(e)
+      }
+    }
+    getImage();
     getPseudoUser();
   }, [])
   return (
@@ -32,7 +42,7 @@ const Card = props => {
       <View style={styles.containerImg}>
         <Image 
         style={styles.img}
-        source={image}
+        source={imageTmp}
         />
       </View>
       <View style={styles.description}>
