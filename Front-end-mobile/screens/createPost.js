@@ -49,33 +49,28 @@ const CreatePost = () => {
   };
   const sendFile = async () => {
     const user = await AsyncStorage.getItem('@userId');
+    let formdata = new FormData();
+    formdata.append("article-image", singleFile);
+    let jsonData = JSON.stringify({
+      articleTitle: articleTitle,
+      articleDescription: articleDescritpion,
+      articleTag_TTids: articleTTags,
+      articleCategory_TTids: articleCategory,
+      articleContent: articleContents,
+      articleCreator: user,
+    })
+    formdata.append("article", jsonData);
     try{
       const api = await fetch('http://192.168.1.80:3001/article/create', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
+          "user-upload-GUID": user
         },
-        body: JSON.stringify({
-          article: {
-            articleTitle: articleTitle,
-            articleDescription: articleDescritpion,
-            articleTag_TTids: articleTTags,
-            articleCategory_TTids: articleCategory,
-            articleContent: articleContents,
-            articleCreator: user,
-          },
-        }),
+        body: formdata
       });
       const res = await api.json();
-      if(res.statusCode === 500){
-        console.log(res.message)
-      }else if(res.statusCode === 200){
-        console.log(res.message)
-        goToLogin()
-      }else if(res.statusCode === 201){
-        console.log('compte crée')
-        goToLogin()
-      }
+      console.log(res);
     }catch(err){
       console.log(err)
     }
