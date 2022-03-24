@@ -16,10 +16,11 @@ export default function Home() {
           {allArticle &&
             allArticle.map((articleInfo) => (
               <Post
+                key={articleInfo._id}
                 allArticleDetail={articleInfo}
-                articleTitle={articleInfo.articleName}
+                articleTitle={articleInfo.articleTitle}
                 articleUrl="/../public/Image/up.png"
-                userId={articleInfo.articleUser}
+                userId={articleInfo.articleCreator}
               ></Post>
             ))}
         </div>

@@ -31,19 +31,6 @@ export default function Navigation(image) {
   if (userCookie == false) {
     return (
       <div className={style.navBarContent}>
-        <Link href="/home/Home">
-          <a>
-            <div className={style.navTitle}>
-              <Image
-                src="/../public/Image/logo-gouvernement.jpeg" // Route of the image file
-                height={80} // Desired size with correct aspect ratio
-                width={80} // Desired size with correct aspect ratio
-                alt="Logo gouvernement français"
-              />
-              <p className={style.textTitre}>Ressources Relationnelles</p>
-            </div>
-          </a>
-        </Link>
         <div className={style.dropdown}>
           <button className={style.dropbtn}>
             <Image
@@ -59,6 +46,20 @@ export default function Navigation(image) {
             </Link>
           </div>
         </div>
+        <Link href="/home/Home">
+          <a>
+            <div className={style.navTitle}>
+              <Image
+                src="/../public/Image/logo-gouvernement.jpeg" // Route of the image file
+                height={80} // Desired size with correct aspect ratio
+                width={80} // Desired size with correct aspect ratio
+                alt="Logo gouvernement français"
+              />
+              <p className={style.textTitre}>Ressources Relationnelles</p>
+            </div>
+          </a>
+        </Link>
+
         <p style={{ fontSize: "20px" }}>{navTitle}</p>
         <div className={style.dropdown}>
           <Image
