@@ -40,6 +40,7 @@ export default function Inscription() {
       }),
     });
     res = await res.json();
+    console.log(res.status);
     if (res.status == "FAILURE") {
       console.log("Le nom d'utilisateurs existe deja");
     } else {

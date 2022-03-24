@@ -1,10 +1,14 @@
 import Navigation from "../Navigation";
 import style from "../../styles/crudPost.module.css";
+import categorieManager from "../utils/categorieManager";
 import Image from "next/dist/client/image";
 import { useState } from "react";
 import utils from "../utils";
 
 export default function createPost() {
+  let allCategorie;
+  allCategorie = categorieManager();
+
   const [typeRessource, setTypeRessource] = useState(null);
   const [CategorieRessource, setCategorieRessource] = useState(null);
   let [inputFile, setInputFile] = useState(null);
@@ -27,19 +31,19 @@ export default function createPost() {
 
   const display = async () => {
     var formdata = new FormData();
-
+    console.log(image);
     formdata.append("article-image", image);
 
     var JSON_Object = JSON.stringify({
       articleCreator: JSON.parse(userCookie)._id,
       articleIsApproved: true,
-      articleCategory: CategorieRessource,
+      articleCategory_TTids: CategorieRessource,
       articleTitle: title,
       articleDescription: content,
     });
-
+    console.log(JSON_Object);
     formdata.append("article", JSON_Object);
-
+    console.log(formdata);
     const res = await fetch("http://localhost:3001/article/create", {
       method: "POST",
       headers: {
@@ -91,9 +95,12 @@ export default function createPost() {
 
               <select name="categorie" id="categorie" onChange={getCategorie}>
                 <option value="">Choisir une catégorie</option>
-                <option value="actualite">Actualité</option>
-                <option value="formation">Formation</option>
-                <option value="information">Information</option>
+                {allCategorie &&
+                  allCategorie.map((categorie) => (
+                    <option key={categorie._id} value="information">
+                      {categorie.categoryName}
+                    </option>
+                  ))}
               </select>
             </div>
             <div className={style.Container}>
