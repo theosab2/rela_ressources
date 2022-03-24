@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, Image} from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LinearGradient from 'react-native-linear-gradient';
+
 
 
 const Account = () => {

@@ -1,5 +1,6 @@
 import React, {Component, useEffect, useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
+import { Icon, Badge } from 'react-native-elements';
 
 const Card = props => {
   const [pseudo, setPseudo] = useState('');
@@ -37,18 +38,28 @@ const Card = props => {
       <View style={styles.description}>
         <Text>{props.data.articleDescription}</Text>
       </View>
-      <View style={styles.icone}>
-        <Text>{props.data.articleNbLikes}</Text>
-        <Text>ICO2</Text>
+      <View style={styles.containerIcon}>
+        <View style={styles.icons}>
+          <Icon
+            name='thumbs-up'
+            type='ionicon'
+            color='#ffffff'            
+          />
+          <Badge
+            status="primary"
+            value={props.data.articleNbLikes}
+            containerStyle={{ position: 'absolute', top: 2, right: 15 }}
+          />
+        </View>
+        <View>
+          <Text>ICO2</Text>
+        </View>
       </View>
     </TouchableOpacity>
   );
 };
 const styles = StyleSheet.create({
   container: {
-    borderStyle: 'solid',
-    borderWidth: 1,
-    borderColor: 'grey',
     margin: 5,
   },
   containerImg: {
@@ -65,13 +76,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#2f4077'
   },
-  icone: {
+  containerIcon: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-around',
     backgroundColor: '#2f4077',
     borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10
+    borderBottomRightRadius: 10,
+    height: 35
+  },
+  icons:{
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   containerPseudo: {
     borderTopLeftRadius: 10,
