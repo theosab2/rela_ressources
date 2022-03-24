@@ -4,7 +4,6 @@ import style from "../styles/Navigation.module.css";
 import { setCookies, getCookie, removeCookies } from "cookies-next";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Modal from "antd/lib/modal/Modal";
 import cookie from "cookie";
 import Home from "./home/Home";
 import createPost from "./crudPost/createPost";
@@ -145,7 +144,7 @@ export default function Navigation(image) {
                 Déconnexion
               </p>
               <p onClick={moderationUtilisateur} className={style.deconnexion}>
-                Moderation
+                Administration
               </p>
             </div>
           </div>

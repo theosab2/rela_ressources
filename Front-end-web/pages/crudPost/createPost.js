@@ -108,6 +108,7 @@ export default function createPost() {
                       <p>Insérer une Image :</p>
                       <input
                         type="file"
+                        name="imgFile"
                         accept="image/*, .pdf,video/*"
                         onChange={uploadToClient}
                       ></input>
@@ -124,6 +125,7 @@ export default function createPost() {
                       <p>Insérer une vidéo :</p>
                       <input
                         type="file"
+                        name="vidFile"
                         accept="video/*"
                         onChange={uploadToClient}
                       ></input>

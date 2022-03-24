@@ -16,7 +16,20 @@
   flex: 1;
   height: 100vh;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: left;
+  align-items: center;
+}
+
+.moderationMenu button {
+  margin-top: 50px;
+  box-shadow: 0px 0px 5px #000;
+  width: 90%;
+  height: 90%;
+  border-radius: 5px;
+}
+
+.moderationMenu button:hover {
+  box-shadow: 0px 0px 10px #000;
 }
 
 .createContainer {
@@ -29,6 +42,7 @@
   align-items: center;
   justify-content: center;
   padding-bottom: 10%;
+  margin-top: 200px;
 }
 .pageCreate {
   min-height: 100vh;
@@ -47,7 +61,8 @@
   border-collapse: collapse;
 }
 .tabHistorique table {
-  border-top-left-radius: 10px;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .tabHistorique thead {
@@ -87,6 +102,16 @@
 
 .tabHistorique input[value="Supprimer"] {
   background-color: #f55;
+}
+
+.tabHistorique input[type="submit"] {
+  padding: 5px;
+  background-color: #000091;
+  border-radius: 5px;
+}
+
+.tabHistorique input[type="submit"]:focus {
+  box-shadow: 0px 0px 5px #000;
 }
 
 .modal {
@@ -256,6 +281,11 @@
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+  background-color: #ddd;
+}
+
+.tableSave * {
+  padding: 10px;
 }
 
 .theadSave {
@@ -265,4 +295,35 @@
 
 .tbodySave .trSave {
   text-align: center;
+}
+
+.inputTextCategorie {
+  width: 15vw;
+  height: 5vh;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px #000;
+  font-size: large;
+}
+
+.buttonValiderCategorie {
+  margin-left: 10px;
+  box-shadow: 0px 0px 5px #000;
+  border-radius: 5px;
+  background-color: #000091;
+  color: #fff;
+  width: 5vw;
+}
+
+.ajouterCategorie {
+  display: flex;
+  flex-direction: row;
+}
+
+.categorieSelect {
+  width: 15vw;
+  height: 3vh;
+  margin: 10px;
+  box-shadow: 0 0 5px #000;
+  border-radius: 5px;
 }

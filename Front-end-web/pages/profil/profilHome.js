@@ -6,7 +6,6 @@ import Image from "next/image";
 import { GetServerSideProps } from "next";
 import ProfilUpdate from "./profilUpdate";
 import ProfilParam from "./profilParam";
-import ProfilHistorique from "./profilHistorique";
 import { useRouter } from "next/router";
 import utils from "../utils";
 
@@ -37,9 +36,6 @@ export default function profilHome() {
       case "ProfilParam":
         return <ProfilParam></ProfilParam>;
         break;
-      case "ProfilHistorique":
-        return <ProfilHistorique></ProfilHistorique>;
-        break;
       default:
         return <ProfilUpdate></ProfilUpdate>;
     }
@@ -64,11 +60,6 @@ export default function profilHome() {
             </button>
             <button onClick={() => setProfilPage((profilPage = "ProfilParam"))}>
               Paramètres
-            </button>
-            <button
-              onClick={() => setProfilPage((profilPage = "ProfilHistorique"))}
-            >
-              Historique de mes publication
             </button>
             <button onClick={showModalDeleteAccount}>
               Supprimer mon compte

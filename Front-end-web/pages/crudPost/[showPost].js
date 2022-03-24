@@ -8,32 +8,12 @@ export default function (props) {
   const router = useRouter();
   const { showPost } = router.query;
   const [user, setUser] = useState(null);
+  const [article, setArticle] = useState(null);
 
-  const display = async () => {
-    const res = await fetch("http://localhost:3001/comment/create", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        comment: {
-          commentArticle: "test",
-          commentContent: "test",
-          commentUser: "61e180f2f42a5ffe793e0ec8",
-        },
-      }),
-    });
-    res = await res.json();
-    if (res.status != "SUCESS") {
-      console.log("Erreur");
-    } else {
-      console.log("Réussite");
-    }
-  };
+  console.log(showPost);
 
-  const getUser = async () =>
-    fetch("http://localhost:3001/user/" + showPost, {
+  const getArticle = async () =>
+    await fetch("http://localhost:3001/article/" + showPost, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -41,15 +21,16 @@ export default function (props) {
     })
       .then((res) => res.json())
       .then((data) => {
-        setUser(data);
+        setArticle(data);
         console.log(data);
       });
 
   useEffect(() => {
-    getUser();
+    getArticle();
   }, [showPost]);
 
-  if (user != null) {
+  if (article && article.message != "une erreur est survenue") {
+    console.log(article);
     return (
       <>
         <Navigation></Navigation>
@@ -65,11 +46,8 @@ export default function (props) {
                       width={40}
                       height={10}
                     />
-                    <p>{user.username}</p>
                   </div>
-                  <div className={style.ArticleHeaderTitle}>
-                    {props.articleTitle}
-                  </div>
+                  <div className={style.ArticleHeaderTitle}></div>
                 </div>
                 <img
                   src="/Image/bateau_2.jpg"
@@ -98,23 +76,13 @@ export default function (props) {
                   width={25}
                   height={25}
                 />
-                {props.articleProfilUrl && (
-                  <div className={style.profilPostContainer}>
-                    <Image
-                      src={props.articleProfilUrl}
-                      width={50}
-                      height={50}
-                      className={style.profilPost}
-                    />
-                  </div>
-                )}
               </div>
             </div>
             <div className={style.commentContainer}>
               <p>Ajouter un commentaire</p>
               <form className={style.CommentInputContainer}>
                 <input type="text"></input>
-                <input type="submit" value="valider" onClick={display}></input>
+                <input type="submit" value="valider"></input>
               </form>
             </div>
           </div>

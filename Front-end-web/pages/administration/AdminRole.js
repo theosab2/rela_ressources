@@ -37,7 +37,6 @@ export default function (props) {
                 <th className={style.thSave}>Téléphone</th>
                 <th className={style.thSave}>Modifier rôle </th>
                 <th className={style.thSave}>Modifier</th>
-                <th className={style.thSave}>Désactiver</th>
               </tr>
             </thead>
             <tbody className={style.tbodySave}>
@@ -63,13 +62,6 @@ export default function (props) {
                         value={"Valider"}
                         onClick={() => openModal(21)}
                         className={style.modifierRole}
-                      ></input>
-                    </td>
-                    <td className={style.tdSave}>
-                      <input
-                        type="button"
-                        value="Supprimer"
-                        className={style.SupprimerRole}
                       ></input>
                     </td>
                   </tr>

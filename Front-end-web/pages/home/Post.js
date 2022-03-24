@@ -78,7 +78,7 @@ export default function Post(props) {
             height={25}
             onClick={ajouterFav}
           />
-          <Link href={`../crudPost/${props.allArticleDetail.articleUser}`}>
+          <Link href={`../crudPost/${props.allArticleDetail._id}`}>
             <Image
               src={"/../public/Image/commentaire.png"}
               width={40}
