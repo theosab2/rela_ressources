@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const articleSchema = mongoose.Schema({
-  articleTitle: { type: String, required: false, unique: true },
+  articleTitle: { type: String, required: true, unique: true },
   articleDescription: { type: String, required: false},
   articleTag_TTids:
   [
@@ -30,7 +30,8 @@ const articleSchema = mongoose.Schema({
   articleNbLikes:{type:Number,required:true,default:0},
   articleNbDislikes:{type:Number,required:true,default:0},
   articleImage:{type:String,required:false},
-  articleIsApproved:{type:Boolean,required:true,default:false}
+  articleIsApproved:{type:Boolean,required:true,default:false},
+  articleIsActive:{type:Boolean,required:true,default:false},
 });
 
 module.exports = mongoose.model('Article', articleSchema);

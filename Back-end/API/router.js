@@ -189,13 +189,9 @@ router.get("/article/:id", async function (req, res, next) {
   router.post("/article/create", _multer.articleImage, async function (req, res, next) {
 
     var articleObject = {};
-
-    console.log("router : file",req.file);
   
     if(req.file == undefined || req.file == null){
-      articleObject = {
-        ...JSON.parse(req.body.article)
-      }
+      articleObject = req.body.article
     }
     else{
       articleObject = {
