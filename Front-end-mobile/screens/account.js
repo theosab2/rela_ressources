@@ -1,56 +1,72 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import LinearGradient from 'react-native-linear-gradient';
 
 
 const Account = () => {
-  const [userId, setUserId] = useState('loading');
   const [userData, setUserData] = useState({});
-
-  const getLocalData = async () => {
-    try {
-      const userId = await AsyncStorage.getItem('@userId');
-      setUserId(userId != null ? userId : null)
-      getUserData()
-    } catch (e) {
-      console.log('error1 = ' + e);
+  
+  useEffect(() => {
+    const getLocalData = async () => {
+      try {
+        const storedId = await AsyncStorage.getItem('@userId');
+        if(storedId != null){
+          getUserData(storedId)
+        }else{
+          
+        }
+      } catch (e) {
+        console.log(e);
+      }
     }
-  }
+    const getUserData = async (storedId) => {
+      try {
+        const api = await fetch('http://10.176.131.87:3001/user/' + storedId, {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        });
+        const res = await api.json();
+        console.log(res);
+        setUserData(res);
+      } catch (e) {
+        console.log(e);
+      }
+    } 
+    getLocalData();
+  }, []);
 
-  const getUserData = async () => {
-    try {
-      console.log("userId = " + userId);
-      const api = await fetch('http://192.168.1.80:3001/user/' + userId, {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      });
-      const res = await api.json();
-      //console.log(res);
-      //setUserData(res);
-      //console.log(res);
-    } catch (e) {
-      console.log('error2 = ' + e);
-    }
-  }
 
-  getLocalData()
-
+  
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>{userData.username}</Text>
-      <Text style={styles.text}>{userData.email}</Text>
-      <Text style={styles.text}>{userData.name}</Text>
-      <Text style={styles.text}>{userData.firstname}</Text>
-      <Text style={styles.text}>{userData.phone}</Text>
-      <Text style={styles.text}>{userData.role}</Text>
-      <Text style={styles.text}>{userData.location.region}</Text>
-      <Text style={styles.text}>{userData.location.ville}</Text>
-      <Text style={styles.text}>{userData.location.zip}</Text>
+      <LinearGradient
+        colors={['#869ece', '#ffffff' ]}
+        style={styles.linearGradient}
+        locations={[0, 1]}
+      >
+        <View>
+
+        </View>
+        <View style={styles.profilCadre}>
+          <Image
+            style={styles.profilImage}
+            source={require('../test_content/zombie.png')}
+          />
+        </View>
+        
+        <Text style={styles.text}>{userData.username}</Text>
+        <Text style={styles.text}>{userData.email}</Text>
+        <Text style={styles.text}>{userData.name}</Text>
+        <Text style={styles.text}>{userData.firstname}</Text>
+        <Text style={styles.text}>{userData.phone}</Text>
+        <Text style={styles.text}>{userData.role}</Text>
+      </LinearGradient>
     </View>
   );
 };
@@ -62,9 +78,35 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    width: '95%',
+    width: '100%',
   },
   text: {
     color: "black"
+  },
+  profilCadre:{
+    borderTopLeftRadius: 500,
+    borderBottomLeftRadius:500,
+    borderBottomRightRadius:500,
+    borderTopRightRadius: 500,
+    borderColor: '#2F4077',
+    borderWidth:3,
+    width: 215,
+    height:215,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  profilImage:{
+    borderTopLeftRadius: 500,
+    borderBottomLeftRadius:500,
+    borderBottomRightRadius:500,
+    borderTopRightRadius: 500,
+    width: 200,
+    height:200
+  },
+  linearGradient: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+    width: '100%',
   }
 });

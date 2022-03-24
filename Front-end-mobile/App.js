@@ -32,24 +32,34 @@ const StackAccount = ({navigation, route}) => {
   const [userId, setUserId] = useState(null);
 
 
-  const getData = async () => {
-    try {
-      const userId = await AsyncStorage.getItem('@userId');
-      setUserId(userId != null ? userId : null)
-    } catch(e) {
-    }
-  }
-  getData()
 
-  console.log('coucou ' + userId);
+  useEffect(()=>{
+    const getData = async () => {
+      try {
+        const storedId = await AsyncStorage.getItem('@userId');
+        setUserId(storedId != null ? storedId : null)
+      } catch(e) {
+      }
+    }
+    getData();
+  }, [])
+
   if(userId != null){
     return(
       <Stack.Navigator 
         screenOptions={{
-          headerShown: false
+          headerShown: true
       }}>
         <Stack.Screen name='account' 
-        component={Account} 
+        component={Account}
+        options={{
+          headerLeft: props => (<Icon name='menu'
+          type='ionicon'
+          color='#869ECE'
+          size={40}
+          onPress={() => navigation.openDrawer()}/>),
+          title: 'Profile'
+        }}
         />
       </Stack.Navigator>
     )

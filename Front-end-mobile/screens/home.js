@@ -1,32 +1,60 @@
 import {HeaderStyleInterpolators} from '@react-navigation/stack';
-import React, {Component} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import {StyleSheet, Text, View, ScrollView, SafeAreaView} from 'react-native';
 import Card from '../components/card';
 import Footer from '../components/footer';
+import LinearGradient from 'react-native-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Home = ({navigation}) => {
+  const [post, setPost] = useState({});
+  const [display, setDisplay] = useState(<Text>Loading</Text>);
+  let displayedPost;
+
+  useEffect(() => {
+    const getStateUser = async () => {
+      const user = await AsyncStorage.getItem('@userId');
+      if(user != null){
+        getPost()
+      }else{
+        getPost
+      }
+    }
+    const getPost = async () => {
+      
+      //console.log(post);
+      setDisplay(displayPost());
+    }
+    const displayPost = () => {
+      if(post != {}){
+        console.log(post.articles);
+        return post.articles.map(item => {
+          console.log(item._id);
+          return <Card navigation={navigation} key={item._id} data={item}/>
+        })
+      }else{
+        console.log('error');
+        return <View/>
+      }
+    }
+    getStateUser();
+  }, [])
+  
   return (
-    <>
+    <LinearGradient
+      colors={['#869ece', '#ffffff' ]}
+      style={styles.linearGradient}
+      locations={[0, 1]}
+    >
       <SafeAreaView style={styles.container}>
         <ScrollView style={styles.scrollView}>
-          <Card navigation={navigation} />
-          <Card navigation={navigation} />
-          <Card navigation={navigation} />
-          <Card navigation={navigation} />
-          <Card navigation={navigation} />
-          <Card navigation={navigation} />
-          <Card navigation={navigation} />
-          <Card navigation={navigation} />
-          <Card navigation={navigation} />
-          <Card navigation={navigation} />
-          <Card navigation={navigation} />
-          <Card navigation={navigation} />
+          {display}
         </ScrollView>
       </SafeAreaView>
       <View style={styles.footer}>
         <Footer />
       </View>
-    </>
+    </LinearGradient>
   );
 };
 const styles = StyleSheet.create({
@@ -42,6 +70,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  linearGradient: {
+    height: '100%',
+    width: '100%',
+  }
 });
 
 export default Home;
