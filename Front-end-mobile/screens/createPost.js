@@ -1,17 +1,20 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React, { useState } from 'react';
-import { Button, Input } from 'react-native-elements';
+import { Button, Input, Image } from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 import DocumentPicker from 'react-native-document-picker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CreatePost = () => {
   const [articleTitle, setArticleTitle] = useState('');
   const [articleDescritpion, setArticleDescription] = useState('');
   const [articleTTags, setArticleTTags] = useState([]);
+  const [articleCategory, setArticleCategory] = useState(undefined);
   const [articleContentIds, setArticleContentIds] = useState([]);
+  const [articleContents, setArticleContents] = useState([])
   const [articleCreator, setArticleCreator] = useState('');
   const [singleFile, setSingleFile] = useState(null);
-  const [imageUri, setImageUri] = useState('../test_content/waiting.jpg');
+  const [imageUri, setImageUri] = useState(null);
 
   const selectFile = async () => {
     // Opening Document Picker to select one file
@@ -30,7 +33,7 @@ const CreatePost = () => {
       console.log('res : ' + JSON.stringify(res));
       // Setting the state to show single file attributes
       setSingleFile(res[0]);
-      setImageUri(uri);
+      setImageUri(res[0].uri);
     } catch (err) {
       setSingleFile(null);
       // Handling any exception (If any)
@@ -44,6 +47,39 @@ const CreatePost = () => {
       }
     }
   };
+  const sendFile = async () => {
+    const user = await AsyncStorage.getItem('@userId');
+    try{
+      const api = await fetch('http://192.168.1.80:3001/article/create', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          article: {
+            articleTitle: articleTitle,
+            articleDescription: articleDescritpion,
+            articleTag_TTids: articleTTags,
+            articleCategory_TTids: articleCategory,
+            articleContent: articleContents,
+            articleCreator: user,
+          },
+        }),
+      });
+      const res = await api.json();
+      if(res.statusCode === 500){
+        console.log(res.message)
+      }else if(res.statusCode === 200){
+        console.log(res.message)
+        goToLogin()
+      }else if(res.statusCode === 201){
+        console.log('compte crée')
+        goToLogin()
+      }
+    }catch(err){
+      console.log(err)
+    }
+  }
   return (
     <LinearGradient
       colors={['#869ece', '#ffffff']}
@@ -69,7 +105,7 @@ const CreatePost = () => {
         <View>
           <Image
             style={styles.uploadImg}
-            source={imageUri}
+            source={imageUri != null ? {uri: imageUri} : require('../test_content/waiting.jpg')}
           />
           <Text >
           File Name: {singleFile.name ? singleFile.name : ''}
@@ -91,6 +127,7 @@ const CreatePost = () => {
       </TouchableOpacity>
       <Button
         title='Valider'
+        onPress={sendFile}
       />
     </LinearGradient>
   );
@@ -128,4 +165,8 @@ const styles = StyleSheet.create({
     marginRight: 35,
     textAlign: 'center',
   },
+  uploadImg: {
+    width: 100,
+    height: 100,
+  }
 });

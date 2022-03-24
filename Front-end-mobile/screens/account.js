@@ -23,7 +23,7 @@ const Account = () => {
     }
     const getUserData = async (storedId) => {
       try {
-        const api = await fetch('http://10.176.131.87:3001/user/' + storedId, {
+        const api = await fetch('http://192.168.1.80:3001/user/' + storedId, {
           method: 'GET',
           headers: {
             Accept: 'application/json',

@@ -21,7 +21,7 @@ const Home = ({navigation}) => {
       }
     }
     const getPost = async () => {
-      const api = await fetch('http://10.176.131.87:3001/articles/all', {
+      const api = await fetch('http://192.168.1.80:3001/articles/all', {
         method: 'GET',
         headers: {
           Accept: 'application/json',
