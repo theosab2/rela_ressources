@@ -199,15 +199,25 @@
 
 .ArticleFooter {
   background-color: #fff;
-  height: 6vh;
+  height: 8vh;
   width: 100%;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  padding-left: 2vw;
   box-shadow: 1px 1px 5px #666;
+}
+
+.ArticleFooterRate {
+  background-color: #eee;
+  padding: 5px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .profilPost {
@@ -304,10 +314,31 @@
   cursor: pointer;
 }
 
+.upVote {
+  width: 25px;
+  height: 25px;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  background-color: #000;
+}
+
 .upVote:hover {
   cursor: pointer;
   clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
   background-color: #000091;
+}
+
+.downVote {
+  width: 25px;
+  height: 25px;
+  clip-path: polygon(50% 100%, 0 0, 100% 0);
+  background-color: #000;
+}
+
+.rate {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .downVote:hover {

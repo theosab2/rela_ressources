@@ -30,6 +30,7 @@ export default function createPost() {
 
     formdata.append('article-image',image);
     
+
     var JSON_Object = JSON.stringify({
       articleCreator: JSON.parse(userCookie)._id,
       articleIsApproved: true,
@@ -39,6 +40,7 @@ export default function createPost() {
     });
 
     formdata.append('article',JSON_Object);
+    formdata.append("article", JSON_Object);
 
     const res = await fetch("http://localhost:3001/article/create", {
       method: "POST",
