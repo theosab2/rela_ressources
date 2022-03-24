@@ -188,17 +188,16 @@ const mArticle = require('../models/article');
             }     
         };
 
-        //return Boolean representing existence of the provided articleName in database
-        module.exports.checkArticleNameExistence = async (articleName) => {
-            console.log("D.A.L [checkArticleNameExistence] (paramètres) 'articleName' :",articleName);
-            console.log(await mArticle.count({'articleName':{'$regex': '^'+articleName+'$',$options:'im'}}));
+        //return Boolean representing existence of the provided articleTitle in database
+        module.exports.checkArticleTitleExistence = async (articleTitle) => {
+            console.log("D.A.L [checkArticleTitleExistence] (paramètres) 'articleTitle' :",articleTitle);
             try {
-                var result = await mArticle.count({'articleName':{'$regex': '^'+articleName+'$',$options:'im'}}) > 0; //Case-insensitive query
-                console.log("D.A.L [checkArticleNameExistence] (return) 'result' : ",result);
+                var result = await mArticle.count({'articleTitle':{'$regex': '^'+articleTitle+'$',$options:'im'}}) > 0; //Case-insensitive query
+                console.log("D.A.L [checkArticleTitleExistence] (return) 'result' : ",result);
                 return result;
             } 
             catch (error) {
-                console.log("D.A.L [checkArticleNameExistence] (return) 'err' : ",error);
+                console.log("D.A.L [checkArticleTitleExistence] (return) 'err' : ",error);
                 return {message:"une erreur est survenue",error};
             }     
         };
@@ -224,8 +223,8 @@ const mArticle = require('../models/article');
         
         try //Vérification de l'existence du nom de l'article dans la base de données
         {   
-            var articleNameAlreadyExist = await this.checkArticleNameExistence(articleObject.articleName);
-            console.log("D.A.L [createArticle] articleNameAlreadyExist :",articleNameAlreadyExist);
+            var articleTitleAlreadyExist = await this.checkArticleTitleExistence(articleObject.articleTitle);
+            console.log("D.A.L [createArticle] articleTitleAlreadyExist :",articleTitleAlreadyExist);
         }
         catch(exception) //ECHEC de la vérification de l'existence du nom d'utilisateur dans la base de données
         {
@@ -233,13 +232,14 @@ const mArticle = require('../models/article');
             return({
                 status:"CONTROL_FAILURE",
                 statusCode:500,
-                message: "Une erreur est survenue durant la vérification de l'existence du nom de l'article : \'"+articleObject.articleName+"\' dans la base de données",
+                message: "Une erreur est survenue durant la vérification de l'existence du nom de l'article : \'"+articleObject.articleTitle+"\' dans la base de données",
                 exception:exception
             })
         }
         
-        if(!articleNameAlreadyExist)
+        if(!articleTitleAlreadyExist)
         {
+
             try //Création du modèle à partir des données du body de la requête
             {   
                 var newArticle = new mArticle({ ...articleObject });
@@ -266,7 +266,7 @@ const mArticle = require('../models/article');
                 return ({
                     status:"EXCEPTION",
                     statusCode:500,
-                    message: "Une erreur est survenue durant l'enregistrement du modèle dans la base de données pour le nouvel article : \'"+articleObject.articleName+"\'",
+                    message: "Une erreur est survenue durant l'enregistrement du modèle dans la base de données pour le nouvel article : \'"+articleObject.articleTitle+"\'",
                     articleInfoReceipted:articleObject,
                     exception:exception
                 })
@@ -277,7 +277,7 @@ const mArticle = require('../models/article');
                 status:"SUCCESS",
                 statusCode:201,
                 articleCreated:articleObject,
-                message: "Utilisateur : \'"+articleObject.articleName+"\' Créé avec succès"
+                message: "Utilisateur : \'"+articleObject.articleTitle+"\' Créé avec succès"
             });
         }
         else
@@ -285,10 +285,10 @@ const mArticle = require('../models/article');
             var message = "";
             var nbFieldInError = 0;
 
-            if(articleNameAlreadyExist) 
+            if(articleTitleAlreadyExist) 
             {
                 nbFieldInError++;
-                message += "\'articleName\'";
+                message += "\'articleTitle\'";
             }
 
             message = nbFieldInError > 1 
@@ -336,8 +336,8 @@ const mArticle = require('../models/article');
 
         try //Vérification de l'existence du nom de l'article dans la base de données
         {   
-            var articleNameAlreadyExist = await this.checkArticleNameExistence(articleObject.articleName);
-            console.log("D.A.L [createArticle] articleNameAlreadyExist :",articleNameAlreadyExist);
+            var articleTitleAlreadyExist = await this.checkArticleTitleExistence(articleObject.articleTitle);
+            console.log("D.A.L [createArticle] articleTitleAlreadyExist :",articleTitleAlreadyExist);
         }
         catch(exception) //ECHEC de la vérification de l'existence du nom d'utilisateur dans la base de données
         {
@@ -345,18 +345,18 @@ const mArticle = require('../models/article');
             return({
                 status:"CONTROL_FAILURE",
                 statusCode:500,
-                message: "Une erreur est survenue durant la vérification de l'existence du nom de l'article : \'"+articleObject.articleName+"\' dans la base de données",
+                message: "Une erreur est survenue durant la vérification de l'existence du nom de l'article : \'"+articleObject.articleTitle+"\' dans la base de données",
                 exception:exception
             })
         }
 
-        if(articleNameAlreadyExist){
+        if(articleTitleAlreadyExist){
             return ({
                 status:"FAILURE",
                 statusCode:500,
                 userInfoReceipted:articleObject,
                 nbError:1,
-                message:"A field value who need to be unique in database already exist : articleName"
+                message:"A field value who need to be unique in database already exist : articleTitle"
             });
         }
     
