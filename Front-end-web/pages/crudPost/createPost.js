@@ -28,8 +28,7 @@ export default function createPost() {
   const display = async () => {
     var formdata = new FormData();
 
-    formdata.append('article-image',image);
-    
+    formdata.append("article-image", image);
 
     var JSON_Object = JSON.stringify({
       articleCreator: JSON.parse(userCookie)._id,
@@ -39,14 +38,13 @@ export default function createPost() {
       articleDescription: content,
     });
 
-    formdata.append('article',JSON_Object);
     formdata.append("article", JSON_Object);
 
     const res = await fetch("http://localhost:3001/article/create", {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "user-upload-GUID":JSON.parse(userCookie)._id
+        "user-upload-GUID": JSON.parse(userCookie)._id,
       },
       body: formdata,
     });
