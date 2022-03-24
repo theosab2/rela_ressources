@@ -2,6 +2,8 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const express = require("express");
 const bodyParser = require("body-parser");
+const path = require('path');
+const $reqLogger = require('./MiddleWares/req-logger-config');
 
 module.exports = function (app, server) {
   setTimeout(() => {
@@ -25,13 +27,14 @@ module.exports = function (app, server) {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader(
       "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
+      "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization, user-upload-GUID"
     );
     res.setHeader("Access-Control-Allow-Methods", "*");
     next();
   });
 
   app.use(express.json());
+  app.use($reqLogger);
 
   //=========//
   //   API   //
@@ -40,6 +43,11 @@ module.exports = function (app, server) {
   //Déclaration du router pour l'API
   var router = require("./API/router");
   app.use(router);
+  
+  app.use('/article-image',express.static(path.join(__dirname,"Assets/Uploads/Image/Article")));
+  app.use('/avatar-image',express.static(path.join(__dirname,"Assets/Uploads/Image/Avatar")));
+  // Ajout 'uplaoded-pdf'
+  // Ajout 'uploaded-video'
 
   //========//
   // SOCKET //

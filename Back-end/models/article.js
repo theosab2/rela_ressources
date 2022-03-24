@@ -13,9 +13,12 @@ const articleSchema = mongoose.Schema({
     { type: String, required: false }
   ],
 
-  articleContent_ids:
+  articleContents:
   [
-    { type: String, required: false }
+    {
+      type_TTids:{type: String,required:false},
+      body:{ type: String, required: false },
+    }
   ],
 
   articleComment_ids:

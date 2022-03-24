@@ -1,3 +1,7 @@
+//==== MiddleWares ====//
+const _multer = require('../MiddleWares/multer-configuration');
+//=====================//
+
 //===== DAL - QueryServices =====//
 const _articleQueryService = require("../DAL/articleQueryService");
 const _categoryQueryService = require("../DAL/categoryQueryService");
@@ -6,7 +10,7 @@ const _roleQueryService = require("../DAL/roleQueryService");
 const _userQueryService = require("../DAL/userQueryService");
 //===============================//
 
-//===== BLL - QueryServices =====//
+//===== BLL - ApplicationServices =====//
 const _articleApplicationService = require("../BLL/articleApplicationService");
 const _categoryApplicationService = require("../BLL/categoryApplicationService");
 const _commentApplicationService = require("../BLL/commentApplicationService");
@@ -181,14 +185,32 @@ router.get("/article/:id", async function (req, res, next) {
 //#region [UPDATE RESSOURCES]
 
 //Création d'un article
-router.post("/article/create", async function (req, res, next) {
-  var articleCreationQueryResult = await _articleQueryService.createArticle(
-    req.body.article
-  );
-  res
-    .status(articleCreationQueryResult.statusCode)
-    .json(articleCreationQueryResult);
-});
+
+  router.post("/article/create", _multer.articleImage, async function (req, res, next) {
+
+    var articleObject = {};
+
+    console.log("router : file",req.file);
+  
+    if(req.file == undefined || req.file == null){
+      articleObject = {
+        ...JSON.parse(req.body.article)
+      }
+    }
+    else{
+      articleObject = {
+        ...JSON.parse(req.body.article),
+        articleImage:`${req.protocol}://${req.get('host')}/article-image/${req.file.filename}`
+      }
+    }    
+
+    var articleCreationQueryResult = await _articleQueryService.createArticle(
+      articleObject
+    );
+    res
+      .status(articleCreationQueryResult.statusCode)
+      .json(articleCreationQueryResult);
+  });
 
 //Suppression d'un article
 router.post("/article/delete/:articleId", async function (req, res, next) {

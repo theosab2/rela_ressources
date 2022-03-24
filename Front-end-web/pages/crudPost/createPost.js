@@ -26,21 +26,27 @@ export default function createPost() {
   };
 
   const display = async () => {
+    var formdata = new FormData();
+
+    formdata.append('article-image',image);
+    
+    var JSON_Object = JSON.stringify({
+      articleCreator: JSON.parse(userCookie)._id,
+      articleIsApproved: true,
+      articleCategory: CategorieRessource,
+      articleTitle: title,
+      articleDescription: content,
+    });
+
+    formdata.append('article',JSON_Object);
+
     const res = await fetch("http://localhost:3001/article/create", {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
+        "user-upload-GUID":JSON.parse(userCookie)._id
       },
-      body: JSON.stringify({
-        article: {
-          articleUser: JSON.parse(userCookie)._id,
-          articleIsModerate: true,
-          articleCategory: "catégorie de test",
-          articleName: title,
-          articleContent: content,
-        },
-      }),
+      body: formdata,
     });
     res = await res.json();
     if (res.status != "SUCESS") {
@@ -67,7 +73,7 @@ export default function createPost() {
         <Navigation></Navigation>
         <div className={style.pageCreate}>
           <div className={style.empty}></div>
-          <form className={style.createContainer}>
+          <form encType="multipart/form-data" className={style.createContainer}>
             <div>
               <p>Création d'un post </p>
             </div>
@@ -108,7 +114,7 @@ export default function createPost() {
                       <p>Insérer une Image :</p>
                       <input
                         type="file"
-                        name="imgFile"
+                        name="image"
                         accept="image/*, .pdf,video/*"
                         onChange={uploadToClient}
                       ></input>
