@@ -9,7 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const Home = ({navigation}) => {
   const [post, setPost] = useState({});
   const [display, setDisplay] = useState(<Text>Loading</Text>);
-  let displayedPost;
+  let excedTime = 0;
 
   useEffect(() => {
     const getStateUser = async () => {
@@ -21,23 +21,29 @@ const Home = ({navigation}) => {
       }
     }
     const getPost = async () => {
-      
-      //console.log(post);
-      setDisplay(displayPost());
+      const api = await fetch('http://10.176.131.87:3001/articles/all', {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      });
+      const res = await api.json()
+      setDisplay(displayPost(res));
     }
-    const displayPost = () => {
-      if(post != {}){
-        console.log(post.articles);
-        return post.articles.map(item => {
+    const displayPost = (data) => {
+      if(data.articles != undefined){
+        console.log(data.articles);
+        return data.articles.map(item => {
           console.log(item._id);
           return <Card navigation={navigation} key={item._id} data={item}/>
         })
       }else{
-        console.log('error');
         return <View/>
       }
     }
     getStateUser();
+    
   }, [])
   
   return (
