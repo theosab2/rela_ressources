@@ -112,12 +112,40 @@
 
 .ArticleContainer {
   width: 50vw;
+  max-width: 1000px;
+  min-width: 500px;
   margin-top: 3rem;
   border-radius: 5px;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  box-shadow: 0px 0px 5px #444;
+  background-color: #fff;
+}
+
+.HomeContainer {
+  display: flex;
+  padding-top: 5rem;
+  flex-direction: row;
+  justify-content: center;
+
+  width: 80%;
+  height: 100%;
+  background-color: #ddd;
+}
+
+.HomeSubContainer {
+  padding-top: 5rem;
+  background-color: #dfdfdf;
+  box-shadow: 0px 0px 10px #666;
+  width: 120%;
+  height: 100%;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
 }
 
 .ArticleSubContainer {
@@ -125,14 +153,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 100%;
-  background-color: #fff;
   box-shadow: 0px 0px 5px #444;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  width: 100%;
   flex-direction: column;
-  overflow: hidden;
 }
 
 .ArticleSubContainerComment {
@@ -141,7 +164,7 @@
   align-items: center;
   width: 100%;
   height: 100%;
-  background-color: #fff;
+
   box-shadow: 0px 0px 5px #444;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -151,32 +174,33 @@
 
 .ArticleHeader {
   display: flex;
-  width: 100%;
   min-height: 40px;
   box-shadow: 0 0 5px #000;
   padding: 5px;
+  width: 100%;
   z-index: 1;
+  justify-content: space-around;
 }
 
-.ArticleHeader .userWhoCreatePost {
-  justify-content: left;
-}
-
-.userWhoCreatePost {
+.ArticleHeader div {
   display: flex;
-  flex-direction: row;
-  flex: 1;
-}
-
-.ArticleHeaderTitle {
-  display: flex;
-  flex: 1;
-  text-align: center;
-  font-weight: 700;
-  font-size: 15px;
-  letter-spacing: 1px;
-  justify-content: center;
   align-items: center;
+}
+
+.ArticleHeader div p {
+  box-shadow: 0 0 5px #000;
+  margin-left: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.ArticleHeader h2 {
+  border: 1px solid #999;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px #000;
 }
 
 .LinkPost {
@@ -236,7 +260,7 @@
 .commentContainer {
   height: 100%;
   min-height: 20vh;
-  width: 50vw;
+  width: 80%;
   background-color: #fff;
   box-shadow: 0px 0px 5px #222;
   margin-top: 20px;
@@ -263,7 +287,7 @@
 }
 
 .CommentInputContainer input[type="text"] {
-  width: 30vw;
+  width: 20vw;
 }
 
 .CommentInputContainer input[type="submit"] {
@@ -271,6 +295,38 @@
   background-color: #000091;
   color: #fff;
   font-size: 20px;
+}
+
+.HomeContainerPopular {
+  width: 20vw;
+  height: 40vh;
+  box-shadow: 0 0 5px #000;
+  border-radius: 10px;
+  margin-top: 150px;
+  margin-left: 100px;
+  margin-right: 100px;
+  background-color: #dfefef;
+  overflow: hidden;
+}
+
+.HomeContainerPopularHeader {
+  background-color: #000;
+  height: 50px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+}
+
+.HomeContainerPopularContent {
+  padding: 10px;
+}
+
+.HomeContainerPopularContent td p {
+  font-size: 20px;
+  padding: 10px;
+  border-bottom: 1px solid #000;
 }
 
 .pageComment {
@@ -281,6 +337,10 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+
+.imageProfil {
+  border-radius: 100%;
 }
 
 .ArticleContainerComment {
@@ -317,21 +377,37 @@
 .upVote {
   width: 25px;
   height: 25px;
-  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-  background-color: #000;
+  clip-path: polygon(
+    0 50%,
+    50% 0,
+    100% 50%,
+    70% 50%,
+    70% 100%,
+    30% 100%,
+    30% 50%
+  );
+  background-color: #000091;
 }
 
 .upVote:hover {
   cursor: pointer;
-  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-  background-color: #000091;
+  clip-path: polygon(
+    0 50%,
+    50% 0,
+    100% 50%,
+    70% 50%,
+    70% 100%,
+    30% 100%,
+    30% 50%
+  );
+  background-color: #0000ee;
 }
 
 .downVote {
   width: 25px;
   height: 25px;
-  clip-path: polygon(50% 100%, 0 0, 100% 0);
-  background-color: #000;
+  clip-path: polygon(0 50%, 50% 100%, 100% 50%, 70% 50%, 70% 0, 30% 0, 30% 50%);
+  background-color: #e1000f;
 }
 
 .rate {
@@ -343,6 +419,6 @@
 
 .downVote:hover {
   cursor: pointer;
-  clip-path: polygon(50% 100%, 0 0, 100% 0);
-  background-color: #e1000f;
+  clip-path: polygon(0 50%, 50% 100%, 100% 50%, 70% 50%, 70% 0, 30% 0, 30% 50%);
+  background-color: #ff000f;
 }

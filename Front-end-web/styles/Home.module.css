@@ -118,17 +118,51 @@
 .HomeContainer {
   display: flex;
   padding-top: 5rem;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: center;
+
+  width: 80%;
+  height: 100%;
+  background-color: #ddd;
+}
+
+.HomeContainerPopular {
+  width: 20vw;
+  height: 40vh;
+  box-shadow: 0 0 5px #000;
+  border-radius: 10px;
+  margin-top: 150px;
+  margin-left: 100px;
+  margin-right: 100px;
+  background-color: #dfefef;
+  overflow: hidden;
+}
+
+.HomeContainerPopularHeader {
+  background-color: #000;
+  height: 50px;
+  color: #fff;
+  display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  font-size: 25px;
+}
+
+.HomeContainerPopularContent {
+  padding: 10px;
+}
+
+.HomeContainerPopularContent td p {
+  font-size: 20px;
+  padding: 10px;
+  border-bottom: 1px solid #000;
 }
 
 .HomeSubContainer {
   padding-top: 5rem;
-  background-color: #fff;
-  box-shadow: 0px 0px 5px #000;
-  width: 75%;
+  background-color: #dfdfdf;
+  box-shadow: 0px 0px 10px #666;
+  width: 120%;
   height: 100%;
   display: flex;
   flex: 1;
@@ -136,27 +170,104 @@
   align-items: center;
 }
 
+.HomeSearchBar {
+  margin-top: 4rem;
+  display: flex;
+  align-items: center;
+  width: 45vw;
+  min-width: 500px;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 5px;
+  box-shadow: 0 0 5px #000;
+  min-height: 60px;
+  font-size: 20px;
+  background-color: #fff;
+}
+
+.HomeSearchBar input[type="search"] {
+  width: 45vw;
+  min-width: 500px;
+  min-height: 60px;
+  font-size: 20px;
+  border: none;
+}
+
+.HomeSearchBar input[type="button"] {
+  background-color: #fff;
+  border: none;
+  display: flex;
+  width: 3vw;
+  height: 5vh;
+  background-image: url(../public/Image/rechercher.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.HomeSearchBarFilter {
+  margin-top: 4rem;
+  display: flex;
+  align-items: center;
+  width: 45vw;
+  min-width: 500px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #000;
+  min-height: 60px;
+  font-size: 20px;
+  background-color: #fff;
+  padding: 5px;
+}
+
+.HomeSearchBarFilter .HomeSearchBarNew {
+  background-color: #fff;
+  border: none;
+  display: flex;
+  width: 3vw;
+  height: 3vh;
+  background-image: url(../public/Image/lhorloge.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.HomeSearchBarFilter .HomeSearchBarPopular {
+  background-color: #fff;
+  border: none;
+  display: flex;
+  width: 3vw;
+  height: 3vh;
+  background-image: url(../public/Image/trophee.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.HomeSearchBarFilter .HomeSearchBarIncrease {
+  background-color: #fff;
+  border: none;
+  display: flex;
+  width: 3vw;
+  height: 3vh;
+  background-image: url(../public/Image/flamme.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.HomeSearchBar p {
+  margin-left: 40px;
+}
+
 .ArticleContainer {
   width: 50vw;
+  min-width: 500px;
   margin-top: 3rem;
   border-radius: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-}
-
-.ArticleSubContainer {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  background-color: #fff;
-  box-shadow: 0px 0px 5px #444;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
 }
 
 .ArticleImageContainer {
@@ -276,4 +387,8 @@
   height: 2vh;
   border-radius: 5px;
   margin-bottom: 10px;
+}
+
+.imageProfil {
+  border-radius: 100%;
 }

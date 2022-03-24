@@ -16,11 +16,14 @@ export default function () {
 
   if (allArticle != null) {
     const userInfo = JSON.parse(userCookie);
+
     allArticle.forEach((element) => {
-      if (element.articleUser == userInfo._id) {
+      if (element.articleCreator == userInfo._id) {
         array.push(element);
       }
     });
+
+    console.log(allArticle);
     return (
       <div>
         <Navigation></Navigation>
@@ -47,21 +50,27 @@ export default function () {
                 {allArticle &&
                   array.map((articleInfo) => (
                     <tr className={style.trSave}>
-                      <td className={style.tdSave}>{articleInfo._id}</td>
                       <td className={style.tdSave}>
-                        {articleInfo.articleName}
+                        {articleInfo.articleIsApproved
+                          ? "Approuvé"
+                          : "Non approuvé"}
+                      </td>
+                      <td className={style.tdSave}>
+                        {articleInfo.articleTitle}
                       </td>
                       <td className={style.tdSave}>Image</td>
+                      <td className={style.tdSave}>Photographie</td>
                       <td className={style.tdSave}>
-                        {articleInfo.articleCategory}
-                      </td>
-                      <td className={style.tdSave}>
-                        <Image
-                          className={style.chowIcon}
-                          src="/../public/Image/eye-solid.svg"
-                          height="30px"
-                          width="30px"
-                        />
+                        <Link href={`../crudPost/${articleInfo._id}`}>
+                          <a>
+                            <Image
+                              className={style.chowIcon}
+                              src="/../public/Image/eye-solid.svg"
+                              height="30px"
+                              width="30px"
+                            />
+                          </a>
+                        </Link>
                       </td>
                     </tr>
                   ))}
