@@ -13,7 +13,7 @@ const Login = ({navigation}) => {
 
   const getDataDebug = async () => {
     try {
-      const api = await fetch('http://192.168.1.80:3001/users/all', {
+      const api = await fetch('http://10.176.131.87:3001/users/all', {
         method: 'GET',
         headers: {
           Accept: 'application/json',
@@ -34,7 +34,7 @@ const Login = ({navigation}) => {
       console.log(await AsyncStorage.getItem('@userEmail'));
       console.log(await AsyncStorage.getItem('@userPassword'));
 
-      const login = await fetch('http://192.168.1.80:3001/auth/login', {
+      const login = await fetch('http://10.176.131.87:3001/auth/login', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

@@ -131,6 +131,7 @@ export default function createPost() {
                       <p>Insérer une vidéo :</p>
                       <input
                         type="file"
+                        name="vidFile"
                         accept="video/*"
                         onChange={uploadToClient}
                       ></input>
