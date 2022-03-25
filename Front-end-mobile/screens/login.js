@@ -3,6 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import {CheckBox, Input, Icon, Button, Text} from 'react-native-elements';
 import {color} from 'react-native-reanimated';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {API_URL} from "@env"
 
 
 const Login = ({navigation}) => {
@@ -13,7 +14,7 @@ const Login = ({navigation}) => {
 
   const getDataDebug = async () => {
     try {
-      const api = await fetch('http://192.168.1.80:3001/users/all', {
+      const api = await fetch(API_URL + '/users/all', {
         method: 'GET',
         headers: {
           Accept: 'application/json',
@@ -34,7 +35,7 @@ const Login = ({navigation}) => {
       console.log(await AsyncStorage.getItem('@userEmail'));
       console.log(await AsyncStorage.getItem('@userPassword'));
 
-      const login = await fetch('http://192.168.1.80:3001/auth/login', {
+      const login = await fetch(API_URL + '/auth/login', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

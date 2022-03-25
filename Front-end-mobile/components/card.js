@@ -1,13 +1,14 @@
 import React, {Component, useEffect, useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import { Icon, Badge } from 'react-native-elements';
+import {API_URL} from "@env"
 
 const Card = props => {
   const [pseudo, setPseudo] = useState('');
   const [imageTmp,setImageTmp] = useState(require('../test_content/waiting.jpg'))
   useEffect(() => {
     const getPseudoUser = async() => {
-      const api = await fetch('http://192.168.1.80:3001/user/' + props.data.articleCreator, {
+      const api = await fetch(API_URL + '/user/' + props.data.articleCreator, {
         method: 'GET',
         headers: {
           Accept: 'application/json',

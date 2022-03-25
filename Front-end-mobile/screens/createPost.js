@@ -4,6 +4,7 @@ import { Button, Input, Image } from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 import DocumentPicker from 'react-native-document-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {API_URL} from "@env"
 
 const CreatePost = () => {
   const [articleTitle, setArticleTitle] = useState('');
@@ -61,7 +62,7 @@ const CreatePost = () => {
     })
     formdata.append("article", jsonData);
     try{
-      const api = await fetch('http://192.168.1.80:3001/article/create', {
+      const api = await fetch(API_URL + '/article/create', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
