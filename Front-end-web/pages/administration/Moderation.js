@@ -51,9 +51,9 @@ export default function () {
                         ? "Approuvé"
                         : "Désaprouvé"}
                     </td>
-                    <td>{articleInfo.articleName}</td>
-                    <td>{articleInfo.articleContent}</td>
-                    <td>{articleInfo.articleCategory}</td>
+                    <td>{articleInfo.articleTitle}</td>
+                    <td>{articleInfo.articleDescription}</td>
+                    <td>{articleInfo.articleCategory_TTids}</td>
                     <td>
                       <Link href={`../crudPost/${articleInfo._id}`}>
                         <a>

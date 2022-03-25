@@ -40,9 +40,7 @@
   flex: 5;
   height: 100vh;
   align-items: center;
-  justify-content: center;
   padding-bottom: 10%;
-  margin-top: 200px;
 }
 .pageCreate {
   min-height: 100vh;
