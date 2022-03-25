@@ -130,7 +130,10 @@ export default function (props) {
     article.message != "une erreur est survenue" &&
     allComment != null
   ) {
-    console.log(allComment);
+    setTimeout(() => {
+      console.log(allComment.comments.commentContent);
+    }, 1000);
+
     return (
       <>
         <Navigation></Navigation>
@@ -238,14 +241,19 @@ export default function (props) {
               </div>
               <div className={style.commentContainer}>
                 <p>Ajouter un commentaire</p>
+                <form>
+                  <input type="text" onChange={writeComment}></input>
 
-                <input type="text" onChange={writeComment}></input>
-
-                <input
-                  type="submit"
-                  value="valider"
-                  onClick={addComment}
-                ></input>
+                  <input
+                    type="button"
+                    value="valider"
+                    onClick={addComment}
+                  ></input>
+                </form>
+                {allComment.comments &&
+                  allComment.comments.map((comment) => (
+                    <div>{comment.commentContent}</div>
+                  ))}
               </div>
             </div>
           </div>
