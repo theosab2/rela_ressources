@@ -12,17 +12,21 @@
 
 .menu button {
   font-size: 1.5rem;
-  width: 80%;
+  width: 85%;
   text-align: center;
+  font-weight: 400;
   margin-top: 3vh;
+  transition: all 0.2s ease-in-out;
 }
 
 .menu button:hover {
   font-size: 1.5rem;
-  width: 70%;
+  width: 100%;
   text-align: center;
   font-weight: 700;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
 }
 
 .content {
@@ -73,7 +77,14 @@
 .inputTextContainer {
   display: flex;
   flex-direction: column;
+  font-weight: 300;
 }
+.inputTextContainer:hover{
+  display: flex;
+  flex-direction: column;
+  font-weight: 400;
+}
+
 .inputTextContainer label {
   font-size: 25px;
   font-weight: 500;
@@ -379,4 +390,41 @@
   color: #fff;
   border-radius: 10px;
   font-size: 20px;
+}
+
+.input_label{
+  color: #719ece;
+  font-family: 'Marianne',serif;
+  font-size: xx-large;
+}
+.input{
+  width:100%;
+  text-align: left;
+  transition: all 0.2s ease-in-out;
+}
+.input:hover{
+  width:120%;
+  text-align: left;
+  transition: all 0.2s ease-in-out;
+}
+.input_focused{
+  width: 120%;
+  text-align: left;
+  transition: all 0.2s ease-in-out;
+}
+
+.largeInput{
+  width:150%;
+  text-align: left;
+  transition: all 0.2s ease-in-out;
+}
+.largeInput:hover{
+  width:160%;
+  text-align: left;
+  transition: all 0.2s ease-in-out;
+}
+.largeInput_focused{
+  width:160%;
+  text-align: left;
+  transition: all 0.2s ease-in-out;
 }

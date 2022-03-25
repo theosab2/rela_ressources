@@ -187,21 +187,6 @@ const mComment = require('../models/comment');
             }     
         };
 
-        //return Boolean representing existence of the provided commentName in database
-        module.exports.checkCommentNameExistence = async (commentName) => {
-            console.log("D.A.L [checkCommentNameExistence] (paramètres) 'commentName' :",commentName);
-            console.log(await mComment.count({'commentName':{'$regex': '^'+commentName+'$',$options:'im'}}));
-            try {
-                var result = await mComment.count({'commentName':{'$regex': '^'+commentName+'$',$options:'im'}}) > 0; //Case-insensitive query
-                console.log("D.A.L [checkCommentNameExistence] (return) 'result' : ",result);
-                return result;
-            } 
-            catch (error) {
-                console.log("D.A.L [checkCommentNameExistence] (return) 'err' : ",error);
-                return {message:"une erreur est survenue",error};
-            }     
-        };
-
     //#endregion
 
 //#endregion
@@ -221,90 +206,47 @@ const mComment = require('../models/comment');
             })
         }
         
-        try //Vérification de l'existence du nom du comment dans la base de données
+        try //Création du modèle à partir des données du body de la requête
         {   
-            var commentNameAlreadyExist = await this.checkCommentNameExistence(commentObject.commentName);
-            console.log("D.A.L [createComment] commentNameAlreadyExist :",commentNameAlreadyExist);
+            var newComment = new mComment({ ...commentObject });
         }
-        catch(exception) //ECHEC de la vérification de l'existence du nom d'utilisateur dans la base de données
-        {
+        catch (exception) //ECHEC Création du modèle à partir des données du body de la requête
+        {   
             console.log("D.A.L [createComment] (return) 'exception' : ", exception);
-            return({
-                status:"CONTROL_FAILURE",
+            return ({
+                status:"EXCEPTION",
                 statusCode:500,
-                message: "Une erreur est survenue durant la vérification de l'existence du nom de l'comment : \'"+commentObject.commentName+"\' dans la base de données",
+                message: "Une erreur est survenue durant la création du modèle pour le nouvel comment : \'"+commentObject.name+"\'",
+                commentInfoReceipted:commentObject,
                 exception:exception
             })
         }
-        
-        if(!commentNameAlreadyExist)
-        {
-            try //Création du modèle à partir des données du body de la requête
-            {   
-                var newComment = new mComment({ ...commentObject });
-            }
-            catch (exception) //ECHEC Création du modèle à partir des données du body de la requête
-            {   
-                console.log("D.A.L [createComment] (return) 'exception' : ", exception);
-                return ({
-                    status:"EXCEPTION",
-                    statusCode:500,
-                    message: "Une erreur est survenue durant la création du modèle pour le nouvel comment : \'"+commentObject.name+"\'",
-                    commentInfoReceipted:commentObject,
-                    exception:exception
-                })
-            }
-        
-            try //Sauvegarde du modèle Comment dans la BDD
-            {   
-                await (newComment.save());
-            }
-            catch (exception) //ECHEC Sauvegarde du modèle Comment dans la BDD
-            {   
-                console.log("D.A.L [createComment] (return) 'exception' : ", exception);
-                return ({
-                    status:"EXCEPTION",
-                    statusCode:500,
-                    message: "Une erreur est survenue durant l'enregistrement du modèle dans la base de données pour le nouveau comment : \'"+commentObject.commentName+"\'",
-                    commentInfoReceipted:commentObject,
-                    exception:exception
-                })
-            }
     
-            console.log("D.A.L [createComment] (return) 'status' : SUCCESS");
-            return ({
-                status:"SUCCESS",
-                statusCode:201,
-                commentCreated:commentObject,
-                message: "Utilisateur : \'"+commentObject.commentName+"\' Créé avec succès"
-            });
+        try //Sauvegarde du modèle Comment dans la BDD
+        {   
+            await (newComment.save());
         }
-        else
-        {
-            var message = "";
-            var nbFieldInError = 0;
-
-            if(commentNameAlreadyExist) 
-            {
-                nbFieldInError++;
-                message += "\'commentName\'";
-            }
-
-            message = nbFieldInError > 1 
-            ? nbFieldInError+" fields values who needs to be uniques in database already exist : "+message 
-            : "A field value who need to be unique in database already exist : "+message;
-
-            console.log("D.A.L [createComment] (return) 'error' : duplicated-field");
+        catch (exception) //ECHEC Sauvegarde du modèle Comment dans la BDD
+        {   
+            console.log("D.A.L [createComment] (return) 'exception' : ", exception);
             return ({
-                status:"FAILURE",
+                status:"EXCEPTION",
                 statusCode:500,
-                userInfoReceipted:commentObject,
-                nbError:nbFieldInError,
-                message:message
-            });
+                message: "Une erreur est survenue durant l'enregistrement du modèle dans la base de données pour le nouveau comment : \'"+commentObject.commentName+"\'",
+                commentInfoReceipted:commentObject,
+                exception:exception
+            })
         }
 
-        
+        //TODO : faire la vérification de la création du commentaire
+
+        console.log("D.A.L [createComment] (return) 'status' : SUCCESS");
+        return ({
+            status:"SUCCESS",
+            statusCode:201,
+            commentCreated:commentObject,
+            message: "Utilisateur : \'"+commentObject.commentName+"\' Créé avec succès"
+        });
     };
 
     //Mets à jour le comment et renvoi le résultat de la mise à jour
