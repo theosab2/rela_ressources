@@ -75,30 +75,39 @@ export default function ProfilUpdate() {
               alt="Logo gouvernement français"
             />
             <div className={style.inputTextContainer}>
-              <label htmlFor="Nom">Nom</label>
+              <label className={style.input_label} htmlFor="Nom">Nom</label>
               <input
+                className={style.input}
                 id="nameUser"
                 type="text"
                 defaultValue={userInfo.name}
+                onFocus={(e) => {e.target.className = style.input_focused}}
+                onBlur={(e) => {e.target.className = style.input}}
                 onChange={(nameUser) => setNameUser(nameUser.target.value)}
               ></input>
             </div>
             <div className={style.inputTextContainer}>
-              <label htmlFor="Prenom">Prenom</label>
+              <label className={style.input_label} htmlFor="Prenom">Prenom</label>
               <input
+                className={style.input}
                 id="surnameUser"
                 type="text"
                 defaultValue={userInfo.firstname}
+                onFocus={(e) => {e.target.className = style.input_focused}}
+                onBlur={(e) => {e.target.className = style.input}}
                 onChange={(surnameUser) =>
                   setSurnameUser(surnameUser.target.value)
                 }
               ></input>
             </div>
             <div className={style.inputTextContainer}>
-              <label htmlFor="Pseudonyme">Pseudonyme</label>
+              <label className={style.input_label} htmlFor="Pseudonyme">Pseudonyme</label>
               <input
+                className={style.input}
                 type="text"
                 defaultValue={userInfo.username}
+                onFocus={(e) => {e.target.className = style.input_focused}}
+                onBlur={(e) => {e.target.className = style.input}}
                 onChange={(pseudoUser) =>
                   setPseudoUser(pseudoUser.target.value)
                 }
@@ -107,37 +116,49 @@ export default function ProfilUpdate() {
           </div>
           <div className={style.contentright}>
             <div className={style.inputTextContainer}>
-              <label htmlFor="Mail">Adresse mail</label>
+              <label className={style.input_label} htmlFor="Mail">Adresse mail</label>
               <input
+                className={style.largeInput}
                 id="mailUser"
                 type="text"
-                defaultValue={userInfo.username}
+                defaultValue={userInfo.email}
+                onFocus={(e) => {e.target.className = style.largeInput_focused}}
+                onBlur={(e) => {e.target.className = style.largeInput}}
                 onChange={(mailUser) => setMailUser(mailUser.target.value)}
               ></input>
             </div>
             <div className={style.inputTextContainer}>
-              <label htmlFor="Pays">Region</label>
+              <label className={style.input_label} htmlFor="Pays">Region</label>
               <input
+                className={style.input}
                 type="text"
                 defaultValue={userInfo.location.ville}
+                onFocus={(e) => {e.target.className = style.input_focused}}
+                onBlur={(e) => {e.target.className = style.input}}
                 onChange={(regionUser) =>
                   setRegionUser(regionUser.target.value)
                 }
               ></input>
             </div>
             <div className={style.inputTextContainer}>
-              <label htmlFor="Ville">Ville</label>
+              <label className={style.input_label} htmlFor="Ville">Ville</label>
               <input
+                className={style.input}
                 type="text"
                 defaultValue={userInfo.location.region}
+                onFocus={(e) => {e.target.className = style.input_focused}}
+                onBlur={(e) => {e.target.className = style.input}}
                 onChange={(townUser) => setTownUser(townUser.target.value)}
               ></input>
             </div>
             <div className={style.inputTextContainer}>
-              <label htmlFor="naissance">Téléphone</label>
+              <label className={style.input_label} htmlFor="naissance">Téléphone</label>
               <input
+                className={style.input}
                 type="text"
                 defaultValue={userInfo.phone}
+                onFocus={(e) => {e.target.className = style.input_focused}}
+                onBlur={(e) => {e.target.className = style.input}}
                 onChange={(phoneUser) => setPhoneUser(phoneUser.target.value)}
               ></input>
             </div>
