@@ -5,6 +5,7 @@ import Card from '../components/card';
 import Footer from '../components/footer';
 import LinearGradient from 'react-native-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {API_URL} from "@env"
 
 const Home = ({navigation}) => {
   const [post, setPost] = useState({});
@@ -21,7 +22,7 @@ const Home = ({navigation}) => {
       }
     }
     const getPost = async () => {
-      const api = await fetch('http://192.168.1.80:3001/articles/all', {
+      const api = await fetch(API_URL + '/articles/all', {
         method: 'GET',
         headers: {
           Accept: 'application/json',

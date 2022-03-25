@@ -4,8 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import LinearGradient from 'react-native-linear-gradient';
 import {Button, Icon} from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-
-
+import {API_URL} from "@env"
 
 const Account = () => {
   const [userData, setUserData] = useState({});
@@ -25,7 +24,7 @@ const Account = () => {
     }
     const getUserData = async (storedId) => {
       try {
-        const api = await fetch('http://192.168.1.80:3001/user/' + storedId, {
+        const api = await fetch(API_URL + '/user/' + storedId, {
           method: 'GET',
           headers: {
             Accept: 'application/json',

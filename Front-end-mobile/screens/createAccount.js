@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
 import {CheckBox, Input, Icon, Button, Text} from 'react-native-elements';
+import {API_URL} from "@env"
 
 const CreateAccount = ({navigation}) => {
   const [username, setUsername] = useState('');
@@ -19,7 +20,7 @@ const CreateAccount = ({navigation}) => {
     if (accept) {
       console.log(username);
       try{
-        const api = await fetch('http://192.168.1.80:3001/auth/register', {
+        const api = await fetch(API_URL + '/auth/register', {
           method: 'POST',
           headers: {
             Accept: 'application/json',
