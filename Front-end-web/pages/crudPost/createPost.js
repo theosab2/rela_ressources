@@ -44,7 +44,7 @@ export default function createPost() {
     console.log(JSON_Object);
     formdata.append("article", JSON_Object);
     console.log(formdata);
-    const res = await fetch("http://localhost:3001/article/create", {
+    const res = await fetch("http://10.176.131.87:3001/article/create", {
       method: "POST",
       headers: {
         Accept: "application/json",

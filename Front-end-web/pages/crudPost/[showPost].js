@@ -5,14 +5,19 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import articleManager from "../utils/articleManager";
+import utils from "../utils/cookieManager";
 
 export default function (props) {
   const router = useRouter();
   const { showPost } = router.query;
+  //let user;
   const [user, setUser] = useState(null);
   const [article, setArticle] = useState(null);
+  const [allComment, setAllComment] = useState(null);
   const [nbLike, setLike] = useState(null);
   const [nbDislike, setDislike] = useState(null);
+  const [comment, setComment] = useState(null);
+  const userCookie = utils();
 
   let allArticle;
   let articlePopular = [];
@@ -60,24 +65,72 @@ export default function (props) {
     console.log(event);
   }
 
-  const getArticle = async () =>
-    await fetch("http://localhost:3001/article/" + showPost, {
-      method: "GET",
+  function writeComment(event) {
+    setComment(event.target.value);
+  }
+
+  async function addComment() {
+    console.log(JSON.parse(userCookie)._id);
+    console.log(article._id);
+    console.log(comment);
+    let res = await fetch("http://10.176.131.87:3001/comment/create", {
+      method: "POST",
       headers: {
         Accept: "application/json",
+        "Content-Type": "application/json",
       },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setArticle(data);
-      });
+      body: JSON.stringify({
+        comment: {
+          commentCreator: JSON.parse(userCookie)._id,
+          commentArticle: article._id,
+          commentContent: comment,
+        },
+      }),
+    });
+
+    res = await res.json();
+  }
 
   useEffect(() => {
+    const getArticle = async () =>
+      await fetch("http://10.176.131.87:3001/article/" + showPost, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setArticle(data);
+        });
     getArticle();
   }, [showPost]);
 
-  if (article && article.message != "une erreur est survenue") {
-    console.log(article);
+  useEffect(() => {
+    const getComment = async () =>
+      await fetch("http://10.176.131.87:3001/comments/query", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          commentArticle: showPost,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setAllComment(data);
+        });
+    getComment();
+  }, [showPost]);
+
+  if (
+    article &&
+    article.message != "une erreur est survenue" &&
+    allComment != null
+  ) {
+    console.log(allComment);
     return (
       <>
         <Navigation></Navigation>
@@ -92,7 +145,7 @@ export default function (props) {
                 <tbody>
                   {articlePopular &&
                     articlePopular.map((articlePopular) => (
-                      <tr>
+                      <tr key={articlePopular._id}>
                         <td>
                           <p>{articlePopular.articleTitle}</p>
                         </td>
@@ -185,10 +238,14 @@ export default function (props) {
               </div>
               <div className={style.commentContainer}>
                 <p>Ajouter un commentaire</p>
-                <form className={style.CommentInputContainer}>
-                  <input type="text"></input>
-                  <input type="submit" value="valider"></input>
-                </form>
+
+                <input type="text" onChange={writeComment}></input>
+
+                <input
+                  type="submit"
+                  value="valider"
+                  onClick={addComment}
+                ></input>
               </div>
             </div>
           </div>

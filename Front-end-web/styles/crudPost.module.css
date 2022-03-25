@@ -223,7 +223,7 @@
 
 .ArticleFooter {
   background-color: #fff;
-  height: 8vh;
+  height: 100%;
   width: 100%;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -291,6 +291,13 @@
 }
 
 .CommentInputContainer input[type="submit"] {
+  width: 10vw;
+  background-color: #000091;
+  color: #fff;
+  font-size: 20px;
+}
+
+.CommentInputContainer input[type="button"] {
   width: 10vw;
   background-color: #000091;
   color: #fff;
