@@ -32,6 +32,8 @@ const articleSchema = mongoose.Schema({
   articleImage:{type:String,required:false},
   articleIsApproved:{type:Boolean,required:true,default:false},
   articleIsActive:{type:Boolean,required:true,default:false},
+  _createdAt:{type:Date, required:true, default:Date.now()},
+  _updatedAt:{type:Date, requried:true, default:Date.now()}
 });
 
 module.exports = mongoose.model('Article', articleSchema);
