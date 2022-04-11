@@ -6,6 +6,7 @@ import Footer from '../components/footer';
 import LinearGradient from 'react-native-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {API_URL} from "@env"
+import HomemadeNavBar from '../components/homemadeNavBar';
 
 const Home = ({navigation}) => {
   const [post, setPost] = useState({});
@@ -54,13 +55,15 @@ const Home = ({navigation}) => {
       locations={[0, 1]}
     >
       <SafeAreaView style={styles.container}>
+        
         <ScrollView style={styles.scrollView}>
           {display}
+          
         </ScrollView>
       </SafeAreaView>
       <View style={styles.footer}>
-        <Footer />
       </View>
+      <HomemadeNavBar navigation={navigation}/>
     </LinearGradient>
   );
 };
@@ -70,12 +73,6 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 8,
-  },
-  footer: {
-    flex: 1,
-    backgroundColor: 'grey',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   linearGradient: {
     height: '100%',

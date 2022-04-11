@@ -28,97 +28,97 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
-const StackAccount = ({navigation, route}) => {
+const StackAccount = ({ navigation, route }) => {
   const [userId, setUserId] = useState(null);
 
 
 
-  useEffect(()=>{
+  useEffect(() => {
     const getData = async () => {
       try {
         const storedId = await AsyncStorage.getItem('@userId');
         setUserId(storedId != null ? storedId : null)
-      } catch(e) {
+      } catch (e) {
       }
     }
     getData();
   }, [])
 
-  if(userId != null){
-    return(
-      <Stack.Navigator 
+  if (userId != null) {
+    return (
+      <Stack.Navigator
         screenOptions={{
           headerShown: true
-      }}>
-        <Stack.Screen name='account' 
-        component={Account}
-        options={{
-          headerLeft: props => (<Icon name='menu'
-          type='ionicon'
-          color='#869ECE'
-          size={40}
-          onPress={() => navigation.openDrawer()}/>),
-          title: 'Profile'
-        }}
+        }}>
+        <Stack.Screen name='account'
+          component={Account}
+          options={{
+            headerLeft: props => (<Icon name='menu'
+              type='ionicon'
+              color='#869ECE'
+              size={40}
+              onPress={() => navigation.openDrawer()} />),
+            title: 'Profile'
+          }}
         />
       </Stack.Navigator>
     )
   }
-  else{
-      return(
-    <Stack.Navigator 
-      screenOptions={{
-        headerShown: false
-    }}>
-      <Stack.Screen name='Login' 
-      component={Login} 
-      />
-      <Stack.Screen name='createAccount' 
-      component={CreateAccount} 
-      />
-    </Stack.Navigator>
-  )
+  else {
+    return (
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false
+        }}>
+        <Stack.Screen name='Login'
+          component={Login}
+        />
+        <Stack.Screen name='createAccount'
+          component={CreateAccount}
+        />
+      </Stack.Navigator>
+    )
 
   }
 }
-const TabNavigation = ({navigation, route}) => {
+const TabNavigation = ({ navigation, route }) => {
   const [connected, setConnect] = useState(false);
   console.log(route);
   React.useEffect(() => {
-    if(route.params?.post){
+    if (route.params?.post) {
       setConnect(true);
     }
-  },[route.params?.post]);
+  }, [route.params?.post]);
 
   const connexion = () => {
     console.log(connected)
   }
-  return(
+  return (
     <Tab.Navigator
       initialRouteName='home'
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color}) => {
+        tabBarIcon: ({ focused, color }) => {
           let iconName;
           if (route.name === 'home') {
             iconName = focused
               ? 'newspaper'
               : 'newspaper-outline';
           }
-          if (route.name === 'createPost'){
+          if (route.name === 'createPost') {
             iconName = focused
               ? 'add-circle'
               : 'add-circle-outline';
-          } 
-          if (route.name === 'postSaved'){
+          }
+          if (route.name === 'postSaved') {
             iconName = focused
               ? 'folder-open'
               : 'folder-outline';
-          } 
+          }
 
           // You can return any component that you like here!
           return <Icon name={iconName}
-          type='ionicon'
-          color={color} />;
+            type='ionicon'
+            color={color} />;
         },
         tabBarActiveTintColor: '#2F4077',
         tabBarInactiveTintColor: '#869ECE',
@@ -128,15 +128,15 @@ const TabNavigation = ({navigation, route}) => {
         component={Home}
         options={{
           headerLeft: props => (<Icon name='menu'
-          type='ionicon'
-          color='#869ECE'
-          size={40}
-          onPress={() => navigation.openDrawer()}/>),
+            type='ionicon'
+            color='#869ECE'
+            size={40}
+            onPress={() => navigation.openDrawer()} />),
           headerRight: () => (<Icon name='person-circle-outline'
-          type='ionicon'
-          color='#869ECE'
-          size={40}
-          onPress={() => navigation.navigate('Login')}/>),
+            type='ionicon'
+            color='#869ECE'
+            size={40}
+            onPress={() => navigation.navigate('Login')} />),
           title: 'Fil d\'actus'
         }}
       />
@@ -144,15 +144,15 @@ const TabNavigation = ({navigation, route}) => {
         component={CreatePost}
         options={{
           headerLeft: props => (<Icon name='menu'
-          type='ionicon'
-          color='#869ECE'
-          size={40}
-          onPress={() => navigation.openDrawer()}/>),
+            type='ionicon'
+            color='#869ECE'
+            size={40}
+            onPress={() => navigation.openDrawer()} />),
           headerRight: () => (<Icon name='person-circle-outline'
-          type='ionicon'
-          color='#869ECE'
-          size={40}
-          onPress={() => navigation.navigate('Login')}/>),
+            type='ionicon'
+            color='#869ECE'
+            size={40}
+            onPress={() => navigation.navigate('Login')} />),
           title: 'Créer une ressource'
         }}
       />
@@ -160,46 +160,111 @@ const TabNavigation = ({navigation, route}) => {
         component={PostSaved}
         options={{
           headerLeft: () => (<Icon name='menu'
-          type='ionicon'
-          color='#869ECE'
-          size={40}
-          onPress={() => navigation.openDrawer()}/>),
+            type='ionicon'
+            color='#869ECE'
+            size={40}
+            onPress={() => navigation.openDrawer()} />),
           headerRight: () => (<Icon name='person-circle-outline'
-          type='ionicon'
-          color='#869ECE'
-          size={40}
-          onPress={() => navigation.navigate('Login')}/>),
+            type='ionicon'
+            color='#869ECE'
+            size={40}
+            onPress={() => navigation.navigate('Login')} />),
           title: 'Vos ressources'
         }}
-        
+
       />
     </Tab.Navigator>
   )
 }
-const DrawerNavigation = ({navigation,route}) => {
-  return(
+const DrawerNavigation = ({ navigation, route }) => {
+  return (
     <Drawer.Navigator initialRouteName='Home'>
-          <Drawer.Screen
-            name='Home'
-            component={TabNavigation}
-            options={{
-              title: 'Accueil',
-              headerShown: false,
-            }}
-            
-          />
-          <Drawer.Screen
-            name='Login'
-            component={StackAccount}
-            options={{
-              title: "Compte",
-              headerShown: false
-            }}
-          />
-        </Drawer.Navigator>
+      <Drawer.Screen
+        name='Home'
+        component={TabNavigation}
+        options={{
+          title: 'Accueil',
+          headerShown: false,
+        }}
+
+      />
+      <Drawer.Screen
+        name='Login'
+        component={StackAccount}
+        options={{
+          title: "Compte",
+          headerShown: false
+        }}
+      />
+    </Drawer.Navigator>
   )
 }
-
+const HomeStack = ({navigation, route}) => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name='home'
+        component={Home}
+      />
+      <Stack.Screen
+        name='Test'
+        component={Login}
+      />
+    </Stack.Navigator>
+  )
+}
+const RelationStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: true
+      }}>
+      <Stack.Screen
+        name='Relation'
+        component={Home}
+      />
+    </Stack.Navigator>
+  )
+}
+const AddStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: true
+      }}>
+      <Stack.Screen
+        name='CreatePost'
+        component={CreatePost}
+      />
+    </Stack.Navigator>
+  )
+}
+const SaveStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: true
+      }}>
+      <Stack.Screen
+        name='MyPost'
+        component={PostSaved}
+      />
+    </Stack.Navigator>
+  )
+}
+const MsgStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: true
+      }}>
+      <Stack.Screen
+        name='account'
+        component={Home}
+      />
+    </Stack.Navigator>
+  )
+}
 const App = () => {
 
   useEffect(() => {
@@ -207,11 +272,28 @@ const App = () => {
       "[react-native-gesture-handler] ",
     ]);
   })
-  
+
   return (
     <>
       <NavigationContainer>
-        <DrawerNavigation/>
+        <Stack.Navigator
+            screenOptions={{
+              headerShown: false
+            }}
+        >
+          <Stack.Screen
+            name='Home'
+            component={HomeStack}
+          />
+          <Stack.Screen
+            name='NewPost'
+            component={AddStack}
+          />
+          <Stack.Screen
+            name='SavedPost'
+            component={PostSaved}
+          />
+        </Stack.Navigator>
       </NavigationContainer>
     </>
   );
