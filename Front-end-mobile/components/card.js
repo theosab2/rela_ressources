@@ -2,6 +2,7 @@ import React, {Component, useEffect, useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import { Icon, Badge } from 'react-native-elements';
 import {API_URL} from "@env"
+import { color } from 'react-native-reanimated';
 
 const Card = props => {
   const [pseudo, setPseudo] = useState('');
@@ -37,87 +38,71 @@ const Card = props => {
     <TouchableOpacity
       style={styles.container}
       onPress={() => props.navigation.navigate('Login')}>
-      <View style={styles.containerPseudo}>
-        <Text style={styles.pseudo} adjustsFontSizeToFit={true}>{pseudo}</Text>
-      </View>
-      <View style={styles.containerImg}>
-        <Image 
-        style={styles.img}
-        source={imageTmp}
-        />
-      </View>
-      <View style={styles.description}>
-        <Text>{props.data.articleDescription}</Text>
-      </View>
-      <View style={styles.containerIcon}>
-        <View style={styles.icons}>
-          <Icon
-            name='thumbs-up'
-            type='ionicon'
-            color='#ffffff'            
-          />
-          <Badge
-            status="primary"
-            value={props.data.articleNbLikes}
-            containerStyle={{ position: 'absolute', top: 2, right: 15 }}
+        <View style={styles.topPart}>
+          <View style={styles.titleContainer}>
+            <View style={styles.categoryContainer}>
+              <Text style={styles.categorieIcon}>CA</Text>
+              <Text>Categorie</Text>
+            </View>
+            <Text style={styles.titlePost}>{props.data.articleTitle}</Text>
+            <Text style={styles.date}>{props.data._createdAt}</Text>
+          </View>
+          <Image 
+            style={styles.img}
+            source={imageTmp}
           />
         </View>
-        <View>
-          <Text>ICO2</Text>
+        <View style={styles.bottomPart}>
+          <Text>{props.data.articleDescription}</Text>
         </View>
-      </View>
     </TouchableOpacity>
   );
 };
 const styles = StyleSheet.create({
   container: {
     margin: 5,
+    width: '95%',
+    height: 230,
+    backgroundColor: '#869ECE',
+    borderRadius: 10
   },
-  containerImg: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    height: 200,
-    backgroundColor: "#2f4077",
-    borderTopRightRadius: 10
-  },
-  description: {
-    display: 'flex',
-    alignItems: 'center',
-    backgroundColor: '#2f4077'
-  },
-  containerIcon: {
-    display: 'flex',
+  topPart:{
+    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    backgroundColor: '#2f4077',
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-    height: 35
+    margin: 9
   },
-  icons:{
-    justifyContent: 'center',
+  titleContainer: {
+    flexDirection: 'column',
+    width: '66%'
+
+  },
+  categoryContainer:{
     flexDirection: 'row',
     alignItems: 'center'
   },
-  containerPseudo: {
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    backgroundColor: '#2F4077',
-    width: 100,
-    justifyContent: 'center',
-    alignItems: 'center'
+  categorieIcon: {
+    backgroundColor: "#90CE86",
+    borderRadius: 100,
+    textAlign: 'center',
+    padding: 3,
+    marginEnd: 5
   },
-  pseudo: {
-    
+  titlePost: {
+    fontSize: 22
+  },
+  date: {
+    fontSize: 12,
+    color: '#BEC4D3',
+  },
+  bottomPart:{
+    flex: 1,
+    margin: 9,
   },
   img:{
     backgroundColor: '#ffffff',
-    width: '95%',
-    height: '95%',
-    borderTopRightRadius: 10,
-    borderBottomLeftRadius: 10,
+    width: '33%',
+    height: '100%',
+    borderRadius: 10
   }
 });
 

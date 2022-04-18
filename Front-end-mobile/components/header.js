@@ -10,15 +10,17 @@ const Header = (props, {navigation}) => {
     <View style={styles.container}>
       <Avatar
         size={55}
-        icon={{name: 'navicon', type: 'evilicon', size: 55}}
+        icon={{name: 'navicon', type: 'evilicon', size: 40}}
         onPress={() => {
           console.log('Menu');
         }}
       />
-      <Text>{props.title}</Text>
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>Ressources Relationnelles</Text>
+      </View>
       <Avatar
         size={55}
-        icon={{name: 'user', type: 'evilicon', size: 55}}
+        icon={{name: 'user', type: 'evilicon', size: 40}}
         onPress={() => navigation.navigate('Login')}
       />
     </View>
@@ -31,6 +33,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
   },
+  titleContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '25%'
+  },
+  title: {
+    textAlign: 'center',
+  }
 });
 
 export default Header;

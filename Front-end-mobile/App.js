@@ -201,7 +201,10 @@ const DrawerNavigation = ({ navigation, route }) => {
 }
 const HomeStack = ({navigation, route}) => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+    screenOptions={{
+      headerShown: false
+    }}>
       <Stack.Screen
         name='home'
         component={Home}
