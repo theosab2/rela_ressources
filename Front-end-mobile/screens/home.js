@@ -89,10 +89,6 @@ const styles = StyleSheet.create({
   postPosition: {
     alignItems: 'center'
   },
-  linearGradient: {
-    height: '100%',
-    width: '100%',
-  },
   titleContainer: {
     width: '100%',
     justifyContent: 'center',

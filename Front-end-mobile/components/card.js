@@ -37,7 +37,9 @@ const Card = props => {
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() => props.navigation.navigate('Login')}>
+      onPress={() => props.navigation.navigate('Post', {
+        idPost: props.data._id
+      })}>
         <View style={styles.topPart}>
           <View style={styles.titleContainer}>
             <View style={styles.categoryContainer}>

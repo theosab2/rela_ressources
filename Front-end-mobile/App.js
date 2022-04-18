@@ -23,6 +23,7 @@ import CreatePost from './screens/createPost';
 import PostSaved from './screens/postSaved';
 import { Button } from 'react-native-elements/dist/buttons/Button';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Post from './screens/post';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -210,8 +211,8 @@ const HomeStack = ({navigation, route}) => {
         component={Home}
       />
       <Stack.Screen
-        name='Test'
-        component={Login}
+        name='Post'
+        component={Post}
       />
     </Stack.Navigator>
   )
