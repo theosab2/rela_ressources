@@ -21,11 +21,9 @@ const Card = props => {
     }
     const getImage = async () => {
       try {
-        console.log('lien ',props.data)
         if(props.data.articleImage != '' || props.data.articleImage != null || props.data.articleImage != undefined ){
           setImageTmp({uri : props.data.articleImage})
         }
-        console.log(imageTmp)
       } catch (e) {
         console.log('error')
         console.log(e)
