@@ -11,8 +11,7 @@ const Post = ({route, navigation}) => {
 
   useEffect(() => {
     const getDataPost = async () => {
-     /* try{*/
-        console.log(API_URL + '/article/' + route.params.idPost)
+      try{
         const api = await fetch(API_URL + '/article/' + route.params.idPost, {
           method: 'GET',
           headers: {
@@ -21,11 +20,10 @@ const Post = ({route, navigation}) => {
           },
         });
         const res = await api.json()
-        console.log(res)
         setPost(res);
-      /*}catch(e){
+      }catch(e){
         console.log(e);
-      }*/
+      }
     }
     getDataPost();
   },[])
@@ -80,7 +78,7 @@ const Post = ({route, navigation}) => {
                 color='#CE8686'
                 style={styles.infoIcon}
               />
-              <Text style={styles.info}>122</Text>
+              <Text style={styles.info}>{post != null ? post.articleNbLikes : '...' }</Text>
             </View>
             <View style={styles.infoContainer}>
               <Icon
@@ -89,7 +87,7 @@ const Post = ({route, navigation}) => {
                 color='#CE8686'
                 style={styles.infoIcon}
               />
-              <Text style={styles.info}>47</Text>
+              <Text style={styles.info}>{post != null ? post.articleNbLikes : '...' }</Text>
             </View>
             <View style={styles.infoContainer}>
               <Icon
@@ -98,11 +96,11 @@ const Post = ({route, navigation}) => {
                 color='#CE8686'
                 style={styles.infoIcon}
               />
-              <Text style={styles.info}>10</Text>
+              <Text style={styles.info}>{post != null ? post.articleNbDislikes : '...' }</Text>
             </View>
           </View>
-          <ProfilCard userId={1}/>
-          <Text>{route.params.idPost}</Text>
+          <ProfilCard userId={post != null ? post.articleCreator : null} date={post != null ? post._updatedAt : null}/>
+          <Text>{post != null ? post.articleDescription : '...' }</Text>
         </ScrollView>
       </SafeAreaView>
       <View style={styles.footer}>

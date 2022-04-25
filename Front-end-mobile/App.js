@@ -84,7 +84,6 @@ const StackAccount = ({ navigation, route }) => {
 }
 const TabNavigation = ({ navigation, route }) => {
   const [connected, setConnect] = useState(false);
-  console.log(route);
   React.useEffect(() => {
     if (route.params?.post) {
       setConnect(true);
@@ -269,6 +268,27 @@ const MsgStack = () => {
     </Stack.Navigator>
   )
 }
+const AuthStack = ({navigation, route}) => {
+  return (
+    <Stack.Navigator
+    screenOptions={{
+      headerShown: false
+    }}>
+      <Stack.Screen
+        name='Login'
+        component={Login}
+      />
+      <Stack.Screen
+        name='CreateAccount'
+        component={CreateAccount}
+      />
+      <Stack.Screen
+        name='Profil'
+        component={Account}
+      />
+    </Stack.Navigator>
+  )
+}
 const App = () => {
 
   useEffect(() => {
@@ -296,6 +316,10 @@ const App = () => {
           <Stack.Screen
             name='SavedPost'
             component={PostSaved}
+          />
+          <Stack.Screen
+            name='Auth'
+            component={AuthStack}
           />
         </Stack.Navigator>
       </NavigationContainer>

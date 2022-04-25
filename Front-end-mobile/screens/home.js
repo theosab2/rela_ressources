@@ -17,7 +17,6 @@ const Home = ({navigation}) => {
     const getStateUser = async () => {
       const user = await AsyncStorage.getItem('@userId');
       setUserId(user);
-      console.log(user);
       if(user != null){
         getPost()
       }else{
@@ -41,9 +40,7 @@ const Home = ({navigation}) => {
     }
     const displayPost = (data) => {
       if(data.articles != undefined){
-        console.log(data.articles);
         return data.articles.map(item => {
-          console.log('coucou',item._id);
           return <Card navigation={navigation} key={item._id} data={item}/>
         })
       }else{
@@ -55,7 +52,7 @@ const Home = ({navigation}) => {
   }, [])
   return (
     <View style={styles.container}>
-      <Header />
+      <Header navigation={navigation}/>
       <View style={styles.titleContainer}>
         <Text style={styles.title}>Fil d'actualités</Text>
         <Divider

@@ -1,17 +1,30 @@
+import {API_URL} from "@env"
 import { Image, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-const ProfilCard = ({userId}) => {
+const ProfilCard = ({userId,date}) => {
     const [userData,setUserData] = useState(null);
 
     useEffect(() => {
-        const getUserData = () => {
-            if(userId){
-
+        const getUserData = async () => {
+                try {
+                    const api = await fetch(API_URL + '/user/' + userId, {
+                        method: 'GET',
+                        headers: {
+                          Accept: 'application/json',
+                          'Content-Type': 'application/json'
+                        },
+                      });
+                      const res = await api.json()
+                      setUserData(res);
+                      console.log("user",userData);
+                } catch (e) {
+                    console.log('error',e);
+                }
             }
-        }
-    },[])
+        getUserData();
+    },[userId])
 
   return (
     <TouchableOpacity style={styles.container} containerStyle={styles.containerStyle}>
@@ -20,8 +33,8 @@ const ProfilCard = ({userId}) => {
         source={require('../test_content/waiting.jpg')}
       />
       <View style={styles.infoContainer}>
-          <Text style={styles.name}>Nom Prenom</Text>
-          <Text style={styles.date}>date</Text>
+          <Text style={styles.name}>{userId != null && userData.username != null ? userData.username : "..."}</Text>
+          <Text style={styles.date}>{date != null ? date : "..."}</Text>
       </View>
       <TouchableOpacity containerStyle={styles.buttonContainer}>
           <Text>Add</Text>

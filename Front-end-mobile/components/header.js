@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {Avatar, Button} from 'react-native-elements';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-const Header = (props, {navigation}) => {
+
+const Header = ({navigation}) => {
   console.log(navigation);
   return (
     <View style={styles.container}>
@@ -21,7 +20,7 @@ const Header = (props, {navigation}) => {
       <Avatar
         size={55}
         icon={{name: 'user', type: 'evilicon', size: 40}}
-        onPress={() => navigation.navigate('Login')}
+        onPress={() => navigation.navigate('Auth',{ screen: 'Login' })}
       />
     </View>
   );
