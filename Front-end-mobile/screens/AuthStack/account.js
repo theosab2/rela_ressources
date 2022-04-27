@@ -1,8 +1,7 @@
 import { StyleSheet, Text, View, Image} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import LinearGradient from 'react-native-linear-gradient';
-import {Button, Icon} from 'react-native-elements';
+import {Icon} from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import {API_URL} from "@env"
 
@@ -46,18 +45,13 @@ const Account = () => {
 
   return (
     <View style={styles.container}>
-      <LinearGradient
-        colors={['#869ece', '#ffffff' ]}
-        style={styles.linearGradient}
-        locations={[0, 1]}
-      >
         <View
           style={styles.card}
         >
           <View style={styles.profilCadre}>
             <Image
               style={styles.profilImage}
-              source={require('../test_content/zombie.png')}
+              source={require('../../test_content/zombie.png')}
             />
           </View>
           <Text style={styles.username}>{userData.username}</Text>
@@ -92,7 +86,6 @@ const Account = () => {
             <Text style={styles.text}>Messages</Text>
           </TouchableOpacity>
         </View>
-      </LinearGradient>
     </View>
   );
 };
@@ -105,6 +98,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
+    backgroundColor: '#2F4077'
   },
   card: {
     height: '75%',

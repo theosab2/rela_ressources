@@ -101,7 +101,7 @@ const CreatePost = () => {
         <View>
           <Image
             style={styles.uploadImg}
-            source={imageUri != null ? {uri: imageUri} : require('../test_content/waiting.jpg')}
+            source={imageUri != null ? {uri: imageUri} : require('../../test_content/waiting.jpg')}
           />
           <Text >
           File Name: {singleFile.name ? singleFile.name : ''}

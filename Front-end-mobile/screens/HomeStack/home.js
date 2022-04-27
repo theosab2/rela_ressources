@@ -1,10 +1,10 @@
 import React, {Component, useEffect, useState} from 'react';
 import {StyleSheet, Text, View, ScrollView, SafeAreaView} from 'react-native';
-import Card from '../components/card';
+import Card from '../../components/card';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {API_URL} from "@env"
-import HomemadeNavBar from '../components/homemadeNavBar';
-import Header from '../components/header';
+import HomemadeNavBar from '../../components/homemadeNavBar';
+import Header from '../../components/header';
 import { Divider } from 'react-native-elements';
 
 const Home = ({navigation}) => {

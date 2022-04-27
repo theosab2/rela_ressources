@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { Button } from 'react-native-elements/dist/buttons/Button'
-import { createIconSetFromFontello } from 'react-native-vector-icons'
 import LinearGradient from 'react-native-linear-gradient';
 
 const PostSaved = ({route}) => {

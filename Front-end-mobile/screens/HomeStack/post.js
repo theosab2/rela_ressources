@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { Image, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import Header from '../components/header';
-import ProfilCard from '../components/profilCard';
+import Header from '../../components/header';
+import ProfilCard from '../../components/profilCard';
 
 const Post = ({route, navigation}) => {
   const [post, setPost] = useState(null);
@@ -63,7 +63,7 @@ const Post = ({route, navigation}) => {
         <ScrollView style={styles.scrollView} contentContainerStyle={styles.postPosition}>
           <Image
             style={styles.img}
-            source={require('../test_content/waiting.jpg')}
+            source={require('../../test_content/waiting.jpg')}
           />
           <Text style={styles.title}>{post != null ? post.articleTitle : '...' }</Text>
           <View style={styles.infoLine}>

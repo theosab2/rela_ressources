@@ -9,21 +9,24 @@
 import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, LogBox } from 'react-native';
-import Home from './screens/home';
-import Login from './screens/login';
+import Home from './screens/HomeStack/home';
+import Login from './screens/AuthStack/login';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import CreateAccount from './screens/createAccount';
-import Account from './screens/account';
+import CreateAccount from './screens/AuthStack/createAccount';
+import Account from './screens/AuthStack/account';
 import Header from './components/header';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
-import CreatePost from './screens/createPost';
-import PostSaved from './screens/postSaved';
+import CreatePost from './screens/AddStack/createPost';
+import PostSaved from './screens/SavedStack/postSaved';
 import { Button } from 'react-native-elements/dist/buttons/Button';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Post from './screens/post';
+import Post from './screens/HomeStack/post';
+import IdSetting from './screens/AuthStack/idSetting';
+import PwdSetting from './screens/AuthStack/pwdSetting';
+import CoorSetting from './screens/AuthStack/coorSetting';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -199,12 +202,12 @@ const DrawerNavigation = ({ navigation, route }) => {
     </Drawer.Navigator>
   )
 }
-const HomeStack = ({navigation, route}) => {
+const HomeStack = ({ navigation, route }) => {
   return (
     <Stack.Navigator
-    screenOptions={{
-      headerShown: false
-    }}>
+      screenOptions={{
+        headerShown: false
+      }}>
       <Stack.Screen
         name='home'
         component={Home}
@@ -265,26 +268,34 @@ const MsgStack = () => {
         name='account'
         component={Home}
       />
+      <Stack.Screen
+        name='Account'
+        component={Account}
+      />
     </Stack.Navigator>
   )
 }
-const AuthStack = ({navigation, route}) => {
+const AuthStack = ({ navigation, route }) => {
   return (
     <Stack.Navigator
-    screenOptions={{
-      headerShown: false
-    }}>
+      screenOptions={{
+        headerShown: false
+      }}>
       <Stack.Screen
         name='Login'
         component={Login}
       />
       <Stack.Screen
-        name='CreateAccount'
-        component={CreateAccount}
+        name='IdSetting'
+        component={IdSetting}
       />
       <Stack.Screen
-        name='Profil'
-        component={Account}
+        name='PwdSetting'
+        component={PwdSetting}
+      />
+      <Stack.Screen
+        name='CoorSetting'
+        component={CoorSetting}
       />
     </Stack.Navigator>
   )
@@ -301,9 +312,9 @@ const App = () => {
     <>
       <NavigationContainer>
         <Stack.Navigator
-            screenOptions={{
-              headerShown: false
-            }}
+          screenOptions={{
+            headerShown: false
+          }}
         >
           <Stack.Screen
             name='Home'
