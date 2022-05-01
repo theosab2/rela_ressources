@@ -22,6 +22,49 @@ router.get("/test", (req, res, next) => {
   res.status(200).json({ message: "L'API à répondu correctement" });
 });
 
+//#region [SCHEMA]
+
+  //USER
+  //Get user model schema
+  router.get("/user/schema", async function (req, res, next) {
+    var data = await _userQueryService.getUserSchema();
+    res.status(200).json(data);
+  });
+
+  //Get user model schema
+  router.get("/user/schema/detailled", async function (req, res, next) {
+    var data = await _userQueryService.getDetailledUserSchema();
+    res.status(200).json(data);
+  });
+
+  //ARTICLE
+  //Get article model schema
+  router.get("/article/schema", async function (req, res, next) {
+    var data = await _articleQueryService.getArticleSchema();
+    res.status(200).json(data);
+  });
+
+  //Get article model detailled schema
+  router.get("/article/schema/detailled", async function (req, res, next) {
+    var data = await _articleQueryService.getDetailledArticleSchema();
+    res.status(200).json(data);
+  });
+
+  //COMMENT
+  //Get comment model schema
+  router.get("/comment/schema", async function (req, res, next) {
+    var data = await _commentQueryService.getCommentSchema();
+    res.status(200).json(data);
+  });
+
+  //Get comment model detailled schema
+  router.get("/comment/schema/detailled", async function (req, res, next) {
+    var data = await _commentQueryService.getDetailledCommentSchema();
+    res.status(200).json(data);
+  });
+
+//#endregion
+
 //#region [AUTH]
 
 //Inscription
@@ -53,22 +96,6 @@ router.post("/auth/logout/:userId", async function (req, res, next) {
 // ========================================================== //
 
 //#region [USER]
-
-//#region [SCHEMA]
-
-//Get user model schema
-router.get("/user/schema", async function (req, res, next) {
-  var data = await _userQueryService.getUserSchema();
-  res.status(200).json(data);
-});
-
-//Get user model schema
-router.get("/user/schema/detailled", async function (req, res, next) {
-  var data = await _userQueryService.getDetailledUserSchema();
-  res.status(200).json(data);
-});
-
-//#endregion
 
 //#region [QUERY]
 
@@ -128,22 +155,6 @@ router.put("/user/:userId", async function (req, res, next) {
 
 //#region [ARTICLE]
 
-//#region [SCHEMA]
-
-//Get article model schema
-router.get("/article/schema", async function (req, res, next) {
-  var data = await _articleQueryService.getArticleSchema();
-  res.status(200).json(data);
-});
-
-//Get article model detailled schema
-router.get("/article/schema/detailled", async function (req, res, next) {
-  var data = await _articleQueryService.getDetailledArticleSchema();
-  res.status(200).json(data);
-});
-
-//#endregion
-
 //#region [QUERY]
 
 //Get query object template
@@ -178,8 +189,7 @@ router.get("/article/:id", async function (req, res, next) {
 
 //#region [UPDATE RESSOURCES]
 
-//Création d'un article
-
+  //Création d'un article
   router.post("/article/create", _multer.articleImage, async function (req, res, next) {
 
     var articleObject = {};
@@ -226,92 +236,7 @@ router.put("/article/:articleId", async function (req, res, next) {
 
 // ========================================================== //
 
-//#region [CATEGORY]
-
-//#region [QUERY]
-
-//Get query object template
-router.get("/categories/query", async function (req, res, next) {
-  var data = await _categoryQueryService.getQueryTemplate();
-  res.status(200).json(data);
-});
-
-//Get list of categories from query in request body
-router.post("/categories/query", async function (req, res, next) {
-  var data = await _categoryQueryService.queryCategories(req.body);
-  res.status(200).json(data);
-});
-
-//#endregion
-
-//#region [GET RESSOURCES]
-
-
-//Get all categories
-router.get("/categories/all", async function (req, res, next) { //TODO : get all category with UT
-  var data = await _categoryQueryService.getAllCategories();
-  res.status(200).json(data);
-});
-
-//Get category by ID
-router.get("/category/:id", async function (req, res, next) { //TODO : get one category with UT
-  var data = await _categoryQueryService.getCategoryById(req.params.id);
-  res.status(200).json(data);
-});
-
-//#endregion
-
-//#region [UPDATE RESSOURCES]
-
-//Création d'un category
-router.post("/category/create", async function (req, res, next) { //TODO : create category with UT
-  var categoryCreationQueryResult = await _categoryQueryService.createCategory(
-    req.body.category
-  );
-  res.status(categoryCreationQueryResult.statusCode).json(categoryCreationQueryResult);
-});
-
-//Suppression d'un category
-router.post("/category/delete/:categoryId", async function (req, res, next) { //TODO : delete category with UT
-  // Sera à modifier, on ne supprime pas une entité, on la désactive (mev)
-  var deleteResult = await _categoryQueryService.deleteCategory(
-    req.params.categoryId
-  );
-  res.status(deleteResult.statusCode).json(deleteResult);
-});
-
-//Mise à jour d'un category
-router.put("/category/:categoryId", async function (req, res, next) { //TODO : update category with UT
-  var updateResult = await _categoryQueryService.updateCategory(
-    req.params.categoryId,
-    req.body.category
-  );
-  res.status(updateResult.statusCode).json(updateResult);
-});
-
-//#endregion
-
-//#endregion
-
-// ========================================================== //
-
 //#region [COMMENT]
-
-//#region [SCHEMA]
-
-//Get comment model schema
-router.get("/comment/schema", async function (req, res, next) {
-  var data = await _commentQueryService.getCommentSchema();
-  res.status(200).json(data);
-});
-
-//Get comment model detailled schema
-router.get("/comment/schema/detailled", async function (req, res, next) {
-  var data = await _commentQueryService.getDetailledCommentSchema();
-  res.status(200).json(data);
-});
-
-//#endregion
 
 //#region [QUERY]
 
@@ -380,5 +305,11 @@ router.put("/comment/:commentId", async function (req, res, next) {
 //#endregion
 
 // ========================================================== //
+
+//#region [UTable]
+
+  
+
+//#endregion
 
 module.exports = router;
