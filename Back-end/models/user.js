@@ -8,9 +8,18 @@ const userSchema = mongoose.Schema({
   phone: { type: String, required: true,unique:true },
   email: { type: String, required: true,unique:true },
   isConnected: { type: Boolean, required: false },
-  isActive: { type: Boolean, required: true},
+  isApproved: { type: Boolean, required: true},
+  relation_ids:[
+    {type:String, required:false}
+  ],
+  avatarUrl : {type:Boolean, required: false, default:"AvatarDefaultUrl"},
   role: { type: String, required: true },
-  location: { type: Object, required: false}
+  favoris: [
+    {type:String,required:false},
+  ],
+  location: { type: Object, required: false},
+  _createdAt:{ type:Date, required: true, default: Date.now()},
+  _updatedAt:{ type:Date, required: false, default: null}
 });
 
 module.exports = mongoose.model('User', userSchema);
