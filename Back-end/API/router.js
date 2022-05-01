@@ -4,17 +4,11 @@ const _multer = require('../MiddleWares/multer-configuration');
 
 //===== DAL - QueryServices =====//
 const _articleQueryService = require("../DAL/articleQueryService");
-const _categoryQueryService = require("../DAL/categoryQueryService");
 const _commentQueryService = require("../DAL/commentQueryService");
-const _roleQueryService = require("../DAL/roleQueryService");
 const _userQueryService = require("../DAL/userQueryService");
 //===============================//
 
 //===== BLL - ApplicationServices =====//
-const _articleApplicationService = require("../BLL/articleApplicationService");
-const _categoryApplicationService = require("../BLL/categoryApplicationService");
-const _commentApplicationService = require("../BLL/commentApplicationService");
-const _roleApplicationService = require("../BLL/roleApplicationService");
 const _userApplicationService = require("../BLL/userApplicationService");
 //===============================//
 
@@ -222,88 +216,6 @@ router.put("/article/:articleId", async function (req, res, next) {
   var updateResult = await _articleQueryService.updateArticle(
     req.params.articleId,
     req.body.article
-  );
-  res.status(updateResult.statusCode).json(updateResult);
-});
-
-//#endregion
-
-//#endregion
-
-// ========================================================== //
-
-//#region [ROLE]
-
-//#region [SCHEMA]
-
-//Get role model schema
-router.get("/role/schema", async function (req, res, next) {
-  var data = await _roleQueryService.getRoleSchema();
-  res.status(200).json(data);
-});
-
-//Get role model detailled schema
-router.get("/role/schema/detailled", async function (req, res, next) {
-  var data = await _roleQueryService.getDetailledRoleSchema();
-  res.status(200).json(data);
-});
-
-//#endregion
-
-//#region [QUERY]
-
-//Get query object template
-router.get("/roles/query", async function (req, res, next) {
-  var data = await _roleQueryService.getQueryTemplate();
-  res.status(200).json(data);
-});
-
-//Get list of roles from query in request body
-router.post("/roles/query", async function (req, res, next) {
-  var data = await _roleQueryService.queryRoles(req.body);
-  res.status(200).json(data);
-});
-
-//#endregion
-
-//#region [GET RESSOURCES]
-
-//Get all roles
-router.get("/roles/all", async function (req, res, next) {
-  var data = await _roleQueryService.getAllRoles();
-  res.status(200).json(data);
-});
-
-//Get role by ID
-router.get("/role/:id", async function (req, res, next) {
-  var data = await _roleQueryService.getRoleById(req.params.id);
-  res.status(200).json(data);
-});
-
-//#endregion
-
-//#region [UPDATE RESSOURCES]
-
-//Création d'un role
-router.post("/role/create", async function (req, res, next) {
-  var roleCreationQueryResult = await _roleQueryService.createRole(
-    req.body.role
-  );
-  res.status(roleCreationQueryResult.statusCode).json(roleCreationQueryResult);
-});
-
-//Suppression d'un role
-router.post("/role/delete/:roleId", async function (req, res, next) {
-  // Sera à modifier, on ne supprime pas une entité, on la désactive (mev)
-  var deleteResult = await _roleQueryService.deleteRole(req.params.roleId);
-  res.status(deleteResult.statusCode).json(deleteResult);
-});
-
-//Mise à jour d'un role
-router.put("/role/:roleId", async function (req, res, next) {
-  var updateResult = await _roleQueryService.updateRole(
-    req.params.roleId,
-    req.body.role
   );
   res.status(updateResult.statusCode).json(updateResult);
 });
