@@ -1,25 +1,39 @@
 const mongoose = require('mongoose');
 
-const userSchema = mongoose.Schema({
+const UserSchema = mongoose.Schema({
+  password: { type: String, required: true},
   username: { type: String, required: true, unique: true },
   firstname: { type: String, required: true},
-  name: { type: String, required: true },
-  password: { type: String, required: true},
+  lastname: { type: String, required: true },
   phone: { type: String, required: true,unique:true },
   email: { type: String, required: true,unique:true },
-  isConnected: { type: Boolean, required: false },
-  isApproved: { type: Boolean, required: true},
+  isConnected: { type: Boolean },
+  isApproved: { type: Boolean, required: true, default:false},
   relation_ids:[
-    {type:String, required:false}
+    {type:String}
   ],
-  avatarUrl : {type:Boolean, required: false, default:"AvatarDefaultUrl"},
-  role: { type: String, required: true },
+  photoUrl : {type:String, required: false, default:"AvatarDefaultUrl"},
+  role: { type: String, required: true, default:"user" },
   favoris: [
     {type:String,required:false},
   ],
-  location: { type: Object, required: false},
+  location: { 
+    coutry:{type:String},
+    city:{type:String},
+    zipcode:{type:String},
+    address:{type:String},
+    region:{type:String},
+    latitude:{type:Number},
+    longitude:{type:Number},
+  },
+  settings:[
+    {
+      UT_id:{type:String, required:true}, //code : SETTING => (name, valueType, defaultValue)
+      value:{type:String}
+    }
+  ],
   _createdAt:{ type:Date, required: true, default: Date.now()},
-  _updatedAt:{ type:Date, required: false, default: null}
+  _updatedAt:{ type:Date, required: false, default: Date.now()}
 });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', UserSchema);
