@@ -2,7 +2,6 @@
 const mongoose = require('mongoose');
 
 //Import B.L.L associée
-const _commentApplicationService = require("../BLL/commentApplicationService");
 
 //Import B.L.L global
 const _queryParserService = require("../BLL/global/queryParserService");
