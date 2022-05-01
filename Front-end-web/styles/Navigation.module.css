@@ -1,4 +1,4 @@
-.header{
+.navHeader{
     display: flex;
     flex: 1;
     height: 75px;
@@ -6,14 +6,104 @@
     align-items: center;
 }
 
+.navBody{
+  display: flex;
+  flex-direction: row;
+}
+
 .sideBar{
+  position: fixed;
   background-color: #2F4077; 
   width: 200px;
   height: 100%;
 }
 
-.sidebarcontent{
+.sidebarContent{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border:solid 2px #869ECE;
+  flex-direction: column;
+}
+.sidebarTitle{
+  display: flex;
+  width: 100%;
   background-color: #869ECE;
+  text-align: center;
+  color: #fff;
+  height: 35px;
+  justify-content: center;
+  align-items: center;
+}
+
+.sidebarChoice{
+  width: 100%;
+  background-color: #2F4077;
+  border: 1px #869ECE solid;
+  color:#fff;
+}
+
+.sidebarChoice div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  border-bottom: 1px #869ECE solid;
+  font-size: 15px;
+  color: #fff;
+
+}
+
+.recentContent{
+  position: sticky;
+  display: flex;
+  width: 300px;
+  height: 500px;
+  background-color: #2F4077;
+  margin-left: 80%;
+  margin-top: 75px;
+  border-radius: 10px;
+  flex-direction: column;
+}
+
+.recentTitle{
+  margin-top: 10px;
+  margin-left: 10px;
+  color: #fff;
+  font-size: 20px;
+  border-bottom: 1px solid #000;
+}
+
+.recentChoice{
+  display: flex;
+  margin-top: 10px;
+  margin-left: 10px;
+  color: #fff;
+  font-size: 20px;
+  border-bottom: 1px solid #000;
+  flex-direction: row;
+}
+
+.recentUserPicture{
+  width: 50px;
+  height: 50px;
+  flex: 1;
+}
+
+.recentInfo{
+  display: flex;
+  flex-direction: column;
+  flex: 5;
+  justify-content: center;
+  margin-left: 10px;
+}
+
+.recentUserName{
+  font-size: 12px;
+}
+
+.recentArticleTitle{
+  font-size: 15px;
 }
 
 .burger_menu{
@@ -22,9 +112,13 @@
     height: 60px;
     margin-left: 10px;
     color:#fff;
+    cursor: pointer;
 }
-.burger_menu{
-  cursor: pointer;
+
+.icon_connexion{
+  width: 60px;
+  height: 60px;
+  margin-left: 80%;
 }
 
 .headerTitle{
