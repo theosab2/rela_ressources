@@ -10,7 +10,7 @@ module.exports = function (app, server) {
     console.log("Attempting database connexion...");
     mongoose
       .connect(
-        `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_URL}/${process.env.DB_NAME}?retryWrites=true&w=majority`,
+        `mongodb+srv://CUBES-DBUSER:DatabasePassword@cubes-cluster.7elq3.mongodb.net/CUBESDB?retryWrites=true&w=majority`,
         {
           useNewUrlParser: true,
           useUnifiedTopology: true,

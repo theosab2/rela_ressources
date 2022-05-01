@@ -392,3 +392,9 @@
 .imageProfil {
   border-radius: 100%;
 }
+
+.colorBackground{
+ height: 100vh;
+ width: 100vw;
+ background-color: #BEC4D3;
+}
