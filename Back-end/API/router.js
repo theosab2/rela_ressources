@@ -2,6 +2,11 @@
 const _multer = require('../MiddleWares/multer-configuration');
 //=====================//
 
+//===== Controllers =====//
+const _utController = require("../Controllers/utController");
+
+//===============================//
+
 //===== DAL - QueryServices =====//
 const _articleQueryService = require("../DAL/articleQueryService");
 const _commentQueryService = require("../DAL/commentQueryService");
@@ -308,7 +313,12 @@ router.put("/comment/:commentId", async function (req, res, next) {
 
 //#region [UTable]
 
-  
+  //Get query object template
+  router.get("/ut/all/:code", async function (req, res, next) {
+    let code = req.params.code;
+    var data = await _utController.getAllByCode(code);
+    res.status(200).json(data);
+  });
 
 //#endregion
 

@@ -12,7 +12,6 @@
 
                 var IS_NOT_NULL = await this.parseParameter_IsNotNull(value);
 
-                //TODO suppression des paramètres entre crochets
 
                 console.log(key,": CASE INSENSITIVE :",CASE_INSENSITIVE);
                 console.log(key,": LIKE :",LIKE);
