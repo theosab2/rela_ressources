@@ -4,17 +4,11 @@ const _multer = require('../MiddleWares/multer-configuration');
 
 //===== DAL - QueryServices =====//
 const _articleQueryService = require("../DAL/articleQueryService");
-const _categoryQueryService = require("../DAL/categoryQueryService");
 const _commentQueryService = require("../DAL/commentQueryService");
-const _roleQueryService = require("../DAL/roleQueryService");
 const _userQueryService = require("../DAL/userQueryService");
 //===============================//
 
 //===== BLL - ApplicationServices =====//
-const _articleApplicationService = require("../BLL/articleApplicationService");
-const _categoryApplicationService = require("../BLL/categoryApplicationService");
-const _commentApplicationService = require("../BLL/commentApplicationService");
-const _roleApplicationService = require("../BLL/roleApplicationService");
 const _userApplicationService = require("../BLL/userApplicationService");
 //===============================//
 
@@ -232,111 +226,7 @@ router.put("/article/:articleId", async function (req, res, next) {
 
 // ========================================================== //
 
-//#region [ROLE]
-
-//#region [SCHEMA]
-
-//Get role model schema
-router.get("/role/schema", async function (req, res, next) {
-  var data = await _roleQueryService.getRoleSchema();
-  res.status(200).json(data);
-});
-
-//Get role model detailled schema
-router.get("/role/schema/detailled", async function (req, res, next) {
-  var data = await _roleQueryService.getDetailledRoleSchema();
-  res.status(200).json(data);
-});
-
-//#endregion
-
-//#region [QUERY]
-
-//Get query object template
-router.get("/roles/query", async function (req, res, next) {
-  var data = await _roleQueryService.getQueryTemplate();
-  res.status(200).json(data);
-});
-
-//Get list of roles from query in request body
-router.post("/roles/query", async function (req, res, next) {
-  var data = await _roleQueryService.queryRoles(req.body);
-  res.status(200).json(data);
-});
-
-//#endregion
-
-//#region [GET RESSOURCES]
-
-//Get all roles
-router.get("/roles/all", async function (req, res, next) {
-  var data = await _roleQueryService.getAllRoles();
-  res.status(200).json(data);
-});
-
-//Get role by ID
-router.get("/role/:id", async function (req, res, next) {
-  var data = await _roleQueryService.getRoleById(req.params.id);
-  res.status(200).json(data);
-});
-
-//#endregion
-
-//#region [UPDATE RESSOURCES]
-
-//Création d'un role
-router.post("/role/create", async function (req, res, next) {
-  var roleCreationQueryResult = await _roleQueryService.createRole(
-    req.body.role
-  );
-  res.status(roleCreationQueryResult.statusCode).json(roleCreationQueryResult);
-});
-
-//Suppression d'un role
-router.post("/role/delete/:roleId", async function (req, res, next) {
-  // Sera à modifier, on ne supprime pas une entité, on la désactive (mev)
-  var deleteResult = await _roleQueryService.deleteRole(req.params.roleId);
-  res.status(deleteResult.statusCode).json(deleteResult);
-});
-
-//Mise à jour d'un role
-router.put("/role/:roleId", async function (req, res, next) {
-  var updateResult = await _roleQueryService.updateRole(
-    req.params.roleId,
-    req.body.role
-  );
-  res.status(updateResult.statusCode).json(updateResult);
-});
-
-//#endregion
-
-//#endregion
-
-// ========================================================== //
-
 //#region [CATEGORY]
-
-//#region [SCHEMA]
-
-//Get category model schema
-router.get("/category/schema", async function (req, res, next) {
-  var data = await _categoryQueryService.getCategorySchema();
-  res.status(200).json(data);
-});
-
-//Get category model detailled schema
-router.get("/category/schema/detailled", async function (req, res, next) {
-  var data = await _categoryQueryService.getDetailledCategorySchema();
-  res.status(200).json(data);
-});
-
-//Get user model schema
-router.get("/user/schema/detailled", async function (req, res, next) {
-  var data = await _userQueryService.getDetailledUserSchema();
-  res.status(200).json(data);
-});
-
-//#endregion
 
 //#region [QUERY]
 
@@ -352,25 +242,19 @@ router.post("/categories/query", async function (req, res, next) {
   res.status(200).json(data);
 });
 
-//Get list of users from query in request body
-router.post("/users/query", async function (req, res, next) {
-  var data = await _userQueryService.queryUsers(req.body);
-  res.status(200).json(data);
-});
-
 //#endregion
 
 //#region [GET RESSOURCES]
 
 
 //Get all categories
-router.get("/categories/all", async function (req, res, next) {
+router.get("/categories/all", async function (req, res, next) { //TODO : get all category with UT
   var data = await _categoryQueryService.getAllCategories();
   res.status(200).json(data);
 });
 
 //Get category by ID
-router.get("/category/:id", async function (req, res, next) {
+router.get("/category/:id", async function (req, res, next) { //TODO : get one category with UT
   var data = await _categoryQueryService.getCategoryById(req.params.id);
   res.status(200).json(data);
 });
@@ -380,7 +264,7 @@ router.get("/category/:id", async function (req, res, next) {
 //#region [UPDATE RESSOURCES]
 
 //Création d'un category
-router.post("/category/create", async function (req, res, next) {
+router.post("/category/create", async function (req, res, next) { //TODO : create category with UT
   var categoryCreationQueryResult = await _categoryQueryService.createCategory(
     req.body.category
   );
@@ -388,7 +272,7 @@ router.post("/category/create", async function (req, res, next) {
 });
 
 //Suppression d'un category
-router.post("/category/delete/:categoryId", async function (req, res, next) {
+router.post("/category/delete/:categoryId", async function (req, res, next) { //TODO : delete category with UT
   // Sera à modifier, on ne supprime pas une entité, on la désactive (mev)
   var deleteResult = await _categoryQueryService.deleteCategory(
     req.params.categoryId
@@ -397,7 +281,7 @@ router.post("/category/delete/:categoryId", async function (req, res, next) {
 });
 
 //Mise à jour d'un category
-router.put("/category/:categoryId", async function (req, res, next) {
+router.put("/category/:categoryId", async function (req, res, next) { //TODO : update category with UT
   var updateResult = await _categoryQueryService.updateCategory(
     req.params.categoryId,
     req.body.category
