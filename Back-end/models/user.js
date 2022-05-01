@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const userSchema = mongoose.Schema({
+const UserSchema = mongoose.Schema({
   username: { type: String, required: true, unique: true },
   firstname: { type: String, required: true},
   name: { type: String, required: true },
@@ -10,7 +10,7 @@ const userSchema = mongoose.Schema({
   isConnected: { type: Boolean, required: false },
   isApproved: { type: Boolean, required: true},
   relation_ids:[
-    {type:String, required:false}
+    {type:String}
   ],
   avatarUrl : {type:Boolean, required: false, default:"AvatarDefaultUrl"},
   role: { type: String, required: true },
@@ -22,4 +22,4 @@ const userSchema = mongoose.Schema({
   _updatedAt:{ type:Date, required: false, default: null}
 });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', UserSchema);

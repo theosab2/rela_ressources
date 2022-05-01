@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const articleSchema = mongoose.Schema({
+const ArticleSchema = mongoose.Schema({
   articleTitle: { type: String, required: true, unique: true },
   articleDescription: { type: String, required: false},
   articleTag_TTids:
@@ -47,4 +47,4 @@ const articleSchema = mongoose.Schema({
   _updatedAt:{type:Date, requried:false, default:null}
 });
 
-module.exports = mongoose.model('Article', articleSchema);
+module.exports = mongoose.model('Article', ArticleSchema);
