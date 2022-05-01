@@ -14,6 +14,8 @@ export default function Navigation(image) {
   const router = useRouter();
   const navTitle = "Accueil";
 
+  let [renderPage, setRenderPage] = useState("Accueil");
+
   useEffect(() => {
     if (router.asPath == "/") {
       router.push("/");
@@ -29,6 +31,15 @@ export default function Navigation(image) {
     router.push("/administration/AdministrationHome");
   };
 
+  function pageRender() {
+    switch (renderPage) {
+      case "Accueil":
+        return <Home></Home>;
+        break;
+      default:
+        return <Home></Home>;
+    }
+  }
 
   const userCookie = utils();
   if (userCookie == false) {
@@ -37,6 +48,7 @@ export default function Navigation(image) {
         <div className={style.navHeader}>
           <img src="/Image/burger-menu.png" className={style.burger_menu}/>
           <p className={style.headerTitle}>Ressource Relationnelle</p>
+          <p className={style.headerPageTitle}>{navTitle}</p>
           <img src="/Image/connexion.png" className={style.icon_connexion}/>
         </div>
         <div className={style.navBody}>
@@ -49,20 +61,22 @@ export default function Navigation(image) {
               </div>
             </div>
           </div>
-          <div className={style.recentContent}>
-            <div className={style.recentTitle}>Récent</div>
-            <div className={style.recentChoice}>
-                <img 
-                src="/Image/connexion.png"
-                alt="User picture"
-                className={style.recentUserPicture}
-                />
+          <div className={style.navContentSeparator}>
+          {pageRender()}
+            <div className={style.recentContent}>
+              <div className={style.recentTitle}>Récent</div>
+                <div className={style.recentChoice}>
+                    <img 
+                    src="/Image/connexion.png"
+                    alt="User picture"
+                    className={style.recentUserPicture}
+                    />
                 <div className={style.recentInfo}>
-                  <div className={style.recentUserName}>JeanMichel62</div>
-                  <div className={style.recentArticleTitle}>La terre est ovoidale</div>
+                      <div className={style.recentUserName}>JeanMichel62</div>
+                      <div className={style.recentArticleTitle}>La terre est ovoidale</div>
+                </div>
               </div>
             </div>
-          
           </div>
         </div>
       </>

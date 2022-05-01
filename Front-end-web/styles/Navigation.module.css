@@ -1,4 +1,8 @@
 .navHeader{
+  overflow: hidden;
+  position: fixed; 
+  top: 0; 
+  width: 100%;
     display: flex;
     flex: 1;
     height: 75px;
@@ -13,9 +17,14 @@
 
 .sideBar{
   position: fixed;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   background-color: #2F4077; 
   width: 200px;
-  height: 100%;
+  margin-top: 75px;
+
 }
 
 .sidebarContent{
@@ -54,14 +63,22 @@
 
 }
 
+.navContentSeparator{
+  margin-left: 200px;
+  display: flex;
+  justify-content: space-around;
+  height: 100%;
+  width: 100%;
+  margin-top: 125px;
+  
+}
+
 .recentContent{
   position: sticky;
   display: flex;
   width: 300px;
   height: 500px;
   background-color: #2F4077;
-  margin-left: 80%;
-  margin-top: 75px;
   border-radius: 10px;
   flex-direction: column;
 }
@@ -127,4 +144,10 @@
     font-size: 20px;
     margin-left: 50px;
     font-family:sans-serif;
+}
+
+.headerPageTitle{
+  color:#fff;
+  margin-left: 200px;
+  font-size: 20px;
 }

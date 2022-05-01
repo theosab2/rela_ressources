@@ -6,7 +6,7 @@ import articleManager from "../utils/articleManager";
 import Image from "next/image";
 
 export default function Home() {
-  let allArticle;
+  /*let allArticle;
   let articlePopular = [];
   allArticle = articleManager();
   for (let i = 0; i < 5; i++) {
@@ -14,69 +14,54 @@ export default function Home() {
       articlePopular.push(allArticle[i]);
     }
   }
+
+  {allArticle &&
+    allArticle
+      .reverse()
+      .map((articleInfo) => (
+        <Post
+          key={articleInfo._id}
+          allArticleDetail={articleInfo}
+          articleTitle={articleInfo.articleTitle}
+          articleUrl="/../public/Image/up.png"
+          userId={articleInfo.articleCreator}
+        ></Post>
+      ))}*/
   return (
     <>
-      <Navigation></Navigation>
-      <div className={style.HomeContainer}>
-        <div className={style.HomeContainerPopular}>
-          <div className={style.HomeContainerPopularHeader}>
-            Les plus populaire
+      <div className={style.mainContainer}>
+        <input type="text" placeholder="Recherche" className={style.searchBar}></input>
+        <div className={style.articleContainer}>
+          <div className={style.firstPartContainer}>
+            <div className={style.firstInfo}>
+              <div className={style.userInfoContainer}>
+                <img src="/Image/connexion.png" className={style.userPicture}/>
+                <div className={style.userPostInfoContainer}>
+                  <div className={style.userName}>JeanMichelle</div>
+                  <div className={style.publicationDate}>Publication : Il y a 4h</div>
+                </div>
+              </div>
+              <div className={style.articleTitle}>Je suis un jolie titre</div>
+            </div>
+            <img src="/Image/Bateau_2.jpg" className={style.articlePicture}/>
           </div>
-
-          <div className={style.HomeContainerPopularContent}>
-            <table>
-              <tbody>
-                {articlePopular &&
-                  articlePopular.map((articlePopular) => (
-                    <tr>
-                      <td>
-                        <p>{articlePopular.articleTitle}</p>
-                      </td>
-                      <td>
-                        <Image
-                          src={"/../public/Image/Bateau_2.jpg"} // Route of the image file
-                          height={40} // Desired size with correct aspect ratio
-                          width={40} // Desired size with correct aspect ratio
-                          alt="Image profil"
-                          className={style.imageProfil}
-                        />
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
+          <div className={style.articleBody}>Je suis une courte description de ce qui se trouve sur l’image dans le bas de la ressource et il y a une faute d’orthographe</div>
+          <div className={style.articleFooter}>
+            <div className={style.articleRate}>
+              <div>235</div>
+              <img src="/Image/like.png" className={style.like}/>
+              <div>156</div>
+              <img src="/Image/like.png" className={style.dislike}/>
+            </div>
+            <div className={style.articleOption}>
+              <img src="/Image/alert.png" className={style.warning}/>
+              <img src="/Image/forward.png" className={style.forward}/>
+              <img src="/Image/plus.png" className={style.add}/>
+              <img src="/Image/comments.png" className={style.comment}/>
+            </div>
           </div>
         </div>
-        <div className={style.HomeSubContainer}>
-          <div className={style.HomeSearchBar}>
-            <input type="search" placeholder="Rechercher"></input>
-            <input type="button" id="search"></input>
-          </div>
-          <div className={style.HomeSearchBarFilter}>
-            <p>Nouveau</p>
-            <input type="button" className={style.HomeSearchBarNew}></input>
-            <p>Populaire</p>
-            <input type="button" className={style.HomeSearchBarPopular}></input>
-            <p>En hausse</p>
-            <input
-              type="button"
-              className={style.HomeSearchBarIncrease}
-            ></input>
-          </div>
-          {allArticle &&
-            allArticle
-              .reverse()
-              .map((articleInfo) => (
-                <Post
-                  key={articleInfo._id}
-                  allArticleDetail={articleInfo}
-                  articleTitle={articleInfo.articleTitle}
-                  articleUrl="/../public/Image/up.png"
-                  userId={articleInfo.articleCreator}
-                ></Post>
-              ))}
-        </div>
-      </div>
+     </div>
     </>
   );
 }

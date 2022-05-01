@@ -9,7 +9,9 @@ import Home from "./home/Home";
 export default function Index() {
   return (
     <div className={styles.colorBackground}>
-      <Navigation></Navigation>
+      <Navigation>
+        
+      </Navigation>
     </div>
   );
 }
