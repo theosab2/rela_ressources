@@ -21,8 +21,8 @@ const Card = props => {
     }
     const getImage = async () => {
       try {
-        if(props.data.articleImage != '' || props.data.articleImage != null || props.data.articleImage != undefined ){
-          setImageTmp({uri : props.data.articleImage})
+        if(props.data.image != '' || props.data.image != null || props.data.image != undefined ){
+          setImageTmp({uri : props.data.image})
         }
       } catch (e) {
         console.log('error')
@@ -44,7 +44,7 @@ const Card = props => {
               <Text style={styles.categorieIcon}>CA</Text>
               <Text>Categorie</Text>
             </View>
-            <Text style={styles.titlePost}>{props.data.articleTitle}</Text>
+            <Text style={styles.titlePost}>{props.data.title}</Text>
             <Text style={styles.date}>{props.data._createdAt}</Text>
           </View>
           <Image 
@@ -53,7 +53,7 @@ const Card = props => {
           />
         </View>
         <View style={styles.bottomPart}>
-          <Text>{props.data.articleDescription}</Text>
+          <Text>{props.data.description}</Text>
         </View>
     </TouchableOpacity>
   );

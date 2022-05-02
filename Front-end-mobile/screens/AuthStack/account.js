@@ -5,7 +5,7 @@ import {Icon} from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import {API_URL} from "@env"
 
-const Account = () => {
+const Account = ({navigation}) => {
   const [userData, setUserData] = useState({});
   
   useEffect(() => {
@@ -15,7 +15,7 @@ const Account = () => {
         if(storedId != null){
           getUserData(storedId)
         }else{
-          
+          //navigation.navigate('Auth', {screen: 'Login'})
         }
       } catch (e) {
         console.log(e);

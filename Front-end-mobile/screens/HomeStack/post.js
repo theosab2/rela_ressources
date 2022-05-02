@@ -65,7 +65,7 @@ const Post = ({route, navigation}) => {
             style={styles.img}
             source={require('../../test_content/waiting.jpg')}
           />
-          <Text style={styles.title}>{post != null ? post.articleTitle : '...' }</Text>
+          <Text style={styles.title}>{post != null ? post.title : '...' }</Text>
           <View style={styles.infoLine}>
             <View style={styles.infoContainer}>
               <Text style={styles.categorieIcon}>CA</Text>
@@ -99,8 +99,8 @@ const Post = ({route, navigation}) => {
               <Text style={styles.info}>{post != null ? post.articleNbDislikes : '...' }</Text>
             </View>
           </View>
-          <ProfilCard userId={post != null ? post.articleCreator : null} date={post != null ? post._updatedAt : null}/>
-          <Text>{post != null ? post.articleDescription : '...' }</Text>
+          <ProfilCard userId={post != null ? post.creator : null} date={post != null ? post._updatedAt : null}/>
+          <Text>{post != null ? post.description : '...' }</Text>
         </ScrollView>
       </SafeAreaView>
       <View style={styles.footer}>
