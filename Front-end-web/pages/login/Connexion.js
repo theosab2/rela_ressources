@@ -66,61 +66,48 @@ export default function Connexion() {
   };
 
   return (
-    <>
-      <Head>
-        <title>Connexion</title>
-      </Head>
-      <Navigation></Navigation>
-      <div className={style.InscriptionContainer}>
-        <div className={style.ConnexionSubContainer}>
+
+      <div className={style.connexionContainer}>
+        <h1>Connexion</h1>
           <Image
             src={"/../public/Image/connexion.png"}
             atl={"icon connexion"}
-            width={250}
-            height={250}
+            width={100}
+            height={100}
           />
-          <h1>Connexion</h1>
           <Link href="./Inscription">
-            <a className={style.InscriptionLink}>Je n'ai pas de compte</a>
+            <a className={style.link}>Je n'ai pas de compte</a>
           </Link>
-          <form className={style.FormInscription}>
-            <label className={style.LabelInscription}>Identifiant :</label>
+          <div className={style.connexionInsert}>
+          <div className={style.connexionInput}>
+            <label>Identifiant :</label>
             <input
               type="text"
-              className={style.InputInscrption}
+              className={style.inputText}
               defaultValue={identifiant}
               onChange={(identifiant) =>
                 setIdentifiant(identifiant.target.value)
               }
             />
-
-            <label className={style.LabelInscription}>Mot de passe :</label>
+            </div>
+            <div className={style.connexionInput}>
+            <label >Mot de passe :</label>
             <input
               type="password"
-              className={style.InputInscrption}
+              className={style.inputText}
               defaultValue={mdp}
               onChange={(mdp) => setMdp(mdp.target.value)}
             />
-
-            <div>
-              <input
-                type="checkbox"
-                className={style.CheckBoxInscription}
-              ></input>
-              <label className={style.LabelInscription}>
-                Rester connecter ?
-              </label>
             </div>
+            <a className={style.link}>Mot de passe oublié</a>
+          </div>
             <button
               type="button"
               onClick={display}
-              className={style.SubmitInscription}
+              className={style.buttonApproved}
             >
-              Connexion
+              Valider
             </button>
-          </form>
-        </div>
       </div>
-    </>
   );
 }

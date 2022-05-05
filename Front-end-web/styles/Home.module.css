@@ -1,5 +1,6 @@
 .colorBackground{
 background-color: #BEC4D3;
+height: 100vh;
 }
 
 .mainContainer{
@@ -20,7 +21,6 @@ background-color: #BEC4D3;
 }
 
 .articleContainer{
-  width: 100%;
   min-width: 600px;
   height: 100%;
   background-color: #2F4077;

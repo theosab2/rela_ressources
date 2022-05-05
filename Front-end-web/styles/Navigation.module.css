@@ -50,17 +50,25 @@
   background-color: #2F4077;
   border: 1px #869ECE solid;
   color:#fff;
-}
-
-.sidebarChoice div{
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+}
+
+.sidebarChoice button{
   height: 30px;
   border-bottom: 1px #869ECE solid;
   font-size: 15px;
   color: #fff;
+  width: 100%;
+}
 
+.sidebarChoice button:hover{
+  transition: 0.3s;
+  color: #2F4077;
+  background-color: #869ECE;
+  border: 1px solid #2F4077;
 }
 
 .navContentSeparator{
@@ -150,4 +158,8 @@
   color:#fff;
   margin-left: 200px;
   font-size: 20px;
+}
+
+.pageRender{
+  width: 80%;
 }
