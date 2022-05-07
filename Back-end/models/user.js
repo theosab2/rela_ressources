@@ -5,14 +5,14 @@ const UserSchema = mongoose.Schema({
   username: { type: String, required: true, unique: true },
   firstname: { type: String, required: true},
   lastname: { type: String, required: true },
-  phone: { type: String, required: true,unique:true },
-  email: { type: String, required: true,unique:true },
+  phone: { type: String, required: false,unique:true },
+  email: { type: String, required: false,unique:true },
   isConnected: { type: Boolean },
   isApproved: { type: Boolean, required: true, default:false},
   relation_ids:[
     {type:String}
   ],
-  photoUrl : {type:String, required: false, default:"AvatarDefaultUrl"},
+  photoUrl : {type:String, default:"AvatarDefaultUrl"},
   role: { type: String, required: true, default:"user" },
   favoris: [
     {type:String,required:false},
@@ -28,7 +28,7 @@ const UserSchema = mongoose.Schema({
   },
   settings:[
     {
-      UT_id:{type:String, required:true}, //code : SETTING => (name, valueType, defaultValue)
+      UT_id:{type:String, required:false}, //code : SETTING => (name, valueType, defaultValue)
       value:{type:String}
     }
   ],
