@@ -91,5 +91,51 @@ export default function Navigation(image) {
         </div>
       </>
     );
+  }else{
+    <>
+        <div className={style.navHeader}>
+          <img src="/Image/burger-menu.png" className={style.burger_menu}/>
+          <button onClick={() => setRenderPage((renderPage = "Accueil"))} className={style.headerTitle}>Ressource Relationnelle</button>
+          <p className={style.headerPageTitle}>{navTitle}</p>
+          <img src="/Image/connexion.png" className={style.icon_connexion}/>
+        </div>
+        <div className={style.navBody}>
+          <div className={style.sideBar}>
+            <div className={style.sidebarContent}>
+              <div className={style.sidebarTitle}>Profil</div>
+              <div className={style.sidebarChoice}>
+                <button onClick={() => setRenderPage((renderPage = "Connexion"))}>Connexion</button>
+                <button onClick={() => setRenderPage((renderPage = "Inscription"))}>Inscription</button>
+              </div>
+            </div>
+            <div className={style.sidebarContent}>
+              <div className={style.sidebarTitle}>Profil</div>
+              <div className={style.sidebarChoice}>
+                <button onClick={() => setRenderPage((renderPage = "Connexion"))}>Connexion</button>
+                <button onClick={() => setRenderPage((renderPage = "Inscription"))}>Inscription</button>
+              </div>
+            </div>
+          </div>
+          <div className={style.navContentSeparator}>
+            <div className={style.pageRender}>
+            {pageRender()}
+            </div>
+            <div className={style.recentContent}>
+              <div className={style.recentTitle}>Récent</div>
+                <div className={style.recentChoice}>
+                    <img 
+                    src="/Image/connexion.png"
+                    alt="User picture"
+                    className={style.recentUserPicture}
+                    />
+                <div className={style.recentInfo}>
+                      <div className={style.recentUserName}>JeanMichel62</div>
+                      <div className={style.recentArticleTitle}>La terre est ovoidale</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
   }
 }

@@ -54,12 +54,12 @@ export default function Inscription() {
   };
 
   return (
-        <div >
-          <p>Inscription</p>
-          <Link href="./Connexion">
-            <a >J'ai déjà compte</a>
+        <div className={style.connexionContainer}>
+          <h1>Créer un compte</h1>
+          <Link href="./Connexion" >
+            <a className={style.link}>J'ai déjà compte</a>
           </Link>
-          <form >
+          <div className={style.inputContainer}>
             <label >
               Nom d'utilisateurs :
             </label>
@@ -127,8 +127,8 @@ export default function Inscription() {
 
               required
             />
-
-            <div>
+          </div>
+            <div className={style.conditionUtilisationContainer}>
               <input
                 id="condition"
                 name="condition"
@@ -142,13 +142,12 @@ export default function Inscription() {
             </div>
             <button
               type="submit"
-
               onClick={display}
+              className={style.buttonApproved}
             >
-              Inscription
+              Valider
             </button>
-          </form>
-        </div>
 
+        </div>
   );
 }

@@ -12,6 +12,7 @@
   text-decoration: underline;
   font-size: small;
   text-align: center;
+  margin: 20px;
 }
 
 .connexionInsert{
@@ -27,8 +28,8 @@
   box-shadow: 1px 1px 3px #555;
   text-align: center;
   width: 200px;
-  height: 30px;
-  margin-left: 30%;
+  height: 50px;
+
 }
 
 .inputText{
@@ -37,6 +38,7 @@
   border: none;
   border-radius: 5px;
   box-shadow: 1px 1px 3px #555;
+  font-size: 20px;
 }
 
 .connexionInput{
@@ -44,4 +46,27 @@
   flex-direction: column;
   margin:20px;
   justify-content: center;
+}
+
+
+/*---------------------*/
+
+.inputContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+}
+
+.inputContainer input{
+  width: 500px;
+  height:50px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px #555;
+  font-size: 20px;
+}
+
+.conditionUtilisationContainer{
+  margin: 20px;
 }
