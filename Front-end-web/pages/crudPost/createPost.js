@@ -73,51 +73,50 @@ export default function createPost() {
   const userCookie = utils();
   if (userCookie != false) {
     return (
-      <>
-        <Navigation></Navigation>
-        <div className={style.pageCreate}>
-          <div className={style.empty}></div>
-          <form encType="multipart/form-data" className={style.createContainer}>
-            <div>
-              <p>Création d'un post </p>
-            </div>
-            <div className={style.createPostDropDown}>
+        <div className={style.crudContainer}>
+              <h1>Créer votre ressource</h1>
+                <label htmlFor="titre"></label>
+                <input
+                  
+                  type="text"
+                  placeholder="Ajouter un titre"
+                  required
+                  onChange={(title) => setTitle(title.target.value)}
+                  className={style.inputText}
+                ></input>
+                <div className={style.addRessourceContainer}>
+                  <button className={style.addRessource}>
+                    +
+                  </button>
               <select
                 name="typeRessource"
                 id="typeRessource"
                 onChange={getType}
+                className={style.dropdownList}
               >
-                <option value="image">Choisir un type</option>
+                <option value="image">Choisir un type de fichier</option>
                 <option value="image">Image/Photo</option>
                 <option value="video">Video</option>
                 <option value="lien">Lien</option>
               </select>
-
-              <select name="categorie" id="categorie" onChange={getCategorie}>
-                <option value="">Choisir une catégorie</option>
-                {allCategorie &&
-                  allCategorie.map((categorie) => (
-                    <option key={categorie._id} value="information">
-                      {categorie.categoryName}
-                    </option>
-                  ))}
-              </select>
-            </div>
-            <div className={style.Container}>
-              <div className={style.ContainerTitle}>
-                <label htmlFor="titre"></label>
-                <input
-                  className={style.titleInput}
-                  type="text"
-                  placeholder="Insérer un titre"
-                  required
-                  onChange={(title) => setTitle(title.target.value)}
-                ></input>
               </div>
+              <div >
+                <textarea
+                  className={style.descriptionRessource}
+                  rows="5"
+                  placeholder="Insérer une description"
+                  required
+                  onChange={(content) => setContent(content.target.value)}
+                ></textarea>
+              </div>
+              
+
+            <div >
+
               {(() => {
                 if (typeRessource == "image") {
                   return (
-                    <div className={style.ContainerInsert}>
+                    <div >
                       <p>Insérer une Image :</p>
                       <input
                         type="file"
@@ -128,13 +127,13 @@ export default function createPost() {
                       <img
                         id="output"
                         src={createObjectURL}
-                        className={style.imagePreview}
+                        
                       />
                     </div>
                   );
                 } else if (typeRessource == "video") {
                   return (
-                    <div className={style.ContainerInsert}>
+                    <div >
                       <p>Insérer une vidéo :</p>
                       <input
                         type="file"
@@ -145,44 +144,56 @@ export default function createPost() {
                       <img
                         id="output"
                         src={createObjectURL}
-                        className={style.imagePreview}
+                        
                       />
                     </div>
                   );
                 } else if (typeRessource == "lien") {
                   return (
-                    <div className={style.ContainerInsert}>
+                    <div >
                       <p>Lien :</p>
                       <input type="text" placeholder="Insérer un lien"></input>
                     </div>
                   );
                 } else {
-                  return <div className={style.ContainerInsert}></div>;
+                  return <div ></div>;
                 }
               })()}
-              <div className={style.ContainerDesc}>
-                <textarea
-                  className={style.descInput}
-                  rows="5"
-                  placeholder="Insérer une description"
-                  required
-                  onChange={(content) => setContent(content.target.value)}
-                ></textarea>
-              </div>
+
             </div>
-            <div>
+            <select name="categorie" 
+            id="categorie" 
+            onChange={getCategorie}
+            className={style.dropdownListCategorie}>
+                <option value="">Choisir une catégorie</option>
+                {allCategorie &&
+                  allCategorie.map((categorie) => (
+                    <option key={categorie._id} value="information">
+                      {categorie.categoryName}
+                    </option>
+                  ))}
+              </select>
+              <div className={style.privateRessource}>
+              <input
+                id="condition"
+                name="condition"
+                type="checkbox"
+                required
+
+              />
+              <label htmlFor="condition">
+                Cette publication est privée
+              </label>
+            </div>
               <button
-                className={style.buttonSubmit}
+                className={style.validateRessource}
                 type="submit"
                 onClick={display}
               >
-                Valider la création
+                Valider
               </button>
-            </div>
-          </form>
-          <div className={style.empty}></div>
+
         </div>
-      </>
     );
   } else return <>loading...</>;
 }

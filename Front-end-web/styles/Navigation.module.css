@@ -57,7 +57,7 @@
 }
 
 .sidebarChoice button{
-  height: 30px;
+  min-height: 30px;
   border-bottom: 1px #869ECE solid;
   font-size: 15px;
   color: #fff;
@@ -66,7 +66,7 @@
 
 .sidebarChoice button:hover{
   transition: 0.3s;
-  color: #2F4077;
+  color: #fff;
   background-color: #869ECE;
   border: 1px solid #2F4077;
 }

@@ -10,11 +10,13 @@ export default function Inscription() {
   const [firstname, setFirstname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [phone, setPhone] = useState("");
-  const [region, setRegion] = useState("");
 
   const display = async () => {
     console.log(pseudo);
+    console.log(name);
+    console.log(firstname);
+    console.log(email);
+    console.log(password);
     const res = await fetch("http://10.176.131.87:3001/auth/register", {
       method: "POST",
       headers: {
@@ -27,15 +29,8 @@ export default function Inscription() {
           firstname: firstname,
           name: name,
           password: password,
-          phone: phone,
           email: email,
           isActive: false,
-          role: "user",
-          location: {
-            ville: "ee",
-            region: "re",
-            zip: "zip",
-          },
         },
       }),
     });

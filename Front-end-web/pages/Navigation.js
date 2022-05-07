@@ -8,7 +8,7 @@ import cookie from "cookie";
 import Home from "./home/Home";
 import Connexion from "./login/Connexion";
 import Inscription from "./login/Inscription";
-import createPost from "./crudPost/createPost";
+import CreatePost from "./crudPost/createPost";
 import utils from "./utils";
 
 
@@ -44,6 +44,9 @@ export default function Navigation(image) {
       case "Inscription":
         return <Inscription></Inscription>;
         break;
+        case "Creer":
+          return <CreatePost></CreatePost>;
+          break;
       default:
         return <Home></Home>;
     }
@@ -92,6 +95,7 @@ export default function Navigation(image) {
       </>
     );
   }else{
+    return(
     <>
         <div className={style.navHeader}>
           <img src="/Image/burger-menu.png" className={style.burger_menu}/>
@@ -102,17 +106,35 @@ export default function Navigation(image) {
         <div className={style.navBody}>
           <div className={style.sideBar}>
             <div className={style.sidebarContent}>
-              <div className={style.sidebarTitle}>Profil</div>
+              <div className={style.sidebarTitle}>Publication</div>
               <div className={style.sidebarChoice}>
-                <button onClick={() => setRenderPage((renderPage = "Connexion"))}>Connexion</button>
-                <button onClick={() => setRenderPage((renderPage = "Inscription"))}>Inscription</button>
+                <button onClick={() => setRenderPage((renderPage = "Creer"))}>Créer une ressource</button>
+                <button onClick={() => setRenderPage((renderPage = "Historique"))}>Historique de mes ressources</button>
+                <button onClick={() => setRenderPage((renderPage = "Favorie"))}>Mes ressources favorites</button>
+                <button onClick={() => setRenderPage((renderPage = "Abonnement"))}>Mes abonnement</button>
               </div>
             </div>
             <div className={style.sidebarContent}>
               <div className={style.sidebarTitle}>Profil</div>
               <div className={style.sidebarChoice}>
-                <button onClick={() => setRenderPage((renderPage = "Connexion"))}>Connexion</button>
-                <button onClick={() => setRenderPage((renderPage = "Inscription"))}>Inscription</button>
+                <button onClick={() => setRenderPage((renderPage = "Profil"))}>Modifier le profil</button>
+                <button onClick={() => setRenderPage((renderPage = "Deconnexion"))}>Deconnexion</button>
+              </div>
+            </div>
+            <div className={style.sidebarContent}>
+              <div className={style.sidebarTitle}>Communauté</div>
+              <div className={style.sidebarChoice}>
+                <button onClick={() => setRenderPage((renderPage = "Ami"))}>Ami</button>
+                <button onClick={() => setRenderPage((renderPage = "Groupe"))}>Groupe</button>
+                <button onClick={() => setRenderPage((renderPage = "Evenement"))}>Evenement</button>
+              </div>
+            </div>
+            <div className={style.sidebarContent}>
+              <div className={style.sidebarTitle}>Paramètre</div>
+              <div className={style.sidebarChoice}>
+                <button onClick={() => setRenderPage((renderPage = "Preference"))}>Préférence</button>
+                <button onClick={() => setRenderPage((renderPage = "Supprimer"))}>Supprimer mon compte</button>
+                <button onClick={() => setRenderPage((renderPage = "Condition"))}>Condition d'utilisation</button>
               </div>
             </div>
           </div>
@@ -137,5 +159,6 @@ export default function Navigation(image) {
           </div>
         </div>
       </>
+    );
   }
 }
