@@ -79,35 +79,35 @@ export default function Connexion() {
             <a className={style.link}>Je n'ai pas de compte</a>
           </Link>
           <div className={style.connexionInsert}>
-          <div className={style.connexionInput}>
-            <label>Identifiant :</label>
-            <input
-              type="text"
-              className={style.inputText}
-              defaultValue={identifiant}
-              onChange={(identifiant) =>
-                setIdentifiant(identifiant.target.value)
-              }
-            />
+            <div className={style.connexionInput}>
+              <label>Identifiant :</label>
+              <input
+                type="text"
+                className={style.inputText}
+                defaultValue={identifiant}
+                onChange={(identifiant) =>
+                  setIdentifiant(identifiant.target.value)
+                }
+              />
             </div>
             <div className={style.connexionInput}>
-            <label >Mot de passe :</label>
-            <input
-              type="password"
-              className={style.inputText}
-              defaultValue={mdp}
-              onChange={(mdp) => setMdp(mdp.target.value)}
-            />
+              <input
+                type="password"
+                className={style.inputText}
+                defaultValue={mdp}
+                onChange={(mdp) => setMdp(mdp.target.value)}
+              />
+                            <a className={style.link}>Mot de passe oublié</a>
+
             </div>
-            <a className={style.link}>Mot de passe oublié</a>
-          </div>
             <button
-              type="button"
-              onClick={display}
-              className={style.buttonApproved}
-            >
-              Valider
-            </button>
+                type="button"
+                onClick={display}
+                className={style.buttonApproved}
+              >
+                Valider
+              </button>
+          </div>
       </div>
   );
 }

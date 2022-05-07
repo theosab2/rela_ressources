@@ -74,11 +74,9 @@
 .navContentSeparator{
   margin-left: 200px;
   display: flex;
-  justify-content: space-around;
-  height: 100%;
+  height: 80vh;
   width: 100%;
   margin-top: 125px;
-  
 }
 
 .recentContent{
@@ -162,4 +160,5 @@
 
 .pageRender{
   width: 80%;
+  height: 100%;
 }

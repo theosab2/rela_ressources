@@ -54,107 +54,77 @@ export default function Inscription() {
   };
 
   return (
-    <>
-      <Head>
-        <title>Inscrption</title>
-      </Head>
-      <Navigation />
-      <div className={style.InscriptionContainer}>
-        <div className={style.InscriptionSubContainer}>
+        <div >
           <p>Inscription</p>
           <Link href="./Connexion">
-            <a className={style.InscriptionLink}>J'ai déjà compte</a>
+            <a >J'ai déjà compte</a>
           </Link>
-          <form className={style.FormInscription}>
-            <label className={style.LabelInscription}>
+          <form >
+            <label >
               Nom d'utilisateurs :
             </label>
             <input
               id="pseudo"
               name="pseudo"
               type="text"
-              className={style.InputInscrption}
               required
               onChange={(pseudo) => setUsername(pseudo.target.value)}
               defaultValue={pseudo}
             />
 
-            <label className={style.LabelInscription}>Nom :</label>
+            <label >Nom :</label>
             <input
               id="nom"
               name="nom"
               type="text"
-              className={style.InputInscrption}
+
               required
               onChange={(name) => setName(name.target.value)}
               defaultValue={name}
             />
 
-            <label className={style.LabelInscription}>Prénom :</label>
+            <label >Prénom :</label>
             <input
               id="prenom"
               name="prenom"
               type="text"
-              className={style.InputInscrption}
+
               required
               defaultValue={firstname}
               onChange={(firstname) => setFirstname(firstname.target.value)}
             />
 
-            <label className={style.LabelInscription}>Adresse mail :</label>
+            <label >Adresse mail :</label>
             <input
               id="mail"
               name="mail"
               type="email"
-              className={style.InputInscrption}
+
               required
               defaultValue={email}
               onChange={(email) => setEmail(email.target.value)}
             />
 
-            <label className={style.LabelInscription}>
-              Numéro de téléphone :
-            </label>
-            <input
-              id="telephone"
-              name="telephone"
-              type="tel"
-              className={style.InputInscrption}
-              required
-              defaultValue={phone}
-              onChange={(phone) => setPhone(phone.target.value)}
-            />
 
-            <label className={style.LabelInscription}>Région :</label>
-            <input
-              id="region"
-              name="region"
-              type="text"
-              className={style.InputInscrption}
-              required
-              defaultValue={region}
-              onChange={(region) => setRegion(region.target.value)}
-            />
-
-            <label className={style.LabelInscription}>Mot de passe :</label>
+            <label >Mot de passe :</label>
             <input
               id="mdp"
               name="mdp"
               type="password"
-              className={style.InputInscrption}
+
               required
               defaultValue={password}
               onChange={(password) => setPassword(password.target.value)}
             />
 
-            <label className={style.LabelInscription}>
+            <label>
               Confirmer mot de passe :
             </label>
             <input
               id="confMdp"
               name="confMdp"
               type="password"
-              className={style.InputInscrption}
+
               required
             />
 
@@ -164,7 +134,7 @@ export default function Inscription() {
                 name="condition"
                 type="checkbox"
                 required
-                className={style.CheckBoxInscription}
+
               />
               <label htmlFor="condition">
                 J'accepte les conditions d'utilisation
@@ -172,14 +142,13 @@ export default function Inscription() {
             </div>
             <button
               type="submit"
-              className={style.SubmitInscription}
+
               onClick={display}
             >
               Inscription
             </button>
           </form>
         </div>
-      </div>
-    </>
+
   );
 }
