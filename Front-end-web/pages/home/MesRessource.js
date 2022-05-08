@@ -25,61 +25,70 @@ export default function () {
 
     console.log(allArticle);
     return (
-      <div>
-        <Navigation></Navigation>
-        <div className={style.contentRessourceSave}>
-          <div className={style.empty}></div>
-          <div className={style.subContentRessourceSave}>
-            <p>Recherche :</p>
-            <input
-              type="search"
-              className={style.searchFav}
-              placeholder="Titre/Type/Catégorie"
-            ></input>
-            <table className={style.tableSave}>
-              <thead className={style.theadSave}>
-                <tr className={style.trSave}>
-                  <th className={style.thSave}>Approbation</th>
-                  <th className={style.thSave}>Titre</th>
-                  <th className={style.thSave}>Type</th>
-                  <th className={style.thSave}>Catégorie</th>
-                  <th className={style.thSave}>Publication</th>
-                </tr>
-              </thead>
-              <tbody className={style.tbodySave}>
-                {allArticle &&
-                  array.map((articleInfo) => (
-                    <tr className={style.trSave}>
-                      <td className={style.tdSave}>
-                        {articleInfo.articleIsApproved
-                          ? "Approuvé"
-                          : "Non approuvé"}
-                      </td>
-                      <td className={style.tdSave}>
-                        {articleInfo.articleTitle}
-                      </td>
-                      <td className={style.tdSave}>Image</td>
-                      <td className={style.tdSave}>Photographie</td>
-                      <td className={style.tdSave}>
-                        <Link href={`../crudPost/${articleInfo._id}`}>
-                          <a>
-                            <Image
-                              className={style.chowIcon}
-                              src="/../public/Image/eye-solid.svg"
-                              height="30px"
-                              width="30px"
-                            />
-                          </a>
-                        </Link>
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
+      <>
+      <div className={style.mainContainer}>
+        <div className={style.filterContainer}>
+          <div>
+          <p> Trier par date</p><Image
+            src={"/../public/Image/sort.png"}
+            atl={"icon connexion"}
+            width={25}
+            height={25}
+          />
           </div>
-          <div className={style.empty}></div>
+          <div>
+          <p> Trier par nom</p><Image
+            src={"/../public/Image/sort_letter.png"}
+            atl={"icon connexion"}
+            width={25}
+            height={25}
+          />
+          </div>
+          <div>
+          <p> Trier par avis</p><Image
+            src={"/../public/Image/fire.png"}
+            atl={"icon connexion"}
+            width={25}
+            height={25}
+          />
+          </div>
         </div>
-      </div>
+        <div className={style.articleContainer}>
+          <div className={style.firstPartContainer}>
+            <div className={style.firstInfo}>
+              <div className={style.userInfoContainer}>
+                <img src="/Image/connexion.png" className={style.userPicture}/>
+                <div className={style.userPostInfoContainer}>
+                  <div className={style.userName}>JeanMichelle</div>
+                  <div className={style.publicationDate}>Publication : Il y a 4h</div>
+                </div>
+              </div>
+              <div className={style.articleTitle}>Je suis un jolie titre</div>
+            </div>
+            <img src="/Image/Bateau_2.jpg" className={style.articlePicture}/>
+          </div>
+          <div className={style.articleBody}>Je suis une courte description de ce qui se trouve sur l’image dans le bas de la ressource et il y a une faute d’orthographe</div>
+          <div className={style.articleFooter}>
+            <div className={style.articleRate}>
+              <div>235</div>
+              <img src="/Image/like.png" />
+              <div>156</div>
+              <img src="/Image/like.png" />
+            </div>
+            <div className={style.articleOption}>
+              <img src="/Image/delete.png" />
+              <img src="/Image/setting.png" />
+            </div>
+            <div className={style.articleOption}>
+              <img src="/Image/alert.png" />
+              <img src="/Image/forward.png" />
+              <img src="/Image/plus.png" />
+              <img src="/Image/comments.png" />
+            </div>
+          </div>
+        </div>
+     </div>
+    </>
     );
   } else {
     return <div>loading...</div>;

@@ -9,6 +9,8 @@ import Home from "./home/Home";
 import Connexion from "./login/Connexion";
 import Inscription from "./login/Inscription";
 import CreatePost from "./crudPost/createPost";
+import Historique from "./home/MesRessource";
+import Favorie from "./home/RessourceSave";
 import utils from "./utils";
 
 
@@ -44,9 +46,15 @@ export default function Navigation(image) {
       case "Inscription":
         return <Inscription></Inscription>;
         break;
-        case "Creer":
-          return <CreatePost></CreatePost>;
-          break;
+      case "Creer":
+        return <CreatePost></CreatePost>;
+        break;
+      case "Historique":
+        return <Historique></Historique>;
+        break;
+      case "Favorie":
+        return <Favorie></Favorie>;
+        break;
       default:
         return <Home></Home>;
     }

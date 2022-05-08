@@ -89,47 +89,42 @@ height: 100vh;
   font-size: 12px;
 }
 
+.articleRate img{
+  height: 25px;
+  width: 25px;
+  margin-left: 5px;
+}
+
 .articleOption{
   display: flex;
   justify-content: space-around;
 }
 
-.like{
-  height: 30px;
-  width: 30px;
-  margin-left: 5px;
+.articleOption img{
+  width: 25px;
+  height: 25px;
+  margin: 5px;
 }
 
 .dislike{
-  height: 30px;
-  width: 30px;
   transform: rotate(180deg);
-  margin-left: 5px;
-}
-
-.warning{
-  height: 30px;
-  width: 30px;
-  margin: 5px;
 }
 
 
-.forward{
-  height: 30px;
-  width: 30px;
-  margin: 5px;
+
+.filterContainer{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 50px;
+  width: 700px;
+  border-radius: 10px;
+  margin: 20px;
+  background-color: #869ECE;
 }
 
-
-.add{
-  height: 30px;
-  width: 30px;
-  margin: 5px;
-}
-
-
-.comment{
-  height: 30px;
-  width: 30px;
-  margin: 5px;
+.filterContainer div{
+display: flex;
+align-items: center;
+justify-content: center;
 }
