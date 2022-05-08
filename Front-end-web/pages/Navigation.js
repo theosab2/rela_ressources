@@ -11,6 +11,7 @@ import Inscription from "./login/Inscription";
 import CreatePost from "./crudPost/createPost";
 import Historique from "./home/MesRessource";
 import Favorie from "./home/RessourceSave";
+import Abonnement from "./home/Abonnement";
 import utils from "./utils";
 
 
@@ -28,7 +29,7 @@ export default function Navigation(image) {
 
   const deconnexionUtilisateur = () => {
     removeCookies("token");
-    router.push("/home/Home");
+    router.push("/");
   };
 
   const moderationUtilisateur = () => {
@@ -54,6 +55,9 @@ export default function Navigation(image) {
         break;
       case "Favorie":
         return <Favorie></Favorie>;
+        break;
+      case "Abonnement":
+        return <Abonnement></Abonnement>;
         break;
       default:
         return <Home></Home>;
@@ -119,7 +123,7 @@ export default function Navigation(image) {
                 <button onClick={() => setRenderPage((renderPage = "Creer"))}>Créer une ressource</button>
                 <button onClick={() => setRenderPage((renderPage = "Historique"))}>Historique de mes ressources</button>
                 <button onClick={() => setRenderPage((renderPage = "Favorie"))}>Mes ressources favorites</button>
-                <button onClick={() => setRenderPage((renderPage = "Abonnement"))}>Mes abonnement</button>
+                <button onClick={deconnexionUtilisateur()}>Mes abonnement</button>
               </div>
             </div>
             <div className={style.sidebarContent}>

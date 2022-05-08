@@ -128,3 +128,36 @@ display: flex;
 align-items: center;
 justify-content: center;
 }
+
+.abonnementContainer{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  min-width: 600px;
+  height: 100%;
+  background-color: #2F4077;
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.abonnementContainer p{
+  color:#fff;
+}
+
+.abonnementContainer div{
+  display: flex;
+  align-items: center;
+}
+
+.abonnementContainer img{
+  height: 25px;
+  width: 25px;
+}
+
+.abonnementContainer button{
+  background-color: #ff5555;
+  min-width: 120px;
+  height: 25px;
+  border-radius: 5px;
+  color:#fff;
+}
