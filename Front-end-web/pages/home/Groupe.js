@@ -28,19 +28,28 @@ export default function () {
       <>
       <div className={style.mainContainer}>
       <input type="text" placeholder="Recherche" className={style.searchBar}></input>
-        <div className={style.abonnementContainer}>
-        <div>
-          <img src="/Image/connexion.png"/>
-          <p>JeanMichel62</p>
-          </div>
-          <div>
-          <img src="/Image/user.png"/>
-          <p>5645</p>
+        <div className={style.groupeContainer}>
+            <div className={style.groupContainerImage}>
+            <img src="/Image/Bateau_2.jpg" className={style.groupeImage}/>
             </div>
-            <img src="/Image/comment.png"/>
-          <button>
-              Désabonner
-          </button>
+            <div className={style.groupContainerIcone}>
+                <div className={style.groupContainerInfo}>
+                    <div>
+                        <img src="/Image/user.png"/>
+                        <p>383</p>
+                    </div>
+                <img src="/Image/oeil.png"/>
+                
+                <button>
+                Rejoindre
+                </button>
+                </div>
+                <div>
+                    <div>
+                        <p>Groupe de partage d’information sur les actions féministes mené en France</p>
+                    </div>
+                </div>
+            </div>
         </div>
      </div>
     </>

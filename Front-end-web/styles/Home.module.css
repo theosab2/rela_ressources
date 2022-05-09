@@ -157,3 +157,73 @@ justify-content: center;
   border-radius: 5px;
   color:#fff;
 }
+
+
+.groupeContainer{
+  display: flex;
+  justify-content: space-around;
+  min-width: 600px;
+  height: 100%;
+  background-color: #2F4077;
+  border-radius: 20px;
+  padding: 10px;
+}
+
+
+.groupeContainer button{
+  background-color: #fff;
+  min-width: 120px;
+  height: 25px;
+  border-radius: 5px;
+  color:#869ECE;
+  margin-left: 50px;
+}
+
+.groupeContainer div{
+  flex: 1;
+  justify-content: center;
+}
+
+
+
+.groupContainerImage{
+  display: flex;
+  align-items: center;
+}
+
+.groupeImage{
+  width: 100px;
+  height: 100%;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+.groupContainerIcone{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.groupContainerIcone div{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  color: #fff;
+}
+
+.groupContainerInfo{
+  display: flex;
+  width: 300px;
+}
+
+.groupContainerInfo div{ 
+  margin-right: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.groupContainerIcone img{
+  width: 30px;
+  height: 30px;
+}
+
