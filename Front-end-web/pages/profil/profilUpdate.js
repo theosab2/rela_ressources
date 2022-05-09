@@ -66,115 +66,59 @@ export default function ProfilUpdate() {
       console.log(userInfo);
       return (
         <>
-          <div className={style.contentleft}>
-            <Image
-              className={style.ImageProfil}
-              src="/../public/Image/logo-gouvernement.jpeg" // Route of the image file
-              height={200} // Desired size with correct aspect ratio
-              width={200} // Desired size with correct aspect ratio
-              alt="Logo gouvernement français"
-            />
-            <div className={style.inputTextContainer}>
-              <label className={style.input_label} htmlFor="Nom">Nom</label>
-              <input
-                className={style.input}
-                id="nameUser"
-                type="text"
-                defaultValue={userInfo.name}
-                onFocus={(e) => {e.target.className = style.input_focused}}
-                onBlur={(e) => {e.target.className = style.input}}
-                onChange={(nameUser) => setNameUser(nameUser.target.value)}
-              ></input>
-            </div>
-            <div className={style.inputTextContainer}>
-              <label className={style.input_label} htmlFor="Prenom">Prenom</label>
-              <input
-                className={style.input}
-                id="surnameUser"
-                type="text"
-                defaultValue={userInfo.firstname}
-                onFocus={(e) => {e.target.className = style.input_focused}}
-                onBlur={(e) => {e.target.className = style.input}}
-                onChange={(surnameUser) =>
-                  setSurnameUser(surnameUser.target.value)
-                }
-              ></input>
-            </div>
-            <div className={style.inputTextContainer}>
-              <label className={style.input_label} htmlFor="Pseudonyme">Pseudonyme</label>
-              <input
-                className={style.input}
-                type="text"
-                defaultValue={userInfo.username}
-                onFocus={(e) => {e.target.className = style.input_focused}}
-                onBlur={(e) => {e.target.className = style.input}}
-                onChange={(pseudoUser) =>
-                  setPseudoUser(pseudoUser.target.value)
-                }
-              ></input>
-            </div>
-          </div>
-          <div className={style.contentright}>
-            <div className={style.inputTextContainer}>
-              <label className={style.input_label} htmlFor="Mail">Adresse mail</label>
-              <input
-                className={style.largeInput}
-                id="mailUser"
-                type="text"
-                defaultValue={userInfo.email}
-                onFocus={(e) => {e.target.className = style.largeInput_focused}}
-                onBlur={(e) => {e.target.className = style.largeInput}}
-                onChange={(mailUser) => setMailUser(mailUser.target.value)}
-              ></input>
-            </div>
-            <div className={style.inputTextContainer}>
-              <label className={style.input_label} htmlFor="Pays">Region</label>
-              <input
-                className={style.input}
-                type="text"
-                defaultValue={userInfo.location.ville}
-                onFocus={(e) => {e.target.className = style.input_focused}}
-                onBlur={(e) => {e.target.className = style.input}}
-                onChange={(regionUser) =>
-                  setRegionUser(regionUser.target.value)
-                }
-              ></input>
-            </div>
-            <div className={style.inputTextContainer}>
-              <label className={style.input_label} htmlFor="Ville">Ville</label>
-              <input
-                className={style.input}
-                type="text"
-                defaultValue={userInfo.location.region}
-                onFocus={(e) => {e.target.className = style.input_focused}}
-                onBlur={(e) => {e.target.className = style.input}}
-                onChange={(townUser) => setTownUser(townUser.target.value)}
-              ></input>
-            </div>
-            <div className={style.inputTextContainer}>
-              <label className={style.input_label} htmlFor="naissance">Téléphone</label>
-              <input
-                className={style.input}
-                type="text"
-                defaultValue={userInfo.phone}
-                onFocus={(e) => {e.target.className = style.input_focused}}
-                onBlur={(e) => {e.target.className = style.input}}
-                onChange={(phoneUser) => setPhoneUser(phoneUser.target.value)}
-              ></input>
-            </div>
-            <div className={style.inputTextContainer}>
-              <div className={style.ImageUpdate}>
-                <Image
-                  className={style.ImageUpdateImg}
-                  src="/../public/Image/update.png" // Route of the image file
-                  height={100} // Desired size with correct aspect ratio
-                  width={100} // Desired size with correct aspect ratio
-                  alt="Icone modification"
-                  onClick={updateUser}
-                />
+          <div className={style.profilContainer}>
+            <p>Modifier vos informations</p>
+            <div className={style.profilInformation}>
+              <div>
+                <label>Nom</label>
+                <input type="text"></input>
+                <label>Identifiant</label>
+                <input type="text"></input>
               </div>
+              <div>
+                <label>Prenom</label>
+                <input type="text"></input>
+                <label>Email</label>
+                <input type="text"></input>
+              </div>  
             </div>
           </div>
+          <div className={style.profilContainer}>
+            <p>Mes informations personelles</p>
+            <div className={style.profilInformation}>
+              <div>
+                <label>Pays</label>
+                <input type="text"></input>
+                <label>Ville</label>
+                <input type="text"></input>
+                <label>Numéro de téléphone</label>
+                <input type="text"></input>
+              </div>
+              <div>
+                <label>Code postal</label>
+                <input type="text"></input>
+                <label>Rue</label>
+                <input type="text"></input>
+              </div>  
+            </div>
+          </div>
+          <div className={style.profilContainer}>
+            <p>Modifier mot de passe</p>
+            <div className={style.profilInformation}>
+              <div>
+                <label>Mot de passe</label>
+                <input type="text"></input>
+
+              </div>
+              <div>
+                <label>Nouveau mot de passe</label>
+                <input type="text"></input>
+                <label>Confirmer nouveau mot de passe</label>
+                <input type="text"></input>
+              </div>  
+            </div>
+          </div>
+          <button className={style.profilUpdateButton}>Valider</button>
         </>
       );
     } else return <div> Loading...</div>;

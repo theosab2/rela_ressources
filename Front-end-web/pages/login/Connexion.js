@@ -62,7 +62,7 @@ export default function Connexion() {
 
   const getServerSideProps = (user) => {
     setCookies("token", user, 24 * 3600);
-    window.location.href = "/home/Home";
+    window.location.href = "/";
   };
 
   return (
@@ -91,13 +91,16 @@ export default function Connexion() {
               />
             </div>
             <div className={style.connexionInput}>
+              <label className="">Mot de passe :</label>
               <input
                 type="password"
                 className={style.inputText}
                 defaultValue={mdp}
                 onChange={(mdp) => setMdp(mdp.target.value)}
               />
+
                             <a className={style.link}>Mot de passe oublié</a>
+            </div>
 
             </div>
             <button
@@ -107,7 +110,7 @@ export default function Connexion() {
               >
                 Valider
               </button>
-          </div>
+
       </div>
   );
 }

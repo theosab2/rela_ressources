@@ -12,6 +12,9 @@ import CreatePost from "./crudPost/createPost";
 import Historique from "./home/MesRessource";
 import Favorie from "./home/RessourceSave";
 import Abonnement from "./home/Abonnement";
+import Profil from "./Profil/profilUpdate";
+import Amis from "./home/Amis";
+import Groupe from "./home/Groupe";
 import utils from "./utils";
 
 
@@ -29,7 +32,7 @@ export default function Navigation(image) {
 
   const deconnexionUtilisateur = () => {
     removeCookies("token");
-    router.push("/");
+    router.push("/home/Home");
   };
 
   const moderationUtilisateur = () => {
@@ -58,6 +61,15 @@ export default function Navigation(image) {
         break;
       case "Abonnement":
         return <Abonnement></Abonnement>;
+        break;      
+      case "Profil":
+        return <Profil></Profil>;
+        break;
+      case "Amis":
+        return <Amis></Amis>;
+        break;
+      case "Groupe":
+        return <Groupe></Groupe>;
         break;
       default:
         return <Home></Home>;
@@ -123,7 +135,7 @@ export default function Navigation(image) {
                 <button onClick={() => setRenderPage((renderPage = "Creer"))}>Créer une ressource</button>
                 <button onClick={() => setRenderPage((renderPage = "Historique"))}>Historique de mes ressources</button>
                 <button onClick={() => setRenderPage((renderPage = "Favorie"))}>Mes ressources favorites</button>
-                <button onClick={deconnexionUtilisateur()}>Mes abonnement</button>
+                <button onClick={() => setRenderPage((renderPage = "Abonnement"))}>Mes abonnement</button>
               </div>
             </div>
             <div className={style.sidebarContent}>
@@ -136,7 +148,7 @@ export default function Navigation(image) {
             <div className={style.sidebarContent}>
               <div className={style.sidebarTitle}>Communauté</div>
               <div className={style.sidebarChoice}>
-                <button onClick={() => setRenderPage((renderPage = "Ami"))}>Ami</button>
+                <button onClick={() => setRenderPage((renderPage = "Amis"))}>Ami</button>
                 <button onClick={() => setRenderPage((renderPage = "Groupe"))}>Groupe</button>
                 <button onClick={() => setRenderPage((renderPage = "Evenement"))}>Evenement</button>
               </div>
