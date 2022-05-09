@@ -1,9 +1,11 @@
 //==== MiddleWares ====//
 const _multer = require('../MiddleWares/multer-configuration');
+const _responseLogger = require('../MiddleWares/response-logger');
 //=====================//
 
 //===== Controllers =====//
 const _utController = require("../Controllers/utController");
+const _messageController = require("../Controllers/messageController");
 
 //===============================//
 
@@ -24,6 +26,7 @@ const router = express.Router();
 
 //===== Global routes =====//
 router.get("/test", (req, res, next) => {
+  _responseLogger(req);
   res.status(200).json({ message: "L'API à répondu correctement" });
 });
 
@@ -32,39 +35,60 @@ router.get("/test", (req, res, next) => {
   //USER
   //Get user model schema
   router.get("/user/schema", async function (req, res, next) {
-    var data = await _userQueryService.getUserSchema();
+    var data = await _userQueryService.getSchema();
+    _responseLogger(req);
     res.status(200).json(data);
   });
 
   //Get user model schema
   router.get("/user/schema/detailled", async function (req, res, next) {
-    var data = await _userQueryService.getDetailledUserSchema();
+    var data = await _userQueryService.getDetailledSchema();
+    _responseLogger(req);
     res.status(200).json(data);
   });
 
   //ARTICLE
   //Get article model schema
   router.get("/article/schema", async function (req, res, next) {
-    var data = await _articleQueryService.getArticleSchema();
+    var data = await _articleQueryService.getSchema();
+    _responseLogger(req);
     res.status(200).json(data);
   });
 
   //Get article model detailled schema
   router.get("/article/schema/detailled", async function (req, res, next) {
-    var data = await _articleQueryService.getDetailledArticleSchema();
+    var data = await _articleQueryService.getDetailledSchema();
+    _responseLogger(req);
     res.status(200).json(data);
   });
 
   //COMMENT
   //Get comment model schema
   router.get("/comment/schema", async function (req, res, next) {
-    var data = await _commentQueryService.getCommentSchema();
+    var data = await _commentQueryService.getSchema();
+    _responseLogger(req);
     res.status(200).json(data);
   });
 
   //Get comment model detailled schema
   router.get("/comment/schema/detailled", async function (req, res, next) {
-    var data = await _commentQueryService.getDetailledCommentSchema();
+    var data = await _commentQueryService.getDetailledSchema();
+    _responseLogger(req);
+    res.status(200).json(data);
+  });
+
+  //MESSAGE
+  //Get message model schema
+  router.get("/message/schema", async function (req, res, next) {
+    var data = await _messageController.getSchema();
+    _responseLogger(req);
+    res.status(200).json(data);
+  });
+
+  //Get message model detailled schema
+  router.get("/message/schema/detailled", async function (req, res, next) {
+    var data = await _messageController.getDetailledSchema();
+    _responseLogger(req);
     res.status(200).json(data);
   });
 
@@ -77,6 +101,7 @@ router.post("/auth/register", async function (req, res, next) {
   var userCreationQueryResult = await _userQueryService.createUser(
     req.body.user
   );
+  _responseLogger(req);
   res.status(userCreationQueryResult.statusCode).json(userCreationQueryResult);
 });
 
@@ -87,12 +112,14 @@ router.post("/auth/login", async function (req, res, next) {
       req.body.identifier,
       req.body.password
     );
+  _responseLogger(req);
   res.status(authenticationResult.statusCode).json(authenticationResult);
 });
 
 //Déconnexion
 router.post("/auth/logout/:userId", async function (req, res, next) {
   var logoutResult = await _userQueryService.disconnectUser(req.params.userId);
+  _responseLogger(req);
   res.status(logoutResult.statusCode).json(logoutResult);
 });
 
@@ -107,12 +134,14 @@ router.post("/auth/logout/:userId", async function (req, res, next) {
 //Get query object template
 router.get("/users/query", async function (req, res, next) {
   var data = await _userQueryService.getQueryTemplate();
+  _responseLogger(req);
   res.status(200).json(data);
 });
 
 //Get list of users from query in request body
 router.post("/users/query", async function (req, res, next) {
   var data = await _userQueryService.queryUsers(req.body);
+  _responseLogger(req);
   res.status(200).json(data);
 });
 
@@ -123,12 +152,14 @@ router.post("/users/query", async function (req, res, next) {
 //Get all users
 router.get("/users/all", async function (req, res, next) {
   var data = await _userQueryService.getAllUsers();
+  _responseLogger(req);
   res.status(200).json(data);
 });
 
 //Get user by ID
 router.get("/user/:id", async function (req, res, next) {
   var data = await _userQueryService.getUserById(req.params.id);
+  _responseLogger(req);
   res.status(200).json(data);
 });
 
@@ -140,6 +171,7 @@ router.get("/user/:id", async function (req, res, next) {
 router.post("/user/delete/:userId", async function (req, res, next) {
   // Sera à modifier, on ne supprime pas une entité, on la désactive (mev)
   var deleteResult = await _userQueryService.deleteUser(req.params.userId);
+  _responseLogger(req);
   res.status(deleteResult.statusCode).json(deleteResult);
 });
 
@@ -149,6 +181,7 @@ router.put("/user/:userId", async function (req, res, next) {
     req.params.userId,
     req.body.user
   );
+  _responseLogger(req);
   res.status(updateResult.statusCode).json(updateResult);
 });
 
@@ -165,12 +198,14 @@ router.put("/user/:userId", async function (req, res, next) {
 //Get query object template
 router.get("/articles/query", async function (req, res, next) {
   var data = await _articleQueryService.getQueryTemplate();
+  _responseLogger(req);
   res.status(200).json(data);
 });
 
 //Get list of articles from query in request body
 router.post("/articles/query", async function (req, res, next) {
   var data = await _articleQueryService.queryArticles(req.body);
+  _responseLogger(req);
   res.status(200).json(data);
 });
 
@@ -181,12 +216,14 @@ router.post("/articles/query", async function (req, res, next) {
 //Get all articles
 router.get("/articles/all", async function (req, res, next) {
   var data = await _articleQueryService.getAllArticles();
+  _responseLogger(req);
   res.status(200).json(data);
 });
 
 //Get article by ID
 router.get("/article/:id", async function (req, res, next) {
   var data = await _articleQueryService.getArticleById(req.params.id);
+  _responseLogger(req);
   res.status(200).json(data);
 });
 
@@ -212,6 +249,7 @@ router.get("/article/:id", async function (req, res, next) {
     var articleCreationQueryResult = await _articleQueryService.createArticle(
       articleObject
     );
+    _responseLogger(req);
     res
       .status(articleCreationQueryResult.statusCode)
       .json(articleCreationQueryResult);
@@ -223,6 +261,7 @@ router.post("/article/delete/:articleId", async function (req, res, next) {
   var deleteResult = await _articleQueryService.deleteArticle(
     req.params.articleId
   );
+  _responseLogger(req);
   res.status(deleteResult.statusCode).json(deleteResult);
 });
 
@@ -232,6 +271,7 @@ router.put("/article/:articleId", async function (req, res, next) {
     req.params.articleId,
     req.body.article
   );
+  _responseLogger(req);
   res.status(updateResult.statusCode).json(updateResult);
 });
 
@@ -248,12 +288,14 @@ router.put("/article/:articleId", async function (req, res, next) {
 //Get query object template
 router.get("/comments/query", async function (req, res, next) {
   var data = await _commentQueryService.getQueryTemplate();
+  _responseLogger(req);
   res.status(200).json(data);
 });
 
 //Get list of comments from query in request body
 router.post("/comments/query", async function (req, res, next) {
   var data = await _commentQueryService.queryComments(req.body);
+  _responseLogger(req);
   res.status(200).json(data);
 });
 
@@ -264,12 +306,14 @@ router.post("/comments/query", async function (req, res, next) {
 //Get all comments
 router.get("/comments/all", async function (req, res, next) {
   var data = await _commentQueryService.getAllComments();
+  _responseLogger(req);
   res.status(200).json(data);
 });
 
 //Get comment by ID
 router.get("/comment/:id", async function (req, res, next) {
   var data = await _commentQueryService.getCommentById(req.params.id);
+  _responseLogger(req);
   res.status(200).json(data);
 });
 
@@ -282,6 +326,7 @@ router.post("/comment/create", async function (req, res, next) {
   var commentCreationQueryResult = await _commentQueryService.createComment(
     req.body.comment
   );
+  _responseLogger(req);
   res
     .status(commentCreationQueryResult.statusCode)
     .json(commentCreationQueryResult);
@@ -293,6 +338,7 @@ router.post("/comment/delete/:commentId", async function (req, res, next) {
   var deleteResult = await _commentQueryService.deleteComment(
     req.params.commentId
   );
+  _responseLogger(req);
   res.status(deleteResult.statusCode).json(deleteResult);
 });
 
@@ -302,10 +348,55 @@ router.put("/comment/:commentId", async function (req, res, next) {
     req.params.commentId,
     req.body.comment
   );
+  _responseLogger(req);
   res.status(updateResult.statusCode).json(updateResult);
 });
 
 //#endregion
+
+//#endregion
+
+// ========================================================== //
+
+//#region [MESSAGE]
+
+  //#region [GET RESSOURCES]
+
+  router.get("/messages/all", async function (req, res, next) {
+    var data = await _messageController.getAll();
+    _responseLogger(req);
+    res.status(200).json(data);
+  });
+
+  //#endregion
+
+  //#region [QUERY]
+
+  //Get query object template
+  router.get("/messages/query", async function (req, res, next) {
+    var data = await _messageController.getQueryTemplate();
+    _responseLogger(req);
+    res.status(200).json(data);
+  });
+
+  //Get list of messages from query in request body 
+  router.post("/messages/query", async function (req, res, next) {
+    var data = await _messageController.query(req.body);
+    _responseLogger(req);
+    res.status(200).json(data);
+  });
+
+  //#endregion
+
+  //#region [UPDATE RESSOURCES]
+
+  router.post("/message/create", async function (req, res, next) {
+    var creationResult = await _messageController.create(req.body);
+    _responseLogger(req);
+    res.status(200).json(creationResult);
+  });
+
+  //#endregion
 
 //#endregion
 
@@ -317,6 +408,7 @@ router.put("/comment/:commentId", async function (req, res, next) {
   router.get("/ut/all/:code", async function (req, res, next) {
     let code = req.params.code;
     var data = await _utController.getAllByCode(code);
+    _responseLogger(req);
     res.status(200).json(data);
   });
 

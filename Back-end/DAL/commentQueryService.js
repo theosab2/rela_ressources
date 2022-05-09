@@ -16,7 +16,7 @@ const mComment = require('../models/comment');
     //#region [SCHEMA]
         
         //Retourhe le schéma détaillé du model 'comment'
-        module.exports.getCommentSchema = async () => {
+        module.exports.getSchema = async () => {
             console.log("D.A.L [getCommentSchema] ()");
 
             //Initialisation de la variable de retour
@@ -38,7 +38,7 @@ const mComment = require('../models/comment');
         };
 
         //Retourhe le schéma détaillé du model 'comment'
-        module.exports.getDetailledCommentSchema = async () => {
+        module.exports.getDetailledSchema = async () => {
             console.log("D.A.L [getDetailledCommentSchema] ()");
 
             //Initialisation de la variable de retour
