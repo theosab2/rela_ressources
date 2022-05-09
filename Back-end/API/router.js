@@ -6,6 +6,7 @@ const _responseLogger = require('../MiddleWares/response-logger');
 //===== Controllers =====//
 const _utController = require("../Controllers/utController");
 const _messageController = require("../Controllers/messageController");
+const _relationController = require("../Controllers/relationController");
 
 //===============================//
 
@@ -91,6 +92,22 @@ router.get("/test", (req, res, next) => {
     _responseLogger(req);
     res.status(200).json(data);
   });
+
+  //RELATION
+  //Get relation model schema
+  router.get("/relation/schema", async function (req, res, next) {
+    var data = await _relationController.getSchema();
+    _responseLogger(req);
+    res.status(200).json(data);
+  });
+
+  //Get relation model detailled schema
+  router.get("/relation/schema/detailled", async function (req, res, next) {
+    var data = await _relationController.getDetailledSchema();
+    _responseLogger(req);
+    res.status(200).json(data);
+  });
+
 
 //#endregion
 
@@ -392,6 +409,50 @@ router.put("/comment/:commentId", async function (req, res, next) {
 
   router.post("/message/create", async function (req, res, next) {
     var creationResult = await _messageController.create(req.body);
+    _responseLogger(req);
+    res.status(200).json(creationResult);
+  });
+
+  //#endregion
+
+//#endregion
+
+// ========================================================== //
+
+//#region [RELATION]
+
+  //#region [GET RESSOURCES]
+
+  router.get("/relations/all", async function (req, res, next) {
+    var data = await _relationController.getAll();
+    _responseLogger(req);
+    res.status(200).json(data);
+  });
+
+  //#endregion
+
+  //#region [QUERY]
+
+  //Get query object template
+  router.get("/relations/query", async function (req, res, next) {
+    var data = await _relationController.getQueryTemplate();
+    _responseLogger(req);
+    res.status(200).json(data);
+  });
+
+  //Get list of relations from query in request body 
+  router.post("/relation/query", async function (req, res, next) {
+    var data = await _relationController.query(req.body);
+    _responseLogger(req);
+    res.status(200).json(data);
+  });
+
+  //#endregion
+
+  //#region [UPDATE RESSOURCES]
+
+  router.post("/relation/create", async function (req, res, next) {
+    var creationResult = await _relationController.create(req.body);
     _responseLogger(req);
     res.status(200).json(creationResult);
   });
