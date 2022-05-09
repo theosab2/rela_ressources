@@ -16,7 +16,7 @@ const mArticle = require('../models/article');
     //#region [SCHEMA]
         
         //Retourhe le schéma détaillé du model 'article'
-        module.exports.getArticleSchema = async () => {
+        module.exports.getSchema = async () => {
             console.log("D.A.L [getArticleSchema] ()");
 
             //Initialisation de la variable de retour
@@ -38,7 +38,7 @@ const mArticle = require('../models/article');
         };
 
         //Retourhe le schéma détaillé du model 'article'
-        module.exports.getDetailledArticleSchema = async () => {
+        module.exports.getDetailledSchema = async () => {
             console.log("D.A.L [getDetailledArticleSchema] ()");
 
             //Initialisation de la variable de retour
@@ -215,7 +215,7 @@ const mArticle = require('../models/article');
             return({
                 status:"BAD_REQUEST",
                 statusCode:400,
-                message: "Mise à jour de l'utilisateur impossible : Objet \'article\' introuvable dans le body de la requête",
+                message: "Création de l'utilisateur impossible : Objet \'article\' introuvable dans le body de la requête",
                 requiredFormat:"Format du body attendu : {article:{...article informations...}}",
             })
         }

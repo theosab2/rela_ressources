@@ -17,7 +17,7 @@ const mUser = require('../models/user');
     //#region [SCHEMA]
         
         //Retourhe le schéma détaillé du model 'user'
-        module.exports.getUserSchema = async () => {
+        module.exports.getSchema = async () => {
             console.log("D.A.L [getUserSchema] ()");
 
             //Initialisation de la variable de retour
@@ -39,7 +39,7 @@ const mUser = require('../models/user');
         };
 
         //Retourhe le schéma détaillé du model 'user'
-        module.exports.getDetailledUserSchema = async () => {
+        module.exports.getDetailledSchema = async () => {
             console.log("D.A.L [getDetailledUserSchema] ()");
 
             //Initialisation de la variable de retour
