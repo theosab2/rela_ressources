@@ -1,7 +1,11 @@
 //#region [Methods]
+
+    const queryParserLogPrefix = "    (query-parser) B.L.L ";
+
     
     //Extrait les paramètres entre crochets
     module.exports.parseObjectQuery = async (query) => {
+        console.log(queryParserLogPrefix,"[parseObjectQuery] (paramètres) 'query' : ",query);
         for (var [key, value] of Object.entries(query)) {
             //TODO external method
             if(typeof(value) ==  typeof(""))
@@ -13,9 +17,9 @@
                 var IS_NOT_NULL = await this.parseParameter_IsNotNull(value);
 
 
-                console.log(key,": CASE INSENSITIVE :",CASE_INSENSITIVE);
-                console.log(key,": LIKE :",LIKE);
-                console.log(key,": IS NOT NULL :",IS_NOT_NULL);
+                console.log(queryParserLogPrefix,key,": CASE INSENSITIVE :",CASE_INSENSITIVE);
+                console.log(queryParserLogPrefix,key,": LIKE :",LIKE);
+                console.log(queryParserLogPrefix,key,": IS NOT NULL :",IS_NOT_NULL);
 
                 if(LIKE && !CASE_INSENSITIVE)
                 {
@@ -72,7 +76,7 @@
                 }
             }
         }
-        console.log(query);
+        console.log(queryParserLogPrefix,"[parseObjectQuery] (return) 'parsed-query' : ",query);
         return query;
     };
 

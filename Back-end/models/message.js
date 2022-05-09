@@ -6,7 +6,8 @@ const MessageSchema = mongoose.Schema({
     UT_id:{type:String}, // code : MESSAGE => (type)
     body:{type:String},
     additionnalCSS:{type:String},
-    _createdAt:{type:Date, required:true, default:Date.now()}
+    _createdAt:{type:Date, required:true, default:Date.now()},
+    _updatedAt:{type:Date, required:true, default:Date.now()}
 });
 
 module.exports = mongoose.model('Message', MessageSchema);
