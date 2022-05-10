@@ -15,6 +15,7 @@ import Abonnement from "./home/Abonnement";
 import Profil from "./Profil/profilUpdate";
 import Amis from "./home/Amis";
 import Groupe from "./home/Groupe";
+import Evenement from "./home/Evenement";
 import utils from "./utils";
 
 
@@ -70,6 +71,9 @@ export default function Navigation(image) {
         break;
       case "Groupe":
         return <Groupe></Groupe>;
+        break;
+      case "Evenement":
+        return <Evenement></Evenement>;
         break;
       default:
         return <Home></Home>;

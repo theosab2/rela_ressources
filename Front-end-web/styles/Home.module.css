@@ -169,6 +169,65 @@ justify-content: center;
   padding: 10px;
 }
 
+.eventContainer{
+  min-width: 600px;
+  min-height: 200px;
+  background-color: #2F4077;
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.eventContainerInfo{
+  display: flex;
+  justify-content: space-around;
+}
+
+.eventImg{
+  height: 100px;
+  width: 100px;
+  border-radius: 5px;
+}
+
+.eventMainInfo{
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  color: #fff;
+}
+
+.eventMainInfo img{
+  height: 20px;
+  width: 20px;
+}
+
+.eventHeader{
+  display: flex;
+  justify-content: space-around;
+  color: #fff;
+}
+
+.eventHeader button{
+  background-color: #fff;
+  min-width: 120px;
+  height: 25px;
+  border-radius: 5px;
+  color:#869ECE;
+  margin-left: 50px;
+}
+
+.eventUser{
+  display: flex;
+  flex-direction: row;
+  margin-right: 30px;
+  justify-content: center;
+  align-items: center;
+}
+
+.eventDescription{
+  color: #fff;
+  margin: auto;
+  max-width: 500px;
+}
 
 .groupeContainer button{
   background-color: #fff;
