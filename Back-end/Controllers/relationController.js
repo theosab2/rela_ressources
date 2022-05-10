@@ -117,7 +117,7 @@ const controllerLogPrefix = "    (relation) CONTROLLER ";
 
 //#endregion
 
-//#region [GET_RESSOURCES]
+//#region [GET RESSOURCES]
 
 module.exports.getAll = async () => {
     console.log(controllerLogPrefix,"[getAll] () ");
@@ -130,7 +130,6 @@ module.exports.getAll = async () => {
 //#endregion
 
 //#region [UPDATE RESSOURCES]
-
 
 module.exports.create = async (requestBody = null) => {
     console.log(controllerLogPrefix,"[create] (paramètres) 'requestBody' :\n",requestBody);

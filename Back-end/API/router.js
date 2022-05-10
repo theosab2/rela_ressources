@@ -108,6 +108,21 @@ router.get("/test", (req, res, next) => {
     res.status(200).json(data);
   });
 
+  //UTable
+  //Get UTable model schema
+  router.get("/ut/schema", async function (req, res, next) {
+    var data = await _utController.getSchema();
+    _responseLogger(req);
+    res.status(200).json(data);
+  });
+
+  //Get UTable model detailled schema
+  router.get("/ut/schema/detailled", async function (req, res, next) {
+    var data = await _utController.getDetailledSchema();
+    _responseLogger(req);
+    res.status(200).json(data);
+  });
+
 
 //#endregion
 
@@ -441,7 +456,7 @@ router.put("/comment/:commentId", async function (req, res, next) {
   });
 
   //Get list of relations from query in request body 
-  router.post("/relation/query", async function (req, res, next) {
+  router.post("/relations/query", async function (req, res, next) {
     var data = await _relationController.query(req.body);
     _responseLogger(req);
     res.status(200).json(data);
@@ -465,13 +480,46 @@ router.put("/comment/:commentId", async function (req, res, next) {
 
 //#region [UTable]
 
+  //#region [GET RESSOURCES]
+
+    //Get all uts by code
+    router.get("/ut/all/:code", async function (req, res, next) {
+      let code = req.params.code;
+      var data = await _utController.getAllByCode(code);
+      _responseLogger(req);
+      res.status(200).json(data);
+    });
+
+  //#endregion
+
+
+  //#region [QUERY]
+
   //Get query object template
-  router.get("/ut/all/:code", async function (req, res, next) {
-    let code = req.params.code;
-    var data = await _utController.getAllByCode(code);
+  router.get("/uts/query", async function (req, res, next) {
+    var data = await _utController.getQueryTemplate();
     _responseLogger(req);
     res.status(200).json(data);
   });
+
+  //Get list of relations from query in request body 
+  router.post("/uts/query", async function (req, res, next) {
+    var data = await _utController.query(req.body);
+    _responseLogger(req);
+    res.status(200).json(data);
+  });
+
+  //#endregion
+
+  //#region [UPDATE RESSOURCES]
+
+  router.post("/ut/create", async function (req, res, next) {
+    var creationResult = await _utController.create(req.body);
+    _responseLogger(req);
+    res.status(200).json(creationResult);
+  });
+  
+  //#endregion
 
 //#endregion
 
