@@ -10,14 +10,19 @@ const _typeValidationService = require("../BLL/global/typeValidationService");
 //Import du modèle relatif
 const mRelation = require('../models/relation');
 
-const queryServiceLogPrefix = "    (relation)      D.A.L ";
+const queryServiceLogPrefix  = "    (relation)      D.A.L ";
 
-module.exports.getSchemaPath = async () => {
-    console.log(queryServiceLogPrefix,"[getSchemaPath] ()");
-    console.log(queryServiceLogPrefix,"[getSchemaPath] (return) schemaPath");
-    return Object.entries(mRelation.schema.paths);
-};
+//#region [QUERY]
 
+    module.exports.getSchemaPath = async () => {
+        console.log(queryServiceLogPrefix,"[getSchemaPath] ()");
+        console.log(queryServiceLogPrefix,"[getSchemaPath] (return) schemaPath");
+        return Object.entries(mRelation.schema.paths);
+    };
+
+//#endregion
+
+//#region [GET RESSOURCES]
 module.exports.getAll = async () => {
     console.log(queryServiceLogPrefix,"[getAll] ()");
 
@@ -43,6 +48,10 @@ module.exports.getAll = async () => {
         return {message:"une erreur est survenue",error};
     }  
 };
+
+//#endregion
+
+//#region [QUERY RESSOURCES]
 
 module.exports.query = async (query = {}) => {
     console.log(queryServiceLogPrefix,"[query] (param) 'query' : ",query);
@@ -80,6 +89,9 @@ module.exports.query = async (query = {}) => {
     }
 };
 
+//#endregion
+
+//#region [UPDATE RESSOURCES]
 module.exports.saveOne = async (newRelationModel) => {
     try //Création du modèle à partir des données du body de la requête
     {
@@ -115,3 +127,5 @@ module.exports.saveOne = async (newRelationModel) => {
         })
     }
 }
+
+//#endregion
