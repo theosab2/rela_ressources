@@ -29,66 +29,33 @@ export default function () {
 
   return (
     <>
-      <div className={style.createContainer}>
-        <div className={style.tabHistorique}>
-          <table>
-            <thead>
-              <tr>
-                <th>Approbation</th>
-                <th>Titre publication</th>
-                <th>Nom du publicateur</th>
-                <th>Catégorie</th>
-                <th>Voir publication</th>
-                <th>Supprimer la publication</th>
-              </tr>
-            </thead>
-            <tbody>
-              {allArticle &&
-                allArticle.map((articleInfo) => (
-                  <tr key={articleInfo._id}>
-                    <td>
-                      {articleInfo.articleIsApproved
-                        ? "Approuvé"
-                        : "Désaprouvé"}
-                    </td>
-                    <td>{articleInfo.articleTitle}</td>
-                    <td>{articleInfo.articleDescription}</td>
-                    <td>{articleInfo.articleCategory_TTids}</td>
-                    <td>
-                      <Link href={`../crudPost/${articleInfo._id}`}>
-                        <a>
-                          <Image
-                            className={style.chowIcon}
-                            src="/../public/Image/eye-solid.svg"
-                            height="30px"
-                            width="30px"
-                          />
-                        </a>
-                      </Link>
-                    </td>
-                    <td>
-                      <form>
-                        <input
-                          type="submit"
-                          value={
-                            articleInfo.articleIsApproved
-                              ? "Désaprouver"
-                              : "Approuver"
-                          }
-                          onClick={() =>
-                            articleInfo.articleIsApproved
-                              ? modererArticle(articleInfo._id, false)
-                              : modererArticle(articleInfo._id, true)
-                          }
-                        ></input>
-                      </form>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
+      <div className={style.mainContainer}>
+        <input type="text" placeholder="Recherche" className={style.searchBar}></input>
+        <div className={style.articleContainer}>
+          <div className={style.firstPartContainer}>
+            <div className={style.firstInfo}>
+              <div className={style.userInfoContainer}>
+                <img src="/Image/connexion.png" className={style.userPicture}/>
+                <div className={style.userPostInfoContainer}>
+                  <div className={style.userName}>JeanMichelle</div>
+                  <div className={style.publicationDate}>Publication : Il y a 4h</div>
+                </div>
+              </div>
+              <div className={style.articleTitle}>Je suis un jolie titre</div>
+            </div>
+            <img src="/Image/Bateau_2.jpg" className={style.articlePicture}/>
+          </div>
+          <div className={style.articleBody}>Je suis une courte description de ce qui se trouve sur l’image dans le bas de la ressource et il y a une faute d’orthographe</div>
+          <div className={style.articleFooter}>
+            <div className={style.articleRate}>
+              <img src="/Image/alert.png" className={style.like}/>
+              <img src="/Image/comment.png" className={style.like}/>
+            </div>
+            <div className={style.articleOption}>
+          </div>
         </div>
       </div>
+     </div>
     </>
   );
 }

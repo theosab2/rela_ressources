@@ -16,6 +16,7 @@ import Profil from "./Profil/profilUpdate";
 import Amis from "./home/Amis";
 import Groupe from "./home/Groupe";
 import Evenement from "./home/Evenement";
+import Moderation from "./administration/Moderation";
 import utils from "./utils";
 
 
@@ -74,6 +75,9 @@ export default function Navigation(image) {
         break;
       case "Evenement":
         return <Evenement></Evenement>;
+        break;
+      case "Moderation":
+        return <Moderation></Moderation>;
         break;
       default:
         return <Home></Home>;
@@ -163,6 +167,15 @@ export default function Navigation(image) {
                 <button onClick={() => setRenderPage((renderPage = "Preference"))}>Préférence</button>
                 <button onClick={() => setRenderPage((renderPage = "Supprimer"))}>Supprimer mon compte</button>
                 <button onClick={() => setRenderPage((renderPage = "Condition"))}>Condition d'utilisation</button>
+              </div>
+            </div>
+            <div className={style.sidebarContent}>
+              <div className={style.sidebarTitle}>Administration</div>
+              <div className={style.sidebarChoice}>
+                <button onClick={() => setRenderPage((renderPage = "Moderation"))}>Modération</button>
+                <button onClick={() => setRenderPage((renderPage = "Categorie"))}>Administration de catégorie</button>
+                <button onClick={() => setRenderPage((renderPage = "Utilisateur"))}>Modifier les utilisateurs</button>
+                <button onClick={() => setRenderPage((renderPage = "Statiques"))}>Statistiques</button>
               </div>
             </div>
           </div>
