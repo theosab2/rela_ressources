@@ -17,6 +17,8 @@ import Amis from "./home/Amis";
 import Groupe from "./home/Groupe";
 import Evenement from "./home/Evenement";
 import Moderation from "./administration/Moderation";
+import Categorie from "./administration/AjouterCategorie";
+import Utilisateur from "./administration/AdminRole";
 import utils from "./utils";
 
 
@@ -78,6 +80,12 @@ export default function Navigation(image) {
         break;
       case "Moderation":
         return <Moderation></Moderation>;
+        break;
+      case "Categorie":
+        return <Categorie></Categorie>;
+        break;
+      case "Utilisateur":
+        return <Utilisateur></Utilisateur>;
         break;
       default:
         return <Home></Home>;

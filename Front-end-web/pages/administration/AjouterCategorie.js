@@ -8,7 +8,7 @@ export default function () {
   const [modifCategorie, setModifCategorie] = useState("");
   let allCategorie;
   allCategorie = categorieManager();
-
+  console.log(allCategorie);
   const ajoutCategorie = async () => {
     let res = await fetch("http://localhost:3001/category/create", {
       method: "POST",
@@ -86,51 +86,13 @@ export default function () {
 
   if (allCategorie != null) {
     allCategorie.forEach((element) => {
-      console.log();
+      console.log(element)
     });
     return (
-      <>
-        <form>
-          <div className={style.tabHistorique}>
-            <table>
-              <thead>
-                <tr>
-                  <th>Catégorie</th>
-                  <th>Etat</th>
-                  <th>Modifier Etat</th>
-                </tr>
-              </thead>
-              <tbody>
-                {allCategorie &&
-                  allCategorie.map((categorie) => (
-                    <tr key={categorie._id}>
-                      <td>{categorie.categoryName}</td>
-                      <td>
-                        {categorie.categoryIsActive ? "Actif" : "Innactif"}
-                      </td>
-                      <td>
-                        <input
-                          type="submit"
-                          value={
-                            categorie.categoryIsActive
-                              ? "Activer"
-                              : "Désactiver"
-                          }
-                          onClick={() =>
-                            categorie.categoryIsActive
-                              ? activeChange(categorie._id, false)
-                              : activeChange(categorie._id, true)
-                          }
-                        ></input>
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          </div>
 
-          <h1>Ajouter Catégorie</h1>
-          <div className={style.ajouterCategorie}>
+        <div className={style.categorieContainer}>
+          <h2>Ajouter Catégorie</h2>
+          <p>Insérer une catégorie</p>
             <input
               type="text"
               placeholder="Insérer une catégorie"
@@ -139,14 +101,13 @@ export default function () {
                 setCreationCategorie(creationCategorie.target.value)
               }
             ></input>
-            <input
-              type="submit"
-              value="Valider"
+            <button
               className={style.buttonValiderCategorie}
               onClick={ajoutCategorie}
-            ></input>
-          </div>
-          <h1>Modifier Catégorie</h1>
+            >Enregistrer les modifications</button>
+
+          <h2>Modifier Catégorie</h2>
+          <p>Choisissez une catégorie</p>
           <select
             className={style.categorieSelect}
             onChange={getUpdateCategory}
@@ -159,7 +120,9 @@ export default function () {
                 </option>
               ))}
           </select>
-          <div className={style.ajouterCategorie}>
+          <div>
+          <p>Insérer une catégorie</p>
+          </div>
             <input
               type="text"
               placeholder="Insérer une catégorie"
@@ -168,16 +131,14 @@ export default function () {
                 setModifCategorie(modifCategorie.target.value)
               }
             ></input>
-            <input
-              type="submit"
-              value="Valider"
+            <button
               className={style.buttonValiderCategorie}
               onClick={updateCategorie}
-            ></input>
-          </div>
-          <h1>Supprimer Catégorie</h1>
+            >Enregistrer les modifications</button>
 
-          <div className={style.ajouterCategorie}>
+          <h2>Supprimer Catégorie</h2>
+
+          <p>Choisissez une catégorie</p>
             <select
               className={style.categorieSelect}
               onChange={getDeleteCategory}
@@ -190,17 +151,14 @@ export default function () {
                   </option>
                 ))}
             </select>
-            <input
-              type="submit"
-              value="Valider"
+            <button
               className={style.buttonValiderCategorie}
               onClick={supprimerCategorie}
-            ></input>
-          </div>
-        </form>
-      </>
+            >Enregistrer les modifications</button>
+        </div>
+
     );
   } else {
     return <>loading</>;
   }
-}
+  }

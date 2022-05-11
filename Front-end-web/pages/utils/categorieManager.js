@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 export default function allCategorie() {
   const [allCategorie, setallCategorie] = useState(null);
   const getCategorie = async () =>
-    fetch("http://localhost:3001/categories/all", {
+    fetch("http://localhost:3001/ut/all/CATEGORY", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -11,11 +11,16 @@ export default function allCategorie() {
     })
       .then((res) => res.json())
       .then((data) => {
-        setallCategorie(data.categories);
+        setallCategorie(data.ut);
       });
 
   useEffect(() => {
     getCategorie();
   }, []);
-  return allCategorie;
+  if(allCategorie == null){
+    console.log(allCategorie)
+  }
+  else{
+    return allCategorie;
+  }
 }

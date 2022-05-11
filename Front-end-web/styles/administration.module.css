@@ -106,3 +106,115 @@
   transform: rotate(180deg);
 }
 
+.categorieContainer{
+  background-color: #2F4077;
+  display: flex;
+  color: #fff;
+  flex-direction: column;
+  align-items: center;
+  max-width: 600px;
+  margin: auto;
+  border-radius: 5px;
+  border: 10px solid #869ECE;
+}
+
+.categorieContainer h2{
+background-color: #869ECE;
+width: 100%;
+margin: none;
+padding: none;
+font-size: 15px;
+font-weight: 100;
+height: 35px;
+display: flex;
+align-items: center;
+margin-block-start: 0 !important; 
+}
+
+
+.categorieContainer button{
+  width: 200px;
+  border-radius: 5px;
+  color: #fff;
+  height: 30px;
+  margin: 10px;
+  background: #CE8686;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 5px;
+font-size: 15px;
+}
+
+.categorieContainer input{
+  width: 400px;
+  height:50px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px #555;
+  font-size: 20px;
+
+}
+
+.categorieContainer .categorieSelect{
+  width: 400px;
+  height:50px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px #555;
+  font-size: 20px;
+  margin: 10px;
+}
+
+.categorieContainer p{
+  width: 400px;
+  text-align: left ;
+}
+
+.adminRoleContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.adminRoleUserContainer{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 700px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #2F4077;
+}
+
+.adminRoleUserContainer div{
+  display: flex;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+}
+
+.adminRoleContainer button{
+  width: 100px;
+  border-radius: 5px;
+  color: #fff;
+  height: 30px;
+  background: #CE8686;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 5px;
+font-size: 15px;
+}
+
+.adminRoleContainer select{
+  width: 150px;
+  height:30px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px #555;
+  font-size: 15px;
+  margin: 10px;
+}
+
+.userIcon{
+  height: 30px;
+  width: 30px;
+}
