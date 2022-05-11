@@ -1,6 +1,6 @@
 //#region [Methods]
 
-    const queryParserLogPrefix = "    (query-parser) B.L.L ";
+    const queryParserLogPrefix = "    (query-parser)  B.L.L ";
 
     
     //Extrait les paramètres entre crochets

@@ -400,6 +400,12 @@ router.put("/comment/:commentId", async function (req, res, next) {
     res.status(200).json(data);
   });
 
+  router.get("/messages/all-by-relation/:relation_id", async function (req, res, next) {
+    var data = await _messageController.getAllByRelation(req.params.relation_id);
+    _responseLogger(req);
+    res.status(200).json(data);
+  });
+
   //#endregion
 
   //#region [QUERY]

@@ -44,7 +44,34 @@ module.exports.getAll = async () => {
     }  
 };
 
-module.exports.query = async (query = {}) => {
+module.exports.getAllByRelation = async (relationId) => {
+    console.log(queryServiceLogPrefix,"[getAllByRelation] (param) relationId : ",relationId);
+
+    try {
+        var data = await mMessage.find().where('relation_id').equals(relationId);
+        if(data.length > 0){
+            console.log(queryServiceLogPrefix,"[getAllByRelation] (return) ",data.length," element",data.length > 1 ?'s':'');
+            return {
+                messages:data,
+                count:data.length
+            };
+
+        }else{
+            console.log(queryServiceLogPrefix,"[getAllByRelation] (return) 0 element : no message found");
+            return {
+                messages:[],
+                message:"aucun message enregistré en base de données pour la relation (id) : "+relationId
+            };
+
+        }       
+    } 
+    catch (error) {
+        console.log(queryServiceLogPrefix,"[getAllByRelation] (error)",error);
+        return {message:"une erreur est survenue",error};
+    }  
+};
+
+module.exports.query = async (parsedQuery = {}) => {
     console.log(queryServiceLogPrefix,"[query] (param) 'query' : ",query);
 
 
@@ -58,7 +85,6 @@ module.exports.query = async (query = {}) => {
     }
     else
     {   //On prend en compte la query transmise à l'API
-        parsedQuery = await _queryParserService.parseObjectQuery(query);
         
         try {
             var data = await mMessage.find().where(query);
