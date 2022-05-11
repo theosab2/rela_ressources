@@ -98,9 +98,18 @@ const controllerLogPrefix = "    (message) CONTROLLER ";
             return this.getAll();
         }
         else
-        {   //On prend en compte la query transmise à l'API            
+        {   //On prend en compte la query transmise à l'API     
+            try{
+                console.log(controllerLogPrefix,"[query] (info) : parsing received query");
+                var parsedQuery = await _queryParserService.parseObjectQuery(query);
+            }
+            catch(exception){
+                console.log(controllerLogPrefix,"[query] (exception) : something went wrong while parsing the query");
+                return {message:"une erreur est survenue",error};
+
+            }       
             try {
-                let data = await _messageQueryService.query(query);
+                let data = await _messageQueryService.query(parsedQuery);
                 console.log(controllerLogPrefix,"[query] (return) : ",data.messages.length," element",data.messages.length > 1 ?'s':'');
                 return data;
             } 
@@ -124,6 +133,13 @@ module.exports.getAll = async () => {
     var data = await _messageQueryService.getAll();
     console.log(controllerLogPrefix,"[getAll] () ");
 
+    return data
+}
+
+module.exports.getAllByRelation = async (relationId) => {
+    console.log(controllerLogPrefix,"[getAllByRelation] () ");
+    var data = await _messageQueryService.getAllByRelation(relationId);
+    console.log(controllerLogPrefix,"[getAllByRelation] (return) data");
     return data
 }
 

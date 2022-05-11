@@ -161,7 +161,7 @@ module.exports.create = async (requestBody = null) => {
         return ({
             status:"EXCEPTION",
             statusCode:500,
-            message: "Une erreur est survenue durant l'enregistrement du modèle dans la base de données pour le nouvel ut : \'"+utObject.name+"\'",
+            message: "Une erreur est survenue durant l'enregistrement du modèle dans la base de données pour le nouvel ut : \'"+utObject.code+"\'",
             utInfoReceipted:utObject,
             exception:exception
         })
@@ -172,7 +172,7 @@ module.exports.create = async (requestBody = null) => {
         status:"SUCCESS",
         statusCode:201,
         utCreated:utObject,
-        message: "Ut : \'"+utObject.body+"\' Créé avec succès"
+        message: "Ut : \'"+utObject.code+"\' Créé avec succès"
     });    
 };
 
