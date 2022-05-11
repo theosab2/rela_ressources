@@ -489,7 +489,7 @@ router.put("/comment/:commentId", async function (req, res, next) {
   //#region [GET RESSOURCES]
 
     //Get all uts by code
-    router.get("/ut/all/:code", async function (req, res, next) {
+    router.get("/uts/all/:code", async function (req, res, next) {
       let code = req.params.code;
       var data = await _utController.getAllByCode(code);
       _responseLogger(req);
