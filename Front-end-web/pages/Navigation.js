@@ -91,7 +91,6 @@ export default function Navigation(image) {
         return <Home></Home>;
     }
   }
-
   const userCookie = utils();
   if (userCookie == false) {
     return (

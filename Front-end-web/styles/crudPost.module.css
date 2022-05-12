@@ -42,13 +42,35 @@
   color: #000;
 }
 
+.addRessourceContainer{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
 .addRessource{
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 50px;
   background-color: #CE8686;
   border-radius: 5px;
   color: #fff;
-  height: 100%;
-  margin-right: 20px;
+  height: 50px;
+  font-size: 25px;
+  margin-right: 10px;
+  
+}
+
+.inputFile{
+  display: none;
+}
+
+.uploadImage{
+  width: auto;
+  height: 100px;
+  border: #869ECE solid 3px;
+  border-radius: 5px;
 }
 
 .descriptionRessource{

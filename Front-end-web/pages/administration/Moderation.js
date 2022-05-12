@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import articleManager from "../utils/articleManager";
 import Link from "next/link";
 
-export default function () {
+export default function Moderation() {
   let allArticle;
   allArticle = articleManager();
   console.log(allArticle);

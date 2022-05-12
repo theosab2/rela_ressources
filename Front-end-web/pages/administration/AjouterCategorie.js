@@ -1,7 +1,7 @@
 import style from "../../styles/administration.module.css";
 import categorieManager from "../utils/categorieManager";
 import { useEffect, useState } from "react";
-export default function () {
+export default function ajouterCategorie() {
   const [creationCategorie, setCreationCategorie] = useState("");
   const [suppressionCategorie, setSuppressionCategorie] = useState("");
   const [categorieModifie, setcategorieModifie] = useState("");

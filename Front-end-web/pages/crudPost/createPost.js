@@ -26,24 +26,24 @@ export default function createPost() {
 
       setImage(i);
       setCreateObjectURL(URL.createObjectURL(i));
+      console.log(image);
     }
   };
 
   const display = async () => {
     var formdata = new FormData();
-    console.log(image);
     formdata.append("article-image", image);
 
     var JSON_Object = JSON.stringify({
-      articleCreator: JSON.parse(userCookie)._id,
-      articleIsApproved: true,
       articleCategory_TTids: CategorieRessource,
-      articleTitle: title,
-      articleDescription: content,
+      title: title,
+      description: content,
+      creator : JSON.parse(userCookie)._id,
+      isApproved: true,
+      isActive: true,
+      privacyIsPublic: true,
     });
-    console.log(JSON_Object);
     formdata.append("article", JSON_Object);
-    console.log(formdata);
     const res = await fetch("http://localhost:3001/article/create", {
       method: "POST",
       headers: {
@@ -52,9 +52,9 @@ export default function createPost() {
       },
       body: formdata,
     });
-    res = await res.json();
+    console.log(res.status);
     if (res.status != "SUCESS") {
-      console.log("Erreur");
+      console.log(res.status);
     } else {
       console.log("Réussite");
     }
@@ -62,12 +62,10 @@ export default function createPost() {
 
   function getType(value) {
     setTypeRessource(value.target.value);
-    console.log(typeRessource);
   }
 
   function getCategorie(value) {
     setCategorieRessource(value.target.value);
-    console.log(CategorieRessource);
   }
 
   const userCookie = utils();
@@ -85,9 +83,15 @@ export default function createPost() {
                   className={style.inputText}
                 ></input>
                 <div className={style.addRessourceContainer}>
-                  <button className={style.addRessource}>
+                  <label htmlFor="file" className={style.addRessource}>
                     +
-                  </button>
+                  </label>
+                  <input id="file" 
+                  className={style.inputFile} 
+                  type="file"                         
+                  accept="image/*, .pdf,video/*"
+                  onChange={uploadToClient}>
+                  </input>
               <select
                 name="typeRessource"
                 id="typeRessource"
@@ -100,6 +104,11 @@ export default function createPost() {
                 <option value="lien">Lien</option>
               </select>
               </div>
+              <img
+                        id="output"
+                        src={createObjectURL}
+                        className={style.uploadImage}
+                      />
               <div >
                 <textarea
                   className={style.descriptionRessource}
@@ -169,7 +178,7 @@ export default function createPost() {
                 {allCategorie &&
                   allCategorie.map((categorie) => (
                     <option key={categorie._id} value="information">
-                      {categorie.categoryName}
+                      {categorie.name}
                     </option>
                   ))}
               </select>

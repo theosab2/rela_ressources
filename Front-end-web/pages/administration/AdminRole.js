@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import userManager from "../utils/userManager";
 import Image from "next/dist/client/image";
 
-export default function (props) {
+export default function Role(props) {
   let [adminPage, setAdminPage] = useState("");
   let [idUser, setIdUser] = useState(null);
   let allUser;
@@ -62,7 +62,6 @@ export default function (props) {
           <div>
           <select
             className={style.categorieSelect}
-
           >
             <option>Utilisateur</option>
           </select>

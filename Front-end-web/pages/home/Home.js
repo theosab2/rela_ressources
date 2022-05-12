@@ -6,11 +6,13 @@ import articleManager from "../utils/articleManager";
 import Image from "next/image";
 
 export default function Home() {
-  /*let allArticle;
+
+  let allArticle;
   let articlePopular = [];
   allArticle = articleManager();
   for (let i = 0; i < 5; i++) {
     if (allArticle != null) {
+      console.log(allArticle)
       articlePopular.push(allArticle[i]);
     }
   }
@@ -26,31 +28,35 @@ export default function Home() {
           articleUrl="/../public/Image/up.png"
           userId={articleInfo.articleCreator}
         ></Post>
-      ))}*/
+      ))}
   return (
     <>
       <div className={style.mainContainer}>
         <input type="text" placeholder="Recherche" className={style.searchBar}></input>
+        {allArticle &&
+    allArticle
+      .reverse()
+      .map((articleInfo) => (
         <div className={style.articleContainer}>
           <div className={style.firstPartContainer}>
             <div className={style.firstInfo}>
               <div className={style.userInfoContainer}>
                 <img src="/Image/connexion.png" className={style.userPicture}/>
                 <div className={style.userPostInfoContainer}>
-                  <div className={style.userName}>JeanMichelle</div>
+                  <div className={style.userName}>{articleInfo.articleCreator}</div>
                   <div className={style.publicationDate}>Publication : Il y a 4h</div>
                 </div>
               </div>
-              <div className={style.articleTitle}>Je suis un jolie titre</div>
+              <div className={style.articleTitle}>{articleInfo.articleTitle}</div>
             </div>
-            <img src="/Image/Bateau_2.jpg" className={style.articlePicture}/>
+            <img src={articleInfo.articleImage} className={style.articlePicture}/>
           </div>
-          <div className={style.articleBody}>Je suis une courte description de ce qui se trouve sur l’image dans le bas de la ressource et il y a une faute d’orthographe</div>
+          <div className={style.articleBody}>{articleInfo.articleDescription}</div>
           <div className={style.articleFooter}>
             <div className={style.articleRate}>
-              <div>235</div>
+              <div>{articleInfo.articleNbLikes}</div>
               <img src="/Image/like.png" className={style.like}/>
-              <div>156</div>
+              <div>{articleInfo.articleNbDislikes}</div>
               <img src="/Image/like.png" className={style.dislike}/>
             </div>
             <div className={style.articleOption}>
@@ -61,6 +67,7 @@ export default function Home() {
             </div>
           </div>
         </div>
+        ))}
      </div>
     </>
   );

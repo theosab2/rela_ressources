@@ -3,7 +3,7 @@ import style from "../../styles/Home.module.css";
 import Image from "next/dist/client/image";
 import Link from "next/link";
 
-export default function () {
+export default function RessourceSave() {
   const showModal = () => {
     document.getElementById("myModal").style.display = "block";
   };

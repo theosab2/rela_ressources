@@ -25,7 +25,12 @@
   background-color: #2F4077; 
   width: 200px;
   margin-top: 75px;
+}
 
+@media (max-width: 600px) {
+  .sideBar{
+    display: none;
+  }
 }
 
 .sidebarContent{

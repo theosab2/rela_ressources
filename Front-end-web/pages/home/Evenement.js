@@ -7,7 +7,7 @@ import utils from "../utils";
 import cookieManager from "../utils/cookieManager";
 import articleManager from "../utils/articleManager";
 
-export default function () {
+export default function Evenement() {
   let allArticle;
   let array = [];
 
