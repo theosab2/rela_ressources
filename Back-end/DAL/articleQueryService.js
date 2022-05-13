@@ -222,7 +222,7 @@ const mArticle = require('../models/article');
         
         try //Vérification de l'existence du nom de l'article dans la base de données
         {   
-            var articleTitleAlreadyExist = await this.checkArticleTitleExistence(articleObject.articleTitle);
+            var articleTitleAlreadyExist = await this.checkArticleTitleExistence(articleObject.title);
             console.log("D.A.L [createArticle] articleTitleAlreadyExist :",articleTitleAlreadyExist);
         }
         catch(exception) //ECHEC de la vérification de l'existence du nom d'utilisateur dans la base de données
@@ -231,7 +231,7 @@ const mArticle = require('../models/article');
             return({
                 status:"CONTROL_FAILURE",
                 statusCode:500,
-                message: "Une erreur est survenue durant la vérification de l'existence du nom de l'article : \'"+articleObject.articleTitle+"\' dans la base de données",
+                message: "Une erreur est survenue durant la vérification de l'existence du nom de l'article : \'"+articleObject.title+"\' dans la base de données",
                 exception:exception
             })
         }
@@ -249,7 +249,7 @@ const mArticle = require('../models/article');
                 return ({
                     status:"EXCEPTION",
                     statusCode:500,
-                    message: "Une erreur est survenue durant la création du modèle pour le nouvel article : \'"+articleObject.name+"\'",
+                    message: "Une erreur est survenue durant la création du modèle pour le nouvel article : \'"+articleObject.title+"\'",
                     articleInfoReceipted:articleObject,
                     exception:exception
                 })
@@ -265,7 +265,7 @@ const mArticle = require('../models/article');
                 return ({
                     status:"EXCEPTION",
                     statusCode:500,
-                    message: "Une erreur est survenue durant l'enregistrement du modèle dans la base de données pour le nouvel article : \'"+articleObject.articleTitle+"\'",
+                    message: "Une erreur est survenue durant l'enregistrement du modèle dans la base de données pour le nouvel article : \'"+articleObject.title+"\'",
                     articleInfoReceipted:articleObject,
                     exception:exception
                 })
@@ -276,7 +276,7 @@ const mArticle = require('../models/article');
                 status:"SUCCESS",
                 statusCode:201,
                 articleCreated:articleObject,
-                message: "Utilisateur : \'"+articleObject.articleTitle+"\' Créé avec succès"
+                message: "Utilisateur : \'"+articleObject.title+"\' Créé avec succès"
             });
         }
         else
@@ -287,7 +287,7 @@ const mArticle = require('../models/article');
             if(articleTitleAlreadyExist) 
             {
                 nbFieldInError++;
-                message += "\'articleTitle\'";
+                message += "\'title\'";
             }
 
             message = nbFieldInError > 1 
