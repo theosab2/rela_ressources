@@ -22,11 +22,19 @@ import Utilisateur from "./administration/AdminRole";
 import utils from "./utils";
 
 
+
 export default function Navigation(image) {
   const router = useRouter();
   const navTitle = "Accueil";
+  var getSession = null;
+  let [renderPage, setRenderPage] = useState("");
 
-  let [renderPage, setRenderPage] = useState("Accueil");
+  useEffect(() => {
+    if (window) { 
+      getSession = window.sessionStorage.getItem("Page");
+      setRenderPage(getSession);
+    }
+  }, []);
 
   useEffect(() => {
     if (router.asPath == "/") {
@@ -87,8 +95,7 @@ export default function Navigation(image) {
       case "Utilisateur":
         return <Utilisateur></Utilisateur>;
         break;
-      default:
-        return <Home></Home>;
+
     }
   }
   const userCookie = utils();

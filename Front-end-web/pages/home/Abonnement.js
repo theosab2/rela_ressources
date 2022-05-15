@@ -11,6 +11,12 @@ export default function abonnement() {
   let allArticle;
   let array = [];
 
+  useEffect(() => {
+    if (window) { 
+      window.sessionStorage.setItem("Page", "Abonnement" );
+    }
+  }, []);
+
   allArticle = articleManager();
   const userCookie = cookieManager();
 

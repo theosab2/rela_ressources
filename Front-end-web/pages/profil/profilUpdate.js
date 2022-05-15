@@ -16,6 +16,12 @@ export default function ProfilUpdate() {
   //let userInfo;
   let idUser;
 
+  useEffect(() => {
+    if (window) { 
+      window.sessionStorage.setItem("Page", "Profil" );
+    }
+  }, []);
+
   async function updateUser() {
     let res = await fetch("http://localhost:3001/user/" + idUser, {
       method: "PUT",

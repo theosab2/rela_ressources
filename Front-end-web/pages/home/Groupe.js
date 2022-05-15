@@ -11,6 +11,12 @@ export default function Groupe() {
   let allArticle;
   let array = [];
 
+  useEffect(() => {
+    if (window) { 
+      window.sessionStorage.setItem("Page", "Groupe" );
+    }
+  }, []);
+
   allArticle = articleManager();
   const userCookie = cookieManager();
 

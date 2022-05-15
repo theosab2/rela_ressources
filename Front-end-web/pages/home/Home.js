@@ -7,28 +7,22 @@ import Image from "next/image";
 
 export default function Home() {
 
+  useEffect(() => {
+    if (window) { 
+      window.sessionStorage.setItem("Page", "Accueil" );
+    }
+  }, []);
+
   let allArticle;
   let articlePopular = [];
   allArticle = articleManager();
   for (let i = 0; i < 5; i++) {
     if (allArticle != null) {
-      console.log(allArticle)
       articlePopular.push(allArticle[i]);
     }
   }
 
-  {allArticle &&
-    allArticle
-      .reverse()
-      .map((articleInfo) => (
-        <Post
-          key={articleInfo._id}
-          allArticleDetail={articleInfo}
-          articleTitle={articleInfo.articleTitle}
-          articleUrl="/../public/Image/up.png"
-          userId={articleInfo.articleCreator}
-        ></Post>
-      ))}
+
   return (
     <>
       <div className={style.mainContainer}>
@@ -37,7 +31,7 @@ export default function Home() {
     allArticle
       .reverse()
       .map((articleInfo) => (
-        <div className={style.articleContainer}>
+        <div className={style.articleContainer} key={articleInfo._id}>
           <div className={style.firstPartContainer}>
             <div className={style.firstInfo}>
               <div className={style.userInfoContainer}>
@@ -55,7 +49,7 @@ export default function Home() {
           <div className={style.articleFooter}>
             <div className={style.articleRate}>
               <div>{articleInfo.articleNbLikes}</div>
-              <img src="/Image/like.png" className={style.like}/>
+              <img src="/Image/like.png"/>
               <div>{articleInfo.articleNbDislikes}</div>
               <img src="/Image/like.png" className={style.dislike}/>
             </div>

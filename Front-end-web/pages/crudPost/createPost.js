@@ -20,6 +20,12 @@ export default function createPost() {
   const [content, setContent] = useState(null);
   const [userId, setUserId] = useState(null);
 
+  useEffect(() => {
+    if (window) { 
+      window.sessionStorage.setItem("Page", "CreatePost" );
+    }
+  }, []);
+
   const uploadToClient = (event) => {
     if (event.target.files && event.target.files[0]) {
       const i = event.target.files[0];

@@ -11,6 +11,12 @@ export default function Evenement() {
   let allArticle;
   let array = [];
 
+  useEffect(() => {
+    if (window) { 
+      window.sessionStorage.setItem("Page", "Evenement" );
+    }
+  }, []);
+
   allArticle = articleManager();
   const userCookie = cookieManager();
 

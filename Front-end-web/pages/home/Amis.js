@@ -11,6 +11,12 @@ export default function Amis() {
   let allArticle;
   let array = [];
 
+  useEffect(() => {
+    if (window) { 
+      window.sessionStorage.setItem("Page", "Amis" );
+    }
+  }, []);
+
   allArticle = articleManager();
   const userCookie = cookieManager();
 

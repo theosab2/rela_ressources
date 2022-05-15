@@ -7,6 +7,13 @@ export default function Role(props) {
   let [adminPage, setAdminPage] = useState("");
   let [idUser, setIdUser] = useState(null);
   let allUser;
+
+  useEffect(() => {
+    if (window) { 
+      window.sessionStorage.setItem("Page", "Connexion" );
+    }
+  }, []);
+
   allUser = userManager();
   console.log(allUser);
   function handleChange(event) {

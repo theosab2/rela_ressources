@@ -11,6 +11,12 @@ export default function Inscription() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  useEffect(() => {
+    if (window) { 
+      window.sessionStorage.setItem("Page", "Inscription" );
+    }
+  }, []);
+
   const display = async () => {
     console.log(pseudo);
     console.log(name);

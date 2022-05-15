@@ -4,6 +4,13 @@ import Image from "next/dist/client/image";
 import Link from "next/link";
 
 export default function RessourceSave() {
+
+  useEffect(() => {
+    if (window) { 
+      window.sessionStorage.setItem("Page", "Favorie" );
+    }
+  }, []);
+
   const showModal = () => {
     document.getElementById("myModal").style.display = "block";
   };

@@ -15,6 +15,12 @@ export default function Connexion() {
   const [identifiant, setIdentifiant] = useState("");
   const [mdp, setMdp] = useState("");
 
+  useEffect(() => {
+    if (window) { 
+      window.sessionStorage.setItem("Page", "Connexion" );
+    }
+  }, []);
+
   const display = async () => {
     console.log(identifiant);
     console.log(mdp);
