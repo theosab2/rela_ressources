@@ -7,6 +7,7 @@ import { setCookies, getCookie } from "cookies-next";
 import Inscription from "./Inscription";
 import Image from "next/dist/client/image";
 
+import { useEffect } from "react";
 export default function Connexion() {
   const sanityIoImageLoader = ({ src, width, quality }) => {
     return `https://cdn.sanity.io/${src}?w=${width}&q=${quality || 75}`;

@@ -7,6 +7,13 @@ export default function ajouterCategorie() {
   const [categorieModifie, setcategorieModifie] = useState("");
   const [modifCategorie, setModifCategorie] = useState("");
   let allCategorie;
+
+  useEffect(() => {
+    if (window) { 
+      window.sessionStorage.setItem("Page", "Categorie" );
+    }
+  }, []);
+
   allCategorie = categorieManager();
   console.log(allCategorie);
   const ajoutCategorie = async () => {

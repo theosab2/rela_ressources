@@ -157,7 +157,7 @@ export default function Navigation(image) {
                 <button onClick={() => setRenderPage((renderPage = "Creer"))}>Créer une ressource</button>
                 <button onClick={() => setRenderPage((renderPage = "Historique"))}>Historique de mes ressources</button>
                 <button onClick={() => setRenderPage((renderPage = "Favorie"))}>Mes ressources favorites</button>
-                <button onClick={() => setRenderPage((renderPage = "Abonnement"))}>Mes abonnement</button>
+                <button onClick={() => setRenderPage((renderPage = "Abonnement"))}>Mes abonnements</button>
               </div>
             </div>
             <div className={style.sidebarContent}>
@@ -170,17 +170,17 @@ export default function Navigation(image) {
             <div className={style.sidebarContent}>
               <div className={style.sidebarTitle}>Communauté</div>
               <div className={style.sidebarChoice}>
-                <button onClick={() => setRenderPage((renderPage = "Amis"))}>Ami</button>
-                <button onClick={() => setRenderPage((renderPage = "Groupe"))}>Groupe</button>
-                <button onClick={() => setRenderPage((renderPage = "Evenement"))}>Evenement</button>
+                <button onClick={() => setRenderPage((renderPage = "Amis"))}>Amis</button>
+                <button onClick={() => setRenderPage((renderPage = "Groupe"))}>Groupes</button>
+                <button onClick={() => setRenderPage((renderPage = "Evenement"))}>Evenements</button>
               </div>
             </div>
             <div className={style.sidebarContent}>
               <div className={style.sidebarTitle}>Paramètre</div>
               <div className={style.sidebarChoice}>
-                <button onClick={() => setRenderPage((renderPage = "Preference"))}>Préférence</button>
+                <button onClick={() => setRenderPage((renderPage = "Preference"))}>Préférences</button>
                 <button onClick={() => setRenderPage((renderPage = "Supprimer"))}>Supprimer mon compte</button>
-                <button onClick={() => setRenderPage((renderPage = "Condition"))}>Condition d'utilisation</button>
+                <button onClick={() => setRenderPage((renderPage = "Condition"))}>Conditions d'utilisation</button>
               </div>
             </div>
             <div className={style.sidebarContent}>

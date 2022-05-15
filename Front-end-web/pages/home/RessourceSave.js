@@ -2,7 +2,7 @@ import Navigation from "../Navigation";
 import style from "../../styles/Home.module.css";
 import Image from "next/dist/client/image";
 import Link from "next/link";
-
+import { useEffect } from "react";
 export default function RessourceSave() {
 
   useEffect(() => {

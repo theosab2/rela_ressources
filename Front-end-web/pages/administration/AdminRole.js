@@ -10,7 +10,7 @@ export default function Role(props) {
 
   useEffect(() => {
     if (window) { 
-      window.sessionStorage.setItem("Page", "Connexion" );
+      window.sessionStorage.setItem("Page", "Utilisateur" );
     }
   }, []);
 

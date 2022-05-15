@@ -10,6 +10,12 @@ export default function Moderation() {
   allArticle = articleManager();
   console.log(allArticle);
 
+  useEffect(() => {
+    if (window) { 
+      window.sessionStorage.setItem("Page", "Moderation" );
+    }
+  }, []);
+
   async function modererArticle(id, bool) {
     console.log(id);
     let res = await fetch("http://localhost:3001/article/" + id, {
