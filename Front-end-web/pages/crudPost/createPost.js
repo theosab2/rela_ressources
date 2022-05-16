@@ -22,7 +22,7 @@ export default function createPost() {
 
   useEffect(() => {
     if (window) { 
-      window.sessionStorage.setItem("Page", "CreatePost" );
+      window.sessionStorage.setItem("Page", "Creer" );
     }
   }, []);
 

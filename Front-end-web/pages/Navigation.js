@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import style from "../styles/navigation.module.css";
+import modalStyle from "../styles/modal.module.css";
 import { setCookies, getCookie, removeCookies } from "cookies-next";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -29,6 +30,14 @@ export default function Navigation(image) {
   var getSession = null;
   let [renderPage, setRenderPage] = useState("");
 
+  const showModal = () => {
+    document.getElementById("myModal").style.display = "block";
+  };
+
+  const closeModal = () => {
+    document.getElementById("myModal").style.display = "none";
+  };
+
   useEffect(() => {
     if (window) { 
       getSession = window.sessionStorage.getItem("Page");
@@ -44,7 +53,8 @@ export default function Navigation(image) {
 
   const deconnexionUtilisateur = () => {
     removeCookies("token");
-    router.push("/home/Home");
+    setRenderPage((renderPage = "Accueil"));
+    router.reload(window.location.pathname)
   };
 
   const moderationUtilisateur = () => {
@@ -164,7 +174,7 @@ export default function Navigation(image) {
               <div className={style.sidebarTitle}>Profil</div>
               <div className={style.sidebarChoice}>
                 <button onClick={() => setRenderPage((renderPage = "Profil"))}>Modifier le profil</button>
-                <button onClick={() => setRenderPage((renderPage = "Deconnexion"))}>Deconnexion</button>
+                <button onClick={() => showModal()}>Deconnexion</button>
               </div>
             </div>
             <div className={style.sidebarContent}>
@@ -195,6 +205,19 @@ export default function Navigation(image) {
           </div>
           <div className={style.navContentSeparator}>
             <div className={style.pageRender}>
+          <div id="myModal" className={modalStyle.modalContainer}>
+            <div className={modalStyle.modalHeader}>
+            <div>Deconnexion</div>
+              <button onClick={closeModal}>
+                x
+              </button>
+              
+            </div>
+            <div className={modalStyle.modalBody}>
+            <button value="Annuler">Annuler</button>
+            <button value="Valider" onClick={() => {deconnexionUtilisateur()}}>Valider</button>
+            </div>
+          </div>
             {pageRender()}
             </div>
             <div className={style.recentContent}>
@@ -213,6 +236,7 @@ export default function Navigation(image) {
             </div>
           </div>
         </div>
+
       </>
     );
   }
