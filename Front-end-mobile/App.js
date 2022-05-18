@@ -20,6 +20,7 @@ import Post from './screens/HomeStack/post';
 import IdSetting from './screens/AuthStack/idSetting';
 import PwdSetting from './screens/AuthStack/pwdSetting';
 import CoorSetting from './screens/AuthStack/coorSetting';
+import CreateContentPost from './screens/AddStack/createContentPost';
 
 const Stack = createStackNavigator();
 const HomeStack = ({ navigation, route }) => {
@@ -61,6 +62,10 @@ const AddStack = () => {
       <Stack.Screen
         name='CreatePost'
         component={CreatePost}
+      />
+      <Stack.Screen
+        name='CreateContentPost'
+        component={CreateContentPost}
       />
     </Stack.Navigator>
   )
