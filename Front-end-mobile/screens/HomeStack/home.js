@@ -68,7 +68,7 @@ const Home = ({navigation}) => {
       </SafeAreaView>
       <View style={styles.footer}>
       </View>
-      <HomemadeNavBar navigation={navigation}/>
+      <HomemadeNavBar route='Home' navigation={navigation}/>
     </View>
   );
 };

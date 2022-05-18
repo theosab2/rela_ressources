@@ -171,7 +171,7 @@ const CreatePost = ({ navigation }) => {
       </View>
       <View style={styles.footer}>
       </View>
-      <HomemadeNavBar navigation={navigation} />
+      <HomemadeNavBar route='CreatePost' navigation={navigation} />
     </View>
   );
 };

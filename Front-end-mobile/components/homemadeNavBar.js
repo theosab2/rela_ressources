@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { Icon, Button } from 'react-native-elements'
 
-const HomemadeNavBar = ({navigation}) => {
+const HomemadeNavBar = ({route,navigation}) => {
     return (
         <View style={styles.container}>
             <Button
@@ -11,10 +11,12 @@ const HomemadeNavBar = ({navigation}) => {
                     <Icon
                         name='home-outline'
                         type='ionicon'
-                        color='#ffffff'
+                        color={route === 'Home' ?'#2F4077' : '#ffffff' }
                     />
                 }
-                onPress={() => navigation.navigate("Home",{ screen: 'Test'})}
+                onPress={() => {
+                    navigation.navigate("Home",{ screen: 'Test'});
+                }}
             />
             <Button
                 type='clear'
@@ -22,9 +24,12 @@ const HomemadeNavBar = ({navigation}) => {
                     <Icon
                         name='people-outline'
                         type='ionicon'
-                        color='#ffffff'
+                        color={route == 'Relation' ? '#2F4077' : '#ffffff'}
                     />
                 }
+                onPress={() => {
+                    navigation.navigate("Relation",{ screen: 'Account'});
+                }}
             />
             <Button
                 type='clear'
@@ -32,10 +37,10 @@ const HomemadeNavBar = ({navigation}) => {
                     <Icon
                         name='add-circle-outline'
                         type='ionicon'
-                        color='#ffffff'
+                        color={route == 'CreatePost' ? '#2F4077' : '#ffffff'}
                     />
                 }
-                onPress={() => navigation.navigate("NewPost")}
+                onPress={() => {navigation.navigate("NewPost", {screen:'CreatePost'})}}
             />
             <Button
                 type='clear'
