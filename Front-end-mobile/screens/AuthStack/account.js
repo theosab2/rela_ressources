@@ -4,6 +4,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Icon} from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import {API_URL} from "@env"
+import HomemadeNavBar from '../../components/homemadeNavBar';
+import Header from '../../components/header';
 
 const Account = ({navigation}) => {
   const [userData, setUserData] = useState({});
@@ -45,6 +47,27 @@ const Account = ({navigation}) => {
 
   return (
     <View style={styles.container}>
+      <Header navigation={navigation}/>
+      <View style={styles.toolsButtons}>
+          <TouchableOpacity
+            style={styles.tool}
+          >
+            <Icon
+              name='pencil-outline'
+              type='ionicon'
+              color='#FFFFFF'
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.tool}
+          >
+            <Icon
+              name='settings-outline'
+              type='ionicon'
+              color='#FFFFFF'
+            />
+          </TouchableOpacity>
+      </View>
         <View
           style={styles.card}
         >
@@ -86,6 +109,7 @@ const Account = ({navigation}) => {
             <Text style={styles.text}>Messages</Text>
           </TouchableOpacity>
         </View>
+        <HomemadeNavBar route='Relation' navigation={navigation}/>
     </View>
   );
 };
@@ -95,13 +119,26 @@ export default Account;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
-    width: '100%',
     backgroundColor: '#2F4077'
   },
+  toolsButtons: {
+    width: '100%',
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingEnd: '5%'
+  },
+  tool: {
+    width: 40,
+    height: 40,
+    backgroundColor: '#CE8686',
+    margin: 5,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   card: {
-    height: '75%',
     width: '95%',
     backgroundColor: '#2F4077',
     borderTopLeftRadius: 10,
