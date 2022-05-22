@@ -77,15 +77,15 @@ export default function ProfilUpdate() {
             <div className={style.profilInformation}>
               <div>
                 <label>Nom</label>
-                <input type="text"></input>
+                <input type="text" defaultValue={userInfo.name}></input>
                 <label>Identifiant</label>
-                <input type="text"></input>
+                <input type="text" defaultValue={userInfo.username}></input>
               </div>
               <div>
                 <label>Prenom</label>
-                <input type="text"></input>
+                <input type="text" defaultValue={userInfo.firstname}></input>
                 <label>Email</label>
-                <input type="text"></input>
+                <input type="text" defaultValue={userInfo.email}></input>
               </div>  
             </div>
           </div>
@@ -94,17 +94,17 @@ export default function ProfilUpdate() {
             <div className={style.profilInformation}>
               <div>
                 <label>Pays</label>
-                <input type="text"></input>
+                <input type="text" defaultValue="France"></input>
                 <label>Ville</label>
-                <input type="text"></input>
+                <input type="text" defaultValue={userInfo.location.ville}></input>
                 <label>Numéro de téléphone</label>
-                <input type="text"></input>
+                <input type="text" defaultValue={userInfo.phone}></input>
               </div>
               <div>
                 <label>Code postal</label>
-                <input type="text"></input>
+                <input type="text" defaultValue={userInfo.location.zip}></input>
                 <label>Rue</label>
-                <input type="text"></input>
+                <input type="text" defaultValue={userInfo.location.zip}></input>
               </div>  
             </div>
           </div>
@@ -114,7 +114,6 @@ export default function ProfilUpdate() {
               <div>
                 <label>Mot de passe</label>
                 <input type="text"></input>
-
               </div>
               <div>
                 <label>Nouveau mot de passe</label>

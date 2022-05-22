@@ -30,6 +30,12 @@ export default function Connexion() {
       const [isBrowser, setIsBrowser] = useState(false);
 
       useEffect(() => {
+        if (window) { 
+          window.sessionStorage.setItem("Page", "Connexion" );
+        }
+      }, []);
+
+      useEffect(() => {
         setIsBrowser(true);
       }, []);
 

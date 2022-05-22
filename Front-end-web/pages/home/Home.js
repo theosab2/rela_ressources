@@ -6,6 +6,9 @@ import articleManager from "../utils/articleManager";
 import Image from "next/image";
 
 export default function Home() {
+  const [nbLike, setLike] = useState(null);
+  const [nbDislike, setDislike] = useState(null);
+  const [id, setId] = useState(null);
 
   useEffect(() => {
     if (window) { 
@@ -22,7 +25,48 @@ export default function Home() {
     }
   }
 
+  useEffect(function showPost(){
+    if(id != null){
+      if (window) { 
+        window.sessionStorage.setItem("Page", "Comment" );
+        window.sessionStorage.setItem("id", id );
+      }
+    }
+  },[id]);
+  
+  async function upVote(id) {
+    setLike(nbLike + 1);
+    let res = await fetch("http://localhost:3001/article/" + id, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        article: {
+          articleNbLikes: nbLike + 1,
+        },
+      }),
+    });
+    res = await res.json();
+  }
 
+  async function downVote(id) {
+    setDislike(nbDislike + 1);
+    let res = await fetch("http://localhost:3001/article/" + id, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        article: {
+          articleNbDislikes: nbDislike + 1,
+        },
+      }),
+    });
+    res = await res.json();
+  }
   return (
     <>
       <div className={style.mainContainer}>
@@ -49,15 +93,18 @@ export default function Home() {
           <div className={style.articleFooter}>
             <div className={style.articleRate}>
               <div>{articleInfo.articleNbLikes}</div>
-              <img src="/Image/like.png"/>
+              <img src="/Image/like.png"  onClick={() => upVote(articleInfo._id)}/>
               <div>{articleInfo.articleNbDislikes}</div>
-              <img src="/Image/like.png" className={style.dislike}/>
+              
+              <img src="/Image/like.png" className={style.dislike} onClick={() => downVote(articleInfo._id)}/>
             </div>
             <div className={style.articleOption}>
               <img src="/Image/alert.png" className={style.warning}/>
               <img src="/Image/forward.png" className={style.forward}/>
               <img src="/Image/plus.png" className={style.add}/>
+              <button onClick={() => setId(articleInfo._id)}>
               <img src="/Image/comments.png" className={style.comment}/>
+              </button>
             </div>
           </div>
         </div>

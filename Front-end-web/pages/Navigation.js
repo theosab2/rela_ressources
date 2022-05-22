@@ -10,6 +10,7 @@ import Home from "./home/Home";
 import Connexion from "./login/Connexion";
 import Inscription from "./login/Inscription";
 import CreatePost from "./crudPost/createPost";
+import Comment from "./crudPost/Comment";
 import Historique from "./home/MesRessource";
 import Favorie from "./home/RessourceSave";
 import Abonnement from "./home/Abonnement";
@@ -22,13 +23,13 @@ import Categorie from "./administration/AjouterCategorie";
 import Utilisateur from "./administration/AdminRole";
 import utils from "./utils";
 
-
-
 export default function Navigation(image) {
   const router = useRouter();
   const navTitle = "Accueil";
   var getSession = null;
+  var getId = null;
   let [renderPage, setRenderPage] = useState("");
+  let [idPage, setIdPage] = useState("");
 
   const showModal = () => {
     document.getElementById("myModal").style.display = "block";
@@ -41,7 +42,9 @@ export default function Navigation(image) {
   useEffect(() => {
     if (window) { 
       getSession = window.sessionStorage.getItem("Page");
+      getId = window.sessionStorage.getItem("id");
       setRenderPage(getSession);
+      setIdPage(getId);
     }
   }, []);
 
@@ -105,7 +108,9 @@ export default function Navigation(image) {
       case "Utilisateur":
         return <Utilisateur></Utilisateur>;
         break;
-
+      case "Comment":
+        return <Comment articleId={idPage}></Comment>;
+        break;
     }
   }
   const userCookie = utils();
