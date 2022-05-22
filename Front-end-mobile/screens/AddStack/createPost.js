@@ -164,13 +164,14 @@ const CreatePost = ({ navigation }) => {
           titleStyle={{ fontWeight: 'bold', fontSize: 12 }}
           containerStyle={[styles.buttonContainerStyle, styles.buttonContinue]}
           onPress={() => {
-            validation();
+            navigation.navigate('CreateContentPost');
+            /**Envoyer l'article à la prochaine page */
           }}
         />
       </View>
       <View style={styles.footer}>
       </View>
-      <HomemadeNavBar navigation={navigation} />
+      <HomemadeNavBar route='CreatePost' navigation={navigation} />
     </View>
   );
 };

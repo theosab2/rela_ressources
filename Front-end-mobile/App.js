@@ -20,6 +20,7 @@ import Post from './screens/HomeStack/post';
 import IdSetting from './screens/AuthStack/idSetting';
 import PwdSetting from './screens/AuthStack/pwdSetting';
 import CoorSetting from './screens/AuthStack/coorSetting';
+import CreateContentPost from './screens/AddStack/createContentPost';
 
 const Stack = createStackNavigator();
 const HomeStack = ({ navigation, route }) => {
@@ -43,11 +44,15 @@ const RelationStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: true
+        headerShown: false
       }}>
       <Stack.Screen
         name='Relation'
         component={Home}
+      />
+      <Stack.Screen
+        name='Account'
+        component={Account}
       />
     </Stack.Navigator>
   )
@@ -61,6 +66,10 @@ const AddStack = () => {
       <Stack.Screen
         name='CreatePost'
         component={CreatePost}
+      />
+      <Stack.Screen
+        name='CreateContentPost'
+        component={CreateContentPost}
       />
     </Stack.Navigator>
   )
@@ -151,6 +160,18 @@ const App = () => {
           <Stack.Screen
             name='Auth'
             component={AuthStack}
+          />
+          <Stack.Screen
+            name='Save'
+            component={SaveStack}
+          />
+          <Stack.Screen
+            name='Msg'
+            component={MsgStack}
+          />
+          <Stack.Screen
+            name='Relation'
+            component={RelationStack}
           />
         </Stack.Navigator>
       </NavigationContainer>
