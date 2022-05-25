@@ -21,6 +21,7 @@ import IdSetting from './screens/AuthStack/idSetting';
 import PwdSetting from './screens/AuthStack/pwdSetting';
 import CoorSetting from './screens/AuthStack/coorSetting';
 import CreateContentPost from './screens/AddStack/createContentPost';
+import Settings from './screens/AuthStack/settings';
 
 const Stack = createStackNavigator();
 const HomeStack = ({ navigation, route }) => {
@@ -121,6 +122,10 @@ const AuthStack = ({ navigation, route }) => {
       <Stack.Screen
         name='Account'
         component={Account}
+      />
+      <Stack.Screen
+        name='Settings'
+        component={Settings}
       />
     </Stack.Navigator>
   )

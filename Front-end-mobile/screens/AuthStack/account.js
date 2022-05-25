@@ -91,6 +91,7 @@ const Account = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.tool}
+          onPress={() => navigation.navigate('Auth',{screen: 'Settings'})}
         >
           <Icon
             name='settings-outline'
