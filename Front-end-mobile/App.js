@@ -50,10 +50,6 @@ const RelationStack = () => {
         name='Relation'
         component={Home}
       />
-      <Stack.Screen
-        name='Account'
-        component={Account}
-      />
     </Stack.Navigator>
   )
 }
@@ -97,10 +93,6 @@ const MsgStack = () => {
         name='account'
         component={Home}
       />
-      <Stack.Screen
-        name='Account'
-        component={Account}
-      />
     </Stack.Navigator>
   )
 }
@@ -125,6 +117,10 @@ const AuthStack = ({ navigation, route }) => {
       <Stack.Screen
         name='CoorSetting'
         component={CoorSetting}
+      />
+      <Stack.Screen
+        name='Account'
+        component={Account}
       />
     </Stack.Navigator>
   )

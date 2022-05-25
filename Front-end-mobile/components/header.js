@@ -20,7 +20,7 @@ const Header = ({navigation}) => {
       <Avatar
         size={55}
         icon={{name: 'user', type: 'evilicon', size: 40}}
-        onPress={() => navigation.navigate('Relation',{ screen: 'Account' })}
+        onPress={() => navigation.navigate('Auth',{ screen: 'Account' })}
       />
     </View>
   );
