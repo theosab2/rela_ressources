@@ -365,93 +365,106 @@ const mUser = require('../models/user');
             })
         }
 
-        try //Vérification du format de l'adresse email reçue
-        {   
-            var emailIsValid = await _typeValidationService.isEmail(userObject.email)
-            console.log("D.A.L [createUser] emailIsValid :",emailIsValid);
+        if(userObject.isEmail != null && userObject.isEmail != undefined)
+        {
+            try //Vérification du format de l'adresse email reçue
+            {   
+                var emailIsValid = await _typeValidationService.isEmail(userObject.email)
+                console.log("D.A.L [createUser] emailIsValid :",emailIsValid);
 
-            if(!emailIsValid){ //Le format de l'adresse email reçue n'est pas valide
+                if(!emailIsValid){ //Le format de l'adresse email reçue n'est pas valide
+                    return({
+                        status:"FAILURE",
+                        statusCode:500,
+                        message: "Le format de l'adresse email reçue : \'"+userObject.email+"\' est invalide",
+                        userInfoReceipted:userObject,
+                        exception:exception
+                    })
+                }
+
+            }
+            catch(exception) //ECHEC de la vérification du format de l'adresse email reçue
+            {   
+                console.log("D.A.L [createUser] (return) 'exception' : ", exception);
                 return({
-                    status:"FAILURE",
+                    status:"CONTROL_FAILURE",
                     statusCode:500,
-                    message: "Le format de l'adresse email reçue : \'"+userObject.email+"\' est invalide",
+                    message: "Une erreur est survenue durant la vérification du format de l'adresse email : \'"+userObject.email+"\'",
+                    userInfoReceipted:userObject,
+                    exception:exception
+                })
+            }
+        
+
+            try //Vérification de l'existence de l'adresse email dans la base de données
+            {   
+                var emailAlreadyExist = await this.checkEmailExistence(userObject.email)
+            }
+            catch(exception) //ECHEC de la vérification de l'existence de l'adresse email dans la base de données
+            {   
+                console.log(exception);
+                return({
+                    status:"CONTROL_FAILURE",
+                    statusCode:500,
+                    message: "Une erreur est survenue durant la vérification de l'existence de l'adresse email : \'"+userObject.email+"\' dans la base de données",
+                    userInfoReceipted:userObject,
+                    exception:exception
+                })
+            }
+        }
+        else
+        {
+            var emailAlreadyExist = false;
+        }
+
+        if(userObject.phone != null && userObject.phone != undefined)
+        {
+            try //Vérification du format du n° de téléphone reçu
+            {   
+                var phoneIsValid = await _typeValidationService.isPhoneNumber(userObject.phone)
+
+                if(!phoneIsValid){ //Le format du n° de téléphone n'est pas valide
+                    return({
+                        status:"FAILURE",
+                        statusCode:500,
+                        message: "Le format du numéro de téléphone reçu : \'"+userObject.phone+"\' est invalide",
+                        userInfoReceipted:userObject
+                    })
+                }
+            }
+            catch(exception) //ECHEC de la vérification du format du n° de téléphone reçu
+            {   
+                console.log(exception);
+                return({
+                    status:"CONTROL_FAILURE",
+                    statusCode:500,
+                    message: "Une erreur est survenue durant la vérification du format du n° de téléphone : \'"+userObject.phone+"\'",
                     userInfoReceipted:userObject,
                     exception:exception
                 })
             }
 
-        }
-        catch(exception) //ECHEC de la vérification du format de l'adresse email reçue
-        {   
-            console.log("D.A.L [createUser] (return) 'exception' : ", exception);
-            return({
-                status:"CONTROL_FAILURE",
-                statusCode:500,
-                message: "Une erreur est survenue durant la vérification du format de l'adresse email : \'"+userObject.email+"\'",
-                userInfoReceipted:userObject,
-                exception:exception
-            })
-        }
+            
 
-        
-
-        try //Vérification de l'existence de l'adresse email dans la base de données
-        {   
-            var emailAlreadyExist = await this.checkEmailExistence(userObject.email)
-        }
-        catch(exception) //ECHEC de la vérification de l'existence de l'adresse email dans la base de données
-        {   
-            console.log(exception);
-            return({
-                status:"CONTROL_FAILURE",
-                statusCode:500,
-                message: "Une erreur est survenue durant la vérification de l'existence de l'adresse email : \'"+userObject.email+"\' dans la base de données",
-                userInfoReceipted:userObject,
-                exception:exception
-            })
-        }
-
-        try //Vérification du format du n° de téléphone reçu
-        {   
-            var phoneIsValid = await _typeValidationService.isPhoneNumber(userObject.phone)
-
-            if(!phoneIsValid){ //Le format du n° de téléphone n'est pas valide
+            try //Vérification de l'existence du numéro de téléphone dans la base de données
+            {   
+                var phoneAlreadyExist = await this.checkPhoneExistence(userObject.phone)
+            }
+            catch(exception) //ECHEC de la vérification de l'existence du numéro de téléphone dans la base de données
+            {   
+                console.log(exception);
                 return({
-                    status:"FAILURE",
+                    status:"CONTROL_FAILURE",
                     statusCode:500,
-                    message: "Le format du numéro de téléphone reçu : \'"+userObject.phone+"\' est invalide",
-                    userInfoReceipted:userObject
+                    message: "Une erreur est survenue durant la vérification de l'existence du numéro de téléphone : \'"+userObject.phone+"\' dans la base de données",
+                    userInfoReceipted:userObject,
+                    exception:exception
                 })
             }
         }
-        catch(exception) //ECHEC de la vérification du format du n° de téléphone reçu
-        {   
-            console.log(exception);
-            return({
-                status:"CONTROL_FAILURE",
-                statusCode:500,
-                message: "Une erreur est survenue durant la vérification du format du n° de téléphone : \'"+userObject.phone+"\'",
-                userInfoReceipted:userObject,
-                exception:exception
-            })
-        }
-
-        
-
-        try //Vérification de l'existence du numéro de téléphone dans la base de données
-        {   
-            var phoneAlreadyExist = await this.checkPhoneExistence(userObject.phone)
-        }
-        catch(exception) //ECHEC de la vérification de l'existence du numéro de téléphone dans la base de données
-        {   
-            console.log(exception);
-            return({
-                status:"CONTROL_FAILURE",
-                statusCode:500,
-                message: "Une erreur est survenue durant la vérification de l'existence du numéro de téléphone : \'"+userObject.phone+"\' dans la base de données",
-                userInfoReceipted:userObject,
-                exception:exception
-            })
+        else
+        {
+            var phoneAlreadyExist = false;
         }
 
         if (!usernameAlreadyExist && !emailAlreadyExist && !phoneAlreadyExist) //Le nom d'utilisateur, l'adresse email et le n° de téléphone n'existent pas encore dans la base de données
