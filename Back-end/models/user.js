@@ -5,8 +5,8 @@ const UserSchema = mongoose.Schema({
   username: { type: String, required: true, unique: true },
   firstname: { type: String, required: true},
   lastname: { type: String, required: true },
-  phone: { type: String, required: false, /* unique:true */ },
-  email: { type: String, required: false,/* unique:true */ },
+  phone: { type: String, required: false }, //unique
+  email: { type: String, required: false }, //unique
   isConnected: { type: Boolean },
   isApproved: { type: Boolean, required: true, default:true},
   relation_ids:[
