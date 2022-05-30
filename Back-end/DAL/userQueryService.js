@@ -133,18 +133,28 @@ const mUser = require('../models/user');
             console.log("D.A.L [getAllUsers] ()");
             try {
                 var data = await mUser.find();
-                return data 
-                ? 
-                    {
-                        users:data,
-                        count:data.length
-                    } 
-                : 
-                    {
+                let returnData = [];
+                data.forEach(element => {
+                    element.password = undefined;
+                    returnData.push(element);
+                });
+                data.password = undefined;
+                if(returnData.length >= 0)
+                {
+                    return {
+                        users:returnData,
+                        count:returnData.length
+                    };
+                } 
+                else{
+                    return{
                         message:"aucun utilisateur enregistré en base de données"
                     };
+                } 
+                    
             } 
             catch (error) {
+                console.log(error);
                 return {message:"une erreur est survenue",error};
             }     
         };
