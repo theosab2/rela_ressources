@@ -8,7 +8,7 @@ const UserSchema = mongoose.Schema({
   phone: { type: String, required: false,unique:true },
   email: { type: String, required: false,unique:true },
   isConnected: { type: Boolean },
-  isApproved: { type: Boolean, required: true, default:false},
+  isApproved: { type: Boolean, required: true, default:true},
   relation_ids:[
     {type:String}
   ],
