@@ -14,8 +14,8 @@ const UserSchema = mongoose.Schema({
   ],
   photoUrl : {type:String, default:"AvatarDefaultUrl"},
   role: { type: String, required: true, default:"user" },
-  favoris: [
-    {type:String,required:false},
+  favorites: [
+    {type:String},
   ],
   location: { 
     coutry:{type:String},
