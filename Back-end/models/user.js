@@ -18,7 +18,7 @@ const UserSchema = mongoose.Schema({
     {type:String},
   ],
   location: { 
-    coutry:{type:String},
+    country:{type:String},
     city:{type:String},
     zipcode:{type:String},
     address:{type:String},
