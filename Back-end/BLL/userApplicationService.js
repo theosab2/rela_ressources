@@ -104,6 +104,7 @@ module.exports.handleAuthenticationRequest = async (identifier,passwordProvided)
     if(passwordIsValid){ //Le mot de passe entré est correct
         //Retourne l'utilisateur connecté
         var userFromConnectionAttempt = await _userQueryService.connectUser(userIdRequest.id);
+        delete userFromConnectionAttempt.password;
         authenticationResult = {
             status:"SUCCESS",
             statusCode:200,
