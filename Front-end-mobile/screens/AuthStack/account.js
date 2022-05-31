@@ -24,7 +24,7 @@ const Account = ({ navigation }) => {
         if (storedId != null) {
           getUserData(storedId)
         } else {
-          //navigation.navigate('Auth', {screen: 'Login'})
+          navigation.navigate('Auth', {screen: 'Login'})
         }
       } catch (e) {
         console.log(e);

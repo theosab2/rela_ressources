@@ -13,6 +13,18 @@ import { block } from 'react-native-reanimated';
 
 
 const Settings = ({ navigation }) => {
+
+    const Logout = async () => {
+        try{
+            await AsyncStorage.removeItem('@userId');
+            await AsyncStorage.removeItem('@userPassword');
+            await AsyncStorage.removeItem('@userEmail');
+            await AsyncStorage.removeItem('@savedAccount');
+            navigation.navigate('Auth', {screen: 'Login'});
+        }catch(e){
+            console.log(e)
+        }
+    }
     return (
         <View style={styles.container}>
             <Header navigation={navigation} />
@@ -87,6 +99,7 @@ const Settings = ({ navigation }) => {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.tool}
+                        onPress= {() => Logout()}
                     >
                         <Icon
                             name='power-outline'
