@@ -28,7 +28,7 @@ const HomemadeNavBar = ({route,navigation}) => {
                     />
                 }
                 onPress={() => {
-                    navigation.navigate("Auth",{ screen: 'Account'});
+                    navigation.navigate("Auth",{ screen: 'Login'});
                 }}
             />
             <Button
