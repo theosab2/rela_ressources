@@ -2,7 +2,7 @@ import Navigation from "../Navigation";
 import Head from "next/head";
 import style from "../../styles/Inscription.module.css";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect,useState } from "react";
 
 export default function Inscription() {
   const [pseudo, setUsername] = useState("");
@@ -23,7 +23,7 @@ export default function Inscription() {
     console.log(firstname);
     console.log(email);
     console.log(password);
-    const res = await fetch("http://10.176.131.87:3001/auth/register", {
+    let res = await fetch("http://localhost:3001/auth/register", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -33,15 +33,14 @@ export default function Inscription() {
         user: {
           username: pseudo,
           firstname: firstname,
-          name: name,
+          lastname: name,
           password: password,
           email: email,
-          isActive: false,
         },
       }),
     });
     res = await res.json();
-    console.log(res.status);
+    console.log(res);
     if (res.status == "FAILURE") {
       console.log("Le nom d'utilisateurs existe deja");
     } else {

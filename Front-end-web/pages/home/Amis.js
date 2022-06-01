@@ -6,8 +6,11 @@ import { useState, useEffect } from "react";
 import utils from "../utils";
 import cookieManager from "../utils/cookieManager";
 import articleManager from "../utils/articleManager";
+import userManager from "../utils/userManager";
 
 export default function Amis() {
+  const [searchFriend, setSearchFriend] = useState("");
+  let allUser = null;
   let allArticle;
   let array = [];
 
@@ -20,6 +23,8 @@ export default function Amis() {
   allArticle = articleManager();
   const userCookie = cookieManager();
 
+  allUser = userManager();
+
   if (allArticle != null) {
     const userInfo = JSON.parse(userCookie);
 
@@ -29,25 +34,27 @@ export default function Amis() {
       }
     });
 
-    console.log(allArticle);
     return (
       <>
       <div className={style.mainContainer}>
-      <input type="text" placeholder="Recherche" className={style.searchBar}></input>
+      <input type="text" placeholder="Recherche" className={style.searchBar} onChange={(searchFriend) =>
+                setSearchFriend(searchFriend.target.value)}></input>
+      {allUser && allUser.map((user) => (
         <div className={style.abonnementContainer}>
         <div>
           <img src="/Image/connexion.png"/>
-          <p>JeanMichel62</p>
+          <p>{user.username}</p>
           </div>
           <div>
           <img src="/Image/user.png"/>
-          <p>5645</p>
+          <p>{user.relation_ids.length}</p>
             </div>
             <img src="/Image/comment.png"/>
           <button>
               Désabonner
           </button>
         </div>
+      ))}
      </div>
     </>
     );

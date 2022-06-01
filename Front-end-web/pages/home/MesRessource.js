@@ -25,7 +25,6 @@ export default function MesRessource() {
 
     if (allArticle != null) {
       const userInfo = JSON.parse(userCookie);
-
       allArticle.forEach((element) => {
         if (element.articleCreator == userInfo._id) {
           array.push(element);

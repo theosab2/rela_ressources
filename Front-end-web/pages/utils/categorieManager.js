@@ -11,7 +11,7 @@ export default function allCategorie() {
     })
       .then((res) => res.json())
       .then((data) => {
-        setallCategorie(data.ut);
+        setallCategorie(data.users);
       });
 
   useEffect(() => {

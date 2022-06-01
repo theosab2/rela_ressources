@@ -96,15 +96,15 @@ export default function ProfilUpdate() {
                 <label>Pays</label>
                 <input type="text" defaultValue="France"></input>
                 <label>Ville</label>
-                <input type="text" defaultValue={userInfo.location.ville}></input>
+                <input type="text" ></input>
                 <label>Numéro de téléphone</label>
                 <input type="text" defaultValue={userInfo.phone}></input>
               </div>
               <div>
                 <label>Code postal</label>
-                <input type="text" defaultValue={userInfo.location.zip}></input>
+                <input type="text" ></input>
                 <label>Rue</label>
-                <input type="text" defaultValue={userInfo.location.zip}></input>
+                <input type="text" ></input>
               </div>  
             </div>
           </div>
@@ -113,7 +113,7 @@ export default function ProfilUpdate() {
             <div className={style.profilInformation}>
               <div>
                 <label>Mot de passe</label>
-                <input type="text"></input>
+                <input type="text" onChange={(title) => setTitle(title.target.value)}></input>
               </div>
               <div>
                 <label>Nouveau mot de passe</label>

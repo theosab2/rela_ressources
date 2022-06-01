@@ -15,18 +15,18 @@ export default function ajouterCategorie() {
   }, []);
 
   allCategorie = categorieManager();
-  console.log(allCategorie);
   const ajoutCategorie = async () => {
-    let res = await fetch("http://localhost:3001/category/create", {
+    let res = await fetch("http://localhost:3001/ut/create", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        category: {
-          categoryName: creationCategorie,
-        },
+        ut:{
+          code: "CATEGORY",
+          name: creationCategorie,
+        }
       }),
     });
     res = await res.json();
@@ -83,18 +83,13 @@ export default function ajouterCategorie() {
 
   function getDeleteCategory(value) {
     setSuppressionCategorie(value.target.value);
-    console.log(suppressionCategorie);
   }
 
   function getUpdateCategory(value) {
     setcategorieModifie(value.target.value);
-    console.log(categorieModifie);
   }
 
   if (allCategorie != null) {
-    allCategorie.forEach((element) => {
-      console.log(element)
-    });
     return (
 
         <div className={style.categorieContainer}>
@@ -123,7 +118,7 @@ export default function ajouterCategorie() {
             {allCategorie &&
               allCategorie.map((categorie) => (
                 <option key={categorie._id} value={categorie._id}>
-                  {categorie.categoryName}
+                  {categorie.name}
                 </option>
               ))}
           </select>
