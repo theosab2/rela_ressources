@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, TextInput } from 'react-native';
 import { CheckBox, Input, Icon, Button, Text, Divider } from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -9,7 +9,9 @@ const Login = ({ navigation }) => {
   // Identifier can set by email,username or phone number 's user
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
-  const [saveLogin, setSaveLogin] = useState();
+  const [saveLogin, setSaveLogin] = useState(false);
+
+  useEffect
 
   const getDataDebug = async () => {
     try {

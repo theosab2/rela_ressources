@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import { Icon, Button } from 'react-native-elements'
 
-const HomemadeNavBar = ({route,navigation}) => {
+const HomemadeNavBar = ({ route, navigation }) => {
     return (
         <View style={styles.container}>
             <Button
@@ -11,11 +11,11 @@ const HomemadeNavBar = ({route,navigation}) => {
                     <Icon
                         name='home-outline'
                         type='ionicon'
-                        color={route === 'Home' ?'#2F4077' : '#ffffff' }
+                        color={route === 'Home' ? '#2F4077' : '#ffffff'}
                     />
                 }
                 onPress={() => {
-                    navigation.navigate("Home",{ screen: 'Test'});
+                    navigation.navigate("Home", { screen: 'Test' });
                 }}
             />
             <Button
@@ -28,7 +28,7 @@ const HomemadeNavBar = ({route,navigation}) => {
                     />
                 }
                 onPress={() => {
-                    navigation.navigate("Auth",{ screen: 'Login'});
+                    navigation.navigate("Auth", { screen: 'Login' });
                 }}
             />
             <Button
@@ -40,7 +40,7 @@ const HomemadeNavBar = ({route,navigation}) => {
                         color={route == 'CreatePost' ? '#2F4077' : '#ffffff'}
                     />
                 }
-                onPress={() => {navigation.navigate("NewPost", {screen:'CreatePost'})}}
+                onPress={() => { navigation.navigate("NewPost", { screen: 'CreatePost' }) }}
             />
             <Button
                 type='clear'

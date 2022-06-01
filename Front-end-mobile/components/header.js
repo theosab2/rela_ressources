@@ -1,15 +1,26 @@
-import React, {Component} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
-import {Avatar, Button} from 'react-native-elements';
+import React, { Component } from 'react';
+import { Text, View, StyleSheet } from 'react-native';
+import { Avatar, Button } from 'react-native-elements';
 
 
-const Header = ({navigation}) => {
-  console.log(navigation);
+const Header = ({ navigation }) => {
+  const LoginState = async () => {
+    try {
+      const storedId = await AsyncStorage.getItem('@userId');
+      if (storedId != null) {
+        navigation.navigate('Auth', { screen: 'Account' })
+      } else {
+        navigation.navigate('Auth', { screen: 'Login' })
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
   return (
     <View style={styles.container}>
       <Avatar
         size={55}
-        icon={{name: 'navicon', type: 'evilicon', size: 40}}
+        icon={{ name: 'navicon', type: 'evilicon', size: 40 }}
         onPress={() => {
           console.log('Menu');
         }}
@@ -19,8 +30,8 @@ const Header = ({navigation}) => {
       </View>
       <Avatar
         size={55}
-        icon={{name: 'user', type: 'evilicon', size: 40}}
-        onPress={() => navigation.navigate('Auth',{ screen: 'Account' })}
+        icon={{ name: 'user', type: 'evilicon', size: 40 }}
+        onPress={() => LoginState()}
       />
     </View>
   );
