@@ -28,16 +28,14 @@ const CoorSetting = ({ navigation, route }) => {
                     user: {
                       username: route.params.username,
                       firstname: firstname,
-                      name: name,
+                      lastname: name,
                       password: route.params.password,
                       phone: route.params.phone,
                       email: route.params.email,
-                      isActive: false,
-                      role: 'user',
                       location: {
                         ville: city,
                         region: region,
-                        zip: zipcode,
+                        zipcode: zipcode,
                       },
                     },
                   }),
