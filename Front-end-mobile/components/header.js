@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { Avatar, Button } from 'react-native-elements';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const Header = ({ navigation }) => {

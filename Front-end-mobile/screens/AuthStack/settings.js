@@ -17,9 +17,8 @@ const Settings = ({ navigation }) => {
     const Logout = async () => {
         try{
             await AsyncStorage.removeItem('@userId');
-            await AsyncStorage.removeItem('@userPassword');
-            await AsyncStorage.removeItem('@userEmail');
             await AsyncStorage.removeItem('@savedAccount');
+            await AsyncStorage.multiRemove(['@userId','@savedAccount'])
             navigation.navigate('Auth', {screen: 'Login'});
         }catch(e){
             console.log(e)

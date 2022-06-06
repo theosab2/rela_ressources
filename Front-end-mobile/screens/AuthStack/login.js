@@ -11,8 +11,6 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [saveLogin, setSaveLogin] = useState(false);
 
-  useEffect
-
   const getDataDebug = async () => {
     try {
       const api = await fetch(API_URL + '/users/all', {
@@ -30,12 +28,6 @@ const Login = ({ navigation }) => {
   }
   const dataAuth = async () => {
     try {
-      await AsyncStorage.setItem('@userEmail', identifier);
-      await AsyncStorage.setItem('@userPassword', password);
-
-      console.log(await AsyncStorage.getItem('@userEmail'));
-      console.log(await AsyncStorage.getItem('@userPassword'));
-
       const login = await fetch(API_URL + '/auth/login', {
         method: 'POST',
         headers: {
@@ -48,18 +40,23 @@ const Login = ({ navigation }) => {
         })
       })
       const res = await login.json();
-      await AsyncStorage.setItem('@userId', res.user._id);
       if (res.status === 'SUCCESS') {
-        navigation.navigate('Home');
+        AsyncStorage.setItem('@userId', res.user._id)
+        if (saveLogin){
+          AsyncStorage.setItem('@savedAccount', true)
+        }else{
+          AsyncStorage.setItem('@savedAccount', false)
+        }
+        navigation.navigate('Home', {
+          screen: 'home',
+        })
       }
       else {
         console.log(res.message);
       }
-
     } catch (e) {
       console.log(e);
     }
-
   }
 
   return (

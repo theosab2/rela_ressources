@@ -22,6 +22,7 @@ import PwdSetting from './screens/AuthStack/pwdSetting';
 import CoorSetting from './screens/AuthStack/coorSetting';
 import CreateContentPost from './screens/AddStack/createContentPost';
 import Settings from './screens/AuthStack/settings';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createStackNavigator();
 const HomeStack = ({ navigation, route }) => {
@@ -136,6 +137,15 @@ const App = () => {
     LogBox.ignoreLogs([
       "[react-native-gesture-handler] ",
     ]);
+    const detectSaveUser = async () => {
+      if(!await AsyncStorage.getItem('@savedAccount')){
+        AsyncStorage.removeItem('@userId');
+        console.log('Anciennes données supprimés');
+      }else{
+        console.log('Données utilisateurs restaurées');
+      }
+    }
+    detectSaveUser();
   })
 
   return (

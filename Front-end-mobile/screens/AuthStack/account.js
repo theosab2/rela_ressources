@@ -28,6 +28,7 @@ const Account = ({ navigation }) => {
         }
       } catch (e) {
         console.log(e);
+        console.log('dommage');
       }
     }
     const getUserData = async (storedId) => {
