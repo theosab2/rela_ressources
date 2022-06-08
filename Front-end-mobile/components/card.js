@@ -8,7 +8,8 @@ const Card = props => {
   const [pseudo, setPseudo] = useState('');
   const [imageTmp,setImageTmp] = useState(require('../test_content/waiting.jpg'))
   useEffect(() => {
-    const getPseudoUser = async() => {
+    console.log(props.data)
+    const getPseudoUser = async () => {
       const api = await fetch(API_URL + '/user/' + props.data.articleCreator, {
         method: 'GET',
         headers: {

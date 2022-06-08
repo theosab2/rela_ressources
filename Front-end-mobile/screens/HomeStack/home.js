@@ -16,6 +16,7 @@ const Home = ({navigation}) => {
   useEffect(() => {
     const getStateUser = async () => {
       const user = await AsyncStorage.getItem('@userId');
+      console.log(user);
       setUserId(user);
       if(user != null){
         getPost()

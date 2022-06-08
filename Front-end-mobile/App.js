@@ -137,16 +137,27 @@ const App = () => {
     LogBox.ignoreLogs([
       "[react-native-gesture-handler] ",
     ]);
-    const detectSaveUser = async () => {
-      if(!await AsyncStorage.getItem('@savedAccount')){
+    const getSavedAccount = async () => {
+      try{
+        return await AsyncStorage.getItem('@savedAccount');
+      }catch(e){
+        console.log(e);
+      }
+    }
+    const detectSaveUser = () => {
+      var loginState = getSavedAccount();
+      //console.log('loginState',loginState);
+      if(loginState == 'false' || loginState == null){
         AsyncStorage.removeItem('@userId');
-        console.log('Anciennes données supprimés');
+        //console.log('Anciennes données supprimés');
+      }else if(loginState == 'true'){
+        //console.log('Données utilisateurs restaurées');
       }else{
-        console.log('Données utilisateurs restaurées');
+        //console.log('erreur login state');
       }
     }
     detectSaveUser();
-  })
+  }, [])
 
   return (
     <>

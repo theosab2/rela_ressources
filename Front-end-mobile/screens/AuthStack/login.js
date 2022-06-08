@@ -42,10 +42,11 @@ const Login = ({ navigation }) => {
       const res = await login.json();
       if (res.status === 'SUCCESS') {
         AsyncStorage.setItem('@userId', res.user._id)
+        console.log('saveLogin',saveLogin)
         if (saveLogin){
-          AsyncStorage.setItem('@savedAccount', true)
+          AsyncStorage.setItem('@savedAccount', 'true')
         }else{
-          AsyncStorage.setItem('@savedAccount', false)
+          AsyncStorage.setItem('@savedAccount', 'false')
         }
         navigation.navigate('Home', {
           screen: 'home',

@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DocumentPicker from 'react-native-document-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_URL } from "@env"
@@ -15,11 +15,7 @@ const CreatePost = ({ navigation }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [namePicture, setNamePicture] = useState('');
-  const [tTags, setTTags] = useState([]);
-  const [category, setCategory] = useState(undefined);
-  const [contentIds, setContentIds] = useState([]);
-  const [contents, setContents] = useState([])
-  const [creator, setCreator] = useState('');
+  const [category, setCategory] = useState(<Picker.Item/>);
   const [singleFile, setSingleFile] = useState(null);
   const [imageUri, setImageUri] = useState(null);
 
@@ -54,34 +50,49 @@ const CreatePost = ({ navigation }) => {
       }
     }
   };
-  const sendFile = async () => {
-    const user = await AsyncStorage.getItem('@userId');
-    let formdata = new FormData();
-    formdata.append("article-image", singleFile);
-    let jsonData = JSON.stringify({
-      articleTitle: articleTitle,
-      articleDescription: articleDescritpion,
-      articleTag_TTids: articleTTags,
-      articleCategory_TTids: articleCategory,
-      articleContent: articleContents,
-      articleCreator: user,
-    })
-    formdata.append("article", jsonData);
-    try {
-      const api = await fetch(API_URL + '/article/create', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          "user-upload-GUID": user
-        },
-        body: formdata
-      });
-      const res = await api.json();
-      console.log(res);
-    } catch (err) {
-      console.log(err)
+  const goToContent = () => {
+    if (title.length <= 0) {
+      console.log('Titre manquant')
+    }
+    else if (description.length <= 0) {
+      console.log('Veuillez décrire en quelque mots votre ressource')
+    }
+    else {
+      const data = {
+        category: category,
+        title: title,
+        description: description,
+        image: singleFile
+      }
+      navigation.navigate('NewPost', {
+        screen: 'CreateContentPost',
+        data: data
+      })
     }
   }
+  useEffect(() => {
+    const getCategories = async () => {
+      try {
+        const api = await fetch(API_URL + '/uts/all/CATEGORY', {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+        });
+        const res = await api.json()
+        console.log(res.ut);
+        return res.ut.map(item => {
+          return <Picker.Item label={item.name} value={item._id}/>
+        })
+      } catch (e) {
+        console.log(e);
+        return <Picker.Item/>
+      }
+    }
+    setCategory(getCategories());
+    console.log('category',category);
+  }, [])
   return (
     <View style={styles.container}>
       <Header navigation={navigation} />
@@ -94,19 +105,17 @@ const CreatePost = ({ navigation }) => {
         />
         <View style={styles.pickerContainer}>
           <Picker
-            selectedValue={"Coucou"}
+            selectedValue={"null"}
             style={styles.picker}
             placeholder="Catégorie"
           >
-            <Picker.Item label="Catégorie" value="java" />
-            <Picker.Item label="JavaScript" value="js" />
+            {category}
           </Picker>
         </View>
 
         <View style={styles.input}>
           <Icon name="text-outline" type="ionicon" color="#FFFFFF" style={styles.inputIcon} />
           <TextInput
-            textContentType='title'
             placeholder="Titre"
             onChangeText={title => setTitle(title)}
             defaultValue={title}
@@ -116,7 +125,6 @@ const CreatePost = ({ navigation }) => {
         <View style={[styles.input, styles.inputDescription]}>
           <Icon name="receipt-outline" type="ionicon" color="#FFFFFF" style={styles.inputIcon} />
           <TextInput
-            textContentType='description'
             placeholder="Courte description décrivant votre ressource"
             onChangeText={description => setDescription(description)}
             defaultValue={description}
@@ -164,7 +172,7 @@ const CreatePost = ({ navigation }) => {
           titleStyle={{ fontWeight: 'bold', fontSize: 12 }}
           containerStyle={[styles.buttonContainerStyle, styles.buttonContinue]}
           onPress={() => {
-            navigation.navigate('CreateContentPost');
+            goToContent();
             /**Envoyer l'article à la prochaine page */
           }}
         />
