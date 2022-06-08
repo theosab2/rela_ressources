@@ -25,10 +25,10 @@ export default function Amis() {
 
   allUser = userManager();
 
-  if (allArticle != null) {
+  if (allUser != null) {
     const userInfo = JSON.parse(userCookie);
 
-    allArticle.forEach((element) => {
+    allUser.forEach((element) => {
       if (element.articleCreator == userInfo._id) {
         array.push(element);
       }

@@ -6,7 +6,7 @@ import Image from "next/dist/client/image";
 export default function Role(props) {
   let [adminPage, setAdminPage] = useState("");
   let [idUser, setIdUser] = useState(null);
-  let allUser;
+  let [allUser,setAllUser] = useState(null);
 
   useEffect(() => {
     if (window) { 
@@ -14,8 +14,23 @@ export default function Role(props) {
     }
   }, []);
 
-  allUser = userManager();
-  console.log(allUser);
+  const getUser = async () =>
+  fetch("http://localhost:3001/users/all", {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      setAllUser(data.users);
+    });
+    console.log("test")
+
+useEffect(() => {
+  getUser();
+}, []);
+
   function handleChange(event) {
     props.onChange(event.target.value);
   }
@@ -34,6 +49,8 @@ export default function Role(props) {
     <>
       <div className={style.adminRoleContainer}>
       <input type="text" placeholder="Recherche" className={style.searchBar}></input>
+      {allUser &&
+                allUser.map((users) => (
         <div className={style.adminRoleUserContainer}>
         <div>
         <Image
@@ -75,6 +92,7 @@ export default function Role(props) {
           <button>Valider</button>
           </div>
         </div>
+                ))}
       </div>
     </>
   );
