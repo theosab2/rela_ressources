@@ -67,6 +67,8 @@ export default function Home() {
     });
     res = await res.json();
   }
+  if(allArticle != null){
+    console.log(allArticle)
   return (
     <>
       <div className={style.mainContainer}>
@@ -81,15 +83,15 @@ export default function Home() {
               <div className={style.userInfoContainer}>
                 <img src="/Image/connexion.png" className={style.userPicture}/>
                 <div className={style.userPostInfoContainer}>
-                  <div className={style.userName}>{articleInfo.articleCreator}</div>
+                  <div className={style.userName}>{articleInfo.creator}</div>
                   <div className={style.publicationDate}>Publication : Il y a 4h</div>
                 </div>
               </div>
-              <div className={style.articleTitle}>{articleInfo.articleTitle}</div>
+              <div className={style.articleTitle}>{articleInfo.title}</div>
             </div>
             <img src={articleInfo.articleImage} className={style.articlePicture}/>
           </div>
-          <div className={style.articleBody}>{articleInfo.articleDescription}</div>
+          <div className={style.articleBody}>{articleInfo.description}</div>
           <div className={style.articleFooter}>
             <div className={style.articleRate}>
               <div>{articleInfo.articleNbLikes}</div>
@@ -111,5 +113,7 @@ export default function Home() {
         ))}
      </div>
     </>
-  );
+  );}else{
+    return <div>loading...</div>
+  }
 }

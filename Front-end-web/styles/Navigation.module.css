@@ -77,6 +77,10 @@
   border: 1px solid #2F4077;
 }
 
+.sidebarOpenPage{
+  font-size: 40px;
+}
+
 .navContentSeparator{
   margin-left: 200px;
   display: flex;

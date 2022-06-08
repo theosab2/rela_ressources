@@ -22,6 +22,7 @@ import Moderation from "./administration/Moderation";
 import Categorie from "./administration/AjouterCategorie";
 import Utilisateur from "./administration/AdminRole";
 import utils from "./utils";
+import articleManager from "./utils/articleManager";
 
 export default function Navigation(image) {
   const router = useRouter();
@@ -30,6 +31,9 @@ export default function Navigation(image) {
   var getId = null;
   let [renderPage, setRenderPage] = useState("");
   let [idPage, setIdPage] = useState("");
+
+  let allArticle;
+  allArticle = articleManager();
 
   const showModal = () => {
     document.getElementById("myModal").style.display = "block";
@@ -42,17 +46,16 @@ export default function Navigation(image) {
   useEffect(() => {
     if (window) { 
       getSession = window.sessionStorage.getItem("Page");
+      if(getSession == null){
+        window.sessionStorage.setItem("Page", "Accueil" );
+      }
+      getSession = window.sessionStorage.getItem("Page");
       getId = window.sessionStorage.getItem("id");
       setRenderPage(getSession);
       setIdPage(getId);
     }
   }, []);
 
-  useEffect(() => {
-    if (router.asPath == "/") {
-      router.push("/");
-    }
-  }, []);
 
   const deconnexionUtilisateur = () => {
     removeCookies("token");
@@ -128,8 +131,8 @@ export default function Navigation(image) {
             <div className={style.sidebarContent}>
               <div className={style.sidebarTitle}>Profil</div>
               <div className={style.sidebarChoice}>
-                <button onClick={() => setRenderPage((renderPage = "Connexion"))}>Connexion</button>
-                <button onClick={() => setRenderPage((renderPage = "Inscription"))}>Inscription</button>
+                <button className={style.sidebarOpenPage}  onClick={() => setRenderPage((renderPage = "Connexion"))}>Connexion</button>
+                <button className={renderPage == 'Inscription'? style.sidebarOpenPage : null} onClick={() => setRenderPage((renderPage = "Inscription"))}>Inscription</button>
               </div>
             </div>
           </div>
@@ -169,7 +172,7 @@ export default function Navigation(image) {
             <div className={style.sidebarContent}>
               <div className={style.sidebarTitle}>Publication</div>
               <div className={style.sidebarChoice}>
-                <button onClick={() => setRenderPage((renderPage = "Creer"))}>Créer une ressource</button>
+                <button className={renderPage == 'Creer'?style.sidebarOpenPage:null} onClick={() => setRenderPage((renderPage = "Creer"))}>Créer une ressource</button>
                 <button onClick={() => setRenderPage((renderPage = "Historique"))}>Historique de mes ressources</button>
                 <button onClick={() => setRenderPage((renderPage = "Favorie"))}>Mes ressources favorites</button>
                 <button onClick={() => setRenderPage((renderPage = "Abonnement"))}>Mes abonnements</button>
@@ -225,8 +228,10 @@ export default function Navigation(image) {
           </div>
             {pageRender()}
             </div>
+
             <div className={style.recentContent}>
               <div className={style.recentTitle}>Récent</div>
+              {allArticle && allArticle.reverse(0,5).map((articleInfo) => (
                 <div className={style.recentChoice}>
                     <img 
                     src="/Image/connexion.png"
@@ -238,10 +243,10 @@ export default function Navigation(image) {
                       <div className={style.recentArticleTitle}>La terre est ovoidale</div>
                 </div>
               </div>
+              ))}
             </div>
           </div>
         </div>
-
       </>
     );
   }

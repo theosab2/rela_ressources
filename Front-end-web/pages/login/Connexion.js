@@ -15,7 +15,9 @@ export default function Connexion() {
 
   const [identifiant, setIdentifiant] = useState("");
   const [mdp, setMdp] = useState("");
-
+  const [load, setLoad] = useState(false);
+  const [error, setError] = useState("");
+  const [spinner, setSpinner] = useState(true);
   useEffect(() => {
     if (window) { 
       window.sessionStorage.setItem("Page", "Connexion" );
@@ -25,7 +27,7 @@ export default function Connexion() {
   const display = async () => {
     console.log(identifiant);
     console.log(mdp);
-
+    setSpinner(false);
     function Modal() {
       const [isBrowser, setIsBrowser] = useState(false);
 
@@ -61,8 +63,16 @@ export default function Connexion() {
       }),
     });
     res = await res.json();
+    console.log(res.status)
+    setSpinner(true);
     if (res.status != "SUCCESS") {
+      setLoad(true);
       console.log(res);
+      if(res.status == null || res.status != "SUCCESS"){
+        setError("Mauvais identifiant ou mot de passe");
+      }else{
+        setError("");
+      }
     } else {
       console.log("Connexion");
       console.log(res.user);
@@ -70,11 +80,12 @@ export default function Connexion() {
       if (res.user.role == "user" && res.user.isActive == false) {
       }
     }
+
   };
 
   const getServerSideProps = (user) => {
-    setCookies("token", user, 24 * 3600);
-    window.location.href = "/";
+    setCookies("token", user, 1 * 3600);
+    window.sessionStorage.setItem("Page", "Accueil" );
   };
 
   return (
@@ -113,16 +124,17 @@ export default function Connexion() {
 
                             <a className={style.link}>Mot de passe oublié</a>
             </div>
-
+            {load ? <div className={style.errorMessage}>{error}</div>:<></>}
+            {<div className={style.errorMessage}>{spinner?<div className="lds-ring"><div></div><div></div><div></div><div></div></div>:""}</div>}
             </div>
+            <div className="ldsRing"><div></div><div></div><div></div><div></div></div>
             <button
                 type="button"
                 onClick={display}
                 className={style.buttonApproved}
               >
                 Valider
-              </button>
-
+            </button>
       </div>
   );
 }
