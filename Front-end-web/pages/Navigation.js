@@ -117,7 +117,7 @@ export default function Navigation(image) {
     }
   }
   const userCookie = utils();
-  if (userCookie != false) {
+  if (userCookie == false) {
     return (
       <>
         <div className={style.navHeader}>

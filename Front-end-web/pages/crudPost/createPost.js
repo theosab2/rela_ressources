@@ -110,11 +110,43 @@ export default function createPost() {
                 <option value="lien">Lien</option>
               </select>
               </div>
-              <img
+              {(() => {
+                if (typeRessource == "image") {
+                  return (
+                    <div >
+                      <img
                         id="output"
                         src={createObjectURL}
                         className={style.uploadImage}
                       />
+                    </div>
+                  );
+                } else if (typeRessource == "video") {
+                  return (
+                    <div >
+                      <img
+                        id="output"
+                        src={createObjectURL}
+                        className={style.uploadImage}
+                      />
+                    </div>
+                  );
+                } else if (typeRessource == "lien") {
+                  return (
+                    <div >
+                      <p>Lien :</p>
+                      <input type="text" placeholder="Insérer un lien"></input>
+                    </div>
+                  );
+                } else {
+                  return <>              <img
+                  id="output"
+                  src={createObjectURL}
+                  className={style.uploadImage}
+                /></>;
+                }
+              })()}
+
               <div >
                 <textarea
                   className={style.descriptionRessource}
@@ -128,52 +160,7 @@ export default function createPost() {
 
             <div >
 
-              {(() => {
-                if (typeRessource == "image") {
-                  return (
-                    <div >
-                      <p>Insérer une Image :</p>
-                      <input
-                        type="file"
-                        name="image"
-                        accept="image/*, .pdf,video/*"
-                        onChange={uploadToClient}
-                      ></input>
-                      <img
-                        id="output"
-                        src={createObjectURL}
-                        
-                      />
-                    </div>
-                  );
-                } else if (typeRessource == "video") {
-                  return (
-                    <div >
-                      <p>Insérer une vidéo :</p>
-                      <input
-                        type="file"
-                        name="vidFile"
-                        accept="video/*"
-                        onChange={uploadToClient}
-                      ></input>
-                      <img
-                        id="output"
-                        src={createObjectURL}
-                        
-                      />
-                    </div>
-                  );
-                } else if (typeRessource == "lien") {
-                  return (
-                    <div >
-                      <p>Lien :</p>
-                      <input type="text" placeholder="Insérer un lien"></input>
-                    </div>
-                  );
-                } else {
-                  return <div ></div>;
-                }
-              })()}
+
 
             </div>
             <select name="categorie" 
