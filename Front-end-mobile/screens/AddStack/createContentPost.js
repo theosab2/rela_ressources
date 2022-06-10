@@ -11,7 +11,9 @@ import { Icon, Button, Image } from 'react-native-elements';
 
 
 
-const CreateContentPost = ({ navigation }) => {
+const CreateContentPost = ({ navigation, route }) => {
+  const [arrayContentFront, setArrayContentFront] = useState([]);
+  const [contentFront, setContentFront] = useState(<View />);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [namePicture, setNamePicture] = useState('');
@@ -23,6 +25,7 @@ const CreateContentPost = ({ navigation }) => {
   const [singleFile, setSingleFile] = useState(null);
   const [imageUri, setImageUri] = useState(null);
 
+  console.log(route.params);
   const selectFile = async () => {
     // Opening Document Picker to select one file
     try {
@@ -82,6 +85,66 @@ const CreateContentPost = ({ navigation }) => {
       console.log(err)
     }
   }
+  const titleContent = (index) => {
+    return (
+      <View style={styles.input}>
+        <Icon name="receipt-outline" type="ionicon" color="#FFFFFF" style={styles.inputIcon} />
+        <TextInput
+          placeholder="Titre du contenu"
+          onChangeText={titreContent => setTitreContent(titreContent)}
+          defaultValue={titreContent}
+        />
+      </View>
+    )
+  }
+  const descriptionContent = (index) => {
+    return (
+      <View style={[styles.input, styles.inputDescription]}>
+        <Icon name="receipt-outline" type="ionicon" color="#FFFFFF" style={styles.inputIcon} />
+        <TextInput
+          placeholder="Courte description décrivant votre ressource de ce contenu"
+          onChangeText={descriptionContent => setDescriptionContent(descriptionContent)}
+          defaultValue={descriptionContent}
+          multiline={true}
+          style={styles.textArea}
+        />
+      </View>
+    )
+  }
+  const imgContent = (index) => {
+    return (
+      <View style={styles.imagePickerContainer}>
+        <View style={styles.imagePickerLeft}>
+          <View style={[styles.input, styles.inputPictureTitle]}>
+            <Icon name="image-outline" type="ionicon" color="#FFFFFF" style={styles.inputIcon} />
+            <Text>{namePicture == '' ? "Sélectionner une image de couverture" : namePicture}</Text>
+          </View>
+          <View style={styles.buttonPictureContainer}>
+            <Button
+              title="Supprimer"
+              buttonStyle={[styles.buttonStyle, styles.buttonDeletePicture]}
+              containerStyle={styles.buttonContainerStyle}
+              activeOpacity={0.5}
+              onPress={selectFile}
+            />
+            <Button
+              title="Ajouter une image"
+              buttonStyle={styles.buttonStyle}
+              containerStyle={styles.buttonContainerStyle}
+              activeOpacity={0.5}
+              onPress={selectFile}
+            />
+          </View>
+        </View>
+        <View style={styles.imagePicker}>
+          <Image
+            style={styles.uploadImg}
+            source={imageUri == null ? require('../../test_content/waiting.jpg') : require('../../test_content/waiting.jpg')}
+          />
+        </View>
+      </View>
+    )
+  }
   return (
     <View style={styles.container}>
       <Header navigation={navigation} />
@@ -112,7 +175,7 @@ const CreateContentPost = ({ navigation }) => {
           titleStyle={{ fontWeight: 'bold', fontSize: 12 }}
           containerStyle={[styles.buttonContainerStyle, styles.buttonContinue]}
           onPress={() => {
-            navigation.navigate('Home', {screen: 'home'});
+            navigation.navigate('Home', { screen: 'home' });
             /**Mise en BDD l'article complet */
           }}
         />

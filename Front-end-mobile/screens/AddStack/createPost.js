@@ -15,7 +15,8 @@ const CreatePost = ({ navigation }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [namePicture, setNamePicture] = useState('');
-  const [category, setCategory] = useState(<Picker.Item/>);
+  const [category, setCategory] = useState(<View style={styles.picker}></View>);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [singleFile, setSingleFile] = useState(null);
   const [imageUri, setImageUri] = useState(null);
 
@@ -57,16 +58,19 @@ const CreatePost = ({ navigation }) => {
     else if (description.length <= 0) {
       console.log('Veuillez décrire en quelque mots votre ressource')
     }
+    else if (selectedCategory == null || selectedCategory == 0){
+      console.log('Selectionner une category');
+    }
     else {
       const data = {
-        category: category,
+        category: selectedCategory,
         title: title,
         description: description,
         image: singleFile
       }
       navigation.navigate('NewPost', {
         screen: 'CreateContentPost',
-        data: data
+        params: data
       })
     }
   }
@@ -82,16 +86,24 @@ const CreatePost = ({ navigation }) => {
         });
         const res = await api.json()
         console.log(res.ut);
-        return res.ut.map(item => {
-          return <Picker.Item label={item.name} value={item._id}/>
-        })
+        setCategory(<Picker
+          selectedValue={selectedCategory}
+          onValueChange={category => setSelectedCategory(category)}
+          style={styles.picker}
+          placeholder="Catégorie"
+        >
+          <Picker.Item label="Choisissez une catégorie" value={0}/>
+          {res.ut.map((item,index) => (
+            <Picker.Item label={item.name} value={item._id} key={index}/>
+          ))}
+        </Picker>);
+        
       } catch (e) {
         console.log(e);
-        return <Picker.Item/>
+        setCategory(<View style={styles.picker}></View>)
       }
     }
-    setCategory(getCategories());
-    console.log('category',category);
+    getCategories();
   }, [])
   return (
     <View style={styles.container}>
@@ -104,13 +116,7 @@ const CreatePost = ({ navigation }) => {
           style={styles.divider}
         />
         <View style={styles.pickerContainer}>
-          <Picker
-            selectedValue={"null"}
-            style={styles.picker}
-            placeholder="Catégorie"
-          >
-            {category}
-          </Picker>
+          {category}
         </View>
 
         <View style={styles.input}>
