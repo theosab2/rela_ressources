@@ -12,7 +12,7 @@ export default function Amis() {
   const [searchFriend, setSearchFriend] = useState("");
   let allUser = null;
   let allArticle;
-  let array = [];
+  let arrayUser = [];
 
   useEffect(() => {
     if (window) { 
@@ -24,6 +24,19 @@ export default function Amis() {
   const userCookie = cookieManager();
 
   allUser = userManager();
+  if(allUser != null){
+    allUser.forEach(element => {
+      console.log(allUser);
+      if(searchFriend != ""){
+        if(element.username.includes(searchFriend)){
+        arrayUser.push(element);
+        }
+      }else{
+      arrayUser.push(element);
+      }
+      console.log(arrayUser);
+    });
+  }
 
   if (allUser != null) {
     const userInfo = JSON.parse(userCookie);
@@ -33,13 +46,13 @@ export default function Amis() {
         array.push(element);
       }
     });
-
+    console.log(searchFriend);
     return (
       <>
       <div className={style.mainContainer}>
       <input type="text" placeholder="Recherche" className={style.searchBar} onChange={(searchFriend) =>
                 setSearchFriend(searchFriend.target.value)}></input>
-      {allUser && allUser.map((user) => (
+      {arrayUser && arrayUser.map((user) => (
         <div className={style.abonnementContainer}>
         <div>
           <img src="/Image/connexion.png"/>
@@ -59,6 +72,6 @@ export default function Amis() {
     </>
     );
   } else {
-    return <div>loading...</div>;
+    return <div className={style.mainContainer}>loading...</div>;
   }
 }
