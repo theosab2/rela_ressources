@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DocumentPicker from 'react-native-document-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_URL } from "@env"
@@ -13,7 +13,10 @@ import { Icon, Button, Image } from 'react-native-elements';
 
 const CreateContentPost = ({ navigation, route }) => {
   const [arrayContentFront, setArrayContentFront] = useState([]);
-  const [contentFront, setContentFront] = useState(<View />);
+
+  const [contentFront, setContentFront] = useState([]);
+  const [selectedContent, setSelectedContent] = useState(null)
+
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [namePicture, setNamePicture] = useState('');
@@ -145,6 +148,46 @@ const CreateContentPost = ({ navigation, route }) => {
       </View>
     )
   }
+  const getContent = async () => {
+    try {
+      const api = await fetch(API_URL + '/uts/all/CONTENT', {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+      });
+      const res = await api.json()
+      console.log(res.ut);
+      setContentFront(res.ut)
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  useEffect(() => {
+    getContent();
+  }, [])
+
+
+  const renderContent = () => {
+    return contentFront.map((item, index) => {
+      return <Picker.Item label={item.name} value={item._id} key={index} />
+    })
+  }
+  /**
+   *       setContentFront(<Picker
+        selectedValue={selectedContent}
+        onValueChange={(value) => setSelectedContent(value)}
+        style={styles.picker}
+        placeholder="Content"
+      >
+        <Picker.Item label="Choisissez un type de contenu" value={0}/>
+        {res.ut.map((item,index) => (
+          <Picker.Item label={item.name} value={item._id} key={index}/>
+        ))}
+      </Picker>);
+   */
   return (
     <View style={styles.container}>
       <Header navigation={navigation} />
@@ -155,16 +198,32 @@ const CreateContentPost = ({ navigation, route }) => {
           color='#CE8686'
           style={styles.divider}
         />
+        { }
         <View style={styles.pickerContainer}>
           <Picker
-            selectedValue={"Coucou"}
+            selectedValue={selectedContent}
+            onValueChange={(value) => setSelectedContent(value)}
             style={styles.picker}
-            placeholder="Choisissez un type de contenu"
+            placeholder="Content"
           >
-            <Picker.Item label="Catégorie" value="java" />
-            <Picker.Item label="JavaScript" value="js" />
+            <Picker.Item label="Choisissez un type de contenu" value={0}/>
+            {renderContent()}
           </Picker>
         </View>
+      </View>
+      <View style={styles.buttons}>
+        <Button
+          title="Ajouter le contenu"
+          loading={false}
+          loadingProps={{ size: 'small', color: 'white' }}
+          buttonStyle={styles.buttonAddStyle}
+          titleStyle={{ fontWeight: 'bold', fontSize: 12 }}
+          containerStyle={[styles.buttonContainerStyle, styles.buttonAdd]}
+          onPress={() => {
+            navigation.navigate('Home', { screen: 'home' });
+            /**Mise en BDD l'article complet */
+          }}
+        />
       </View>
       <View style={styles.buttons}>
         <Button
@@ -293,6 +352,15 @@ const styles = StyleSheet.create({
   buttonContinue: {
     width: "95%",
     margin: 5
+  },
+  buttonAdd: {
+    width: "95%",
+    margin: 5,
+  },
+  buttonAddStyle: {
+    backgroundColor: '#869ECE',
+    borderRadius: 10,
+    height: 50,
   }
 
 });

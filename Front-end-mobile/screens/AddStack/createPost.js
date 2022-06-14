@@ -15,7 +15,7 @@ const CreatePost = ({ navigation }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [namePicture, setNamePicture] = useState('');
-  const [category, setCategory] = useState(<View style={styles.picker}></View>);
+  const [category, setCategory] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [singleFile, setSingleFile] = useState(null);
   const [imageUri, setImageUri] = useState(null);
@@ -74,37 +74,31 @@ const CreatePost = ({ navigation }) => {
       })
     }
   }
-  useEffect(() => {
-    const getCategories = async () => {
-      try {
-        const api = await fetch(API_URL + '/uts/all/CATEGORY', {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-          },
-        });
-        const res = await api.json()
-        console.log(res.ut);
-        setCategory(<Picker
-          selectedValue={selectedCategory}
-          onValueChange={category => setSelectedCategory(category)}
-          style={styles.picker}
-          placeholder="Catégorie"
-        >
-          <Picker.Item label="Choisissez une catégorie" value={0}/>
-          {res.ut.map((item,index) => (
-            <Picker.Item label={item.name} value={item._id} key={index}/>
-          ))}
-        </Picker>);
-        
-      } catch (e) {
-        console.log(e);
-        setCategory(<View style={styles.picker}></View>)
-      }
+  const getCategories = async () => {
+    try {
+      const api = await fetch(API_URL + '/uts/all/CATEGORY', {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+      });
+      const res = await api.json()
+      console.log(res.ut);
+      setCategory(res.ut);
+    } catch (e) {
+      console.log(e);
     }
+  }
+  useEffect(() => {
     getCategories();
   }, [])
+
+  const renderCategory = () => {
+    return category.map((item,index) => {
+      return <Picker.Item label={item.name} value={item._id} key={index} />
+    })
+  }
   return (
     <View style={styles.container}>
       <Header navigation={navigation} />
@@ -116,7 +110,15 @@ const CreatePost = ({ navigation }) => {
           style={styles.divider}
         />
         <View style={styles.pickerContainer}>
-          {category}
+        <Picker
+            selectedValue={selectedCategory}
+            onValueChange={(value) => setSelectedCategory(value)}
+            style={styles.picker}
+            placeholder="Category"
+          >
+            <Picker.Item label="Choisissez une catégorie" value={0}/>
+            {renderCategory()}
+          </Picker>
         </View>
 
         <View style={styles.input}>
