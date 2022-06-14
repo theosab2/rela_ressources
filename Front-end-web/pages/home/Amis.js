@@ -13,7 +13,6 @@ import ShowAmis from "./ComponentShowAmis";
 export default function Amis() {
   const [searchFriend, setSearchFriend] = useState("");
   let allUser = null;
-  let allArticle;
   let arrayUser = [];
 
 
@@ -23,12 +22,8 @@ export default function Amis() {
     }
   }, []);
 
-  allArticle = articleManager();
   const userCookie = cookieManager();
   allUser = userManager();
-
-
-
 
   if (allUser != null) {
     const userInfo = JSON.parse(userCookie);
