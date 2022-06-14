@@ -1,10 +1,16 @@
+import { useEffect, useState } from "react";
 import style from "../../styles/Home.module.css";
 
 
 export default function ComponentShowAmis(props) {
+    const [txtAbo,setTxtAbo] = useState(null);
 
-    const abonnement = async (id) => {
-        await fetch("http://localhost:3001/user/" + id, {
+    const abonnement = async (array) => {
+        if(!props.friend.relation_ids.includes(props.userCookie._id)){
+        setTextAbonnement(!props.friend.relation_ids.includes(props.userCookie._id))
+        array.push(props.userCookie._id)
+        console.log(array)
+        await fetch("http://localhost:3001/user/" + props.friend._id, {
           method: "PUT",
           headers: {
             Accept: "application/json",
@@ -12,13 +18,44 @@ export default function ComponentShowAmis(props) {
           },
           body: JSON.stringify({
             user: {
-              username: props.friend.username,
-              relation_ids: [id]
+              relation_ids: array
             },
           }),
         });
+            
+        }else{
+            setTextAbonnement(!props.friend.relation_ids.includes(props.userCookie._id))
+            array = array.filter(e => e !== props.userCookie._id);
+            console.log(array)
+            await fetch("http://localhost:3001/user/" + props.friend._id, {
+              method: "PUT",
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                user: {
+                  relation_ids: array
+                },
+              }),
+            });
+            
+        }
+    }
+
+
+        function setTextAbonnement(bool){
+            if(bool){
+                setTxtAbo("Désabonnement");
+            }else{
+                setTxtAbo("Abonnement");
+            }
         }
 
+        useEffect(function showPost(){
+            setTextAbonnement(props.friend.relation_ids.includes(props.userCookie._id));
+        },[]);
+        
         return (
             <>
                 <div className={style.abonnementContainer} key={props.friend._id}>
@@ -31,8 +68,8 @@ export default function ComponentShowAmis(props) {
                         <p>{props.friend.relation_ids.length}</p>
                     </div>
                     <img src="/Image/comment.png"/>
-                    <button onClick={() => abonnement(props.friend.relation_ids.push(props.userCookie._id))}>
-                    { props.friend._id.includes(props.userCookie._id) ? "Désabonnement" : "Abonnement" }
+                    <button onClick={() => (abonnement(props.friend.relation_ids))}>
+                    {txtAbo}
                     </button>
                 </div>
             </>

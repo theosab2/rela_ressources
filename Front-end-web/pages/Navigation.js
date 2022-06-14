@@ -234,7 +234,7 @@ export default function Navigation(image) {
             <div className={style.recentContent}>
               <div className={style.recentTitle}>Récent</div>
               {allArticle && allArticle.reverse(0,5).map((articleInfo) => (
-                <div className={style.recentChoice}>
+                <div className={style.recentChoice} key={articleInfo._id}>
                     <img 
                     src="/Image/connexion.png"
                     alt="User picture"
