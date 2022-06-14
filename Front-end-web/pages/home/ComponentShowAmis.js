@@ -4,6 +4,7 @@ import style from "../../styles/Home.module.css";
 
 export default function ComponentShowAmis(props) {
     const [txtAbo,setTxtAbo] = useState(null);
+    const [nbRelation,setNbRelation] = useState(null);
 
     const abonnement = async (array) => {
         if(!props.friend.relation_ids.includes(props.userCookie._id)){
@@ -47,13 +48,16 @@ export default function ComponentShowAmis(props) {
         function setTextAbonnement(bool){
             if(bool){
                 setTxtAbo("Désabonnement");
+                setNbRelation((props.friend.relation_ids.length)+1);
             }else{
+                setNbRelation((props.friend.relation_ids.length)-1);
                 setTxtAbo("Abonnement");
             }
         }
 
         useEffect(function showPost(){
             setTextAbonnement(props.friend.relation_ids.includes(props.userCookie._id));
+            setNbRelation(props.friend.relation_ids.length);
         },[]);
         
         return (
@@ -65,7 +69,7 @@ export default function ComponentShowAmis(props) {
                     </div>
                     <div>
                         <img src="/Image/user.png"/>
-                        <p>{props.friend.relation_ids.length}</p>
+                        <p>{nbRelation}</p>
                     </div>
                     <img src="/Image/comment.png"/>
                     <button onClick={() => (abonnement(props.friend.relation_ids))}>
