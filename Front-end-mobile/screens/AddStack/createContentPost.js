@@ -13,6 +13,7 @@ import { Icon, Button, Image } from 'react-native-elements';
 
 const CreateContentPost = ({ navigation, route }) => {
   const [arrayContentFront, setArrayContentFront] = useState([]);
+  const [contentsData,setContentsData] = useState([]);
 
   const [contentFront, setContentFront] = useState([]);
   const [selectedContent, setSelectedContent] = useState(null)
@@ -93,9 +94,8 @@ const CreateContentPost = ({ navigation, route }) => {
       <View style={styles.input}>
         <Icon name="receipt-outline" type="ionicon" color="#FFFFFF" style={styles.inputIcon} />
         <TextInput
-          placeholder="Titre du contenu"
+          placeholder="Titre"
           onChangeText={titreContent => setTitreContent(titreContent)}
-          defaultValue={titreContent}
         />
       </View>
     )
@@ -169,25 +169,23 @@ const CreateContentPost = ({ navigation, route }) => {
     getContent();
   }, [])
 
-
   const renderContent = () => {
     return contentFront.map((item, index) => {
-      return <Picker.Item label={item.name} value={item._id} key={index} />
+      return <Picker.Item label={item.name} value={item.name} key={index} />
     })
   }
-  /**
-   *       setContentFront(<Picker
-        selectedValue={selectedContent}
-        onValueChange={(value) => setSelectedContent(value)}
-        style={styles.picker}
-        placeholder="Content"
-      >
-        <Picker.Item label="Choisissez un type de contenu" value={0}/>
-        {res.ut.map((item,index) => (
-          <Picker.Item label={item.name} value={item._id} key={index}/>
-        ))}
-      </Picker>);
-   */
+  const AddNewContent = () => {
+    if(selectedContent == null || selectedContent == 0){
+      console.log("contenu non selectionner")
+    }else if(selectedContent == 'img'){
+      arrayContentFront.push(imgContent(arrayContentFront.length))
+    }else if(selectedContent == 'text'){
+      arrayContentFront.push(descriptionContent(arrayContentFront.length))
+    }else if(selectedContent == 'title'){
+      arrayContentFront.push(titleContent(arrayContentFront.length))
+    }
+    setSelectedContent(null);
+  }
   return (
     <View style={styles.container}>
       <Header navigation={navigation} />
@@ -198,7 +196,9 @@ const CreateContentPost = ({ navigation, route }) => {
           color='#CE8686'
           style={styles.divider}
         />
-        { }
+        {arrayContentFront.map(item => {
+          return item
+        })}
         <View style={styles.pickerContainer}>
           <Picker
             selectedValue={selectedContent}
@@ -220,7 +220,7 @@ const CreateContentPost = ({ navigation, route }) => {
           titleStyle={{ fontWeight: 'bold', fontSize: 12 }}
           containerStyle={[styles.buttonContainerStyle, styles.buttonAdd]}
           onPress={() => {
-            navigation.navigate('Home', { screen: 'home' });
+            AddNewContent();
             /**Mise en BDD l'article complet */
           }}
         />
