@@ -6,32 +6,35 @@ import { useState, useEffect } from "react";
 import utils from "../utils";
 import cookieManager from "../utils/cookieManager";
 import articleManager from "../utils/articleManager";
+import ShowAmis from "./ComponentShowAmis";
+import userManager from "../utils/userManager";
 
 export default function abonnement() {
-  let allArticle;
-  let array = [];
+  
+  const userCookie = cookieManager();
+  const userInfo = JSON.parse(userCookie);
+  let allUser = null;
+  let arrayUser = [];
 
   useEffect(() => {
     if (window) { 
       window.sessionStorage.setItem("Page", "Abonnement" );
     }
   }, []);
+  
+  allUser = userManager();
 
-  allArticle = articleManager();
-  const userCookie = cookieManager();
+  if (allUser != null) {
 
-  if (allArticle != null) {
-    const userInfo = JSON.parse(userCookie);
+      allUser.forEach(element => {
+          if(element.relation_ids.includes(userInfo._id)){
+            arrayUser.push(element);
+          }
+      });
 
-    allArticle.forEach((element) => {
-      if (element.articleCreator == userInfo._id) {
-        array.push(element);
-      }
-    });
 
-    console.log(allArticle);
     return (
-      <>
+    <>
       <div className={style.mainContainer}>
         <div className={style.filterContainer}>
           <div>
@@ -59,21 +62,10 @@ export default function abonnement() {
           />
           </div>
         </div>
-        <div className={style.abonnementContainer}>
-        <div>
-          <img src="/Image/connexion.png"/>
-          <p>JeanMichel62</p>
-          </div>
-          <div>
-          <img src="/Image/user.png"/>
-          <p>5645</p>
-            </div>
-            <img src="/Image/comment.png"/>
-          <button>
-              Désabonner
-          </button>
-        </div>
-     </div>
+        {arrayUser && arrayUser.map((user) => (
+          <ShowAmis userCookie={userInfo} friend={user} key={user._id}/>
+          ))}
+      </div>
     </>
     );
   } else {
