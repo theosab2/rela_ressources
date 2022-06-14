@@ -172,6 +172,7 @@ export default function Navigation(image) {
             <div className={style.sidebarContent}>
               <div className={style.sidebarTitle}>Publication</div>
               <div className={style.sidebarChoice}>
+                <button onClick={() => setRenderPage((renderPage = "Accueil"))}>Accueil</button>
                 <button className={renderPage == 'Creer'?style.sidebarOpenPage:null} onClick={() => setRenderPage((renderPage = "Creer"))}>Créer une ressource</button>
                 <button onClick={() => setRenderPage((renderPage = "Historique"))}>Historique de mes ressources</button>
                 <button onClick={() => setRenderPage((renderPage = "Favorie"))}>Mes ressources favorites</button>
@@ -204,6 +205,7 @@ export default function Navigation(image) {
             <div className={style.sidebarContent}>
               <div className={style.sidebarTitle}>Administration</div>
               <div className={style.sidebarChoice}>
+                <button onClick={() => setRenderPage((renderPage = "Accueil"))}>Accueil</button>
                 <button onClick={() => setRenderPage((renderPage = "Moderation"))}>Modération</button>
                 <button onClick={() => setRenderPage((renderPage = "Categorie"))}>Administration de catégorie</button>
                 <button onClick={() => setRenderPage((renderPage = "Utilisateur"))}>Modifier les utilisateurs</button>
