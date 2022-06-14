@@ -13,11 +13,13 @@ import { Icon, Button, Image } from 'react-native-elements';
 
 const CreateContentPost = ({ navigation, route }) => {
   const [arrayContentFront, setArrayContentFront] = useState([]);
-  const [contentsData,setContentsData] = useState([]);
+  const [contentsData, setContentsData] = useState([]);
 
   const [contentFront, setContentFront] = useState([]);
   const [selectedContent, setSelectedContent] = useState(null)
 
+  const [cacheContentType,setCacheContentType] = useState([])
+  
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [namePicture, setNamePicture] = useState('');
@@ -95,7 +97,7 @@ const CreateContentPost = ({ navigation, route }) => {
         <Icon name="receipt-outline" type="ionicon" color="#FFFFFF" style={styles.inputIcon} />
         <TextInput
           placeholder="Titre"
-          onChangeText={titreContent => setTitreContent(titreContent)}
+          onChangeText={titreContent => contentsData[index].body = titreContent}
         />
       </View>
     )
@@ -175,16 +177,43 @@ const CreateContentPost = ({ navigation, route }) => {
     })
   }
   const AddNewContent = () => {
-    if(selectedContent == null || selectedContent == 0){
+    if (selectedContent == null || selectedContent == 0) {
       console.log("contenu non selectionner")
-    }else if(selectedContent == 'img'){
+    } else if (selectedContent == 'img') {
       arrayContentFront.push(imgContent(arrayContentFront.length))
-    }else if(selectedContent == 'text'){
+      contentsData.push({
+        UT_id: getIdContentByName(selectedContent),
+        body: "",
+        positionX: null,
+        positionY: null,
+        textColor: "",
+        additionnalCSS: ""
+      })
+    } else if (selectedContent == 'text') {
       arrayContentFront.push(descriptionContent(arrayContentFront.length))
-    }else if(selectedContent == 'title'){
+      contentsData.push({
+        UT_id: getIdContentByName(selectedContent),
+        body: "",
+        positionX: null,
+        positionY: null,
+        textColor: "",
+        additionnalCSS: ""
+      })
+    } else if (selectedContent == 'title') {
       arrayContentFront.push(titleContent(arrayContentFront.length))
+      contentsData.push({
+        UT_id: getIdContentByName(selectedContent),
+        body: "",
+        positionX: null,
+        positionY: null,
+        textColor: "",
+        additionnalCSS: ""
+      })
     }
     setSelectedContent(null);
+  }
+  const getIdContentByName = (contentName) => {
+    return contentFront.find(item => item.name == contentName)._id
   }
   return (
     <View style={styles.container}>
@@ -206,7 +235,7 @@ const CreateContentPost = ({ navigation, route }) => {
             style={styles.picker}
             placeholder="Content"
           >
-            <Picker.Item label="Choisissez un type de contenu" value={0}/>
+            <Picker.Item label="Choisissez un type de contenu" value={0} />
             {renderContent()}
           </Picker>
         </View>
@@ -234,8 +263,9 @@ const CreateContentPost = ({ navigation, route }) => {
           titleStyle={{ fontWeight: 'bold', fontSize: 12 }}
           containerStyle={[styles.buttonContainerStyle, styles.buttonContinue]}
           onPress={() => {
-            navigation.navigate('Home', { screen: 'home' });
+            //navigation.navigate('Home', { screen: 'home' });
             /**Mise en BDD l'article complet */
+            console.log(contentsData)
           }}
         />
       </View>
