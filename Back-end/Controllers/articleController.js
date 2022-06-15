@@ -1,10 +1,35 @@
 //===== DAL =====//
-const _messageQueryService = require("../DAL/messageQueryService");
+const _articleQueryService = require("../DAL/articleQueryService");
 
 //===== BLL =====//
-//const _utApplicationService = require("../BLL/utApplicationService");
+const _articleApplicationService = require("../BLL/articleApplicationService");
 
-const controllerLogPrefix = "    (message) CONTROLLER ";
+//Logger prefix
+const controllerLogPrefix = "    (article)  CONTROLLER ";
+
+
+
+//#region [GET_RESSOURCES]
+
+module.exports.getAll = async () => {
+    console.log(controllerLogPrefix,"[getAll] ()");
+    
+    // get article from BDD filtered by code
+    let data = await _articleQueryService.getAllArticles();
+    
+    return data;
+};
+
+module.exports.getOne = async (articleId) => {
+    console.log(controllerLogPrefix,"[getOne] (params) articleId : ",articleId);
+    
+    // get article from BDD filtered by code
+    let data = await _articleQueryService.getById(articleId);
+    
+    return data;
+};
+
+//#endregion
 
 //#region [SCHEMA]
 
@@ -18,7 +43,7 @@ const controllerLogPrefix = "    (message) CONTROLLER ";
         }
 
         //Récupération du informations du schema du modèle
-        let schemaPaths = await _messageQueryService.getSchemaPath();
+        let schemaPaths = await _articleQueryService.getSchemaPath();
 
         //Remplissage de la variable de retour
         for (const [key, value] of schemaPaths) {
@@ -29,7 +54,7 @@ const controllerLogPrefix = "    (message) CONTROLLER ";
             + (((value.options.required == true)||(value.options.unique == true)) ? "|" : "");
         }
 
-        console.log("    (message) CONTROLLER [getSchema] (return) schema");
+        console.log(controllerLogPrefix,"[getSchema] (return) schema");
         return schema;
     };
 
@@ -43,7 +68,7 @@ const controllerLogPrefix = "    (message) CONTROLLER ";
         }
         
         //Récupération du informations du schema du modèle
-        let schemaPaths = await _messageQueryService.getSchemaPath();
+        let schemaPaths = await _articleQueryService.getSchemaPath();
 
         //Remplissage de la variable de retour
         for (const [key, value] of schemaPaths) {
@@ -55,7 +80,7 @@ const controllerLogPrefix = "    (message) CONTROLLER ";
                 };
         }
 
-        // get UT from BDD filtered by code
+        // get article from BDD filtered by code
         console.log(controllerLogPrefix,"[getDetailledSchema] (return) detailledSchema");
         return detailledSchema;
     };
@@ -70,7 +95,7 @@ const controllerLogPrefix = "    (message) CONTROLLER ";
         //Initialisation de la variable de retour
         let template = {}
 
-        let schemaPaths = await _messageQueryService.getSchemaPath();
+        let schemaPaths = await _articleQueryService.getSchemaPath();
 
         //Remplissage de la variable de retour
         for (const [key, value] of schemaPaths) {
@@ -91,26 +116,17 @@ const controllerLogPrefix = "    (message) CONTROLLER ";
         console.log(controllerLogPrefix,"[query] (paramètres) 'query' : ",query);
 
         //TODO application service check query template
-    
+
         if(query === {})
-        {   //Pas de query, on renvoit tous les utilisateurs en base de données (même format de retour)
+        {   //Pas de query, on renvoit tous les articles en base de données (même format de retour)
             console.log(controllerLogPrefix,"[query] empty-query");
             return this.getAll();
         }
         else
-        {   //On prend en compte la query transmise à l'API     
-            try{
-                console.log(controllerLogPrefix,"[query] (info) : parsing received query");
-                var parsedQuery = await _queryParserService.parseObjectQuery(query);
-            }
-            catch(exception){
-                console.log(controllerLogPrefix,"[query] (exception) : something went wrong while parsing the query");
-                return {message:"une erreur est survenue",error};
-
-            }       
+        {   //On prend en compte la query transmise à l'API            
             try {
-                let data = await _messageQueryService.query(parsedQuery);
-                console.log(controllerLogPrefix,"[query] (return) : ",data.messages.length," element",data.messages.length > 1 ?'s':'');
+                let data = await _articleQueryService.query(query);
+                console.log(controllerLogPrefix,"[query] (return) : ",data.articles.length," element",data.articles.length > 1 ?'s':'');
                 return data;
             } 
             catch (error) {
@@ -126,55 +142,36 @@ const controllerLogPrefix = "    (message) CONTROLLER ";
 
 //#endregion
 
-//#region [GET_RESSOURCES]
-
-module.exports.getAll = async () => {
-    console.log(controllerLogPrefix,"[getAll] () ");
-    var data = await _messageQueryService.getAll();
-    console.log(controllerLogPrefix,"[getAll] () ");
-
-    return data
-}
-
-module.exports.getAllByRelation = async (relationId) => {
-    console.log(controllerLogPrefix,"[getAllByRelation] () ");
-    var data = await _messageQueryService.getAllByRelation(relationId);
-    return data
-}
-
-//#endregion
-
 //#region [UPDATE RESSOURCES]
 
-
 module.exports.create = async (requestBody = null) => {
-    console.log(controllerLogPrefix,"[create] (paramètres) 'requestBody' :",requestBody);
+    console.log(controllerLogPrefix,"[create] (paramètres) 'requestBody' :\n",requestBody);
 
-    let messageObject = requestBody.message;
+    let articleObject = requestBody.article;
 
-    if(messageObject == {} || messageObject == undefined || messageObject == null){
-        console.log(controllerLogPrefix,"[create] (return) BAD_REQUEST : message not found in request body");
+    if(articleObject == {} || articleObject == undefined || articleObject == null){
+        console.log(controllerLogPrefix,"[create] (return) BAD_REQUEST : article not found in request body");
         return({
             status:"BAD_REQUEST",
             statusCode:400,
-            message: "Création du message impossible : Objet \'message\' introuvable dans le body de la requête",
-            requiredFormat:"Format du body attendu : {message:{...message informations...}}",
+            message: "Création du article impossible : Objet \'article\' introuvable dans le body de la requête",
+            requiredFormat:"Format du body attendu : {article:{...article's informations...}}",
         })
     }
 
     try //Sauvegarde du modèle Article dans la BDD
     {   
         console.log(controllerLogPrefix,"[create] (info) saving created message object in the database");
-        await _messageQueryService.saveOne(messageObject);
+        await _articleQueryService.saveOne(articleObject);
     }
     catch (exception) //ECHEC Sauvegarde du modèle Article dans la BDD
     {   
-        console.log(controllerLogPrefix,"[create] (error) exception occur while saving message object to the database : ",exception);
+        console.log(controllerLogPrefix,"[create] (error) exception occur while saving article object to the database : ",exception);
         return ({
             status:"EXCEPTION",
             statusCode:500,
-            message: "Une erreur est survenue durant l'enregistrement du modèle dans la base de données pour le nouveau message : \'"+messageObject.body+"\'",
-            messageInfoReceipted:messageObject,
+            message: "Une erreur est survenue durant l'enregistrement du modèle dans la base de données pour le nouvel article : \'"+articleObject.code+"\'",
+            articleInfoReceipted:articleObject,
             exception:exception
         })
     }
@@ -183,8 +180,8 @@ module.exports.create = async (requestBody = null) => {
     return ({
         status:"SUCCESS",
         statusCode:201,
-        messageCreated:messageObject,
-        message: "Message : \'"+messageObject.body+"\' Créé avec succès"
+        articleCreated:articleObject,
+        message: "Article : \'"+articleObject.code+"\' Créé avec succès"
     });    
 };
 
