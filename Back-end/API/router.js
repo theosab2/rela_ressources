@@ -248,7 +248,7 @@ router.post("/articles/query", async function (req, res, next) {
 
 //Get all articles
 router.get("/articles/all", async function (req, res, next) {
-  var data = await _articleController.getAllByCode();
+  var data = await _articleController.getAll();
   _responseLogger(req);
   res.status(200).json(data);
 });
@@ -269,18 +269,12 @@ router.get("/article/:id", async function (req, res, next) {
 
     var articleObject = {};
   
-    if(req.file == undefined || req.file == null){
-      articleObject = req.body.article
-    }
-    else{
-      articleObject = {
-        ...JSON.parse(req.body.article),
-        articleImage:`${req.protocol}://${req.get('host')}/article-image/${req.file.filename}`
-      }
-    }    
+    if(req.file != undefined & req.file != null){
+      req.body.article.articleImage = `${req.protocol}://${req.get('host')}/article-image/${req.file.filename}`
+    }   
 
     var articleCreationQueryResult = await _articleController.create(
-      articleObject
+      req.body
     );
     _responseLogger(req);
     res

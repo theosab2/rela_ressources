@@ -105,7 +105,7 @@ const controllerLogPrefix = "    (message) CONTROLLER ";
             }
             catch(exception){
                 console.log(controllerLogPrefix,"[query] (exception) : something went wrong while parsing the query");
-                return {message:"une erreur est survenue",error};
+                return {message:"une erreur est survenue",exception};
 
             }       
             try {

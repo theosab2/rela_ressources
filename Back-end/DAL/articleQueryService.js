@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const _queryParserService = require("../BLL/global/queryParserService");
 const _typeValidationService = require("../BLL/global/typeValidationService");
 
+const queryServiceLogPrefix = "    (article)      D.A.L ";
 
 //Import du modèle relatif
 const mArticle = require('../models/article');
