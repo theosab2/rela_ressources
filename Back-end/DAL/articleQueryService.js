@@ -139,7 +139,7 @@ const mArticle = require('../models/article');
         try //Création du modèle à partir des données du body de la requête
         {
             console.log(queryServiceLogPrefix,"[create] (info) creating artcile object before database insertion");
-            var newArticle = new mUt({ ...newArticleModel });
+            var newArticle = new mArticle({ ...newArticleModel });
         }
         catch (exception) //ECHEC Création du modèle à partir des données du body de la requête
         {   
