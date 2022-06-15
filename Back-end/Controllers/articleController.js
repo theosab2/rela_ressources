@@ -162,7 +162,7 @@ module.exports.create = async (requestBody = null) => {
     try //Sauvegarde du modèle Article dans la BDD
     {   
         console.log(controllerLogPrefix,"[create] (info) saving created message object in the database");
-        await _articleQueryService.saveOne(articleObject);
+        var saveAttempt = await _articleQueryService.saveOne(articleObject);
     }
     catch (exception) //ECHEC Sauvegarde du modèle Article dans la BDD
     {   
