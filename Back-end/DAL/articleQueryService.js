@@ -7,7 +7,9 @@ const mongoose = require('mongoose');
 const _queryParserService = require("../BLL/global/queryParserService");
 const _typeValidationService = require("../BLL/global/typeValidationService");
 
-const queryServiceLogPrefix = "    (article)      D.A.L ";
+//Prefix du logger
+const queryServiceLogPrefix  = "    (article)       D.A.L ";
+
 
 //Import du modèle relatif
 const mArticle = require('../models/article');
@@ -58,7 +60,7 @@ const mArticle = require('../models/article');
     //#region [GET DATA]
 
         //return all articles
-        module.exports.getAllArticles = async () => {
+        module.exports.getAll = async () => {
             console.log(queryServiceLogPrefix,"[getAllArticles] ()");
             try {
                 var data = await mArticle.find();
