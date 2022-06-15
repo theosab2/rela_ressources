@@ -15,7 +15,7 @@ module.exports.getAll = async () => {
     console.log(controllerLogPrefix,"[getAll] ()");
     
     // get article from BDD filtered by code
-    let data = await _articleQueryService.getAllArticles();
+    let data = await _articleQueryService.getAll();
     
     return data;
 };

@@ -137,7 +137,7 @@ router.get("/test", (req, res, next) => {
 
 //Inscription
 router.post("/auth/register", async function (req, res, next) {
-  var userCreationQueryResult = await _authController.createUser(
+  var userCreationQueryResult = await _userController.create(
     req.body.user
   );
   _responseLogger(req);
@@ -190,7 +190,7 @@ router.post("/users/query", async function (req, res, next) {
 
 //Get all users
 router.get("/users/all", async function (req, res, next) {
-  var data = await _userQueryService.getAllUsers();
+  var data = await _userQueryService.getAll();
   _responseLogger(req);
   res.status(200).json(data);
 });
@@ -284,6 +284,7 @@ router.get("/article/:id", async function (req, res, next) {
     var articleCreationQueryResult = await _articleController.create(
       req.body
     );
+
     _responseLogger(req);
     res
       .status(articleCreationQueryResult.statusCode)

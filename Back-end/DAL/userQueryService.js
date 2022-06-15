@@ -350,7 +350,7 @@ const mUser = require('../models/user');
 //#region [UPDATE RESSOURCES]
 
     //Crée un nouvel utilisateur
-    module.exports.createUser = async (userObject) => {
+    module.exports.create = async (userObject) => {
         console.log("D.A.L [createUser] (paramètres) 'userObject' :",userObject);
 
         if(userObject == {} || userObject == undefined || userObject == null){
@@ -582,6 +582,7 @@ const mUser = require('../models/user');
             });
         } 
     };
+    
     //Mets à jour l'utilisateur et renvoi le résultat de la mise à jour
     module.exports.updateUser = async (userId,userObject = {}) => {
         console.log("D.A.L [updateUser] (paramètres) 'userId' :",userId,"'userObject' :",userObject);
