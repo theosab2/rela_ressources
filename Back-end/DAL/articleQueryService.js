@@ -139,7 +139,7 @@ const mArticle = require('../models/article');
         try //Création du modèle à partir des données du body de la requête
         {
             console.log(queryServiceLogPrefix,"[create] (info) creating artcile object before database insertion");
-            var newArticle = new mUt({ ...newArticleModel });
+            var newArticle = new mArticle({ ...newArticleModel });
         }
         catch (exception) //ECHEC Création du modèle à partir des données du body de la requête
         {   
@@ -195,32 +195,6 @@ const mArticle = require('../models/article');
                 statusCode:404,
                 message: "L'article : (ID)=\'"+articleId+"\' n'a pas été trouvé dans la base de données",
             })
-        }
-
-        try //Vérification de l'existence du nom de l'article dans la base de données
-        {   
-            var articleTitleAlreadyExist = await this.checkArticleTitleExistence(articleObject.articleTitle);
-            console.log("D.A.L [createArticle] articleTitleAlreadyExist :",articleTitleAlreadyExist);
-        }
-        catch(exception) //ECHEC de la vérification de l'existence du nom d'utilisateur dans la base de données
-        {
-            console.log("D.A.L [createArticle] (return) 'exception' : ", exception);
-            return({
-                status:"CONTROL_FAILURE",
-                statusCode:500,
-                message: "Une erreur est survenue durant la vérification de l'existence du nom de l'article : \'"+articleObject.articleTitle+"\' dans la base de données",
-                exception:exception
-            })
-        }
-
-        if(articleTitleAlreadyExist){
-            return ({
-                status:"FAILURE",
-                statusCode:500,
-                userInfoReceipted:articleObject,
-                nbError:1,
-                message:"A field value who need to be unique in database already exist : articleTitle"
-            });
         }
     
         try 

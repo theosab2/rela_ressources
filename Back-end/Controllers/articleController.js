@@ -170,7 +170,7 @@ module.exports.create = async (requestBody = null) => {
         return ({
             status:"EXCEPTION",
             statusCode:500,
-            message: "Une erreur est survenue durant l'enregistrement du modèle dans la base de données pour le nouvel article : \'"+articleObject.code+"\'",
+            message: "Une erreur est survenue durant l'enregistrement du modèle dans la base de données pour le nouvel article : \'"+articleObject.title+"\'",
             articleInfoReceipted:articleObject,
             exception:exception
         })
@@ -181,7 +181,7 @@ module.exports.create = async (requestBody = null) => {
         status:"SUCCESS",
         statusCode:201,
         articleCreated:articleObject,
-        message: "Article : \'"+articleObject.code+"\' Créé avec succès"
+        message: "Article : \'"+articleObject.title+"\' Créé avec succès"
     });    
 };
 
