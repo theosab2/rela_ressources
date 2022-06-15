@@ -14,91 +14,23 @@ const mArticle = require('../models/article');
 //#region [QUERY RESSOURCES]
 
     //#region [SCHEMA]
-        
-        //Retourhe le schéma détaillé du model 'article'
-        module.exports.getSchema = async () => {
-            console.log("D.A.L [getArticleSchema] ()");
 
-            //Initialisation de la variable de retour
-            var articleSchema = {
-                
-            }
-
-            //Remplissage de la variable de retour
-            for (const [key, value] of Object.entries(mArticle.schema.paths)) {
-                articleSchema[key] = value.instance
-                + " " 
-                + ((value.options.required == true) ? "|R" : "")
-                + ((value.options.unique == true) ? "|U" : "")
-                + (((value.options.required == true)||(value.options.unique == true)) ? "|" : "");
-            }
-
-            console.log("D.A.L [getArticleSchema] (return) 'article-schema' : ",articleSchema);
-            return articleSchema;
-        };
-
-        //Retourhe le schéma détaillé du model 'article'
-        module.exports.getDetailledSchema = async () => {
-            console.log("D.A.L [getDetailledArticleSchema] ()");
-
-            //Initialisation de la variable de retour
-            var articleDetailledSchema = {
-                
-            }
-
-            //Remplissage de la variable de retour
-            for (const [key, value] of Object.entries(mArticle.schema.paths)) {
-                articleDetailledSchema[key] = 
-                    {
-                        "type":value.instance,
-                        "required":(value.options.required == true),
-                        "unique":(value.options.unique == true)
-                    };
-            }
-
-            console.log("D.A.L [getDetailledArticleSchema] (return) 'detailled-article-schema' : ",articleDetailledSchema);
-            return articleDetailledSchema;
+        module.exports.getSchemaPath = async () => {
+            console.log(queryServiceLogPrefix,"[getSchemaPath] ()");
+            console.log(queryServiceLogPrefix,"[getSchemaPath] (return) schemaPath");
+            return Object.entries(mArticle.schema.paths);
         };
 
     //#endregion
     
     //#region [QUERY DATA]
 
-        //return body template for articles query
-        module.exports.getQueryTemplate = async () => {
-            console.log("D.A.L [getQueryTemplate] ()");
-
-            //Initialisation de la variable de retour
-            var template = {}
-
-            //Remplissage de la variable de retour
-            for (const [key, value] of Object.entries(mArticle.schema.paths)) {
-                template[key] = 
-                    {
-                        "type":value.instance,
-                        "required":(value.options.required == true),
-                        "unique":(value.options.unique == true)
-                    };
-            }
-
-            console.log("D.A.L [getQueryTemplate] (return) query-template : ",template);
-            return template;
-        };
-
-        //return articles filtered by query
-        module.exports.queryArticles = async (query = {}) => {
-            console.log("D.A.L [queryArticles] (paramètres) 'query' : ",query);
-
-            //TODO application service check query template
-            
         
-            if(query === {})
-            {   //Pas de query, on renvoit tous les utilisateurs en base de données (même format de retour)
-                console.log("D.A.L [queryArticles] (return) _getAllArticles()");
-                return this.getAllArticles();
-            }
-            else
-            {   //On prend en compte la query transmise à l'API
+        //return articles filtered by query
+        module.exports.query = async (query = {}) => {
+            console.log("D.A.L [queryArticles] (paramètres) 'query' : ",query);            
+            
+            //On prend en compte la query transmise à l'API
                 parsedQuery = await _queryParserService.parseObjectQuery(query);
                 
                 try {
@@ -110,19 +42,14 @@ const mArticle = require('../models/article');
                     } : {
                         message:"aucun utilisateur trouvé en base de données correspondant à la query"
                     };
-                    console.log("D.A.L [queryArticles] (return) result :", result);
+                    console.log(queryServiceLogPrefix,"[query] (return) : ",data.length," element",data.length > 1 ?'s':'');
                     return result 
                     
                 } 
                 catch (error) {
-                    console.log("D.A.L [queryArticles] (return) :", {message:"une erreur est survenue",error});
+                    console.log("D.A.L [query] (return) :", {message:"une erreur est survenue",error});
                     return {message:"une erreur est survenue",error};
                 }   
-            }
-
-            
-                
-            
         };
 
     //#endregion
@@ -131,7 +58,7 @@ const mArticle = require('../models/article');
 
         //return all articles
         module.exports.getAllArticles = async () => {
-            console.log("D.A.L [getAllArticles] ()");
+            console.log(queryServiceLogPrefix,"[getAllArticles] ()");
             try {
                 var data = await mArticle.find();
                 return data 
@@ -151,8 +78,8 @@ const mArticle = require('../models/article');
         };
 
         //return Article from provided ID
-        module.exports.getArticleById = async (id) => {
-            console.log("D.A.L [getArticleById] (paramètres) 'ID' :",id);
+        module.exports.getById = async (id) => {
+            console.log(queryServiceLogPrefix,"[getById] (paramètres) 'ID' :",id);
             try {
                 var data = await mArticle.findById(id);
                 return data 
@@ -207,105 +134,42 @@ const mArticle = require('../models/article');
 
 //#region [UPDATE RESSOURCES]
 
-    //Crée un nouvel utilisateur
-    module.exports.createArticle = async (articleObject = null) => {
-        console.log("D.A.L [createArticle] (paramètres) 'articleObject' :",articleObject);
-
-        if(articleObject == {} || articleObject == undefined || articleObject == null){
-            return({
-                status:"BAD_REQUEST",
-                statusCode:400,
-                message: "Création de l'utilisateur impossible : Objet \'article\' introuvable dans le body de la requête",
-                requiredFormat:"Format du body attendu : {article:{...article informations...}}",
-            })
-        }
-        
-        try //Vérification de l'existence du nom de l'article dans la base de données
-        {   
-            var articleTitleAlreadyExist = await this.checkArticleTitleExistence(articleObject.title);
-            console.log("D.A.L [createArticle] articleTitleAlreadyExist :",articleTitleAlreadyExist);
-        }
-        catch(exception) //ECHEC de la vérification de l'existence du nom d'utilisateur dans la base de données
+    //Crée un nouvel article
+    module.exports.saveOne = async (newArticleModel) => {
+        try //Création du modèle à partir des données du body de la requête
         {
-            console.log("D.A.L [createArticle] (return) 'exception' : ", exception);
-            return({
-                status:"CONTROL_FAILURE",
+            console.log(queryServiceLogPrefix,"[create] (info) creating artcile object before database insertion");
+            var newArticle = new mUt({ ...newArticleModel });
+        }
+        catch (exception) //ECHEC Création du modèle à partir des données du body de la requête
+        {   
+            console.log(queryServiceLogPrefix,"[create] (error) exception occur during article object creation : ",exception);
+            return ({
+                status:"EXCEPTION",
                 statusCode:500,
-                message: "Une erreur est survenue durant la vérification de l'existence du nom de l'article : \'"+articleObject.title+"\' dans la base de données",
+                message: "Une erreur est survenue durant la création du modèle pour le nouvel article : \'"+newArticleModel.title+"\'",
+                articleInfoReceipted:newArticleModel,
                 exception:exception
             })
         }
-        
-        if(!articleTitleAlreadyExist)
-        {
-
-            try //Création du modèle à partir des données du body de la requête
-            {   
-                var newArticle = new mArticle({ ...articleObject });
-            }
-            catch (exception) //ECHEC Création du modèle à partir des données du body de la requête
-            {   
-                console.log("D.A.L [createArticle] (return) 'exception' : ", exception);
-                return ({
-                    status:"EXCEPTION",
-                    statusCode:500,
-                    message: "Une erreur est survenue durant la création du modèle pour le nouvel article : \'"+articleObject.title+"\'",
-                    articleInfoReceipted:articleObject,
-                    exception:exception
-                })
-            }
-        
-            try //Sauvegarde du modèle Article dans la BDD
-            {   
-                await (newArticle.save());
-            }
-            catch (exception) //ECHEC Sauvegarde du modèle Article dans la BDD
-            {   
-                console.log("D.A.L [createArticle] (return) 'exception' : ", exception);
-                return ({
-                    status:"EXCEPTION",
-                    statusCode:500,
-                    message: "Une erreur est survenue durant l'enregistrement du modèle dans la base de données pour le nouvel article : \'"+articleObject.title+"\'",
-                    articleInfoReceipted:articleObject,
-                    exception:exception
-                })
-            }
     
-            console.log("D.A.L [createArticle] (return) 'status' : SUCCESS");
-            return ({
-                status:"SUCCESS",
-                statusCode:201,
-                articleCreated:articleObject,
-                message: "Utilisateur : \'"+articleObject.title+"\' Créé avec succès"
-            });
-        }
-        else
+        try //Création du modèle à partir des données du body de la requête
         {
-            var message = "";
-            var nbFieldInError = 0;
-
-            if(articleTitleAlreadyExist) 
-            {
-                nbFieldInError++;
-                message += "\'title\'";
-            }
-
-            message = nbFieldInError > 1 
-            ? nbFieldInError+" fields values who needs to be uniques in database already exist : "+message 
-            : "A field value who need to be unique in database already exist : "+message;
-
-            console.log("D.A.L [createArticle] (return) 'error' : duplicated-field");
-            return ({
-                status:"FAILURE",
-                statusCode:500,
-                userInfoReceipted:articleObject,
-                nbError:nbFieldInError,
-                message:message
-            });
+            console.log(queryServiceLogPrefix,"[create] (info) saving created article object in database");
+            newArticle.save()
         }
-
-        
-    };
+        catch (exception) //ECHEC Création du modèle à partir des données du body de la requête
+        {   
+            console.log(queryServiceLogPrefix,"[create] (error) exception occur during article object save in database : ",exception);
+            return ({
+                status:"EXCEPTION",
+                statusCode:500,
+                message: "Une erreur est survenue durant la création du modèle pour le nouvel article : \'"+newArticleModel.title+"\'",
+                articleInfoReceipted:newArticleModel,
+                exception:exception
+            })
+        }
+    }
 
     //Mets à jour l'article et renvoi le résultat de la mise à jour
     module.exports.updateArticle = async (articleId,articleObject = null) => {

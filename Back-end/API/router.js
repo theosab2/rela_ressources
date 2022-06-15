@@ -7,6 +7,7 @@ const _responseLogger = require('../MiddleWares/response-logger');
 const _utController = require("../Controllers/utController");
 const _messageController = require("../Controllers/messageController");
 const _relationController = require("../Controllers/relationController");
+const _articleController = require("../Controllers/articleController");
 
 //===============================//
 
@@ -51,14 +52,14 @@ router.get("/test", (req, res, next) => {
   //ARTICLE
   //Get article model schema
   router.get("/article/schema", async function (req, res, next) {
-    var data = await _articleQueryService.getSchema();
+    var data = await _articleController.getSchema();
     _responseLogger(req);
     res.status(200).json(data);
   });
 
   //Get article model detailled schema
   router.get("/article/schema/detailled", async function (req, res, next) {
-    var data = await _articleQueryService.getDetailledSchema();
+    var data = await _articleController.getDetailledSchema();
     _responseLogger(req);
     res.status(200).json(data);
   });
@@ -229,14 +230,14 @@ router.put("/user/:userId", async function (req, res, next) {
 
 //Get query object template
 router.get("/articles/query", async function (req, res, next) {
-  var data = await _articleQueryService.getQueryTemplate();
+  var data = await _articleController.getQueryTemplate();
   _responseLogger(req);
   res.status(200).json(data);
 });
 
 //Get list of articles from query in request body
 router.post("/articles/query", async function (req, res, next) {
-  var data = await _articleQueryService.queryArticles(req.body);
+  var data = await _articleController.query(req.body);
   _responseLogger(req);
   res.status(200).json(data);
 });
@@ -247,14 +248,14 @@ router.post("/articles/query", async function (req, res, next) {
 
 //Get all articles
 router.get("/articles/all", async function (req, res, next) {
-  var data = await _articleQueryService.getAllArticles();
+  var data = await _articleController.getAllByCode();
   _responseLogger(req);
   res.status(200).json(data);
 });
 
 //Get article by ID
 router.get("/article/:id", async function (req, res, next) {
-  var data = await _articleQueryService.getArticleById(req.params.id);
+  var data = await _articleController.getOne(req.params.id);
   _responseLogger(req);
   res.status(200).json(data);
 });
@@ -278,7 +279,7 @@ router.get("/article/:id", async function (req, res, next) {
       }
     }    
 
-    var articleCreationQueryResult = await _articleQueryService.createArticle(
+    var articleCreationQueryResult = await _articleController.create(
       articleObject
     );
     _responseLogger(req);
