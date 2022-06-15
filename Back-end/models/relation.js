@@ -6,7 +6,7 @@ const RelationSchema = mongoose.Schema({
     user_ids:[
         {type:String}
     ],
-    _createdAt:{type:Date, required:true}, 
+    _createdAt:{type:Date, required:true, default:Date.now()}, 
     _updatedAt:{type:Date, required:true, default:Date.now()}
 });
 
