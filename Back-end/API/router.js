@@ -4,17 +4,23 @@ const _responseLogger = require('../MiddleWares/response-logger');
 //=====================//
 
 //===== Controllers =====//
-const _utController = require("../Controllers/utController");
+const _articleController = require("../Controllers/articleController");
+const _authController = require("../Controllers/authController");
+const _commentController = require("../Controllers/commentController");
 const _messageController = require("../Controllers/messageController");
 const _relationController = require("../Controllers/relationController");
-const _articleController = require("../Controllers/articleController");
+const _userController = require("../Controllers/userController");
+const _utController = require("../Controllers/utController");
 
 //===============================//
 
 //===== DAL - QueryServices =====//
 const _articleQueryService = require("../DAL/articleQueryService");
 const _commentQueryService = require("../DAL/commentQueryService");
+const _messageQueryService = require("../DAL/messageQueryService");
+const _relationQueryService = require("../DAL/relationQueryService");
 const _userQueryService = require("../DAL/userQueryService");
+const _utQueryService = require("../DAL/userQueryService");
 //===============================//
 
 //===== BLL - ApplicationServices =====//
@@ -131,7 +137,7 @@ router.get("/test", (req, res, next) => {
 
 //Inscription
 router.post("/auth/register", async function (req, res, next) {
-  var userCreationQueryResult = await _userQueryService.createUser(
+  var userCreationQueryResult = await _authController.createUser(
     req.body.user
   );
   _responseLogger(req);
@@ -173,7 +179,7 @@ router.get("/users/query", async function (req, res, next) {
 
 //Get list of users from query in request body
 router.post("/users/query", async function (req, res, next) {
-  var data = await _userQueryService.queryUsers(req.body);
+  var data = await _userQueryService.query(req.body);
   _responseLogger(req);
   res.status(200).json(data);
 });
