@@ -139,7 +139,7 @@ const mArticle = require('../models/article');
     module.exports.saveOne = async (newArticleModel) => {
         try //Création du modèle à partir des données du body de la requête
         {
-            console.log(queryServiceLogPrefix,"[create] (info) creating artcile object before database insertion");
+            console.log(queryServiceLogPrefix,"[create] (info) creating article object before database insertion");
             var newArticle = new mArticle({ ...newArticleModel });
         }
         catch (exception) //ECHEC Création du modèle à partir des données du body de la requête
@@ -157,7 +157,7 @@ const mArticle = require('../models/article');
         try //Création du modèle à partir des données du body de la requête
         {
             console.log(queryServiceLogPrefix,"[create] (info) saving created article object in database");
-            newArticle.save()
+            await newArticle.save()
         }
         catch (exception) //ECHEC Création du modèle à partir des données du body de la requête
         {   
