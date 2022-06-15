@@ -118,6 +118,7 @@ export default function Navigation(image) {
   }
   const userCookie = utils();
   if (userCookie == false) {
+
     return (
       <>
         <div className={style.navHeader}>
@@ -159,10 +160,12 @@ export default function Navigation(image) {
       </>
     );
   }else{
+    const userCookieJson = JSON.parse(userCookie);
+    
     return(
     <>
         <div className={style.navHeader}>
-          <img src="/Image/burger-menu.png" className={style.burger_menu}/>
+          <p className={style.username}>{userCookieJson.username}</p>
           <button onClick={() => setRenderPage((renderPage = "Accueil"))} className={style.headerTitle}>Ressource Relationnelle</button>
           <p className={style.headerPageTitle}>{navTitle}</p>
           <img src="/Image/connexion.png" className={style.icon_connexion}/>
@@ -173,6 +176,7 @@ export default function Navigation(image) {
               <div className={style.sidebarTitle}>Publication</div>
               <div className={style.sidebarChoice}>
                 <button onClick={() => setRenderPage((renderPage = "Accueil"))}>Accueil</button>
+
                 <button className={renderPage == 'Creer'?style.sidebarOpenPage:null} onClick={() => setRenderPage((renderPage = "Creer"))}>Créer une ressource</button>
                 <button onClick={() => setRenderPage((renderPage = "Historique"))}>Historique de mes ressources</button>
                 <button onClick={() => setRenderPage((renderPage = "Favorie"))}>Mes ressources favorites</button>
@@ -205,7 +209,6 @@ export default function Navigation(image) {
             <div className={style.sidebarContent}>
               <div className={style.sidebarTitle}>Administration</div>
               <div className={style.sidebarChoice}>
-                <button onClick={() => setRenderPage((renderPage = "Accueil"))}>Accueil</button>
                 <button onClick={() => setRenderPage((renderPage = "Moderation"))}>Modération</button>
                 <button onClick={() => setRenderPage((renderPage = "Categorie"))}>Administration de catégorie</button>
                 <button onClick={() => setRenderPage((renderPage = "Utilisateur"))}>Modifier les utilisateurs</button>
@@ -242,7 +245,7 @@ export default function Navigation(image) {
                     />
                 <div className={style.recentInfo}>
                       <div className={style.recentUserName}>JeanMichel62</div>
-                      <div className={style.recentArticleTitle}>La terre est ovoidale</div>
+                      <div className={style.recentArticleTitle}>{articleInfo.title}</div>
                 </div>
               </div>
               ))}

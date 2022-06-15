@@ -27,7 +27,6 @@ export default function Home() {
     }
   }
 
-
   useEffect(function showPost(){
     if(id != null){
       if (window) { 

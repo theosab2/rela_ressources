@@ -11,6 +11,7 @@ export default function ComponentShowAmis(props) {
         setTextAbonnement(!props.friend.relation_ids.includes(props.userCookie._id))
         array.push(props.userCookie._id)
         console.log(array)
+        
         await fetch("http://localhost:3001/user/" + props.friend._id, {
           method: "PUT",
           headers: {

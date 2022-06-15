@@ -3,8 +3,16 @@ import style from "../../styles/Home.module.css";
 import Image from "next/dist/client/image";
 import Link from "next/link";
 import { useEffect } from "react";
-export default function RessourceSave() {
+import articleManager from "../utils/articleManager";
+import ComponentArticle from "./ComponentArticle";
+import cookieManager from "../utils/cookieManager";
 
+export default function RessourceSave() {
+  let allArticle;
+  let array = [];
+  const userCookie = cookieManager();
+  const userInfo = JSON.parse(userCookie);
+  console.log(userInfo)
   useEffect(() => {
     if (window) { 
       window.sessionStorage.setItem("Page", "Favorie" );
@@ -18,6 +26,19 @@ export default function RessourceSave() {
   const closeModal = () => {
     document.getElementById("myModal").style.display = "none";
   };
+
+  allArticle = articleManager();
+
+  if(allArticle != null){
+
+    allArticle.forEach(element => {
+      console.log(element._id)
+      console.log(userInfo.favorites)
+      if(userInfo.favorites.includes(element._id)){
+      array.push(element)
+      }
+    });
+
   return (
     <>
       <div className={style.mainContainer}>
@@ -47,37 +68,13 @@ export default function RessourceSave() {
           />
           </div>
         </div>
-        <div className={style.articleContainer}>
-          <div className={style.firstPartContainer}>
-            <div className={style.firstInfo}>
-              <div className={style.userInfoContainer}>
-                <img src="/Image/connexion.png" className={style.userPicture}/>
-                <div className={style.userPostInfoContainer}>
-                  <div className={style.userName}>JeanMichelle</div>
-                  <div className={style.publicationDate}>Publication : Il y a 4h</div>
-                </div>
-              </div>
-              <div className={style.articleTitle}>Je suis un jolie titre</div>
-            </div>
-            <img src="/Image/Bateau_2.jpg" className={style.articlePicture}/>
-          </div>
-          <div className={style.articleBody}>Je suis une courte description de ce qui se trouve sur l’image dans le bas de la ressource et il y a une faute d’orthographe</div>
-          <div className={style.articleFooter}>
-            <div className={style.articleRate}>
-              <div>235</div>
-              <img src="/Image/like.png" />
-              <div>156</div>
-              <img src="/Image/like.png" className={style.dislike}/>
-            </div>
-            <div className={style.articleOption}>
-              <img src="/Image/alert.png" />
-              <img src="/Image/forward.png" />
-              <img src="/Image/plus.png" />
-              <img src="/Image/comments.png" />
-            </div>
-          </div>
-        </div>
+        {array && array.reverse().map((array) => (
+            <ComponentArticle articleInfo={array} key={array._id}/>
+        ))}
      </div>
     </>
   );
+  }else{
+    return <>loading...</>
+  }
 }

@@ -1,5 +1,6 @@
 import style from "../../styles/Home.module.css";
 import { useState, useEffect } from "react";
+import cookieManager from "../utils/cookieManager";
 
 export default function ComponentArticle(props) {
 
@@ -7,6 +8,8 @@ export default function ComponentArticle(props) {
     const [nbDislike, setDislike] = useState(null);
     const [user, setUser] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
+    const userCookie = cookieManager();
+    let userCookieJson = JSON.parse(userCookie);
 
     async function downVote(id) {
         setDislike(nbDislike + 1);
@@ -42,6 +45,38 @@ export default function ComponentArticle(props) {
         res = await res.json();
       }
 
+      async function modererArticle(id, bool) {
+        let res = await fetch("http://localhost:3001/article/" + id, {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            article: {
+              articleIsApproved: bool,
+            },
+          }),
+        });
+        res = await res.json();
+      }
+
+      const addFav = async(id) =>{
+        userCookieJson.favorites.push(id);
+        await fetch("http://localhost:3001/user/" + userCookieJson._id, {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            user: {
+              favorites: userCookieJson.favorites,
+            },
+          }),
+        });
+      }
+
       const getUser  = async (id) =>{
         await fetch("http://localhost:3001/user/"+id ,{
           method: "GET",
@@ -61,7 +96,7 @@ export default function ComponentArticle(props) {
     
 
     if(userInfo != null){
-        console.log(userInfo)
+      console.log(props.articleInfo)
     return (
         <div className={style.articleContainer} key={props.articleInfo._id}>
           <div className={style.firstPartContainer}>
@@ -88,9 +123,13 @@ export default function ComponentArticle(props) {
               <img src="/Image/like.png" className={style.dislike} onClick={() => downVote(props.articleInfo._id)}/>
             </div>
             <div className={style.articleOption}>
+              {props.articleInfo.isApproved == true ?
+              <img src="/Image/delete.png" className={style.warning} onClick={() => modererArticle(props.articleInfo._id,false)}/>
+              :
+              <img src="/Image/checkmark.png" className={style.warning} onClick={() => modererArticle(props.articleInfo._id,true)}/>}
               <img src="/Image/alert.png" className={style.warning}/>
               <img src="/Image/forward.png" className={style.forward}/>
-              <img src="/Image/plus.png" className={style.add}/>
+              <img src="/Image/plus.png" className={style.add} onClick={() => addFav(props.articleInfo._id)}/>
               <button onClick={() => setId(props.articleInfo._id)}>
               <img src="/Image/comments.png" className={style.comment}/>
               </button>

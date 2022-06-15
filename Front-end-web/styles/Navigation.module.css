@@ -172,3 +172,9 @@
   width: 80%;
   height: 100%;
 }
+
+.username{
+  color: #fff;
+  font-size: 25px;
+  padding: 10px;
+}

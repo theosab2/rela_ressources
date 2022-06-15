@@ -2,6 +2,7 @@ import style from "../../styles/administration.module.css";
 import { useEffect, useState } from "react";
 import userManager from "../utils/userManager";
 import Image from "next/dist/client/image";
+import ComponentAdminRole from "./ComponentAdminRole";
 
 export default function Role(props) {
   let [adminPage, setAdminPage] = useState("");
@@ -44,55 +45,13 @@ useEffect(() => {
     setIdUser(null);
     document.getElementById("myModal").style.display = "none";
   };
-
   return (
     <>
       <div className={style.adminRoleContainer}>
       <input type="text" placeholder="Recherche" className={style.searchBar}></input>
-      {allUser &&
-                allUser.map((users) => (
-        <div className={style.adminRoleUserContainer}>
-        <div>
-        <Image
-            src={"/../public/Image/connexion.png"}
-            atl={"icon connexion"}
-            width={50}
-            height={50}
-          />
-          <p>MarieMal90</p>
-        </div>
-        <div>
-        <img
-            src={"/Image/user.png"}
-            className={style.userIcon}
-          />
-          <p>184</p>
-        </div>
-        <img
-            src={"/Image/comment.png"}
-            className={style.userIcon}
-          />
-          <div>
-          <img
-            src={"/Image/warning.png"}
-            className={style.userIcon}
-          />
-          <p>0</p>
-          </div>
-          <img
-            src={"/Image/delete.png"}
-            className={style.userIcon}
-          />
-          <div>
-          <select
-            className={style.categorieSelect}
-          >
-            <option>Utilisateur</option>
-          </select>
-          <button>Valider</button>
-          </div>
-        </div>
-                ))}
+      {allUser && allUser.map((users) => (
+        <ComponentAdminRole users={users}/>
+        ))}
       </div>
     </>
   );

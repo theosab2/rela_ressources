@@ -50,7 +50,7 @@ export default function createPost() {
       privacyIsPublic: true,
     });
     formdata.append("article", JSON_Object);
-    const res = await fetch("http://localhost:3001/article/create", {
+    const res = await fetch("http://10.176.132.204:3001/article/create", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -146,7 +146,6 @@ export default function createPost() {
                 /></>;
                 }
               })()}
-
               <div >
                 <textarea
                   className={style.descriptionRessource}
@@ -156,12 +155,7 @@ export default function createPost() {
                   onChange={(content) => setContent(content.target.value)}
                 ></textarea>
               </div>
-              
-
             <div >
-
-
-
             </div>
             <select name="categorie" 
             id="categorie" 
