@@ -17,6 +17,13 @@ const UserSchema = mongoose.Schema({
   favorites: [
     {type:String},
   ],
+  notifications:[
+    {
+      _id:{type:String, required:true},
+      title:{type:String, required:true},
+      content:{type:String}
+    }
+  ],
   location: { 
     country:{type:String},
     city:{type:String},
