@@ -25,6 +25,7 @@ const _utQueryService = require("../DAL/userQueryService");
 
 //===== BLL - ApplicationServices =====//
 const _userApplicationService = require("../BLL/userApplicationService");
+
 //===============================//
 
 //===== Initialisation du router =====//
@@ -43,14 +44,14 @@ router.get("/test", (req, res, next) => {
   //USER
   //Get user model schema
   router.get("/user/schema", async function (req, res, next) {
-    var data = await _userQueryService.getSchema();
+    var data = await _userController.getSchema();
     _responseLogger(req);
     res.status(200).json(data);
   });
 
   //Get user model schema
   router.get("/user/schema/detailled", async function (req, res, next) {
-    var data = await _userQueryService.getDetailledSchema();
+    var data = await _userController.getDetailledSchema();
     _responseLogger(req);
     res.status(200).json(data);
   });
@@ -73,14 +74,14 @@ router.get("/test", (req, res, next) => {
   //COMMENT
   //Get comment model schema
   router.get("/comment/schema", async function (req, res, next) {
-    var data = await _commentQueryService.getSchema();
+    var data = await _commentController.getSchema();
     _responseLogger(req);
     res.status(200).json(data);
   });
 
   //Get comment model detailled schema
   router.get("/comment/schema/detailled", async function (req, res, next) {
-    var data = await _commentQueryService.getDetailledSchema();
+    var data = await _commentController.getDetailledSchema();
     _responseLogger(req);
     res.status(200).json(data);
   });
@@ -137,8 +138,8 @@ router.get("/test", (req, res, next) => {
 
 //Inscription
 router.post("/auth/register", async function (req, res, next) {
-  var userCreationQueryResult = await _userController.create(
-    req.body.user
+  var userCreationQueryResult = await _authController.register(
+    req.body
   );
   _responseLogger(req);
   res.status(userCreationQueryResult.statusCode).json(userCreationQueryResult);
@@ -147,9 +148,8 @@ router.post("/auth/register", async function (req, res, next) {
 //Connexion
 router.post("/auth/login", async function (req, res, next) {
   var authenticationResult =
-    await _userApplicationService.handleAuthenticationRequest(
-      req.body.identifier,
-      req.body.password
+    await _authController.handleAuthenticationRequest(
+      req.body
     );
   _responseLogger(req);
   res.status(authenticationResult.statusCode).json(authenticationResult);
@@ -157,7 +157,7 @@ router.post("/auth/login", async function (req, res, next) {
 
 //Déconnexion
 router.post("/auth/logout/:userId", async function (req, res, next) {
-  var logoutResult = await _userQueryService.disconnectUser(req.params.userId);
+  var logoutResult = await _authController.disconnectUser(req.params.userId);
   _responseLogger(req);
   res.status(logoutResult.statusCode).json(logoutResult);
 });
@@ -172,14 +172,14 @@ router.post("/auth/logout/:userId", async function (req, res, next) {
 
 //Get query object template
 router.get("/users/query", async function (req, res, next) {
-  var data = await _userQueryService.getQueryTemplate();
+  var data = await _userController.getQueryTemplate();
   _responseLogger(req);
   res.status(200).json(data);
 });
 
 //Get list of users from query in request body
 router.post("/users/query", async function (req, res, next) {
-  var data = await _userQueryService.query(req.body);
+  var data = await _userController.query(req.body);
   _responseLogger(req);
   res.status(200).json(data);
 });
@@ -190,14 +190,14 @@ router.post("/users/query", async function (req, res, next) {
 
 //Get all users
 router.get("/users/all", async function (req, res, next) {
-  var data = await _userQueryService.getAll();
+  var data = await _userController.getAll();
   _responseLogger(req);
   res.status(200).json(data);
 });
 
 //Get user by ID
 router.get("/user/:id", async function (req, res, next) {
-  var data = await _userQueryService.getUserById(req.params.id);
+  var data = await _userController.getById(req.params.id);
   _responseLogger(req);
   res.status(200).json(data);
 });
@@ -209,16 +209,16 @@ router.get("/user/:id", async function (req, res, next) {
 //Suppression d'un utilisateur
 router.post("/user/delete/:userId", async function (req, res, next) {
   // Sera à modifier, on ne supprime pas une entité, on la désactive (mev)
-  var deleteResult = await _userQueryService.deleteUser(req.params.userId);
+  var deleteResult = await _userController.delete(req.params.userId);
   _responseLogger(req);
   res.status(deleteResult.statusCode).json(deleteResult);
 });
 
 //Mise à jour d'un utilisateur
 router.put("/user/:userId", async function (req, res, next) {
-  var updateResult = await _userQueryService.updateUser(
+  var updateResult = await _userController.update(
     req.params.userId,
-    req.body.user
+    req.body
   );
   _responseLogger(req);
   res.status(updateResult.statusCode).json(updateResult);
@@ -261,7 +261,7 @@ router.get("/articles/all", async function (req, res, next) {
 
 //Get article by ID
 router.get("/article/:id", async function (req, res, next) {
-  var data = await _articleController.getOne(req.params.id);
+  var data = await _articleController.getById(req.params.id);
   _responseLogger(req);
   res.status(200).json(data);
 });
@@ -273,6 +273,7 @@ router.get("/article/:id", async function (req, res, next) {
   //Création d'un article
   router.post("/article/create", _multer.articleImage, async function (req, res, next) {
 
+  
     if(req.file != undefined & req.file != null){
       req.body.article = {
         ...JSON.parse(req.body.article),
@@ -294,7 +295,7 @@ router.get("/article/:id", async function (req, res, next) {
 //Suppression d'un article
 router.post("/article/delete/:articleId", async function (req, res, next) {
   // Sera à modifier, on ne supprime pas une entité, on la désactive (mev)
-  var deleteResult = await _articleQueryService.deleteArticle(
+  var deleteResult = await _articleController.delete(
     req.params.articleId
   );
   _responseLogger(req);
@@ -303,9 +304,9 @@ router.post("/article/delete/:articleId", async function (req, res, next) {
 
 //Mise à jour d'un article
 router.put("/article/:articleId", async function (req, res, next) {
-  var updateResult = await _articleQueryService.updateArticle(
+  var updateResult = await _articleController.update(
     req.params.articleId,
-    req.body.article
+    req.body
   );
   _responseLogger(req);
   res.status(updateResult.statusCode).json(updateResult);
@@ -323,14 +324,14 @@ router.put("/article/:articleId", async function (req, res, next) {
 
 //Get query object template
 router.get("/comments/query", async function (req, res, next) {
-  var data = await _commentQueryService.getQueryTemplate();
+  var data = await _commentController.getQueryTemplate();
   _responseLogger(req);
   res.status(200).json(data);
 });
 
 //Get list of comments from query in request body
 router.post("/comments/query", async function (req, res, next) {
-  var data = await _commentQueryService.queryComments(req.body);
+  var data = await _commentController.query(req.body);
   _responseLogger(req);
   res.status(200).json(data);
 });
@@ -341,14 +342,14 @@ router.post("/comments/query", async function (req, res, next) {
 
 //Get all comments
 router.get("/comments/all", async function (req, res, next) {
-  var data = await _commentQueryService.getAllComments();
+  var data = await _commentController.getAll();
   _responseLogger(req);
   res.status(200).json(data);
 });
 
 //Get comment by ID
 router.get("/comment/:id", async function (req, res, next) {
-  var data = await _commentQueryService.getCommentById(req.params.id);
+  var data = await _commentController.getById(req.params.id);
   _responseLogger(req);
   res.status(200).json(data);
 });
@@ -359,8 +360,8 @@ router.get("/comment/:id", async function (req, res, next) {
 
 //Création d'un comment
 router.post("/comment/create", async function (req, res, next) {
-  var commentCreationQueryResult = await _commentQueryService.createComment(
-    req.body.comment
+  var commentCreationQueryResult = await _commentController.create(
+    req.body
   );
   _responseLogger(req);
   res
@@ -371,7 +372,7 @@ router.post("/comment/create", async function (req, res, next) {
 //Suppression d'un comment
 router.post("/comment/delete/:commentId", async function (req, res, next) {
   // Sera à modifier, on ne supprime pas une entité, on la désactive (mev)
-  var deleteResult = await _commentQueryService.deleteComment(
+  var deleteResult = await _commentController.delete(
     req.params.commentId
   );
   _responseLogger(req);
@@ -380,9 +381,9 @@ router.post("/comment/delete/:commentId", async function (req, res, next) {
 
 //Mise à jour d'un comment
 router.put("/comment/:commentId", async function (req, res, next) {
-  var updateResult = await _commentQueryService.updateComment(
+  var updateResult = await _commentController.update(
     req.params.commentId,
-    req.body.comment
+    req.body
   );
   _responseLogger(req);
   res.status(updateResult.statusCode).json(updateResult);
