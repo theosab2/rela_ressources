@@ -5,7 +5,8 @@ export default function ComponentAdminRole(props) {
 
     const [role,setRole] = useState(null);
 
-    const changeRole = async () => {
+    const changeRole = async (newRole) => {
+      console.log(newRole)
     await fetch("http://localhost:3001/user/" + props.users._id, {
         method: "PUT",
         headers: {
@@ -14,7 +15,7 @@ export default function ComponentAdminRole(props) {
         },
         body: JSON.stringify({
           user: {
-            role: {}
+            role: newRole
           },
         }),
     });
@@ -58,12 +59,12 @@ export default function ComponentAdminRole(props) {
           <select
             className={style.categorieSelect}
             value={props.users.role}
-            onChange={(e) => setRole(e)}
+            onChange={(e) => setRole(e.target.value)}
           >
           <option value="User">User</option> 
           <option value="Admin">Admin</option> 
           </select>
-          <button onClick={changeRole()}>Valider</button>
+          <button onClick={() => changeRole(role)}>Valider</button>
           </div>
         </div>
         </div>

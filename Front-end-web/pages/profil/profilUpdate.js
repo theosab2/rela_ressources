@@ -2,19 +2,20 @@ import style from "../../styles/profil.module.css";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import utils from "../utils";
+import {useRef} from 'react';
 
 export default function ProfilUpdate() {
   const userCookie = utils();
-  const [mailUser, setMailUser] = useState("");
-  const [nameUser, setNameUser] = useState("");
-  const [surnameUser, setSurnameUser] = useState("");
-  const [pseudoUser, setPseudoUser] = useState("");
-  const [regionUser, setRegionUser] = useState("");
-  const [townUser, setTownUser] = useState("");
-  const [phoneUser, setPhoneUser] = useState("");
+
+  const mailUser = useRef(null);
+  const nameUser = useRef(null);
+  const lastname = useRef(null);
+  const username = useRef(null);
+
   let [userInfo, setUserInfo] = useState("");
   //let userInfo;
   let idUser;
+  
 
   useEffect(() => {
     if (window) { 
@@ -31,16 +32,9 @@ export default function ProfilUpdate() {
       },
       body: JSON.stringify({
         user: {
-          username: pseudoUser,
-          firstname: surnameUser,
-          name: nameUser,
-          phone: phoneUser,
-          email: mailUser,
-          location: {
-            ville: townUser,
-            region: regionUser,
-            zip: "zip",
-          },
+          firstname: nameUser.current.value,
+          name: lastname.current.value,
+          email: mailUser.current.value,
         },
       }),
     });
@@ -77,37 +71,20 @@ export default function ProfilUpdate() {
             <div className={style.profilInformation}>
               <div>
                 <label>Nom</label>
-                <input type="text" defaultValue={userInfo.name}></input>
+                <input type="text" ref={lastname} defaultValue={userInfo.lastname} 
+                ></input>
                 <label>Identifiant</label>
-                <input type="text" defaultValue={userInfo.username}></input>
+                <input type="text" ref={username} defaultValue={userInfo.username} ></input>
               </div>
               <div>
                 <label>Prenom</label>
-                <input type="text" defaultValue={userInfo.firstname}></input>
+                <input type="text" ref={nameUser} defaultValue={userInfo.firstname}></input>
                 <label>Email</label>
-                <input type="text" defaultValue={userInfo.email}></input>
+                <input type="text" ref={mailUser} defaultValue={userInfo.email}></input>
               </div>  
             </div>
           </div>
-          <div className={style.profilContainer}>
-            <p>Mes informations personelles</p>
-            <div className={style.profilInformation}>
-              <div>
-                <label>Pays</label>
-                <input type="text" defaultValue="France"></input>
-                <label>Ville</label>
-                <input type="text" ></input>
-                <label>Numéro de téléphone</label>
-                <input type="text" defaultValue={userInfo.phone}></input>
-              </div>
-              <div>
-                <label>Code postal</label>
-                <input type="text" ></input>
-                <label>Rue</label>
-                <input type="text" ></input>
-              </div>  
-            </div>
-          </div>
+          <button className={style.profilUpdateButton} onClick={()=>updateUser()}>Valider</button>
           <div className={style.profilContainer}>
             <p>Modifier mot de passe</p>
             <div className={style.profilInformation}>

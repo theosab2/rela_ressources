@@ -96,7 +96,7 @@ export default function ComponentArticle(props) {
     
 
     if(userInfo != null){
-      console.log(props.articleInfo)
+      console.log(userCookieJson)
     return (
         <div className={style.articleContainer} key={props.articleInfo._id}>
           <div className={style.firstPartContainer}>
@@ -123,10 +123,12 @@ export default function ComponentArticle(props) {
               <img src="/Image/like.png" className={style.dislike} onClick={() => downVote(props.articleInfo._id)}/>
             </div>
             <div className={style.articleOption}>
-              {props.articleInfo.isApproved == true ?
+              {userCookieJson.role == "admin" ?
+              props.articleInfo.isApproved == true ?
               <img src="/Image/delete.png" className={style.warning} onClick={() => modererArticle(props.articleInfo._id,false)}/>
               :
-              <img src="/Image/checkmark.png" className={style.warning} onClick={() => modererArticle(props.articleInfo._id,true)}/>}
+              <img src="/Image/checkmark.png" className={style.warning} onClick={() => modererArticle(props.articleInfo._id,true)}/>
+              : <></>}
               <img src="/Image/alert.png" className={style.warning}/>
               <img src="/Image/forward.png" className={style.forward}/>
               <img src="/Image/plus.png" className={style.add} onClick={() => addFav(props.articleInfo._id)}/>
