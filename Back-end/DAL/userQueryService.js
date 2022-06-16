@@ -8,6 +8,9 @@ const _userApplicationService = require("../BLL/userApplicationService");
 const _queryParserService = require("../BLL/global/queryParserService");
 const _typeValidationService = require("../BLL/global/typeValidationService");
 
+//Préfix du logger
+const queryServiceLogPrefix  = "    (user)          D.A.L ";
+
 
 //Import du modèle relatif
 const mUser = require('../models/user');
@@ -85,7 +88,7 @@ const mUser = require('../models/user');
         };
 
         //return users filtered by query
-        module.exports.queryUsers = async (query = {}) => {
+        module.exports.query = async (query = {}) => {
             console.log("D.A.L [queryUsers] (paramètres) 'query' : ",query);
 
             //TODO application service check query template
@@ -94,7 +97,7 @@ const mUser = require('../models/user');
             if(query === {})
             {   //Pas de query, on renvoit tous les utilisateurs en base de données (même format de retour)
                 console.log("D.A.L [queryUsers] (return) _getAllUsers()");
-                return this.getAllUsers();
+                return this.getAll();
             }
             else
             {   //On prend en compte la query transmise à l'API
@@ -129,8 +132,8 @@ const mUser = require('../models/user');
     //#region [GET]
 
         //return all users
-        module.exports.getAllUsers = async () => {
-            console.log("D.A.L [getAllUsers] ()");
+        module.exports.getAll = async () => {
+            console.log("D.A.L [getAll] ()");
             try {
                 var data = await mUser.find();
                 let returnData = [];
@@ -347,7 +350,7 @@ const mUser = require('../models/user');
 //#region [UPDATE RESSOURCES]
 
     //Crée un nouvel utilisateur
-    module.exports.createUser = async (userObject) => {
+    module.exports.create = async (userObject) => {
         console.log("D.A.L [createUser] (paramètres) 'userObject' :",userObject);
 
         if(userObject == {} || userObject == undefined || userObject == null){
@@ -579,6 +582,7 @@ const mUser = require('../models/user');
             });
         } 
     };
+    
     //Mets à jour l'utilisateur et renvoi le résultat de la mise à jour
     module.exports.updateUser = async (userId,userObject = {}) => {
         console.log("D.A.L [updateUser] (paramètres) 'userId' :",userId,"'userObject' :",userObject);

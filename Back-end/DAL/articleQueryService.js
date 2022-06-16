@@ -7,7 +7,9 @@ const mongoose = require('mongoose');
 const _queryParserService = require("../BLL/global/queryParserService");
 const _typeValidationService = require("../BLL/global/typeValidationService");
 
-const queryServiceLogPrefix = "    (article)      D.A.L ";
+//Prefix du logger
+const queryServiceLogPrefix  = "    (article)       D.A.L ";
+
 
 //Import du modèle relatif
 const mArticle = require('../models/article');
@@ -58,7 +60,7 @@ const mArticle = require('../models/article');
     //#region [GET DATA]
 
         //return all articles
-        module.exports.getAllArticles = async () => {
+        module.exports.getAll = async () => {
             console.log(queryServiceLogPrefix,"[getAllArticles] ()");
             try {
                 var data = await mArticle.find();
@@ -170,6 +172,13 @@ const mArticle = require('../models/article');
                 exception:exception
             })
         }
+
+        return ({
+            status:"SUCCESS",
+            statusCode:201,
+            articleCreated:newArticleModel,
+            message: "Article : \'"+newArticleModel.title+"\' Ajouté à la base de données avec succès"
+        });
     }
 
     //Mets à jour l'article et renvoi le résultat de la mise à jour

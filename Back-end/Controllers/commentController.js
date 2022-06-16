@@ -1,11 +1,11 @@
 //===== DAL =====//
-const _articleQueryService = require("../DAL/articleQueryService");
+const _commentQueryService = require("../DAL/commentQueryService");
 
 //===== BLL =====//
-const _articleApplicationService = require("../BLL/articleApplicationService");
+const _commentApplicationService = require("../BLL/commentApplicationService");
 
 //Logger prefix
-const controllerLogPrefix = "    (article)  CONTROLLER ";
+const controllerLogPrefix = "    (comment)  CONTROLLER ";
 
 
 
@@ -14,17 +14,17 @@ const controllerLogPrefix = "    (article)  CONTROLLER ";
 module.exports.getAll = async () => {
     console.log(controllerLogPrefix,"[getAll] ()");
     
-    // get article from BDD filtered by code
-    let data = await _articleQueryService.getAll();
+    // get comment from BDD filtered by code
+    let data = await _commentQueryService.getAll();
     
     return data;
 };
 
-module.exports.getOne = async (articleId) => {
-    console.log(controllerLogPrefix,"[getOne] (params) articleId : ",articleId);
+module.exports.getOne = async (commentId) => {
+    console.log(controllerLogPrefix,"[getOne] (params) commentId : ",commentId);
     
-    // get article from BDD filtered by code
-    let data = await _articleQueryService.getById(articleId);
+    // get comment from BDD filtered by code
+    let data = await _commentQueryService.getById(commentId);
     
     return data;
 };
@@ -43,7 +43,7 @@ module.exports.getOne = async (articleId) => {
         }
 
         //Récupération du informations du schema du modèle
-        let schemaPaths = await _articleQueryService.getSchemaPath();
+        let schemaPaths = await _commentQueryService.getSchemaPath();
 
         //Remplissage de la variable de retour
         for (const [key, value] of schemaPaths) {
@@ -68,7 +68,7 @@ module.exports.getOne = async (articleId) => {
         }
         
         //Récupération du informations du schema du modèle
-        let schemaPaths = await _articleQueryService.getSchemaPath();
+        let schemaPaths = await _commentQueryService.getSchemaPath();
 
         //Remplissage de la variable de retour
         for (const [key, value] of schemaPaths) {
@@ -80,7 +80,7 @@ module.exports.getOne = async (articleId) => {
                 };
         }
 
-        // get article from BDD filtered by code
+        // get comment from BDD filtered by code
         console.log(controllerLogPrefix,"[getDetailledSchema] (return) detailledSchema");
         return detailledSchema;
     };
@@ -95,7 +95,7 @@ module.exports.getOne = async (articleId) => {
         //Initialisation de la variable de retour
         let template = {}
 
-        let schemaPaths = await _articleQueryService.getSchemaPath();
+        let schemaPaths = await _commentQueryService.getSchemaPath();
 
         //Remplissage de la variable de retour
         for (const [key, value] of schemaPaths) {
@@ -118,15 +118,15 @@ module.exports.getOne = async (articleId) => {
         //TODO application service check query template
 
         if(query === {})
-        {   //Pas de query, on renvoit tous les articles en base de données (même format de retour)
+        {   //Pas de query, on renvoit tous les comments en base de données (même format de retour)
             console.log(controllerLogPrefix,"[query] empty-query");
             return this.getAll();
         }
         else
         {   //On prend en compte la query transmise à l'API            
             try {
-                let data = await _articleQueryService.query(query);
-                console.log(controllerLogPrefix,"[query] (return) : ",data.articles.length," element",data.articles.length > 1 ?'s':'');
+                let data = await _commentQueryService.query(query);
+                console.log(controllerLogPrefix,"[query] (return) : ",data.comments.length," element",data.comments.length > 1 ?'s':'');
                 return data;
             } 
             catch (error) {
@@ -147,55 +147,42 @@ module.exports.getOne = async (articleId) => {
 module.exports.create = async (requestBody = null) => {
     console.log(controllerLogPrefix,"[create] (paramètres) 'requestBody' :\n",requestBody);
 
-    let articleObject = requestBody.article;
+    let commentObject = requestBody.comment;
 
-    if(articleObject == {} || articleObject == undefined || articleObject == null){
-        console.log(controllerLogPrefix,"[create] (return) BAD_REQUEST : article not found in request body");
+    if(commentObject == {} || commentObject == undefined || commentObject == null){
+        console.log(controllerLogPrefix,"[create] (return) BAD_REQUEST : comment not found in request body");
         return({
             status:"BAD_REQUEST",
             statusCode:400,
-            message: "Création du article impossible : Objet \'article\' introuvable dans le body de la requête",
-            requiredFormat:"Format du body attendu : {article:{...article's informations...}}",
+            message: "Création du comment impossible : Objet \'comment\' introuvable dans le body de la requête",
+            requiredFormat:"Format du body attendu : {comment:{...comment's informations...}}",
         })
     }
 
-    try //Sauvegarde du modèle Article dans la BDD
+    try //Sauvegarde du modèle Comment dans la BDD
     {   
         console.log(controllerLogPrefix,"[create] (info) saving created message object in the database");
-        var saveAttempt = await _articleQueryService.saveOne(articleObject);
+        await _commentQueryService.saveOne(commentObject);
     }
-    catch (exception) //ECHEC Sauvegarde du modèle Article dans la BDD
+    catch (exception) //ECHEC Sauvegarde du modèle Comment dans la BDD
     {   
-        console.log(controllerLogPrefix,"[create] (error) exception occur while saving article object to the database : ",exception);
+        console.log(controllerLogPrefix,"[create] (error) exception occur while saving comment object to the database : ",exception);
         return ({
             status:"EXCEPTION",
             statusCode:500,
-            message: "Une erreur est survenue durant l'enregistrement du modèle dans la base de données pour le nouvel article : \'"+articleObject.title+"\'",
-            articleInfoReceipted:articleObject,
+            message: "Une erreur est survenue durant l'enregistrement du modèle dans la base de données pour le nouvel comment : \'"+commentObject.title+"\'",
+            commentInfoReceipted:commentObject,
             exception:exception
         })
     }
 
-    if(saveAttempt.status == "SUCCESS"){
-        console.log(controllerLogPrefix,"[create] (return) \'status\' : SUCCESS");
-        return ({
-            status:"SUCCESS",
-            statusCode:201,
-            articleCreated:articleObject,
-            message: "Article : \'"+articleObject.title+"\' Créé avec succès"
-        });    
-    }
-    else{
-        console.log(controllerLogPrefix,"[create] (error) exception occur while saving article object to the database : ",exception);
-        return ({
-            status:"EXCEPTION",
-            statusCode:500,
-            message: "Une erreur est survenue durant l'enregistrement du modèle dans la base de données pour le nouvel article : \'"+articleObject.title+"\'",
-            articleInfoReceipted:articleObject,
-            exception:exception
-        });
-    }
-    
+    console.log(controllerLogPrefix,"[create] (return) \'status\' : SUCCESS");
+    return ({
+        status:"SUCCESS",
+        statusCode:201,
+        commentCreated:commentObject,
+        message: "Comment : \'"+commentObject.title+"\' Créé avec succès"
+    });    
 };
 
 //#endregion
