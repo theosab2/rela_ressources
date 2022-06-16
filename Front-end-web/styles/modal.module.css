@@ -1,14 +1,11 @@
 
-.modalContainer::before{
-    width: 10000px;
-    height: 10000px;
-    background-color: black;
-}
+
 .modalContainer{
+    z-index: 10;
     position: absolute;
     width: 500px;
     height: 200px;
-    background-color: #2F4077;
+    background-color: #4F6097;
     border-radius: 10px;
     padding: 10px;
     display:none;

@@ -3,25 +3,38 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import utils from "../utils";
 import {useRef} from 'react';
+import { isResSent } from "next/dist/next-server/lib/utils";
 
 export default function ProfilUpdate() {
   const userCookie = utils();
-
+  let userId = JSON.parse(userCookie);
+  console.log(userId)
   const mailUser = useRef(null);
   const nameUser = useRef(null);
   const lastname = useRef(null);
   const username = useRef(null);
 
-  let [userInfo, setUserInfo] = useState("");
+  let [userInfo, setUserInfo] = useState(null);
   //let userInfo;
   let idUser;
-  
 
-  useEffect(() => {
-    if (window) { 
-      window.sessionStorage.setItem("Page", "Profil" );
+  async function getUser(){
+    idUser = userId._id;
+    await fetch("http://localhost:3001/user/" + idUser, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setUserInfo(data);
+      });
     }
-  }, []);
+
+
+
+  
 
   async function updateUser() {
     let res = await fetch("http://localhost:3001/user/" + idUser, {
@@ -40,30 +53,14 @@ export default function ProfilUpdate() {
     });
     res = await res.json();
   }
-
-  if (userCookie != false) {
-    const userInfo = JSON.parse(userCookie);
-    idUser = userInfo._id;
-
-    /*const getUser = async () =>
-      await fetch("http://localhost:3001/user/" + idUser, {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          userInfo(data);
-          console.log(userInfo);
-        });
-
-    getUser();
-
-    console.log(userInfo);*/
-
-    if (userInfo != null) {
-      console.log(userInfo);
+  useEffect(() => {
+    if (window) { 
+      window.sessionStorage.setItem("Page", "Profil" );
+      getUser(); 
+    }
+  }, []);
+  
+    if (userCookie != null && userInfo != null) {
       return (
         <>
           <div className={style.profilContainer}>
@@ -103,6 +100,6 @@ export default function ProfilUpdate() {
           <button className={style.profilUpdateButton}>Valider</button>
         </>
       );
-    } else return <div> Loading...</div>;
-  } else return <div> Loading...</div>;
+    } else 
+    return <div> Loading...</div>;
 }

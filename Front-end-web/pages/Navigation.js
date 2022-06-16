@@ -227,7 +227,7 @@ export default function Navigation(image) {
               
             </div>
             <div className={modalStyle.modalBody}>
-            <button value="Annuler">Annuler</button>
+            <button value="Annuler" onClick={closeModal}>Annuler</button>
             <button value="Valider" onClick={() => {deconnexionUtilisateur()}}>Valider</button>
             </div>
           </div>

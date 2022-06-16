@@ -7,8 +7,6 @@ import Image from "next/image";
 import ComponentArticle from "./ComponentArticle";
 
 export default function Home() {
-
-  const [id, setId] = useState(null);
   
 
   useEffect(() => {
@@ -26,16 +24,6 @@ export default function Home() {
       articlePopular.push(allArticle[i]);
     }
   }
-
-  useEffect(function showPost(){
-    if(id != null){
-      if (window) { 
-        window.sessionStorage.setItem("Page", "Comment" );
-        window.sessionStorage.setItem("id", id );
-      }
-    }
-  },[id]);
-
 
   if(allArticle != null){
   return (

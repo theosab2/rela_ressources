@@ -1,15 +1,17 @@
 import style from "../../styles/Home.module.css";
 import { useState, useEffect } from "react";
 import cookieManager from "../utils/cookieManager";
+import { useRouter } from "next/router";
 
 export default function ComponentArticle(props) {
-
+    const [id, setId] = useState(null);
     const [nbLike, setLike] = useState(null);
     const [nbDislike, setDislike] = useState(null);
     const [user, setUser] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
     const userCookie = cookieManager();
     let userCookieJson = JSON.parse(userCookie);
+    const router = useRouter();
 
     async function downVote(id) {
         setDislike(nbDislike + 1);
@@ -27,6 +29,17 @@ export default function ComponentArticle(props) {
         });
         res = await res.json();
       }
+
+      useEffect(function showPost(){
+        if(id != null){
+          if (window) { 
+            window.sessionStorage.setItem("Page", "Comment" );
+            window.sessionStorage.setItem("id", id );
+            router.reload(window.location.pathname)
+          }
+        }
+      },[id]);
+    
 
       async function upVote(id) {
         setLike(nbLike + 1);
@@ -96,7 +109,7 @@ export default function ComponentArticle(props) {
     
 
     if(userInfo != null){
-      console.log(userCookieJson)
+      console.log(props.articleInfo)
     return (
         <div className={style.articleContainer} key={props.articleInfo._id}>
           <div className={style.firstPartContainer}>
@@ -112,7 +125,7 @@ export default function ComponentArticle(props) {
               </div>
               <div className={style.articleTitle}>{props.articleInfo.title}</div>
             </div>
-            <img src={props.articleInfo.articleImage} className={style.articlePicture}/>
+            <img src={props.articleInfo.image} className={style.articlePicture}/>
           </div>
           <div className={style.articleBody}>{props.articleInfo.description}</div>
           <div className={style.articleFooter}>
@@ -132,7 +145,7 @@ export default function ComponentArticle(props) {
               <img src="/Image/alert.png" className={style.warning}/>
               <img src="/Image/forward.png" className={style.forward}/>
               <img src="/Image/plus.png" className={style.add} onClick={() => addFav(props.articleInfo._id)}/>
-              <button onClick={() => setId(props.articleInfo._id)}>
+              <button onClick={() => setId(props.articleInfo)}>
               <img src="/Image/comments.png" className={style.comment}/>
               </button>
             </div>
