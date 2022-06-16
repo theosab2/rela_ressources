@@ -172,6 +172,13 @@ const mArticle = require('../models/article');
                 exception:exception
             })
         }
+
+        return ({
+            status:"SUCCESS",
+            statusCode:201,
+            articleCreated:newArticleModel,
+            message: "Article : \'"+newArticleModel.title+"\' Ajouté à la base de données avec succès"
+        });
     }
 
     //Mets à jour l'article et renvoi le résultat de la mise à jour

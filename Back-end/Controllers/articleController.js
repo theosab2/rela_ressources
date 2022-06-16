@@ -176,13 +176,26 @@ module.exports.create = async (requestBody = null) => {
         })
     }
 
-    console.log(controllerLogPrefix,"[create] (return) \'status\' : SUCCESS");
-    return ({
-        status:"SUCCESS",
-        statusCode:201,
-        articleCreated:articleObject,
-        message: "Article : \'"+articleObject.title+"\' Créé avec succès"
-    });    
+    if(saveAttempt.status == "SUCCESS"){
+        console.log(controllerLogPrefix,"[create] (return) \'status\' : SUCCESS");
+        return ({
+            status:"SUCCESS",
+            statusCode:201,
+            articleCreated:articleObject,
+            message: "Article : \'"+articleObject.title+"\' Créé avec succès"
+        });    
+    }
+    else{
+        console.log(controllerLogPrefix,"[create] (error) exception occur while saving article object to the database : ",exception);
+        return ({
+            status:"EXCEPTION",
+            statusCode:500,
+            message: "Une erreur est survenue durant l'enregistrement du modèle dans la base de données pour le nouvel article : \'"+articleObject.title+"\'",
+            articleInfoReceipted:articleObject,
+            exception:exception
+        });
+    }
+    
 };
 
 //#endregion

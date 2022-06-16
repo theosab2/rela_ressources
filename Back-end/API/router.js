@@ -272,12 +272,11 @@ router.get("/article/:id", async function (req, res, next) {
 
   //Création d'un article
   router.post("/article/create", _multer.articleImage, async function (req, res, next) {
-
-  
+    
     if(req.file != undefined & req.file != null){
       req.body.article = {
         ...JSON.parse(req.body.article),
-        articleImage : `${req.protocol}://${req.get('host')}/article-image/${req.file.filename}`
+        image : `${req.protocol}://${req.get('host')}/article-image/${req.file.filename}`
       }
     }   
     
