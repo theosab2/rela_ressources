@@ -22,7 +22,7 @@ export default function allArticle(type) {
   }
 
   const getArticle = async () =>
-    fetch("http://localhost:3001/articles/all", {
+    fetch("http://"+process.env.IP+":3001/articles/all", {
       method: "GET",
       headers: {
         Accept: "application/json",

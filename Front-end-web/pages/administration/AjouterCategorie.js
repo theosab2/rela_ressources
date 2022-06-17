@@ -16,7 +16,7 @@ export default function ajouterCategorie() {
 
   allCategorie = categorieManager();
   const ajoutCategorie = async () => {
-    let res = await fetch("http://localhost:3001/ut/create", {
+    let res = await fetch("http://"+process.env.IP+":3001/ut/create", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -34,7 +34,7 @@ export default function ajouterCategorie() {
 
   const supprimerCategorie = async () => {
     let res = await fetch(
-      "http://localhost:3001/category/delete/" + suppressionCategorie,
+      "http://"+process.env.IP+":3001/category/delete/" + suppressionCategorie,
       {
         method: "POST",
         headers: {
@@ -47,7 +47,7 @@ export default function ajouterCategorie() {
   };
 
   async function activeChange(id, bool) {
-    let res = await fetch("http://localhost:3001/category/" + id, {
+    let res = await fetch("http://"+process.env.IP+":3001/category/" + id, {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -64,7 +64,7 @@ export default function ajouterCategorie() {
 
   async function updateCategorie() {
     let res = await fetch(
-      "http://localhost:3001/category/" + categorieModifie,
+      "http://"+process.env.IP+":3001/category/" + categorieModifie,
       {
         method: "PUT",
         headers: {

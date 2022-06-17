@@ -23,7 +23,7 @@ export default function Inscription() {
     console.log(firstname);
     console.log(email);
     console.log(password);
-    let res = await fetch("http://localhost:3001/auth/register", {
+    let res = await fetch("http://"+process.env.IP+":3001/auth/register", {
       method: "POST",
       headers: {
         Accept: "application/json",

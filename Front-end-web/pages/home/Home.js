@@ -31,9 +31,9 @@ export default function Home() {
       <div className={style.mainContainer}>
         <input type="text" placeholder="Recherche" className={style.searchBar}></input>
         {allArticle &&
-    allArticle
-      .reverse()
-      .map((articleInfo) => (
+        allArticle
+        .reverse()
+        .map((articleInfo) => (
         <ComponentArticle articleInfo={articleInfo} key={articleInfo._id}/>
         ))}
      </div>

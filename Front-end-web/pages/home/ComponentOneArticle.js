@@ -1,19 +1,10 @@
 import style from "../../styles/Home.module.css";
-import { useState, useEffect } from "react";
 import cookieManager from "../utils/cookieManager";
-import { useRouter } from "next/router";
-//import {IP} from "@env";
+import { useState, useEffect } from "react";
 
-export default function ComponentArticle(props) {
-    const [id, setId] = useState(null);
-    const [nbLike, setLike] = useState(null);
-    const [nbDislike, setDislike] = useState(null);
-    const [user, setUser] = useState(null);
+export default function ComponentOneArticle(props) {
     const [userInfo, setUserInfo] = useState(null);
-    const userCookie = cookieManager();
-    let userCookieJson = JSON.parse(userCookie);
-    const router = useRouter();
-
+    console.log(props.article)
     async function downVote(id) {
         setDislike(nbDislike + 1);
         let res = await fetch("http://"+process.env.IP+":3001/article/" + id, {
@@ -30,16 +21,6 @@ export default function ComponentArticle(props) {
         });
         res = await res.json();
       }
-
-      useEffect(function showPost(){
-        if(id != null){
-          if (window) { 
-            window.sessionStorage.setItem("Page", "Comment" );
-            window.sessionStorage.setItem("id", id._id );
-            router.reload(window.location.pathname)
-          }
-        }
-      },[id]);
     
 
       async function upVote(id) {
@@ -103,57 +84,58 @@ export default function ComponentArticle(props) {
             setUserInfo(data);
           });
         }
-    
-        useEffect(function showPost(){
-            getUser(props.articleInfo.creator)
-          },[]);
-    
 
-    if(userInfo != null){
-      console.log(props.articleInfo)
+  const userCookie = cookieManager();
+  let userCookieJson = JSON.parse(userCookie);
+
+  useEffect(function showPost(){
+    getUser(props.article.creator)
+  },[]);
+
+  if(userInfo != null){
     return (
-        <div className={style.articleContainer} key={props.articleInfo._id}>
-          <div className={style.firstPartContainer}>
+        <>
+        <div className={style.firstPartContainer}>
             <div className={style.firstInfo}>
               <div className={style.userInfoContainer}>
                 <img src="/Image/connexion.png" className={style.userPicture}/>
                 <div className={style.userPostInfoContainer}>
                   <div className={style.userName}>
-                    {userInfo.username}
+                    
                   </div>
                   <div className={style.publicationDate}>Publication : Il y a 4h</div>
                 </div>
               </div>
-              <div className={style.articleTitle}>{props.articleInfo.title}</div>
+              <div className={style.articleTitle}>{props.article.title}</div>
             </div>
-            <img src={props.articleInfo.image} className={style.articlePicture}/>
+            <img src={props.article.image} className={style.articlePicture}/>
           </div>
-          <div className={style.articleBody}>{props.articleInfo.description}</div>
+          <div className={style.articleBody}>{props.article.description}</div>
           <div className={style.articleFooter}>
             <div className={style.articleRate}>
-              <div>{props.articleInfo.articleNbLikes}</div>
-              <img src="/Image/like.png"  onClick={() => upVote(props.articleInfo._id)}/>
-              <div>{props.articleInfo.articleNbDislikes}</div>
-              <img src="/Image/like.png" className={style.dislike} onClick={() => downVote(props.articleInfo._id)}/>
+              <div>{props.article.articleNbLikes}</div>
+              <img src="/Image/like.png"  onClick={() => upVote(props.article._id)}/>
+              <div>{props.article.articleNbDislikes}</div>
+              <img src="/Image/like.png" className={style.dislike} onClick={() => downVote(props.article._id)}/>
             </div>
             <div className={style.articleOption}>
               {userCookieJson.role == "admin" ?
-              props.articleInfo.isApproved == true ?
-              <img src="/Image/delete.png" className={style.warning} onClick={() => modererArticle(props.articleInfo._id,false)}/>
+              props.article.isApproved == true ?
+              <img src="/Image/delete.png" className={style.warning} onClick={() => modererArticle(props.article._id,false)}/>
               :
-              <img src="/Image/checkmark.png" className={style.warning} onClick={() => modererArticle(props.articleInfo._id,true)}/>
+              <img src="/Image/checkmark.png" className={style.warning} onClick={() => modererArticle(props.article._id,true)}/>
               : <></>}
               <img src="/Image/alert.png" className={style.warning}/>
               <img src="/Image/forward.png" className={style.forward}/>
-              <img src="/Image/plus.png" className={style.add} onClick={() => addFav(props.articleInfo._id)}/>
-              <button onClick={() => setId(props.articleInfo)}>
+              <img src="/Image/plus.png" className={style.add} onClick={() => addFav(props.article._id)}/>
+              <button onClick={() => setId(props.article._id)}>
               <img src="/Image/comments.png" className={style.comment}/>
               </button>
             </div>
           </div>
-        </div>
+        </>
     );
-    }else{
-        return(<>loading...</>)
-    }
+  }else{
+    return <>Loading...</>
+  }
 }

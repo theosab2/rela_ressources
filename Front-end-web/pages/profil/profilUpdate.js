@@ -20,7 +20,7 @@ export default function ProfilUpdate() {
 
   async function getUser(){
     idUser = userId._id;
-    await fetch("http://localhost:3001/user/" + idUser, {
+    await fetch("http://"+process.env.IP+":3001/user/" + idUser, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -37,7 +37,7 @@ export default function ProfilUpdate() {
   
 
   async function updateUser() {
-    let res = await fetch("http://localhost:3001/user/" + idUser, {
+    let res = await fetch("http://"+process.env.IP+":3001/user/" + idUser, {
       method: "PUT",
       headers: {
         Accept: "application/json",

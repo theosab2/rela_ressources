@@ -7,7 +7,7 @@ export default function ComponentAdminRole(props) {
 
     const changeRole = async (newRole) => {
       console.log(newRole)
-    await fetch("http://localhost:3001/user/" + props.users._id, {
+    await fetch("http://"+process.env.IP+":3001/user/" + props.users._id, {
         method: "PUT",
         headers: {
           Accept: "application/json",

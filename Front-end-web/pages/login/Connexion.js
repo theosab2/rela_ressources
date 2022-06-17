@@ -51,7 +51,7 @@ export default function Connexion() {
       }
     }
 
-    let res = await fetch("http://localhost:3001/auth/login", {
+    let res = await fetch("http://"+process.env.IP+":3001/auth/login", {
       method: "POST",
       headers: {
         Accept: "application/json",

@@ -36,7 +36,7 @@ export default function MesRessource() {
 
     function  deleteArticle(id){
       console.log(id);
-        fetch("http://localhost:3001/article/delete/"+id, {
+        fetch("http://"+process.env.IP+":3001/article/delete/"+id, {
         method: "POST",
         headers: {
           Accept: "application/json",
