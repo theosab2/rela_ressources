@@ -20,14 +20,6 @@ const CreateContentPost = ({ navigation, route }) => {
 
   const [cacheContentType, setCacheContentType] = useState([])
 
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [namePicture, setNamePicture] = useState('');
-  const [tTags, setTTags] = useState([]);
-  const [category, setCategory] = useState(undefined);
-  const [contentIds, setContentIds] = useState([]);
-  const [contents, setContents] = useState([])
-  const [creator, setCreator] = useState('');
   const [singleFile, setSingleFile] = useState(null);
   const [imageUri, setImageUri] = useState(null);
 
