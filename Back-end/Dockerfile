@@ -1,11 +1,18 @@
-FROM node:18 as node
+#Using Node alpine image
+FROM node:alpine as node
 
-WORKDIR /relaRessources_API
-ADD . .
+#Setting Working directory
+WORKDIR /containerized/relaRessources_API
 
+#Copy package.json & package-lock.json files
+COPY package.json .
+COPY package-lock.json .
 
-RUN RUN npm ci --only=production
+#Run npm continuous integration
+RUN npm ci --omit=dev
 
-EXPOSE 3001
+#Copy the rest of the files (some are axcluded by '.dockerignore')
+COPY . .
 
-CMD npm run start
+#Start node API application
+CMD ["npm","start"]
