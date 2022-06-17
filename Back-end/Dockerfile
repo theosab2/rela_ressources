@@ -14,8 +14,5 @@ RUN npm ci --omit=dev
 #Copy the rest of the files (some are axcluded by '.dockerignore')
 COPY . .
 
-#Open corresponding port for API
-EXPOSE 3001
-
 #Start node API application
 CMD ["npm","start"]

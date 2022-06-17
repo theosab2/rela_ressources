@@ -5,6 +5,9 @@ services:
   mongo_db_service:
     container_name: mongo_db_container
     image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
     restart: always 
     ports: 
       - 2717:27017
@@ -23,6 +26,10 @@ services:
       NAME: RelaRessources_API
     depends_on: 
       - mongo_db_service
+    volumes:
+      - ./:/containerized/relaRessources_API
+
 
 volumes:
   db_data: {}
+  
