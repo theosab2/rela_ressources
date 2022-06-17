@@ -18,8 +18,8 @@ const CreateContentPost = ({ navigation, route }) => {
   const [contentFront, setContentFront] = useState([]);
   const [selectedContent, setSelectedContent] = useState(null)
 
-  const [cacheContentType,setCacheContentType] = useState([])
-  
+  const [cacheContentType, setCacheContentType] = useState([])
+
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [namePicture, setNamePicture] = useState('');
@@ -108,8 +108,7 @@ const CreateContentPost = ({ navigation, route }) => {
         <Icon name="receipt-outline" type="ionicon" color="#FFFFFF" style={styles.inputIcon} />
         <TextInput
           placeholder="Courte description décrivant votre ressource de ce contenu"
-          onChangeText={descriptionContent => setDescriptionContent(descriptionContent)}
-          defaultValue={descriptionContent}
+          onChangeText={descriptionContent => contentsData[index].body = descriptionContent}
           multiline={true}
           style={styles.textArea}
         />
@@ -173,7 +172,7 @@ const CreateContentPost = ({ navigation, route }) => {
 
   const renderContent = () => {
     return contentFront.map((item, index) => {
-      return <Picker.Item label={item.name} value={item.name} key={index} />
+      return <Picker.Item label={item.name} value={item.name} />
     })
   }
   const AddNewContent = () => {
@@ -211,6 +210,41 @@ const CreateContentPost = ({ navigation, route }) => {
       })
     }
     setSelectedContent(null);
+  }
+  const sendToDB = () => {
+    var article = {
+      title: route.params.title,
+      description: route.params.description,
+      /**tag_UTids:
+        [
+          { type: String }
+        ],*/
+      category_UTid: route.params.category,
+      contents: contentsData,
+      /**comment_ids:
+        [
+          { type: String }
+        ],*/
+      creator: "User",
+      /**votes: [
+        {
+          UT_id: { type: String, required: true, default: "DefaultTypeTT_id" }, //code : VOTE => (type,way)
+          number: { type: Number, required: true, default: 0 },
+        }
+      ],*/
+      image: route.params.image,
+      /**isApproved: { type: Boolean, required: true, default: false },
+      isActive: { type: Boolean, required: true, default: false },
+      identifiedRelation_ids:
+        [
+          { type: String, required: false },
+        ],
+      privacyIsPublic: { type: Boolean, required: true, default: true },
+      _createdAt: { type: Date, required: true, default: Date.now() },
+      _updatedAt: { type: Date, requried: false, default: null }*/
+
+    }
+    console.log(article)
   }
   const getIdContentByName = (contentName) => {
     return contentFront.find(item => item.name == contentName)._id
@@ -265,7 +299,7 @@ const CreateContentPost = ({ navigation, route }) => {
           onPress={() => {
             //navigation.navigate('Home', { screen: 'home' });
             /**Mise en BDD l'article complet */
-            console.log(contentsData)
+            sendToDB()
           }}
         />
       </View>

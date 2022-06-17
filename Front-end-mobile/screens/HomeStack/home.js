@@ -12,7 +12,7 @@ const Home = ({navigation}) => {
   const [display, setDisplay] = useState(<Text>Loading</Text>);
   const [userId,setUserId] = useState(null);
   let excedTime = 0;
-
+  console.log('ENV',API_URL);
   useEffect(() => {
     const getStateUser = async () => {
       const user = await AsyncStorage.getItem('@userId');
