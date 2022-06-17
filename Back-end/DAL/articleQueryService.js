@@ -72,7 +72,7 @@ const mArticle = require('../models/article');
                     } 
                 : 
                     {
-                        message:"aucun utilisateur enregistré en base de données"
+                        message:"aucun article enregistré en base de données"
                     };
             } 
             catch (error) {
