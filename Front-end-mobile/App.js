@@ -23,6 +23,7 @@ import CoorSetting from './screens/AuthStack/coorSetting';
 import CreateContentPost from './screens/AddStack/createContentPost';
 import Settings from './screens/AuthStack/settings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Relations from './screens/RelationStack/relations';
 
 const Stack = createStackNavigator();
 const HomeStack = ({ navigation, route }) => {
@@ -50,7 +51,7 @@ const RelationStack = () => {
       }}>
       <Stack.Screen
         name='Relation'
-        component={Home}
+        component={Relations}
       />
     </Stack.Navigator>
   )

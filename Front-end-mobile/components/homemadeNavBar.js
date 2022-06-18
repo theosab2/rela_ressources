@@ -1,8 +1,22 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Icon, Button } from 'react-native-elements'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomemadeNavBar = ({ route, navigation }) => {
+    const [user,setUser] = useState(null);
+
+    useEffect(() => {
+        getUser()
+    },[])
+
+    const getUser = async () => {
+        if(await AsyncStorage.getItem('@userId') == null){
+            setUser(null)
+        }else{
+            setUser(await AsyncStorage.getItem('@userId'))
+        }
+    }
     return (
         <View style={styles.container}>
             <Button
@@ -28,7 +42,7 @@ const HomemadeNavBar = ({ route, navigation }) => {
                     />
                 }
                 onPress={() => {
-                    navigation.navigate("Auth", { screen: 'Login' });
+                    user == null ? navigation.navigate("Auth", { screen: 'Login' }) : navigation.navigate("Relation", { screen: 'Login' }) 
                 }}
             />
             <Button
