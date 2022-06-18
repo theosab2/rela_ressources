@@ -36,6 +36,8 @@ const CreatePost = ({ navigation }) => {
       // Printing the log realted to the file
       console.log('res : ' + JSON.stringify(res));
       // Setting the state to show single file attributes
+      setNamePicture(res[0].name)
+      setImageUri(res[0].uri)
       setSingleFile(res[0]);
       setImageUri(res[0].uri);
     } catch (err) {
@@ -166,7 +168,7 @@ const CreatePost = ({ navigation }) => {
           <View style={styles.imagePicker}>
             <Image
               style={styles.uploadImg}
-              source={imageUri == null ? require('../../test_content/waiting.jpg') : require('../../test_content/waiting.jpg')}
+              source={imageUri == null ? require('../../test_content/waiting.jpg') : {uri : imageUri}}
             />
           </View>
         </View>
