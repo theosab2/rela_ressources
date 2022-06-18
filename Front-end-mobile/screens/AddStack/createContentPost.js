@@ -203,7 +203,7 @@ const CreateContentPost = ({ navigation, route }) => {
     }
     setSelectedContent(null);
   }
-  const sendToDB = () => {
+  const sendToDB = async () => {
     const user = await AsyncStorage.getItem('@userId');
     var article = {
       title: route.params.title,
