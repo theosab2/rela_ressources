@@ -204,6 +204,7 @@ const CreateContentPost = ({ navigation, route }) => {
     setSelectedContent(null);
   }
   const sendToDB = () => {
+    const user = await AsyncStorage.getItem('@userId');
     var article = {
       title: route.params.title,
       description: route.params.description,
@@ -217,7 +218,7 @@ const CreateContentPost = ({ navigation, route }) => {
         [
           { type: String }
         ],*/
-      creator: "User",
+      creator: user,
       /**votes: [
         {
           UT_id: { type: String, required: true, default: "DefaultTypeTT_id" }, //code : VOTE => (type,way)
