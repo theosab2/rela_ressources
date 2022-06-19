@@ -12,11 +12,13 @@ const ArticleSchema = mongoose.Schema({
   [
     {
       UT_id:{ type: String },
+      name:{ type: String},
       body:{ type: String },
       positionX:{ type:Number },
       positionY:{ type:Number },
       textColor:{ type:String },
-      additionnalCSS:{ type:String }
+      additionnalCSS:{ type:String },
+      mediaUrl:{ type:String }
     }
   ],
   comment_ids:
