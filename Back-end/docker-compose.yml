@@ -1,0 +1,40 @@
+version: '3.3'
+
+services: 
+  #MongoDB service
+  mongo_db_service:
+    container_name: mongo_db_container
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_DATABASE: RELARESSOURCESDB
+      MONGO_INITDB_ROOT_USERNAME: $DB_ROOT_USER
+      MONGO_INITDB_ROOT_PASSWORD: $DB_ROOT_PASS
+    restart: always 
+    ports: 
+      - 2717:27017
+    volumes: 
+      - db_data:/data/db
+      - db_config:/data/configdb
+
+  #RelaRessources API service
+  api_service:
+    build: .
+    container_name: api_container
+    ports:
+      - 3001:3001
+    environment: 
+      PORT: 3001
+      DB_SERVICE: mongodb
+      DB_CONTAINER: mongo_db_container
+      DB_PORT: 27017
+      DB_NAME: RELARESSOURCESDB
+      NAME: RelaRessources_API
+    depends_on: 
+      - mongo_db_service
+    volumes:
+      - ./:/containerized/relaRessources_API
+
+
+volumes:
+  db_data: {}
+  db_config: {}
