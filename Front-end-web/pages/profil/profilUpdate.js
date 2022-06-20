@@ -7,8 +7,7 @@ import { isResSent } from "next/dist/next-server/lib/utils";
 
 export default function ProfilUpdate() {
   const userCookie = utils();
-  let userId = JSON.parse(userCookie);
-  console.log(userId)
+  console.log(userCookie)
   const mailUser = useRef(null);
   const nameUser = useRef(null);
   const lastname = useRef(null);
@@ -19,7 +18,7 @@ export default function ProfilUpdate() {
   let idUser;
 
   async function getUser(){
-    idUser = userId._id;
+    idUser = userCookie._id;
     await fetch("http://"+process.env.IP+":3001/user/" + idUser, {
       method: "GET",
       headers: {

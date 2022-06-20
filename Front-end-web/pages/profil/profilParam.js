@@ -5,7 +5,6 @@ import utils from "../utils";
 export default function ProfilParam() {
   const userCookie = utils();
   if (userCookie != false) {
-    const userInfo = JSON.parse(userCookie);
     return (
       <div className={style.paramContainer}>
         <div className={style.paramGenContainer}>

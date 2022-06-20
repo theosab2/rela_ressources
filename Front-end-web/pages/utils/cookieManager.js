@@ -17,6 +17,6 @@ export default function cookieManager() {
   if (isLoading) {
     return false;
   } else {
-    return userCookie;
+    return JSON.parse(userCookie);
   }
 }

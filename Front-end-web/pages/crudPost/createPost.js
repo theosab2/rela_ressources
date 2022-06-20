@@ -44,7 +44,7 @@ export default function createPost() {
       articleCategory_TTids: CategorieRessource,
       title: title,
       description: content,
-      creator : JSON.parse(userCookie)._id,
+      creator : userCookie._id,
       isApproved: true,
       isActive: true,
       privacyIsPublic: true,
@@ -54,7 +54,7 @@ export default function createPost() {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "user-upload-GUID": JSON.parse(userCookie)._id,
+        "user-upload-GUID": userCookie._id,
       },
       body: formdata,
     });

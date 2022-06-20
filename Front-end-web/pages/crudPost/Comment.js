@@ -10,8 +10,6 @@ export default function Post(props) {
   const [article, setArticle] = useState(null);
   const [nbLike, setLike] = useState(null);
   const [nbDislike, setDislike] = useState(null);
-  const userCookie = cookieManager();
-  let userCookieJson = JSON.parse(userCookie);
 
 
   const getArticle = async () =>
@@ -39,7 +37,7 @@ export default function Post(props) {
           <ComponentOneArticle article={article}/>
         </div>
         <div className={style.articleContainer}>
-          <ComponentShowComment articleId={article._id}/>
+          <ComponentShowComment article={article}/>
         </div>
       </div>
     );

@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 
 export default function ComponentOneArticle(props) {
     const [userInfo, setUserInfo] = useState(null);
-    console.log(props.article)
     async function downVote(id) {
         setDislike(nbDislike + 1);
         let res = await fetch("http://"+process.env.IP+":3001/article/" + id, {
@@ -86,7 +85,6 @@ export default function ComponentOneArticle(props) {
         }
 
   const userCookie = cookieManager();
-  let userCookieJson = JSON.parse(userCookie);
 
   useEffect(function showPost(){
     getUser(props.article.creator)
@@ -119,7 +117,7 @@ export default function ComponentOneArticle(props) {
               <img src="/Image/like.png" className={style.dislike} onClick={() => downVote(props.article._id)}/>
             </div>
             <div className={style.articleOption}>
-              {userCookieJson.role == "admin" ?
+              {userCookie.role == "admin" ?
               props.article.isApproved == true ?
               <img src="/Image/delete.png" className={style.warning} onClick={() => modererArticle(props.article._id,false)}/>
               :

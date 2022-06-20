@@ -160,12 +160,11 @@ export default function Navigation(image) {
       </>
     );
   }else{
-    const userCookieJson = JSON.parse(userCookie);
     
     return(
     <>
         <div className={style.navHeader}>
-          <p className={style.username}>{userCookieJson.username}</p>
+          <p className={style.username}>{userCookie.username}</p>
           <button onClick={() => setRenderPage((renderPage = "Accueil"))} className={style.headerTitle}>Ressource Relationnelle</button>
           <p className={style.headerPageTitle}>{navTitle}</p>
           <img src="/Image/connexion.png" className={style.icon_connexion}/>

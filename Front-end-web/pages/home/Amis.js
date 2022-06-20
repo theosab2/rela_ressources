@@ -26,7 +26,6 @@ export default function Amis() {
   allUser = userManager();
 
   if (allUser != null) {
-    const userInfo = JSON.parse(userCookie);
 
     if(allUser != null){
       allUser.forEach(element => {
@@ -45,7 +44,7 @@ export default function Amis() {
       <div className={style.mainContainer}>
       <input type="text" placeholder="Recherche" className={style.searchBar} onChange={(searchFriend) =>setSearchFriend(searchFriend.target.value)}></input>
       {arrayUser && arrayUser.map((user) => (
-        <ShowAmis userCookie={userInfo} friend={user} searchFriend={searchFriend} key={user._id}/>
+        <ShowAmis userCookie={userCookie} friend={user} searchFriend={searchFriend} key={user._id}/>
       ))}
      </div>
     </>

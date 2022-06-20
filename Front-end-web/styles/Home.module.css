@@ -348,3 +348,9 @@ color: #fff;
   padding: 5px;
   border-radius: 5px;
 }
+
+.commentBlockContainer{
+  border: 2px solid #869ECE;
+  margin: 5px;
+  border-radius: 5px;
+}

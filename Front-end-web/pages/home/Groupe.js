@@ -21,10 +21,9 @@ export default function Groupe() {
   const userCookie = cookieManager();
 
   if (allArticle != null) {
-    const userInfo = JSON.parse(userCookie);
 
     allArticle.forEach((element) => {
-      if (element.articleCreator == userInfo._id) {
+      if (element.articleCreator == userCookie._id) {
         array.push(element);
       }
     });

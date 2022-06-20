@@ -11,9 +11,7 @@ export default function ComponentArticle(props) {
     const [user, setUser] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
     const userCookie = cookieManager();
-    let userCookieJson = JSON.parse(userCookie);
     const router = useRouter();
-
     async function downVote(id) {
         setDislike(nbDislike + 1);
         let res = await fetch("http://"+process.env.IP+":3001/article/" + id, {
@@ -76,8 +74,8 @@ export default function ComponentArticle(props) {
       }
 
       const addFav = async(id) =>{
-        userCookieJson.favorites.push(id);
-        await fetch("http://"+process.env.IP+":3001/user/" + userCookieJson._id, {
+        userCookie.favorites.push(id);
+        await fetch("http://"+process.env.IP+":3001/user/" + userCookie._id, {
           method: "PUT",
           headers: {
             Accept: "application/json",
@@ -85,7 +83,7 @@ export default function ComponentArticle(props) {
           },
           body: JSON.stringify({
             user: {
-              favorites: userCookieJson.favorites,
+              favorites: userCookie.favorites,
             },
           }),
         });
@@ -137,7 +135,7 @@ export default function ComponentArticle(props) {
               <img src="/Image/like.png" className={style.dislike} onClick={() => downVote(props.articleInfo._id)}/>
             </div>
             <div className={style.articleOption}>
-              {userCookieJson.role == "admin" ?
+              {userCookie.role == "admin" ?
               props.articleInfo.isApproved == true ?
               <img src="/Image/delete.png" className={style.warning} onClick={() => modererArticle(props.articleInfo._id,false)}/>
               :

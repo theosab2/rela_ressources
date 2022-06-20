@@ -11,8 +11,7 @@ export default function RessourceSave() {
   let allArticle;
   let array = [];
   const userCookie = cookieManager();
-  const userInfo = JSON.parse(userCookie);
-  console.log(userInfo)
+  console.log(userCookie)
   useEffect(() => {
     if (window) { 
       window.sessionStorage.setItem("Page", "Favorie" );
@@ -33,8 +32,8 @@ export default function RessourceSave() {
 
     allArticle.forEach(element => {
       console.log(element._id)
-      console.log(userInfo.favorites)
-      if(userInfo.favorites.includes(element._id)){
+      console.log(userCookie.favorites)
+      if(userCookie.favorites.includes(element._id)){
       array.push(element)
       }
     });

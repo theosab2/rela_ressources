@@ -12,7 +12,6 @@ import userManager from "../utils/userManager";
 export default function abonnement() {
   
   const userCookie = cookieManager();
-  const userInfo = JSON.parse(userCookie);
   let allUser = null;
   let arrayUser = [];
 
@@ -27,7 +26,7 @@ export default function abonnement() {
   if (allUser != null) {
 
       allUser.forEach(element => {
-          if(element.relation_ids.includes(userInfo._id)){
+          if(element.relation_ids.includes(userCookie._id)){
             arrayUser.push(element);
           }
       });
@@ -63,7 +62,7 @@ export default function abonnement() {
           </div>
         </div>
         {arrayUser && arrayUser.map((user) => (
-          <ShowAmis userCookie={userInfo} friend={user} key={user._id}/>
+          <ShowAmis userCookie={userCookie} friend={user} key={user._id}/>
           ))}
       </div>
     </>

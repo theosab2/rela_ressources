@@ -25,11 +25,10 @@ export default function MesRessource() {
     const userCookie = cookieManager();
 
     if (allArticle != null) {
-      const userInfo = JSON.parse(userCookie);
       allArticle.forEach((element) => {
         console.log(element)
-        console.log(userInfo._id)
-        if (element.creator == userInfo._id) {
+        console.log(userCookie._id)
+        if (element.creator == userCookie._id) {
           array.push(element);
         }
       });
