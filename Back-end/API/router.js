@@ -271,7 +271,7 @@ router.get("/article/:id", async function (req, res, next) {
 //#region [UPDATE RESSOURCES]
 
   //Création d'un article
-  router.post("/article/create", _multer.articleImage,_multer.contentImages, async function (req, res, next) {     
+  router.post("/article/create", _multer.articleImage, async function (req, res, next) {     
     console.log(req.body);
     console.log(req.file);
     console.log(req.files);

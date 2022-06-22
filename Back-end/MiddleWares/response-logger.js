@@ -3,8 +3,11 @@ const responseLogger = (request) => {
     const rP = request.protocol;
     const rM = request.method;
     const rU = request.url;
+    const dT = Date.toString();
     
-    console.log(`${rA} <= (${rP}) ${rM} ${rU}`);
+    console.log(`[${dT}]${rA} <= (${rP}) ${rM} ${rU}`);
+    console.log(``); //Ligne vide pour la lisibilité des logs
+
 }
 
 module.exports = responseLogger;
