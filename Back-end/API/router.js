@@ -138,7 +138,7 @@ router.get("/test", (req, res, next) => {
 //Inscription
 router.post("/auth/register", async function (req, res, next) {
   var userCreationQueryResult = await _userController.create(
-    req.body.user
+    req.body
   );
   _responseLogger(req);
   res.status(userCreationQueryResult.statusCode).json(userCreationQueryResult);
@@ -271,16 +271,20 @@ router.get("/article/:id", async function (req, res, next) {
 //#region [UPDATE RESSOURCES]
 
   //Création d'un article
-  router.post("/article/create", _multer.articleImage, async function (req, res, next) {
-    
+  router.post("/article/create", _multer.articleImage,_multer.contentImages, async function (req, res, next) {     
+    console.log(req.body);
+    console.log(req.file);
+    console.log(req.files);
+
     if(req.file != undefined & req.file != null){
       req.body.article = {
         ...JSON.parse(req.body.article),
         image : `${req.protocol}://${req.get('host')}/article-image/${req.file.filename}`
-      }
-    }   
+      };
+      for(i=0;i<=req.body.contents.length;i++){
+        req.body.article.contents[i].mediaUrl =  `${req.protocol}://${req.get('host')}/content-images/${req.file.filename}`
+      };  
     
-    console.log(req.body);
     var articleCreationQueryResult = await _articleController.create(
       req.body
     );
@@ -289,6 +293,30 @@ router.get("/article/:id", async function (req, res, next) {
     res
       .status(articleCreationQueryResult.statusCode)
       .json(articleCreationQueryResult);
+  }
+});
+
+  router.post("/article/add-content", _multer.contentMedias, async function (req, res, next) {     
+    console.log(req.body);
+    console.log(req.file);
+    console.log(req.files);
+    
+    if(req.files != undefined & req.files != null || req.file != undefined & req.file != null){ //TEST with 1 content
+      for(i=0;i<req.body.article.contents.length;i++){
+        req.body.article.content[i] = {
+          ...JSON.parse(req.body.article.contents),
+          mediaUrl : `${req.protocol}://${req.get('host')}/content-media/${req.files[i].filename ?? req.file.filename}`
+        };
+      }    
+    var contentAddQueryResult = await _articleController.addContents(
+      req.body.contents
+    );
+
+    _responseLogger(req);
+    res
+      .status(articleCreationQueryResult.statusCode)
+      .json(articleCreationQueryResult);
+  }
   });
 
 //Suppression d'un article

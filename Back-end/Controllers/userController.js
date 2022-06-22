@@ -162,7 +162,7 @@ module.exports.create = async (requestBody = null) => {
     try //Sauvegarde du modèle User dans la BDD
     {   
         console.log(controllerLogPrefix,"[create] (info) saving created message object in the database");
-        await _userQueryService.saveOne(userObject);
+        await _userQueryService.create(userObject);
     }
     catch (exception) //ECHEC Sauvegarde du modèle User dans la BDD
     {   
