@@ -50,7 +50,7 @@ export default function createPost() {
       privacyIsPublic: true,
     });
     formdata.append("article", JSON_Object);
-    const res = await fetch("http://10.176.132.204:3001/article/create", {
+    const res = await fetch("http://"+process.env.IP+":3001/article/create", {
       method: "POST",
       headers: {
         Accept: "application/json",

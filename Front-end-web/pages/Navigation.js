@@ -26,7 +26,7 @@ import articleManager from "./utils/articleManager";
 
 export default function Navigation(image) {
   const router = useRouter();
-  const navTitle = "Accueil";
+  let [navTitle, setNavTitle] = useState("Accueil");
   var getSession = null;
   var getId = null;
   let [renderPage, setRenderPage] = useState("");
@@ -44,6 +44,7 @@ export default function Navigation(image) {
   };
 
   useEffect(() => {
+    
     if (window) { 
       getSession = window.sessionStorage.getItem("Page");
       if(getSession == null){
@@ -54,7 +55,54 @@ export default function Navigation(image) {
       setRenderPage(getSession);
       setIdPage(getId);
     }
-  }, []);
+    switch (renderPage) {
+      case "Accueil":
+        setNavTitle("Accueil");
+        break;
+      case "Connexion":
+        setNavTitle("Connexion");
+        break;
+      case "Inscription":
+        setNavTitle("Inscription");
+        break;
+      case "Creer":
+        setNavTitle("Creation de post");
+        break;
+      case "Historique":
+        setNavTitle("Historique");
+        break;
+      case "Favorie":
+        setNavTitle("Favorie");
+        break;
+      case "Abonnement":
+        setNavTitle("Abonnement");
+        break;      
+      case "Profil":
+        setNavTitle("Profil");
+        break;
+      case "Amis":
+        setNavTitle("Amis");
+        break;
+      case "Groupe":
+        setNavTitle("Groupe");
+        break;
+      case "Evenement":
+        setNavTitle("Evenement");
+        break;
+      case "Moderation":
+        setNavTitle("Modération");
+        break;
+      case "Categorie":
+        setNavTitle("Categorie");
+        break;
+      case "Utilisateur":
+        setNavTitle("Utilisateur");
+        break;
+      case "Comment":
+        setNavTitle("Commentaire");
+        break;
+    }
+  }, [navTitle]);
 
 
   const deconnexionUtilisateur = () => {
@@ -70,52 +118,68 @@ export default function Navigation(image) {
   function pageRender() {
     switch (renderPage) {
       case "Accueil":
+        //setNavTitle("Accueil");
         return <Home></Home>;
         break;
       case "Connexion":
+        //setNavTitle("Connexion");
         return <Connexion></Connexion>;
         break;
       case "Inscription":
+        //setNavTitle("Inscription");
         return <Inscription></Inscription>;
         break;
       case "Creer":
+        //setNavTitle("Creation de post");
         return <CreatePost></CreatePost>;
         break;
       case "Historique":
+        //setNavTitle("Historique");
         return <Historique></Historique>;
         break;
       case "Favorie":
+        //setNavTitle("Favorie");
         return <Favorie></Favorie>;
         break;
       case "Abonnement":
+        //setNavTitle("Abonnement");
         return <Abonnement></Abonnement>;
         break;      
       case "Profil":
+        //setNavTitle("Profil");
         return <Profil></Profil>;
         break;
       case "Amis":
+        //setNavTitle("Amis");
         return <Amis></Amis>;
         break;
       case "Groupe":
+        //setNavTitle("Groupe");
         return <Groupe></Groupe>;
         break;
       case "Evenement":
+        //setNavTitle("Evenement");
         return <Evenement></Evenement>;
         break;
       case "Moderation":
+        //setNavTitle("Modération");
         return <Moderation></Moderation>;
         break;
       case "Categorie":
+        //setNavTitle("Categorie");
         return <Categorie></Categorie>;
         break;
       case "Utilisateur":
+        //setNavTitle("Utilisateur");
         return <Utilisateur></Utilisateur>;
         break;
       case "Comment":
+        //setNavTitle("Commentaire");
         return <Comment articleId={idPage}></Comment>;
         break;
     }
   }
+
   const userCookie = utils();
   if (userCookie == false) {
 

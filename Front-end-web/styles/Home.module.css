@@ -354,3 +354,16 @@ color: #fff;
   margin: 5px;
   border-radius: 5px;
 }
+
+.falseCommentContainer{
+  width: 90%;
+  height: 30px;
+  background-color: #869ECE;
+  margin: auto;
+  border-radius: 5px;
+  text-align: center;
+  color: #fff;
+  font-size: 17px;
+  text-decoration: underline;
+  cursor: pointer;
+}

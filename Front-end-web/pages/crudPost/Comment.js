@@ -10,7 +10,7 @@ export default function Post(props) {
   const [article, setArticle] = useState(null);
   const [nbLike, setLike] = useState(null);
   const [nbDislike, setDislike] = useState(null);
-
+  
 
   const getArticle = async () =>
       await fetch("http://"+process.env.IP+":3001/article/" + props.articleId, {

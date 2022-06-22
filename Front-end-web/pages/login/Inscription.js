@@ -21,8 +21,8 @@ export default function Inscription() {
     console.log(pseudo);
     console.log(name);
     console.log(firstname);
-    console.log(email);
     console.log(password);
+    console.log(email);
     let res = await fetch("http://"+process.env.IP+":3001/auth/register", {
       method: "POST",
       headers: {
@@ -33,7 +33,7 @@ export default function Inscription() {
         user: {
           username: pseudo,
           firstname: firstname,
-          lastname: name,
+          name: name,
           password: password,
           email: email,
         },
@@ -144,7 +144,7 @@ export default function Inscription() {
               type="submit"
               onClick={display}
               className={style.buttonApproved}
-            >
+            > 
               Valider
             </button>
 
