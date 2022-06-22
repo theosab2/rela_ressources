@@ -11,6 +11,8 @@ COPY package-lock.json .
 #Run npm continuous integration
 RUN npm ci --omit=dev
 
+#Install node_modules and clear cache
+RUN npm install && npm cache clean --force
 #Copy the rest of the files (some are axcluded by '.dockerignore')
 COPY . .
 
