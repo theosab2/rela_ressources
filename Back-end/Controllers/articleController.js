@@ -144,6 +144,13 @@ module.exports.getOne = async (articleId) => {
 
 //#region [UPDATE RESSOURCES]
 
+module.exports.addContents = async (requestBody = null) => {
+    console.log(controllerLogPrefix,"[addContents] (paramètres) 'requestBody' :\n",requestBody);
+
+    let contentObject = requestBody.contents;
+
+}
+
 module.exports.create = async (requestBody = null) => {
     console.log(controllerLogPrefix,"[create] (paramètres) 'requestBody' :\n",requestBody);
 

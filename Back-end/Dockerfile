@@ -8,11 +8,12 @@ WORKDIR /containerized/relaRessources_API
 COPY package.json .
 COPY package-lock.json .
 
-#Run npm continuous integration
+#Run npm continuous integration (install node_modules)
 RUN npm ci --omit=dev
 
-#Install node_modules and clear cache
-RUN npm install && npm cache clean --force
+#clean cache
+RUN npm cache clean --force
+
 #Copy the rest of the files (some are axcluded by '.dockerignore')
 COPY . .
 

@@ -14,7 +14,7 @@ import Comment from "./crudPost/Comment";
 import Historique from "./home/MesRessource";
 import Favorie from "./home/RessourceSave";
 import Abonnement from "./home/Abonnement";
-import Profil from "./Profil/profilUpdate";
+import Profil from "./profil/profilUpdate";
 import Amis from "./home/Amis";
 import Groupe from "./home/Groupe";
 import Evenement from "./home/Evenement";
