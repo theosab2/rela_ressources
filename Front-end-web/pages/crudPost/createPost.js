@@ -40,6 +40,15 @@ export default function createPost() {
     var formdata = new FormData();
     formdata.append("article-image", image);
 
+    // create array with 2 images 
+    /*
+    var images = [];
+    images.push(image)
+    images.push(image)
+
+    formdata.append("content-images", images);
+    */
+
     var JSON_Object = JSON.stringify({
       articleCategory_TTids: CategorieRessource,
       title: title,
@@ -58,12 +67,15 @@ export default function createPost() {
       },
       body: formdata,
     });
+    
     console.log(res.status);
     if (res.status != "SUCESS") {
       console.log(res.status);
     } else {
       console.log("Réussite");
     }
+
+    sendArticleContents()
   };
 
   function getType(value) {

@@ -296,16 +296,16 @@ router.get("/article/:id", async function (req, res, next) {
   }
 });
 
-  router.post("/article/add-content", _multer.contentMedias, async function (req, res, next) {     
+  router.post("/article/add-contents", _multer.contentMedias, async function (req, res, next) {     
     console.log(req.body);
     console.log(req.file);
     console.log(req.files);
     
     if(req.files != undefined & req.files != null || req.file != undefined & req.file != null){ //TEST with 1 content
-      for(i=0;i<req.body.article.contents.length;i++){
-        req.body.article.content[i] = {
-          ...JSON.parse(req.body.article.contents),
-          mediaUrl : `${req.protocol}://${req.get('host')}/content-media/${req.files[i].filename ?? req.file.filename}`
+      for(i=0;i<req.body.contents.length;i++){
+        req.body.contents[i] = {
+          ...JSON.parse(req.body.contents[i]),
+          mediaUrl : `${req.protocol}://${req.get('host')}/content-medias/${req.files[i].filename ?? req.file.filename}`
         };
       }    
     var contentAddQueryResult = await _articleController.addContents(

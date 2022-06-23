@@ -6,23 +6,46 @@ const path = require('path');
 const $reqLogger = require('./MiddleWares/req-logger-config');
 
 module.exports = function (app, server) {
-  setTimeout(() => {
-    console.log("Attempting database connexion...");
-    mongoose
-      .connect(
-        `${process.env.DB_SERVICE}://${process.env.DB_ROOT_USER}:${process.env.DB_ROOT_PASS}@${process.env.DB_SERVICE_NAME}:${process.env.DB_PORT}?retryWrites=true&w=majority`,
-        {
-          useNewUrlParser: true,
-          useUnifiedTopology: true,
-          dbName: process.env.DB_NAME
-        }
-      )
-      .then(() => console.log("Database connection : SUCCESS"))
-      .catch((exception) => {
-        console.log("Database connection : FAILURE");
-        console.log("Exception :", exception);
-      });
-  }, 100); //Timeout to log DB connection status after listened port's log
+  if(process.env.devMode == "true" && process.env.devMode != null && process.env.devMode != undefined)
+  {
+    setTimeout(() => {
+      console.log("Attempting development database connexion...");
+      mongoose
+        .connect(
+          `${process.env.DEV_DB_SERVICE}://${process.env.DEV_DB_USER}:${process.env.DEV_DB_PASS}@${process.env.DEV_DB_URL}?retryWrites=true&w=majority`,
+          {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+          }
+        )
+        .then(() => console.log("Development database connection : SUCCESS"))
+        .catch((exception) => {
+          console.log("Development database connection : FAILURE");
+          console.log("Exception :", exception);
+        });
+    }, 100); //Timeout to log dev DB connection status after listened port's log
+  }
+  else
+  {
+    setTimeout(() => {
+      console.log("Attempting database connexion...");
+      mongoose
+        .connect(
+          `${process.env.DB_SERVICE}://${process.env.DB_ROOT_USER}:${process.env.DB_ROOT_PASS}@${process.env.DB_SERVICE_NAME}:${process.env.DB_PORT}?retryWrites=true&w=majority`,
+          {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            dbName: process.env.DB_NAME
+          }
+        )
+        .then(() => console.log("Database connection : SUCCESS"))
+        .catch((exception) => {
+          console.log("Database connection : FAILURE");
+          console.log("Exception :", exception);
+        });
+    }, 100); //Timeout to log DB connection status after listened port's log
+  }
+  
 
   app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
