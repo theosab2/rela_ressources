@@ -5,6 +5,55 @@ import Header from '../../components/header';
 
 const Relations = ({ navigation }) => {
     const [search, setSearch] = useState("");
+    const [suggestions, setSuggestions] = useState(<View/>);
+    const [demande,setDemande] = useState(<View/>);
+    const [friends,setFriends] = useState([])
+
+    useEffect(() => {
+        getFriends();
+    },[])
+
+    const getFriends = async () => {
+        const userId = await AsyncStorage.getItem('@userId')
+        if(userId){
+            return;
+        }
+        try {
+            const api = await fetch(API_URL + "/user/" + userId ,{
+                method: "GET",
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                  },
+              })
+              const res = await api.json();
+              console.log(res);
+        } catch (e) {
+            console.log(e);
+            
+        }
+    }
+    const getSuggestionUser = async () => {
+        if(await AsyncStorage.getItem('@userId') == null){
+            setUser(null)
+        }else{
+            const userId = await AsyncStorage.getItem('@userId')
+        }
+        try {
+            const api = await fetch(API_URL + '/user/' + storedId, {
+                method: 'GET',
+                headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json',
+                },
+              });
+              const res = await api.json();
+        } catch (e) {
+            console.log(e)
+        }
+         
+    }
+
     return (
         <View style={styles.container}>
             <Header navigation={navigation} />
