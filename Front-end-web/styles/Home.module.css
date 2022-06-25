@@ -367,3 +367,49 @@ color: #fff;
   text-decoration: underline;
   cursor: pointer;
 }
+
+/*-------*/
+
+.btnCreateGroupe{
+  margin-left: 20px;
+  font-size: 30px;
+  background-color: #fff;
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  border: 1px #aaa solid;
+}
+
+.searchBarContainer{
+  display: flex;
+  align-items: center;
+}
+
+.createGroupeContainer{
+  background-color: #2F4077;
+  margin: 5px;
+  border-radius: 5px;
+  color: #fff;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.createGroupeContainer button{
+  background-color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  color:#869ECE;
+  box-shadow: 0px 2px 5px #000;
+}
+
+.createGroupeContainer input{
+  background-color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px #000;
+  border: none;
+  margin: 5px;
+  color:#869ECE;
+}

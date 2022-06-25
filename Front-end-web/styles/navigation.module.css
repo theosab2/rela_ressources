@@ -178,3 +178,22 @@
   font-size: 25px;
   padding: 10px;
 }
+
+/*--------------*/
+
+.InputImg{
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  margin-right: 125px;
+}
+
+.inputDiv{
+  background-color: #2F4077;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  width: 100%;
+  box-shadow: 1px 1px 3px #555;
+}

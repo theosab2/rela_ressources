@@ -45,11 +45,6 @@ export default function Connexion() {
     setError(ComponentConnexion(identifiant,mdp));
   };
 
-  const getServerSideProps = (user) => {
-    setCookies("token", user, 1 * 3600);
-    window.sessionStorage.setItem("Page", "Accueil" );
-  };
-
   return (
 
       <div className={style.connexionContainer}>

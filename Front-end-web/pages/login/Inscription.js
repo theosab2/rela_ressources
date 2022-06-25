@@ -34,7 +34,7 @@ export default function Inscription() {
         user: {
           username: pseudo,
           firstname: firstname,
-          name: name,
+          lastname: name,
           password: password,
           email: email,
         },
@@ -43,7 +43,7 @@ export default function Inscription() {
     res = await res.json();
     console.log(res);
     if (res.status == "FAILURE") {
-      console.log("Le nom d'utilisateurs existe deja");
+      setError("Le nom d'utilisateurs ou adresse mail existe deja");
     } else {
       console.log("Compte crée");
       ComponentConnexion(email,password)

@@ -196,8 +196,14 @@ export default function Navigation(image) {
             <div className={style.sidebarContent}>
               <div className={style.sidebarTitle}>Profil</div>
               <div className={style.sidebarChoice}>
-                <button className={style.sidebarOpenPage}  onClick={() => setRenderPage((renderPage = "Connexion"))}>Connexion</button>
-                <button className={renderPage == 'Inscription'? style.sidebarOpenPage : null} onClick={() => setRenderPage((renderPage = "Inscription"))}>Inscription</button>
+                <div className={style.inputDiv}>
+                  <img src="/Image/key.png" className={style.InputImg}/>
+                  <button className={style.sidebarOpenPage}  onClick={() => setRenderPage((renderPage = "Connexion"))}>Connexion</button>
+                </div>
+                <div className={style.inputDiv}>
+                  <img src="/Image/inscription.png" className={style.InputImg}/>
+                  <button className={renderPage == 'Inscription'? style.sidebarOpenPage : null} onClick={() => setRenderPage((renderPage = "Inscription"))}>Inscription</button>
+                </div>
               </div>
             </div>
           </div>

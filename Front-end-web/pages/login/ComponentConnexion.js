@@ -15,7 +15,6 @@ export default async function ComponentConnexion(email,password) {
       res = await res.json();
       console.log(res.status)
       if (res.status != "SUCCESS" || res.user.isActive == false) {
-        setLoad(true);
         console.log(res);
         if(res.status == null || res.status != "SUCCESS"){
           return "Mauvais identifiant ou mot de passe";
@@ -27,6 +26,7 @@ export default async function ComponentConnexion(email,password) {
         console.log(res.user);
         setCookies("token", res.user, 1 * 3600);
         window.sessionStorage.setItem("Page", "Accueil" );
+        router.reload(window.location.pathname)
       }
 
 }
