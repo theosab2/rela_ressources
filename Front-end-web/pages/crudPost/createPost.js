@@ -93,7 +93,6 @@ export default function createPost() {
               <h1>Créer votre ressource</h1>
                 <label htmlFor="titre"></label>
                 <input
-                  
                   type="text"
                   placeholder="Ajouter un titre"
                   required

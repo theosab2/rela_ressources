@@ -12,6 +12,9 @@ const UserSchema = mongoose.Schema({
   relation_ids:[
     {type:String}
   ],
+  friends_ids:[
+    {type:String}
+  ],
   photoUrl : {type:String, default:"AvatarDefaultUrl"},
   role: { type: String, required: true, default:"user" },
   favorites: [
