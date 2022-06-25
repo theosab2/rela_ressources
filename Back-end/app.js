@@ -16,7 +16,7 @@ module.exports = function (app, server) {
           {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-            dbName:process.env.DEV_DB_NAME
+            dbName: process.env.DEV_DB_NAME
           }
         )
         .then(() => console.log("Development database connection : SUCCESS"))

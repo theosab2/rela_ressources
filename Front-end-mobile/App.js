@@ -50,7 +50,7 @@ const RelationStack = () => {
         headerShown: false
       }}>
       <Stack.Screen
-        name='Relation'
+        name='Relations'
         component={Relations}
       />
     </Stack.Navigator>

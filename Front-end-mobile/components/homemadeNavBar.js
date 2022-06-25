@@ -42,7 +42,7 @@ const HomemadeNavBar = ({ route, navigation }) => {
                     />
                 }
                 onPress={() => {
-                    user == null ? navigation.navigate("Auth", { screen: 'Login' }) : navigation.navigate("Relation", { screen: 'Login' }) 
+                    user == null ? navigation.navigate("Auth", { screen: 'Login' }) : navigation.navigate("Relation", { screen: 'Relations' }) 
                 }}
             />
             <Button
