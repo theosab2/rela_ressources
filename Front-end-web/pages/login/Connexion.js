@@ -6,8 +6,10 @@ import React, { useState } from "react";
 import { setCookies, getCookie } from "cookies-next";
 import Inscription from "./Inscription";
 import Image from "next/dist/client/image";
-
+import ComponentConnexion from "./ComponentConnexion";
 import { useEffect } from "react";
+import ComponentAdminRole from "../administration/ComponentAdminRole";
+
 export default function Connexion() {
   const sanityIoImageLoader = ({ src, width, quality }) => {
     return `https://cdn.sanity.io/${src}?w=${width}&q=${quality || 75}`;
@@ -17,7 +19,7 @@ export default function Connexion() {
   const [mdp, setMdp] = useState("");
   const [load, setLoad] = useState(false);
   const [error, setError] = useState("");
-  const [spinner, setSpinner] = useState(true);
+
   useEffect(() => {
     if (window) { 
       window.sessionStorage.setItem("Page", "Connexion" );
@@ -27,7 +29,6 @@ export default function Connexion() {
   const display = async () => {
     console.log(identifiant);
     console.log(mdp);
-    setSpinner(false);
     function Modal() {
       const [isBrowser, setIsBrowser] = useState(false);
 
@@ -40,47 +41,8 @@ export default function Connexion() {
       useEffect(() => {
         setIsBrowser(true);
       }, []);
-
-      if (isBrowser) {
-        return ReactDOM.createPortal(
-          <div>Hello from modal</div>,
-          document.getElementById("modal-root")
-        );
-      } else {
-        return null;
-      }
     }
-
-    let res = await fetch("http://"+process.env.IP+":3001/auth/login", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        identifier: identifiant,
-        password: mdp,
-      }),
-    });
-    res = await res.json();
-    console.log(res.status)
-    setSpinner(true);
-    if (res.status != "SUCCESS") {
-      setLoad(true);
-      console.log(res);
-      if(res.status == null || res.status != "SUCCESS"){
-        setError("Mauvais identifiant ou mot de passe");
-      }else{
-        setError("");
-      }
-    } else {
-      console.log("Connexion");
-      console.log(res.user);
-      getServerSideProps(res.user);
-      if (res.user.role == "user" && res.user.isActive == false) {
-      }
-    }
-
+    setError(ComponentConnexion(identifiant,mdp));
   };
 
   const getServerSideProps = (user) => {
@@ -102,8 +64,10 @@ export default function Connexion() {
             <a className={style.link}>Je n'ai pas de compte</a>
           </Link>
           <div className={style.connexionInsert}>
-            <div className={style.connexionInput}>
+            <div className={style.inputContainer}>
               <label>Identifiant :</label>
+              <div className={style.inputDiv}>
+              <img src="/Image/user.png" className={style.InputImg}/>
               <input
                 type="text"
                 className={style.inputText}
@@ -113,21 +77,22 @@ export default function Connexion() {
                 }
               />
             </div>
-            <div className={style.connexionInput}>
-              <label className="">Mot de passe :</label>
+            
+              <label>Mot de passe :</label>
+              <div className={style.inputDiv}>
+              <img src="/Image/key.png" className={style.InputImg}/>
               <input
                 type="password"
                 className={style.inputText}
                 defaultValue={mdp}
                 onChange={(mdp) => setMdp(mdp.target.value)}
               />
+              </div>
 
                             <a className={style.link}>Mot de passe oublié</a>
             </div>
             {load ? <div className={style.errorMessage}>{error}</div>:<></>}
-            {<div className={style.errorMessage}>{spinner?<div className="lds-ring"><div></div><div></div><div></div><div></div></div>:""}</div>}
             </div>
-            <div className="ldsRing"><div></div><div></div><div></div><div></div></div>
             <button
                 type="button"
                 onClick={display}
