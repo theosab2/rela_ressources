@@ -149,6 +149,52 @@ module.exports.addContents = async (requestBody = null) => {
 
     let contentObject = requestBody.contents;
 
+    if(contentObject == {} || contentObject == undefined || contentObject == null){
+        console.log(controllerLogPrefix,"[create] (return) BAD_REQUEST : content not found in request body");
+        return({
+            status:"BAD_REQUEST",
+            statusCode:400,
+            message: "Création du article impossible : Objet \'article\' introuvable dans le body de la requête",
+            requiredFormat:"Format du body attendu : {article:{...article's informations...}}",
+        })
+    }
+
+    try //Sauvegarde du modèle Article dans la BDD
+    {   
+        console.log(controllerLogPrefix,"[create] (info) saving created message object in the database");
+        var saveAttempt = await _articleQueryService.updateArticle(articleObject);
+    }
+    catch (exception) //ECHEC Sauvegarde du modèle Article dans la BDD
+    {   
+        console.log(controllerLogPrefix,"[create] (error) exception occur while saving article object to the database : ",exception);
+        return ({
+            status:"EXCEPTION",
+            statusCode:500,
+            message: "Une erreur est survenue durant l'enregistrement du modèle dans la base de données pour le nouvel article : \'"+articleObject.title+"\'",
+            articleInfoReceipted:articleObject,
+            exception:exception
+        })
+    }
+
+    if(saveAttempt.status == "SUCCESS"){
+        console.log(controllerLogPrefix,"[create] (return) \'status\' : SUCCESS");
+        return ({
+            status:"SUCCESS",
+            statusCode:201,
+            articleCreated:articleObject,
+            message: "Article : \'"+articleObject.title+"\' Créé avec succès"
+        });    
+    }
+    else{
+        console.log(controllerLogPrefix,"[create] (error) exception occur while saving article object to the database : ",exception);
+        return ({
+            status:"EXCEPTION",
+            statusCode:500,
+            message: "Une erreur est survenue durant l'enregistrement du modèle dans la base de données pour le nouvel article : \'"+articleObject.title+"\'",
+            articleInfoReceipted:articleObject,
+            exception:exception
+        });
+    }
 }
 
 module.exports.create = async (requestBody = null) => {
