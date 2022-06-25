@@ -162,27 +162,16 @@ module.exports.create = async (requestBody = null) => {
     try //Sauvegarde du modèle User dans la BDD
     {   
         console.log(controllerLogPrefix,"[create] (info) saving created message object in the database");
-        await _userQueryService.create(userObject);
+        var creationQuery = await _userQueryService.saveOne(userObject);
     }
     catch (exception) //ECHEC Sauvegarde du modèle User dans la BDD
     {   
         console.log(controllerLogPrefix,"[create] (error) exception occur while saving user object to the database : ",exception);
-        return ({
-            status:"EXCEPTION",
-            statusCode:500,
-            message: "Une erreur est survenue durant l'enregistrement du modèle dans la base de données pour le nouvel user : \'"+userObject.title+"\'",
-            userInfoReceipted:userObject,
-            exception:exception
-        })
+        return creationQuery
     }
 
     console.log(controllerLogPrefix,"[create] (return) \'status\' : SUCCESS");
-    return ({
-        status:"SUCCESS",
-        statusCode:201,
-        userCreated:userObject,
-        message: "User : \'"+userObject.title+"\' Créé avec succès"
-    });    
+    return creationQuery
 };
 
 //#endregion

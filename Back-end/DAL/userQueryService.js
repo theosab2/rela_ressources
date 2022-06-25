@@ -350,8 +350,8 @@ const mUser = require('../models/user');
 //#region [UPDATE RESSOURCES]
 
     //Crée un nouvel utilisateur
-    module.exports.create = async (userObject) => {
-        console.log("D.A.L [createUser] (paramètres) 'userObject' :",userObject);
+    module.exports.saveOne = async (userObject) => {
+        console.log("D.A.L [saveOne] (paramètres) 'userObject' :",userObject);
 
         if(userObject == {} || userObject == undefined || userObject == null){
             return({
@@ -365,11 +365,11 @@ const mUser = require('../models/user');
         try //Vérification de l'existence du nom d'utilisateur dans la base de données
         {   
             var usernameAlreadyExist = await this.checkUsernameExistence(userObject.username);
-            console.log("D.A.L [createUser] usernameAlreadyExist :",usernameAlreadyExist);
+            console.log("D.A.L [saveOne] usernameAlreadyExist :",usernameAlreadyExist);
         }
         catch(exception) //ECHEC de la vérification de l'existence du nom d'utilisateur dans la base de données
         {
-            console.log("D.A.L [createUser] (return) 'exception' : ", exception);
+            console.log("D.A.L [saveOne] (return) 'exception' : ", exception);
             return({
                 status:"CONTROL_FAILURE",
                 statusCode:500,
@@ -378,7 +378,7 @@ const mUser = require('../models/user');
             })
         }
 
-        if(userObject.isEmail != null && userObject.isEmail != undefined)
+        if(userObject.email != null && userObject.email != undefined)
         {
             try //Vérification du format de l'adresse email reçue
             {   
