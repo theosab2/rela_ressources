@@ -307,16 +307,17 @@ router.get("/article/:id", async function (req, res, next) {
           ...JSON.parse(req.body.contents[i]),
           mediaUrl : `${req.protocol}://${req.get('host')}/content-medias/${req.files[i].filename ?? req.file.filename}`
         };
-      }    
-    var contentAddQueryResult = await _articleController.addContents(
-      req.body.contents
-    );
-
-    _responseLogger(req);
-    res
+      }
+      
+      var contentAddQueryResult = await _articleController.addContents(
+        req.body.contents
+      );
+      
+      _responseLogger(req);
+      res
       .status(articleCreationQueryResult.statusCode)
       .json(articleCreationQueryResult);
-  }
+    }
   });
 
 //Suppression d'un article
