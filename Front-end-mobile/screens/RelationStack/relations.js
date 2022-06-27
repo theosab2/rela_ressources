@@ -1,57 +1,99 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, TextInput, StyleSheet, ScrollView, SafeAreaView } from 'react-native'
+import { View, Text, TextInput, StyleSheet, ScrollView, SafeAreaView, Image } from 'react-native'
 import { Divider, Icon } from 'react-native-elements';
 import Header from '../../components/header';
+import HomemadeNavBar from '../../components/homemadeNavBar';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { API_URL } from "@env"
+import { TouchableOpacity } from 'react-native-gesture-handler'
+
 
 const Relations = ({ navigation }) => {
     const [search, setSearch] = useState("");
-    const [suggestions, setSuggestions] = useState(<View/>);
-    const [demande,setDemande] = useState(<View/>);
-    const [friends,setFriends] = useState([])
+    const [suggestions, setSuggestions] = useState([]);
+    const [demande, setDemande] = useState(<View />);
+    const [friends, setFriends] = useState([]);
+    const [displaySuggestion, setDisplaySuggestion] = useState([]);
+    const [displayDemandes, setDisplayDemandes] = useState([]);
 
     useEffect(() => {
         getFriends();
-    },[])
-
+        getSuggestionUser();
+    }, [])
+    //Get user friends
     const getFriends = async () => {
         const userId = await AsyncStorage.getItem('@userId')
-        if(userId){
+        console.log(userId)
+        if (userId == null) {
             return;
         }
         try {
-            const api = await fetch(API_URL + "/user/" + userId ,{
+            const api = await fetch(API_URL + "/user/" + userId, {
                 method: "GET",
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
-                  },
-              })
-              const res = await api.json();
-              console.log(res);
+                },
+            })
+            const res = await api.json();
+            setFriends(res.friends_ids);
         } catch (e) {
             console.log(e);
-            
         }
     }
+    //Get all unfriends user
     const getSuggestionUser = async () => {
-        if(await AsyncStorage.getItem('@userId') == null){
+        if (await AsyncStorage.getItem('@userId') == null) {
             setUser(null)
-        }else{
+        } else {
             const userId = await AsyncStorage.getItem('@userId')
         }
         try {
-            const api = await fetch(API_URL + '/user/' + storedId, {
+            const api = await fetch(API_URL + '/users/all', {
                 method: 'GET',
                 headers: {
-                  Accept: 'application/json',
-                  'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
                 },
-              });
-              const res = await api.json();
+            });
+            const res = await api.json();
+            setSuggestions(res.users);
+            getDisplaySuggestion();
         } catch (e) {
             console.log(e)
         }
-         
+    }
+    const getDisplaySuggestion = async () => {
+        const userId = await AsyncStorage.getItem('@userId')
+        displaySuggestion.splice(0, displaySuggestion.length)
+        displaySuggestion.push(suggestions.map(item => {
+            console.log(item._id)
+            if (item._id == userId) {
+                return;
+            }
+            else if (friends.find(friend => friend === item._id)) {
+                return;
+            }
+            else {
+                return <TouchableOpacity style={styles.cardContainer} containerStyle={styles.cardContainerStyle}>
+                    <Image
+                        style={styles.cardImg}
+                        source={require('../../test_content/waiting.jpg')}
+                    />
+                    <View style={styles.infoContainer}>
+                        <Text style={styles.name}>{item.username}</Text>
+                        <Text style={styles.date}></Text>
+                    </View>
+                    <TouchableOpacity containerStyle={styles.buttonContainer}>
+                        <Text>Add</Text>
+                    </TouchableOpacity>
+                </TouchableOpacity>
+            }
+        }))
+    }
+    const getDisplayDemande = () => {
+        displayDemandes.splice(0, displayDemandes.length);
+
     }
 
     return (
@@ -92,8 +134,12 @@ const Relations = ({ navigation }) => {
                             style={styles.divider}
                         />
                     </View>
+                    <View>
+                        {displaySuggestion}
+                    </View>
                 </ScrollView>
             </SafeAreaView>
+            <HomemadeNavBar route='Relation' navigation={navigation} />
         </View>)
 }
 export default Relations
@@ -136,4 +182,45 @@ const styles = StyleSheet.create({
     inputIcon: {
         margin: 5,
     },
+    cardContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    cardContainerStyle: {
+        height: 60,
+        width: '100%',
+        backgroundColor: '#869ECE',
+        borderRadius: 10,
+        justifyContent: 'center',
+        margin: 5,
+
+    },
+    cardImg: {
+        margin: 5,
+        width: 50,
+        height: 50,
+        borderRadius: 100,
+    },
+    infoContainer: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        margin: 5,
+        width: '60%'
+    },
+    buttonContainer: {
+        backgroundColor: '#CE8686',
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 25,
+        width: 70
+    },
+    name: {
+        color: '#FFFFFF',
+        fontSize: 15,
+    },
+    date: {
+        color: '#BEC4D3',
+        fontSize: 12
+    }
 })
