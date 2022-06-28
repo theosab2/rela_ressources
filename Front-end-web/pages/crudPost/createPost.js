@@ -51,6 +51,7 @@ export default function createPost() {
   };
 
   const uploadContentMediasToClient = (event) => {
+    
     console.log(event)
     if(typeof(event) != typeof(undefined))
     {
