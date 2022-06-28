@@ -57,24 +57,23 @@ export default function createPost() {
     {
       if (event.target.files && event.target.files[0]) {
         console.log("files")
-      
+        
         for (let i = 0; i < event.target.files.length; i++) {
-          console.log("file: ",event.target.files[i]);
 
           const media = event.target.files[i];
-  
+
           let newContentsMedia = contentsMedia;
           newContentsMedia[event.target.id.replace()].push(newContentsMedia)
           setContentsMedia(newContentsMedia);
-  
+
           let newContentsMediaObjectURL = contentsMediaObjectURL;
           newContentsMediaObjectURL.push(URL.createObjectURL(media))
           setContentsMediaObjectURL(newContentsMediaObjectURL);
         }
       }
     }
-    
   };
+  
   const display = async () => {
     // create array with 2 images 
     /*
@@ -97,6 +96,7 @@ export default function createPost() {
       isActive: true,
       privacyIsPublic: true,
     });
+
     formdata.append("article", JSON_Object);
     const res = await fetch("http://"+process.env.IP+":3001/article/create", {
       method: "POST",
@@ -300,6 +300,17 @@ export default function createPost() {
               <label htmlFor="condition">
                 Cette publication est privée
               </label>
+              <div>
+              <label htmlFor="content-files" className={style.addContentMedia}>
+                +
+              </label>
+              <input id="content-files" 
+                className={style.inputFile} 
+                type="file"                         
+                accept="image/*, .pdf,video/*"
+                onChange={uploadContentMediasToClient}>
+              </input>
+            </div>
             </div>
                 <div id="article-contents-div">
                   
