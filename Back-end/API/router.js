@@ -269,11 +269,10 @@ router.get("/article/:id", async function (req, res, next) {
 //#endregion
 
 //#region [UPDATE RESSOURCES]
-
   //Création d'un article
   router.post("/article/create", _multer.articleImage, async function (req, res, next) {     
-    console.log(req.body);
-    console.log(req.file);
+    console.log(req.body );
+    console.log(req.file );
     console.log(req.files);
 
     if(req.file != undefined & req.file != null){
@@ -283,32 +282,40 @@ router.get("/article/:id", async function (req, res, next) {
       };
       /*
       for(i=0;i<=req.body.contents.length;i++){
+      if(!req.body.contents){
+        req.body.contents = [];
+      }
+      for(i=0;i < req.body.contents.length ;i++){
         req.body.article.contents[i].mediaUrl =  `${req.protocol}://${req.get('host')}/content-images/${req.file.filename}`
       };  
       */
     
-    var articleCreationQueryResult = await _articleController.create(
-      req.body
-    );
+      var articleCreationQueryResult = await _articleController.create(
+        req.body
+      );
 
-    _responseLogger(req);
-    res
-      .status(articleCreationQueryResult.statusCode)
-      .json(articleCreationQueryResult);
-  }
-});
+      _responseLogger(req);
+      res
+        .status(articleCreationQueryResult.statusCode)
+        .json(articleCreationQueryResult);
+    }
+  
+  });
 
   router.post("/article/add-contents", _multer.contentMedias, async function (req, res, next) {     
-    console.log(req.body);
-    console.log(req.file);
+    console.log(req.body );
+    console.log(req.file );
     console.log(req.files);
-    
+
     if(req.files != undefined & req.files != null || req.file != undefined & req.file != null){ //TEST with 1 content
       for(i=0;i<req.body.contents.length;i++){
-        req.body.contents[i] = {
-          ...JSON.parse(req.body.contents[i]),
-          mediaUrl : `${req.protocol}://${req.get('host')}/content-medias/${req.files[i].filename ?? req.file.filename}`
-        };
+        if(req.files[i].filename != null || req.file.filename != null)
+        {
+          req.body.contents[i] = {
+            ...JSON.parse(req.body.contents[i]),
+            mediaUrl : `${req.protocol}://${req.get('host')}/content-medias/${req.files[i].filename ?? req.file.filename}`
+          };
+        }
       }
       
       var contentAddQueryResult = await _articleController.addContents(
@@ -320,6 +327,7 @@ router.get("/article/:id", async function (req, res, next) {
       .status(articleCreationQueryResult.statusCode)
       .json(articleCreationQueryResult);
     }
+
   });
 
 //Suppression d'un article
@@ -328,6 +336,7 @@ router.post("/article/delete/:articleId", async function (req, res, next) {
   var deleteResult = await _articleQueryService.deleteArticle(
     req.params.articleId
   );
+  
   _responseLogger(req);
   res.status(deleteResult.statusCode).json(deleteResult);
 });
@@ -338,6 +347,7 @@ router.put("/article/:articleId", async function (req, res, next) {
     req.params.articleId,
     req.body.article
   );
+  
   _responseLogger(req);
   res.status(updateResult.statusCode).json(updateResult);
 });

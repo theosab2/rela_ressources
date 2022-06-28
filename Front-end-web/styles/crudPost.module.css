@@ -64,6 +64,20 @@
   
 }
 
+.addContentMedia{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 50px;
+
+  background-color: #2a6faf;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 25px;
+  margin-right: 10px;
+}
+
 .inputFile{
   display: none;
 }

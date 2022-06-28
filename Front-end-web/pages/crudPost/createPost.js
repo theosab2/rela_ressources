@@ -22,6 +22,10 @@ export default function createPost() {
   const [content, setContent] = useState(null);
   const [userId, setUserId] = useState(null);
 
+  const [contents, setContents] = useState([]);
+  const [contentsMedia, setContentsMedia] = useState([]);
+  const [contentsMediaObjectURL, setContentsMediaObjectURL] = useState([]);
+
   useEffect(() => {
     if (window) { 
       window.sessionStorage.setItem("Page", "Creer" );
@@ -38,6 +42,19 @@ export default function createPost() {
     }
   };
 
+  const uploadContentMediasToClient = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      
+      for (let i = 0; i < event.target.files.length; i++) {
+
+        const media = event.target.files[i];
+        setContentsMedia(media);
+        setContentsMediaObjectURL(URL.createObjectURL(media));
+      }
+      
+      console.log(event);
+    }
+  };
   const display = async () => {
     // create array with 2 images 
     /*
@@ -49,6 +66,8 @@ export default function createPost() {
     */
     var formdata = new FormData();
     formdata.append("article-image", image);
+    var contentMedias = [];
+    
     var JSON_Object = JSON.stringify({
       articleCategory_TTids: CategorieRessource,
       title: title,
@@ -58,7 +77,6 @@ export default function createPost() {
       isActive: true,
       privacyIsPublic: true,
     });
-    console.log("Titre :"+title +" Description :"+content+" Createur :"+userCookie._id)
     formdata.append("article", JSON_Object);
     const res = await fetch("http://"+process.env.IP+":3001/article/create", {
       method: "POST",
@@ -72,11 +90,39 @@ export default function createPost() {
     console.log(res.status);
     if (res.status != "SUCESS") {
       console.log(res.status);
-    } else {
+    } 
+    else {
       console.log("Réussite");
     }
 
     sendArticleContents()
+  };
+
+  const sendArticleContents= async () => {
+    var formdata = new FormData();
+
+    var contentMedia = image;
+    var contentMedias = [];
+    contentMedias.push(contentMedia)
+
+    formdata.append("content-images", contentMedias);
+
+    
+    var JSON_Object = JSON.stringify({
+      contents:[
+        
+      ]//TODO : add content state
+    });
+
+    const res = await fetch("http://"+process.env.IP+":3001/article/add-contents", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "user-upload-GUID": userCookie._id,
+      },
+      body: formdata,
+    });
+
   };
 
   function getType(value) {
@@ -133,7 +179,8 @@ export default function createPost() {
                       />
                     </div>
                   );
-                } else if (typeRessource == "video") {
+                } 
+                else if (typeRessource == "video") {
                   return (
                     <div >
                       <img
@@ -143,14 +190,16 @@ export default function createPost() {
                       />
                     </div>
                   );
-                } else if (typeRessource == "lien") {
+                } 
+                else if (typeRessource == "lien") {
                   return (
                     <div >
                       <p>Lien :</p>
                       <input type="text" placeholder="Insérer un lien"></input>
                     </div>
                   );
-                } else {
+                } 
+                else {
                   return <>              <img
                   id="output"
                   src={createObjectURL}
@@ -158,7 +207,7 @@ export default function createPost() {
                 /></>;
                 }
               })()}
-              <div >
+              <div>
                 <textarea
                   className={style.descriptionRessource}
                   rows="5"
@@ -167,8 +216,6 @@ export default function createPost() {
                   onChange={(content) => setContent(content.target.value)}
                 ></textarea>
               </div>
-            <div >
-            </div>
             <select name="categorie" 
             id="categorie" 
             onChange={getCategorie}
@@ -192,6 +239,17 @@ export default function createPost() {
               <label htmlFor="condition">
                 Cette publication est privée
               </label>
+              <div>
+              <label htmlFor="content-files" className={style.addContentMedia}>
+                +
+              </label>
+              <input id="content-files" 
+                className={style.inputFile} 
+                type="file"                         
+                accept="image/*, .pdf,video/*"
+                onChange={uploadContentMediasToClient}>
+              </input>
+            </div>
             </div>
               <button
                 className={style.validateRessource}
