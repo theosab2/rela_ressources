@@ -11,7 +11,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 const Relations = ({ navigation }) => {
     const [search, setSearch] = useState("");
     const [suggestions, setSuggestions] = useState([]);
-    const [demande, setDemande] = useState(<View />);
+    const [demande, setDemande] = useState([]);
+    const [waiting, setWaiting] = useState([]);
     const [friends, setFriends] = useState([]);
     const [displaySuggestion, setDisplaySuggestion] = useState([]);
     const [displayDemandes, setDisplayDemandes] = useState([]);
@@ -23,7 +24,6 @@ const Relations = ({ navigation }) => {
     //Get user friends
     const getFriends = async () => {
         const userId = await AsyncStorage.getItem('@userId')
-        console.log(userId)
         if (userId == null) {
             return;
         }
@@ -66,12 +66,19 @@ const Relations = ({ navigation }) => {
     const getDisplaySuggestion = async () => {
         const userId = await AsyncStorage.getItem('@userId')
         displaySuggestion.splice(0, displaySuggestion.length)
+        demande.splice(0,demande.length);
         displaySuggestion.push(suggestions.map(item => {
-            console.log(item._id)
+            console.log('detail',item.friends_ids.find(friend => friend === userId))
             if (item._id == userId) {
+                console.log('cest moi');
                 return;
             }
+            else if (item.friends_ids.find(friend => friend === userId) != undefined) {
+                console.log('initialisation dune demande',item);
+                demande.push(item);
+            }
             else if (friends.find(friend => friend === item._id)) {
+                
                 return;
             }
             else {
@@ -85,14 +92,51 @@ const Relations = ({ navigation }) => {
                         <Text style={styles.date}></Text>
                     </View>
                     <TouchableOpacity containerStyle={styles.buttonContainer}>
-                        <Text>Add</Text>
+                        <Text>Ajouter</Text>
                     </TouchableOpacity>
                 </TouchableOpacity>
             }
         }))
+        getDisplayDemande();;
     }
-    const getDisplayDemande = () => {
+    const getDisplayDemande = async () => {
         displayDemandes.splice(0, displayDemandes.length);
+        displayDemandes.push(demande.map(item => {
+            return <TouchableOpacity style={styles.cardContainer} containerStyle={styles.cardContainerStyle}>
+                <Image
+                    style={styles.cardImg}
+                    source={require('../../test_content/waiting.jpg')}
+                />
+                <View style={styles.infoContainer}>
+                    <Text style={styles.name}>{item.username}</Text>
+                    <Text style={styles.date}></Text>
+                </View>
+                <TouchableOpacity containerStyle={styles.buttonContainer}>
+                    <Text>Accepter</Text>
+                </TouchableOpacity>
+            </TouchableOpacity>
+        }))
+        //console.log(displayDemandes);
+        displayDemandes.push(friends.map(item => {
+            suggestions.find(friend => {
+                if (friend.friends_ids != undefined && friend.friends_ids == item) {
+                    return <TouchableOpacity style={styles.cardContainer} containerStyle={styles.cardContainerStyle}>
+                        <Image
+                            style={styles.cardImg}
+                            source={require('../../test_content/waiting.jpg')}
+                        />
+                        <View style={styles.infoContainer}>
+                            <Text style={styles.name}>{friends.username}</Text>
+                            <Text style={styles.date}></Text>
+                        </View>
+                        <TouchableOpacity containerStyle={styles.buttonContainer}>
+                            <Text>En attente</Text>
+                        </TouchableOpacity>
+                    </TouchableOpacity>
+                }
+            })
+        }))
+        //console.log(displayDemandes);
 
     }
 
@@ -125,6 +169,9 @@ const Relations = ({ navigation }) => {
                             color='#CE8686'
                             style={styles.divider}
                         />
+                    </View>
+                    <View>
+                        {displayDemandes}
                     </View>
                     <View style={styles.titleContainer}>
                         <Text style={styles.title}>Suggestions</Text>
