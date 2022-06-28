@@ -295,6 +295,17 @@ export default function createPost() {
               <label htmlFor="condition">
                 Cette publication est privée
               </label>
+              <div>
+              <label htmlFor="content-files" className={style.addContentMedia}>
+                +
+              </label>
+              <input id="content-files" 
+                className={style.inputFile} 
+                type="file"                         
+                accept="image/*, .pdf,video/*"
+                onChange={uploadContentMediasToClient}>
+              </input>
+            </div>
             </div>
                 <div id="article-contents-div">
                   
