@@ -54,7 +54,7 @@ const HomemadeNavBar = ({ route, navigation }) => {
                         color={route == 'CreatePost' ? '#2F4077' : '#ffffff'}
                     />
                 }
-                onPress={() => { navigation.navigate("NewPost", { screen: 'CreatePost' }) }}
+                onPress={() => { user == null ? navigation.navigate("Auth", { screen: 'Login' }) : navigation.navigate("NewPost", { screen: 'CreatePost' }) }}
             />
             <Button
                 type='clear'
