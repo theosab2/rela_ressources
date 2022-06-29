@@ -7,10 +7,10 @@ import utils from "../utils";
 import cookieManager from "../utils/cookieManager";
 import articleManager from "../utils/articleManager";
 import {useRef} from 'react';
+import groupManager from "../utils/groupManager";
+import ComponentJoinGroupe from "./ComponentJoinGroupe";
 
 export default function Groupe() {
-  let allArticle;
-  let array = [];
   const [showCreate,setShowCreate] = useState(false);
   const groupName = useRef(null);
 
@@ -20,17 +20,8 @@ export default function Groupe() {
     }
   }, []);
 
-  allArticle = articleManager();
   const userCookie = cookieManager();
-
-  if (allArticle != null) {
-
-    allArticle.forEach((element) => {
-      if (element.articleCreator == userCookie._id) {
-        array.push(element);
-      }
-    });
-
+  let allGroup = groupManager();
     async function createGroupe(){
       const res = await fetch("http://"+process.env.IP+":3001/relation/create", {
         method: "POST",
@@ -47,8 +38,11 @@ export default function Groupe() {
         }),
       });
     }
+  
 
-    console.log(allArticle);
+    
+
+    if(allGroup != null){
     return (
       <>
       <div className={style.mainContainer}>
@@ -66,29 +60,9 @@ export default function Groupe() {
         <button onClick={() => createGroupe()} >Valider</button>
       </div>
       :""}
-        <div className={style.groupeContainer}>
-            <div className={style.groupContainerImage}>
-            <img src="/Image/Bateau_2.jpg" className={style.groupeImage}/>
-            </div>
-            <div className={style.groupContainerIcone}>
-                <div className={style.groupContainerInfo}>
-                    <div>
-                        <img src="/Image/user.png"/>
-                        <p>383</p>
-                    </div>
-                <img src="/Image/oeil.png"/>
-                
-                <button>
-                Rejoindre
-                </button>
-                </div>
-                <div>
-                    <div>
-                        <p>Groupe de partage d’information sur les actions féministes mené en France</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+      {allGroup && allGroup.map((group) => (
+        <ComponentJoinGroupe group={group} />
+    ))};
      </div>
     </>
     );

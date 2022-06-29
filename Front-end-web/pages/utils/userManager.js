@@ -1,4 +1,3 @@
-import { setCookies, getCookie, removeCookies } from "cookies-next";
 import { useEffect, useState } from "react";
 
 export default function allUser() {
@@ -19,5 +18,6 @@ export default function allUser() {
   useEffect(() => {
     getArticle();
   }, []);
+
   return allUser;
 }
