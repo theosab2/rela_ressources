@@ -5,7 +5,9 @@ import Image from "next/dist/client/image";
 import { useState } from "react";
 import utils from "../utils";
 import { useEffect } from "react";
+
 export default function createPost() {
+  
   let allCategorie;
   allCategorie = categorieManager();
 
