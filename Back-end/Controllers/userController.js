@@ -1,3 +1,6 @@
+//===== === =====//
+const CryptoJS = require('crypto-js');
+
 //===== DAL =====//
 const _userQueryService = require("../DAL/userQueryService");
 
@@ -88,7 +91,6 @@ module.exports.getOne = async (userId) => {
 //#endregion
 
 //#region [QUERY RESSOURCES]
-
     module.exports.getQueryTemplate = async () => {
         console.log(controllerLogPrefix,"[getQueryTemplate] ()");
 
@@ -158,6 +160,12 @@ module.exports.create = async (requestBody = null) => {
             requiredFormat:"Format du body attendu : {user:{...user's informations...}}",
         })
     }
+
+    //Hashage du mot de passe
+    var hashedPassword = CryptoJS.AES.encrypt(userObject.password, "the-super-secret-key");
+
+    userObject.password = hashedPassword.toString();
+
 
     try //Sauvegarde du modèle User dans la BDD
     {   

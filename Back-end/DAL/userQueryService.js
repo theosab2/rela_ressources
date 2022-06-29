@@ -1,3 +1,6 @@
+//===== === =====//
+const CryptoJS = require('crypto-js');
+
 //mongoose
 const mongoose = require('mongoose');
 
@@ -244,7 +247,6 @@ const mUser = require('../models/user');
             try {
                 username =  username;
                 var data = await mUser.findOne({username:username});
-                console.log(data);
                 return data._id != undefined
                 ? 
                 {
@@ -267,7 +269,6 @@ const mUser = require('../models/user');
                 }
             }     
         };
-
     //#endregion
 
     //#region [CHECK]
@@ -331,15 +332,21 @@ const mUser = require('../models/user');
         //return Boolean representing existence of the combination userId <-> password in database
         module.exports.checkPassword = async (userId,passwordProvided) => {
             console.log("D.A.L [checkPassword] (paramètres) 'userId' :",userId,'passwordProvided',passwordProvided);
+            
 
             try {
-                var checkResult = ((await mUser.count({_id:userId,password:passwordProvided})) > 0);
+                let userPasswordHash = (await mUser.findById(userId)).password;
+
+                var decryptedUserPasswordHash = CryptoJS.AES.decrypt(userPasswordHash, "the-super-secret-key");
+
+                var checkResult = (decryptedUserPasswordHash.toString(CryptoJS.enc.Utf8) === passwordProvided)
+
                 console.log("D.A.L [checkPassword] (return) 'checkResult' : ",checkResult);
                 return checkResult
             } 
             catch (error) {
                 console.log("D.A.L [checkPassword] (return) 'err' : ",error);
-                return {message:"une erreur est survenue",error};
+                return false;
             }     
         };
 

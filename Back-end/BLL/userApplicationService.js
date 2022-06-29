@@ -116,9 +116,10 @@ module.exports.handleAuthenticationRequest = async (identifier,passwordProvided)
         authenticationResult = {
             status:"FAILURE",
             statusCode:401,
-            message:"Can't connect to user (id=\'"+userId+"\') : Invalid password",
+            message:"Can't connect to user (id=\'"+userIdRequest.id+"\') : Invalid password",
             user:{}
         }
+        
     }
 
     return authenticationResult;
