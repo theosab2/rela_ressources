@@ -63,8 +63,9 @@ export default function ajouterCategorie() {
   }
 
   async function updateCategorie() {
+    console.log(categorieModifie)
     let res = await fetch(
-      "http://"+process.env.IP+":3001/category/" + categorieModifie,
+      "http://"+process.env.IP+":3001/ut/" + categorieModifie,
       {
         method: "PUT",
         headers: {

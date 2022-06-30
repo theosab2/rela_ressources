@@ -61,7 +61,7 @@ export default function Groupe() {
       </div>
       :""}
       {allGroup && allGroup.map((group) => (
-        <ComponentJoinGroupe group={group} />
+        <ComponentJoinGroupe group={group} key={group._id}/>
     ))};
      </div>
     </>
