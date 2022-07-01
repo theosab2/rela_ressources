@@ -244,44 +244,94 @@ export default function Navigation(image) {
             <div className={style.sidebarContent}>
               <div className={style.sidebarTitle}>Publication</div>
               <div className={style.sidebarChoice}>
-                <button onClick={() => setRenderPage((renderPage = "Accueil"))}>Accueil</button>
-
-                <button className={renderPage == 'Creer'?style.sidebarOpenPage:null} onClick={() => setRenderPage((renderPage = "Creer"))}>Créer une ressource</button>
-                <button onClick={() => setRenderPage((renderPage = "Historique"))}>Historique de mes ressources</button>
-                <button onClick={() => setRenderPage((renderPage = "Favorie"))}>Mes ressources favorites</button>
-                <button onClick={() => setRenderPage((renderPage = "Abonnement"))}>Mes abonnements</button>
+              <div className={style.inputDiv}>
+                  <img src="/Image/home.png" className={style.InputImg}/>
+                  <button onClick={() => setRenderPage((renderPage = "Accueil"))}>Accueil</button>
+                </div>
+                <div className={style.inputDiv}>
+                  <img src="/Image/creer.png" className={style.InputImg}/>
+                  <button className={renderPage == 'Creer'?style.sidebarOpenPage:null} onClick={() => setRenderPage((renderPage = "Creer"))}>Créer une ressource</button>
+                </div>
+                <div className={style.inputDiv}>
+                  <img src="/Image/archiver.png" className={style.InputImg}/>
+                  <button onClick={() => setRenderPage((renderPage = "Historique"))}>Historique</button>
+                </div>
+                <div className={style.inputDiv}>
+                  <img src="/Image/favoris.png" className={style.InputImg}/>
+                  <button onClick={() => setRenderPage((renderPage = "Favorie"))}>Favories</button>
+                </div>
+                <div className={style.inputDiv}>
+                  <img src="/Image/verify.png" className={style.InputImg}/>
+                  <button onClick={() => setRenderPage((renderPage = "Abonnement"))}>Mes abonnements</button>
+                </div>
               </div>
             </div>
             <div className={style.sidebarContent}>
               <div className={style.sidebarTitle}>Profil</div>
               <div className={style.sidebarChoice}>
-                <button onClick={() => setRenderPage((renderPage = "Profil"))}>Modifier le profil</button>
-                <button onClick={() => showModal()}>Deconnexion</button>
+              <div className={style.inputDiv}>
+                  <img src="/Image/profil.png" className={style.InputImg}/>
+                  <button onClick={() => setRenderPage((renderPage = "Profil"))}>Modifier le profil</button>
+                </div>                
+                <div className={style.inputDiv}>
+                  <img src="/Image/se-deconnecter.png" className={style.InputImg}/>
+                  <button onClick={() => showModal()}>Deconnexion</button>
+                </div>
               </div>
             </div>
             <div className={style.sidebarContent}>
               <div className={style.sidebarTitle}>Communauté</div>
               <div className={style.sidebarChoice}>
-                <button onClick={() => setRenderPage((renderPage = "Amis"))}>Amis</button>
-                <button onClick={() => setRenderPage((renderPage = "Groupe"))}>Groupes</button>
-                <button onClick={() => setRenderPage((renderPage = "Evenement"))}>Evenements</button>
+              <div className={style.inputDiv}>
+                  <img src="/Image/ajouter-un-ami.png" className={style.InputImg}/>
+                  <button onClick={() => setRenderPage((renderPage = "Amis"))}>Amis</button>
+                </div>
+                <div className={style.inputDiv}>
+                  <img src="/Image/groupe.png" className={style.InputImg}/>
+                  <button onClick={() => setRenderPage((renderPage = "Groupe"))}>Groupes</button>
+                </div>
+                <div className={style.inputDiv}>
+                  <img src="/Image/evenement.png" className={style.InputImg}/>
+                  <button onClick={() => setRenderPage((renderPage = "Evenement"))}>Evenements</button>
+                </div>
               </div>
             </div>
             <div className={style.sidebarContent}>
               <div className={style.sidebarTitle}>Paramètre</div>
               <div className={style.sidebarChoice}>
-                <button onClick={() => setRenderPage((renderPage = "Preference"))}>Préférences</button>
-                <button onClick={() => setRenderPage((renderPage = "Supprimer"))}>Supprimer mon compte</button>
-                <button onClick={() => setRenderPage((renderPage = "Condition"))}>Conditions d'utilisation</button>
+              <div className={style.inputDiv}>
+                  <img src="/Image/options.png" className={style.InputImg}/>
+                  <button onClick={() => setRenderPage((renderPage = "Preference"))}>Préférences</button>
+                </div>
+                <div className={style.inputDiv}>
+                  <img src="/Image/delete-account.png" className={style.InputImg}/>
+                  <button onClick={() => setRenderPage((renderPage = "Supprimer"))}>Supprimer compte</button>
+                </div>
+                <div className={style.inputDiv}>
+                  <img src="/Image/conditions.png" className={style.InputImg}/>
+                  <button onClick={() => setRenderPage((renderPage = "Condition"))}>Conditions d'utilisation</button>
+                </div>
               </div>
             </div>
             <div className={style.sidebarContent}>
               <div className={style.sidebarTitle}>Administration</div>
-              <div className={style.sidebarChoice}>
-                <button onClick={() => setRenderPage((renderPage = "Moderation"))}>Modération</button>
-                <button onClick={() => setRenderPage((renderPage = "Categorie"))}>Administration de catégorie</button>
-                <button onClick={() => setRenderPage((renderPage = "Utilisateur"))}>Modifier les utilisateurs</button>
-                <button onClick={() => setRenderPage((renderPage = "Statiques"))}>Statistiques</button>
+                <div className={style.sidebarChoice}>
+                <div className={style.inputDiv}>
+                  <img src="/Image/moderator.png" className={style.InputImg}/>
+                  <button onClick={() => setRenderPage((renderPage = "Moderation"))}>Modération</button>
+                </div>
+                <div className={style.inputDiv}>
+                  <img src="/Image/evenement.png" className={style.InputImg}/>
+                  <button onClick={() => setRenderPage((renderPage = "Categorie"))}>Catégorie</button>
+                </div>
+                <div className={style.inputDiv}>
+                  <img src="/Image/utilisateur.png" className={style.InputImg}/>
+                  <button onClick={() => setRenderPage((renderPage = "Utilisateur"))}>Gérer utilisateurs</button>
+                </div>
+                <div className={style.inputDiv}>
+                  <img src="/Image/statistiques.png" className={style.InputImg}/>
+                  <button onClick={() => setRenderPage((renderPage = "Statiques"))}>Statistiques</button>
+                </div>
               </div>
             </div>
           </div>

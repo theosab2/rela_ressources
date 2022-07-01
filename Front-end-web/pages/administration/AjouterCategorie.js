@@ -73,8 +73,8 @@ export default function ajouterCategorie() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          category: {
-            categoryName: modifCategorie,
+          ut: {
+            name: modifCategorie,
           },
         }),
       }

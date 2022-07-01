@@ -62,21 +62,6 @@
   flex-direction: column;
 }
 
-.sidebarChoice button{
-  min-height: 30px;
-  border-bottom: 1px #869ECE solid;
-  font-size: 15px;
-  color: #fff;
-  width: 100%;
-}
-
-.sidebarChoice button:hover{
-  transition: 0.3s;
-  color: #fff;
-  background-color: #869ECE;
-  border: 1px solid #2F4077;
-}
-
 .sidebarOpenPage{
   font-size: 40px;
 }
@@ -184,16 +169,34 @@
 .InputImg{
   height: 20px;
   width: 20px;
-  position: absolute;
-  margin-right: 125px;
+
 }
 
 .inputDiv{
   background-color: #2F4077;
   display: flex;
-  justify-content: center;
   align-items: center;
-  border-radius: 5px;
   width: 100%;
   box-shadow: 1px 1px 3px #555;
+  min-height: 30px;
+  border-bottom: 1px #869ECE solid;
+  font-size: 15px;
+  color: #fff;
+  text-align: end;
+}
+
+.inputDiv button{
+margin-left: 20px;
+}
+
+.inputDiv img{
+  margin-left: 5px;
+}
+
+.inputDiv:hover{
+  transition: 0.3s;
+  color: #fff;
+  background-color: #869ECE;
+  border: 1px solid #2F4077;
+  cursor: pointer;
 }

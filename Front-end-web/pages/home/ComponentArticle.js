@@ -74,6 +74,7 @@ export default function ComponentArticle(props) {
       }
 
       const addFav = async(id) =>{
+        
         userCookie.favorites.push(id);
         await fetch("http://"+process.env.IP+":3001/user/" + userCookie._id, {
           method: "PUT",
@@ -87,6 +88,7 @@ export default function ComponentArticle(props) {
             },
           }),
         });
+        console.log("aaa")
       }
 
       const getUser  = async (id) =>{
