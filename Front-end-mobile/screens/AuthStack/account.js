@@ -12,6 +12,7 @@ import Card from '../../components/card';
 const Account = ({ navigation }) => {
   const [userData, setUserData] = useState({});
   const[selectedTab,setSelectedTab] = useState('top');
+  const [friends,setFriends] = useState([]);
   /**
    * A modifier => Créer deux state pour new et top ressource
    */
@@ -27,8 +28,7 @@ const Account = ({ navigation }) => {
           navigation.navigate('Auth', {screen: 'Login'})
         }
       } catch (e) {
-        console.log(e);
-        console.log('dommage');
+        console.log('dommage',e);
       }
     }
     const getUserData = async (storedId) => {
@@ -42,6 +42,7 @@ const Account = ({ navigation }) => {
         });
         const res = await api.json();
         setUserData(res);
+        setFriends(userData.friends_ids)
       } catch (e) {
         console.log(e);
       }
@@ -72,6 +73,7 @@ const Account = ({ navigation }) => {
     }
     getPost();
     getLocalData();
+    
   }, []);
 
 
@@ -132,7 +134,7 @@ const Account = ({ navigation }) => {
             style={styles.divider}
           />
           <View style={styles.containerStat}>
-            <Text style={styles.stat}>128</Text>
+            <Text style={styles.stat}>{friends.length}</Text>
             <Text style={styles.libelleStat}>Relations</Text>
           </View>
         </View>
