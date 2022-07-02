@@ -414,3 +414,47 @@ color: #fff;
   margin: 5px;
   color:#869ECE;
 }
+
+.convContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.convSubContainer{
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  height: 80%;
+  min-height: 500px;
+  background-color: #869ECE;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px #444;
+}
+
+.convSubContainer button{
+  background-color: #2F4077;
+  height: 30px;
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.convSubContainer textarea{
+ height: 100px;
+ width: 80%;
+}
+
+
+.MessageContainer{
+  padding: 10px;
+  flex: 5;
+}
+
+.SendContainer{
+  border-top: 1px solid #000;
+  display: flex;
+  flex: 1;
+  justify-content: space-evenly;
+  align-items: center;
+}

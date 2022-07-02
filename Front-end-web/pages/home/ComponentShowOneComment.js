@@ -3,7 +3,7 @@ import style from "../../styles/Home.module.css";
 import Image from "next/image";
 import cookieManager from "../utils/cookieManager";
 
-export default function(props) {
+export default function ComponentShowOneComment(props) {
     const [userInfo, setUserInfo] = useState(null);
     const userCookie = cookieManager();
     const [txtAbo,setTxtAbo] = useState(null);

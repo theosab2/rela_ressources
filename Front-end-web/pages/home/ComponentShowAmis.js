@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import style from "../../styles/Home.module.css";
+import { useRouter } from "next/router";
 
 
 export default function ComponentShowAmis(props) {
     const [txtAbo,setTxtAbo] = useState(null);
     const [nbRelation,setNbRelation] = useState(null);
+    const [id, setId] = useState(null);
+    const router = useRouter();
 
     const abonnement = async (array) => {
         if(!props.friend.relation_ids.includes(props.userCookie._id)){
@@ -59,8 +62,19 @@ export default function ComponentShowAmis(props) {
         useEffect(function showPost(){
             setTextAbonnement(props.friend.relation_ids.includes(props.userCookie._id));
             setNbRelation(props.friend.relation_ids.length);
-        },[]);
-        
+            if(id != null){
+              if (window) { 
+                window.sessionStorage.setItem("Page", "Message" );
+                window.sessionStorage.setItem("id", id );
+                router.reload(window.location.pathname)
+              }
+            }
+        },[id]);
+
+
+
+
+
         return (
             <>
                 <div className={style.abonnementContainer} key={props.friend._id}>
@@ -72,7 +86,7 @@ export default function ComponentShowAmis(props) {
                         <img src="/Image/user.png"/>
                         <p>{nbRelation}</p>
                     </div>
-                    <img src="/Image/comment.png"/>
+                    <img onClick={()=>setId(props.friend._id)} src="/Image/comment.png"/>
                     <button onClick={() => (abonnement(props.friend.relation_ids))}>
                     {txtAbo}
                     </button>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import style from "../../styles/Home.module.css";
 import cookieManager from "../utils/cookieManager";
 
-export default function(props) {
+export default function ComponentJoinGroupe(props) {
 
     const userCookie = cookieManager();
     const [txtAbo,setTxtAbo] = useState(null)

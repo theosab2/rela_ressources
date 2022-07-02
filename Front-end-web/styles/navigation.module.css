@@ -62,10 +62,6 @@
   flex-direction: column;
 }
 
-.sidebarOpenPage{
-  font-size: 40px;
-}
-
 .navContentSeparator{
   margin-left: 200px;
   display: flex;
@@ -194,6 +190,35 @@ margin-left: 20px;
 }
 
 .inputDiv:hover{
+  transition: 0.3s;
+  color: #fff;
+  background-color: #869ECE;
+  border: 1px solid #2F4077;
+  cursor: pointer;
+}
+
+.inputDivSelect{
+  background-color: #869ECE;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  box-shadow: 1px 1px 3px #555;
+  min-height: 30px;
+  border-bottom: 1px #869ECE solid;
+  font-size: 15px;
+  color: #fff;
+  text-align: end;
+}
+
+.inputDivSelect button{
+  margin-left: 20px;
+}
+
+.inputDivSelect img{
+  margin-left: 5px;
+}
+
+.inputDivSelect:hover{
   transition: 0.3s;
   color: #fff;
   background-color: #869ECE;

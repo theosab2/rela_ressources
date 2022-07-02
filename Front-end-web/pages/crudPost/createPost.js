@@ -39,9 +39,6 @@ export default function createPost() {
   };
 
   const display = async () => {
-    var formdata = new FormData();
-    formdata.append("article-image", image);
-
     // create array with 2 images 
     /*
     var images = [];
@@ -50,7 +47,8 @@ export default function createPost() {
 
     formdata.append("content-images", images);
     */
-
+    var formdata = new FormData();
+    formdata.append("article-image", image);
     var JSON_Object = JSON.stringify({
       articleCategory_TTids: CategorieRessource,
       title: title,
@@ -60,6 +58,7 @@ export default function createPost() {
       isActive: true,
       privacyIsPublic: true,
     });
+    console.log("Titre :"+title +" Description :"+content+" Createur :"+userCookie._id)
     formdata.append("article", JSON_Object);
     const res = await fetch("http://"+process.env.IP+":3001/article/create", {
       method: "POST",
