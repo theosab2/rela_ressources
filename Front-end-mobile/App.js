@@ -24,6 +24,7 @@ import CreateContentPost from './screens/AddStack/createContentPost';
 import Settings from './screens/AuthStack/settings';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Relations from './screens/RelationStack/relations';
+import AccountUpdate from './screens/AuthStack/accountUpdate';
 
 const Stack = createStackNavigator();
 const HomeStack = ({ navigation, route }) => {
@@ -129,6 +130,10 @@ const AuthStack = ({ navigation, route }) => {
         name='Settings'
         component={Settings}
       />
+      <Stack.Screen
+        name='AccountUpdate'
+        component={AccountUpdate}
+      />
     </Stack.Navigator>
   )
 }
@@ -139,21 +144,21 @@ const App = () => {
       "[react-native-gesture-handler] ",
     ]);
     const getSavedAccount = async () => {
-      try{
+      try {
         return await AsyncStorage.getItem('@savedAccount');
-      }catch(e){
+      } catch (e) {
         console.log(e);
       }
     }
     const detectSaveUser = () => {
       var loginState = getSavedAccount();
       //console.log('loginState',loginState);
-      if(loginState == 'false' || loginState == null){
+      if (loginState == 'false' || loginState == null) {
         AsyncStorage.removeItem('@userId');
         //console.log('Anciennes données supprimés');
-      }else if(loginState == 'true'){
+      } else if (loginState == 'true') {
         //console.log('Données utilisateurs restaurées');
-      }else{
+      } else {
         //console.log('erreur login state');
       }
     }
