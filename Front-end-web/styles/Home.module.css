@@ -175,6 +175,10 @@ justify-content: center;
   color:#fff;
 }
 
+.hover{
+  cursor: pointer;
+}
+
 
 .groupeContainer{
   display: flex;

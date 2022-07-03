@@ -51,7 +51,6 @@ export default function Navigation(image) {
       if(getSession == null){
         window.sessionStorage.setItem("Page", "Accueil" );
       }
-      getSession = window.sessionStorage.getItem("Page");
       getId = window.sessionStorage.getItem("id");
       setRenderPage(getSession);
       setIdPage(getId);
@@ -103,7 +102,7 @@ export default function Navigation(image) {
         setNavTitle("Commentaire");
         break;
     }
-  }, [navTitle]);
+  }, []);
 
 
   const deconnexionUtilisateur = () => {
@@ -184,7 +183,7 @@ export default function Navigation(image) {
         break;
       case "EnterGroup":
           //setNavTitle("Commentaire");
-          return <EntrerGroupe UserId={idPage}></EntrerGroupe>;
+          return <EntrerGroupe GroupId={idPage}></EntrerGroupe>;
           break;
     }
   }

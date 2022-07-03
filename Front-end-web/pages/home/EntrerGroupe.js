@@ -1,7 +1,7 @@
-export default function EntrerGroupe() {
+export default function EntrerGroupe(props) {
     return (
         <div>
-            Enter
+            {props.GroupId}
         </div>
     );
 }
