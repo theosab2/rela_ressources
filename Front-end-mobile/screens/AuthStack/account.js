@@ -78,7 +78,6 @@ const Account = ({ navigation }) => {
 
 
 
-
   return (
     <View style={styles.container}>
       <Header navigation={navigation} />
@@ -134,7 +133,7 @@ const Account = ({ navigation }) => {
             style={styles.divider}
           />
           <View style={styles.containerStat}>
-            <Text style={styles.stat}>{friends.length}</Text>
+            <Text style={styles.stat}>{friends == undefined ? 0 : friends.length}</Text>
             <Text style={styles.libelleStat}>Relations</Text>
           </View>
         </View>
