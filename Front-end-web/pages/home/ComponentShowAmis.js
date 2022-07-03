@@ -44,7 +44,6 @@ export default function ComponentShowAmis(props) {
                 },
               }),
             });
-            
         }
     }
 
@@ -71,10 +70,6 @@ export default function ComponentShowAmis(props) {
             }
         },[id]);
 
-
-
-
-
         return (
             <>
                 <div className={style.abonnementContainer} key={props.friend._id}>
@@ -86,9 +81,9 @@ export default function ComponentShowAmis(props) {
                         <img src="/Image/user.png"/>
                         <p>{nbRelation}</p>
                     </div>
-                    <img onClick={()=>setId(props.friend._id)} src="/Image/comment.png"/>
+                    <img onClick={()=>setId(props.friend._id)} src="/Image/comment.png" className={style.hover}/>
                     <button onClick={() => (abonnement(props.friend.relation_ids))}>
-                    {txtAbo}
+                      {txtAbo}
                     </button>
                 </div>
             </>

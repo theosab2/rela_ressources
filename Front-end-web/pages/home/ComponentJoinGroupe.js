@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import style from "../../styles/Home.module.css";
 import cookieManager from "../utils/cookieManager";
+import { useRouter } from "next/router";
 
 export default function ComponentJoinGroupe(props) {
-
+    const router = useRouter();
     const userCookie = cookieManager();
     const [txtAbo,setTxtAbo] = useState(null)
     const [id, setId] = useState(null);
@@ -11,9 +12,8 @@ export default function ComponentJoinGroupe(props) {
     const joinGroup = async (array) => {
       if(!props.group.user_ids.includes(userCookie._id)){
         setTxtAbo(true)
-        array.push(props.userCookie._id)
+        array.push(userCookie._id)
         console.log(array)
-        
         await fetch("http://"+process.env.IP+":3001/relations/" + props.group._id, {
           method: "PUT",
           headers: {
@@ -68,10 +68,9 @@ export default function ComponentJoinGroupe(props) {
                         <img src="/Image/user.png"/>
                         <p>{props.group.user_ids.length}</p>
                     </div>
-                <img src="/Image/oeil.png" onClick={()=>setId(props.group._id)}/>
-                
+                    {txtAbo ? <img src="/Image/oeil.png" onClick={()=>setId(props.group._id)}/>: null}
                 <button onClick={()=>joinGroup(props.group.user_ids)}>
-                {txtAbo ? "Quitter": "Rejoindre"}
+                  {txtAbo ? "Quitter": "Rejoindre"}
                 </button>
                 </div>
                 <div>
