@@ -3,7 +3,7 @@ import style from "../../styles/Home.module.css";
 export default function Message(props) {
 
     const abonnement = async (array) => {
-    await fetch("http://"+process.env.IP+":3001/localhost:3001/messages/all-by-relation/, {
+    await fetch("http://"+process.env.IP+":3001/localhost:3001/messages/all-by-relation/"), {
         method: "PUT",
         headers: {
           Accept: "application/json",
@@ -14,7 +14,7 @@ export default function Message(props) {
             relation_ids: array
           },
         }),
-      });
+      };
     }
 
     return (

@@ -24,6 +24,7 @@ import Utilisateur from "./administration/AdminRole";
 import utils from "./utils";
 import articleManager from "./utils/articleManager";
 import Message from "./home/Message";
+import EntrerGroupe from "./home/EntrerGroupe";
 
 export default function Navigation(image) {
   const router = useRouter();
@@ -181,6 +182,10 @@ export default function Navigation(image) {
         //setNavTitle("Commentaire");
         return <Message UserId={idPage}></Message>;
         break;
+      case "EnterGroup":
+          //setNavTitle("Commentaire");
+          return <EntrerGroupe UserId={idPage}></EntrerGroupe>;
+          break;
     }
   }
 

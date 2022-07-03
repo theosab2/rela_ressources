@@ -39,9 +39,6 @@ export default function Groupe() {
       });
     }
   
-
-    
-
     if(allGroup != null){
     return (
       <>

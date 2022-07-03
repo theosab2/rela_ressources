@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import style from "../../styles/Home.module.css";
 import cookieManager from "../utils/cookieManager";
 
@@ -6,9 +6,10 @@ export default function ComponentJoinGroupe(props) {
 
     const userCookie = cookieManager();
     const [txtAbo,setTxtAbo] = useState(null)
+    const [id, setId] = useState(null);
 
     const joinGroup = async (array) => {
-        if(!props.group.user_ids.includes(userCookie._id)){
+      if(!props.group.user_ids.includes(userCookie._id)){
         setTxtAbo(true)
         array.push(props.userCookie._id)
         console.log(array)
@@ -25,7 +26,7 @@ export default function ComponentJoinGroupe(props) {
             },
           }),
         });
-    }else{
+      }else{
         setTxtAbo(false)
         array = array.filter(e => e !== userCookie._id);
         console.log(array)
@@ -41,9 +42,20 @@ export default function ComponentJoinGroupe(props) {
             },
           }),
         });
-        
+      }
     }
-}
+
+    useEffect(function showPost(){
+      setTxtAbo(props.group.user_ids.includes(userCookie._id));
+      if(id != null){
+        if (window) { 
+          window.sessionStorage.setItem("Page", "EnterGroup" );
+          window.sessionStorage.setItem("id", id );
+          router.reload(window.location.pathname)
+        }
+      }
+  },[id]);
+    
 
     return (
         <div className={style.groupeContainer} >
@@ -56,7 +68,7 @@ export default function ComponentJoinGroupe(props) {
                         <img src="/Image/user.png"/>
                         <p>{props.group.user_ids.length}</p>
                     </div>
-                <img src="/Image/oeil.png"/>
+                <img src="/Image/oeil.png" onClick={()=>setId(props.group._id)}/>
                 
                 <button onClick={()=>joinGroup(props.group.user_ids)}>
                 {txtAbo ? "Quitter": "Rejoindre"}
