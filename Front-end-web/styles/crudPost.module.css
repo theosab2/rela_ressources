@@ -64,6 +64,20 @@
   
 }
 
+.addContentMedia{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 50px;
+
+  background-color: #2a6faf;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 25px;
+  margin-right: 10px;
+}
+
 .inputFile{
   display: none;
 }
@@ -96,6 +110,15 @@
   color: #fff;
   background-color: #869ECE;
   border-radius: 5px;
+}
+
+.articleContentDiv{
+  width: 90%;
+  border-style:solid;
+  border-width:1px;
+  border-radius:5%;
+  border-color:white;
+  background-color:white;
 }
 
 .privateRessource{

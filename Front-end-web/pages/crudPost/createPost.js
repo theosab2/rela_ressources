@@ -2,7 +2,7 @@ import Navigation from "../Navigation";
 import style from "../../styles/crudPost.module.css";
 import categorieManager from "../utils/categorieManager";
 import Image from "next/dist/client/image";
-import { useState } from "react";
+import React, { useState } from "react";
 import utils from "../utils";
 import { useEffect } from "react";
 
@@ -22,11 +22,23 @@ export default function createPost() {
   const [content, setContent] = useState(null);
   const [userId, setUserId] = useState(null);
 
+  const [contents, setContents] = useState([]);
+  const [contentsMedia, setContentsMedia] = useState([]);
+  const [contentsMediaObjectURL, setContentsMediaObjectURL] = useState([]);
+
   useEffect(() => {
     if (window) { 
       window.sessionStorage.setItem("Page", "Creer" );
     }
   }, []);
+
+  const addNewContent = () => {
+    let newContents = contents;
+    newContents.push({});
+    setContents(newContents);
+    console.log("contents : ",contents)
+    displayArticleContents();
+  }
 
   const uploadToClient = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -38,6 +50,32 @@ export default function createPost() {
     }
   };
 
+  const uploadContentMediasToClient = (event) => {
+    console.log(event)
+    if(typeof(event) != typeof(undefined))
+    {
+      if (event.target.files && event.target.files[0]) {
+        console.log("files")
+      
+        for (let i = 0; i < event.target.files.length; i++) {
+          console.log("file: ",event.target.files[i]);
+
+          const media = event.target.files[i];
+  
+          let newContentsMedia = contentsMedia;
+          newContentsMedia[event.target.id.replace()].push(newContentsMedia)
+          setContentsMedia(newContentsMedia);
+  
+          let newContentsMediaObjectURL = contentsMediaObjectURL;
+          newContentsMediaObjectURL.push(URL.createObjectURL(media))
+          setContentsMediaObjectURL(newContentsMediaObjectURL);
+        }
+        
+        console.log(event);
+      }
+    }
+    
+  };
   const display = async () => {
     // create array with 2 images 
     /*
@@ -49,6 +87,8 @@ export default function createPost() {
     */
     var formdata = new FormData();
     formdata.append("article-image", image);
+    var contentMedias = [];
+    
     var JSON_Object = JSON.stringify({
       articleCategory_TTids: CategorieRessource,
       title: title,
@@ -58,7 +98,6 @@ export default function createPost() {
       isActive: true,
       privacyIsPublic: true,
     });
-    console.log("Titre :"+title +" Description :"+content+" Createur :"+userCookie._id)
     formdata.append("article", JSON_Object);
     const res = await fetch("http://"+process.env.IP+":3001/article/create", {
       method: "POST",
@@ -72,11 +111,80 @@ export default function createPost() {
     console.log(res.status);
     if (res.status != "SUCESS") {
       console.log(res.status);
-    } else {
+    } 
+    else {
       console.log("Réussite");
     }
 
     sendArticleContents()
+  };
+
+  const sendArticleContents= async () => {
+    var formdata = new FormData();
+
+    var contentMedia = image;
+    var contentMedias = [];
+    contentMedias.push(contentMedia)
+
+    formdata.append("content-images", contentMedias);
+
+    
+    var JSON_Object = JSON.stringify({
+      contents:[
+        
+      ]//TODO : add content state
+    });
+
+    const res = await fetch("http://"+process.env.IP+":3001/article/add-contents", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "user-upload-GUID": userCookie._id,
+      },
+      body: formdata,
+    });
+
+  };
+
+  const displayArticleContents = () => {
+    let contentsCounter = 0;
+    var toReturn = "";               
+
+    document.getElementById("article-contents-div").innerHTML = "";
+    contents.forEach(content => {
+      contentsCounter++;
+      console.log(contentsCounter);
+      console.log(style.articleContentDiv);
+
+      document.getElementById("article-contents-div").innerHTML += `
+      <div 
+        class=${style.articleContentDiv}
+      >
+        <label htmlFor={content-file-${contentsCounter}} className={style.addContentMedia}>
+        +
+        </label>
+        <input 
+          id={content-file-${contentsCounter}} 
+          className={style.inputFile} 
+          type="file"                         
+          accept="image/*, .pdf,video/*"
+          onChange=${uploadContentMediasToClient()}>
+        </input>
+        <div >
+          <img
+            id={output-content-${contentsCounter}}
+            src={contentsMediaObjectURL[${contentsCounter -1}]}
+            className={style.uploadImage}
+          />
+        </div>
+      </div>
+      `
+      setTimeout(() => {
+        console.log(document.getElementById(`content-file-${contentsCounter}`));
+        
+        document.getElementById(`content-file-${contentsCounter}`).addEventListener("change",uploadContentMediasToClient())
+      }, 500);
+    });
   };
 
   function getType(value) {
@@ -133,7 +241,8 @@ export default function createPost() {
                       />
                     </div>
                   );
-                } else if (typeRessource == "video") {
+                } 
+                else if (typeRessource == "video") {
                   return (
                     <div >
                       <img
@@ -143,14 +252,16 @@ export default function createPost() {
                       />
                     </div>
                   );
-                } else if (typeRessource == "lien") {
+                } 
+                else if (typeRessource == "lien") {
                   return (
                     <div >
                       <p>Lien :</p>
                       <input type="text" placeholder="Insérer un lien"></input>
                     </div>
                   );
-                } else {
+                } 
+                else {
                   return <>              <img
                   id="output"
                   src={createObjectURL}
@@ -158,7 +269,7 @@ export default function createPost() {
                 /></>;
                 }
               })()}
-              <div >
+              <div>
                 <textarea
                   className={style.descriptionRessource}
                   rows="5"
@@ -167,8 +278,6 @@ export default function createPost() {
                   onChange={(content) => setContent(content.target.value)}
                 ></textarea>
               </div>
-            <div >
-            </div>
             <select name="categorie" 
             id="categorie" 
             onChange={getCategorie}
@@ -193,6 +302,16 @@ export default function createPost() {
                 Cette publication est privée
               </label>
             </div>
+                <div id="article-contents-div">
+                  
+                </div>
+                <button
+                    className={style.articleAddContent}
+                    type="button"
+                    onClick={addNewContent}
+                  >
+                    Ajouter un élément
+                  </button>
               <button
                 className={style.validateRessource}
                 type="submit"
