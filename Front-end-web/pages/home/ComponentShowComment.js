@@ -15,15 +15,15 @@ export default function ComponentShowComment(props) {
   const [showModal, setShowModal] = useState(false);
   
       async function getComment (id) {
+        console.log(id);
         let res = await fetch("http://"+process.env.IP+":3001/comments/query" ,{
           method: "POST",
           headers: {
             Accept: "application/json",
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            comment: {
-              article: id,
-            },
+              "article": id,
           }),
         })
         res = await res.json();

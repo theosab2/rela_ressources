@@ -109,6 +109,11 @@ export default function ComponentOneArticle(props) {
             <img src={props.article.image} className={style.articlePicture}/>
           </div>
           <div className={style.articleBody}>{props.article.description}</div>
+          {props.article.contents &&
+    props.article.contents
+      .map((content) => (
+        <div className={style.articleBody} key={content._id}>{content.body}</div>
+        ))}
           <div className={style.articleFooter}>
             <div className={style.articleRate}>
               <div>{props.article.articleNbLikes}</div>
