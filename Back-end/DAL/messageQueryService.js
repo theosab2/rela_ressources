@@ -72,13 +72,13 @@ module.exports.getAllByRelation = async (relationId) => {
 };
 
 module.exports.query = async (parsedQuery = {}) => {
-    console.log(queryServiceLogPrefix,"[query] (param) 'query' : ",query);
+    console.log(queryServiceLogPrefix,"[query] (param) 'parsedQuery' : ",parsedQuery);
 
 
     //TODO application service check query template
     
 
-    if(query === {})
+    if(parsedQuery === {})
     {   //Pas de query, on renvoit tous les messagtes en base de données (même format de retour)
         console.log(queryServiceLogPrefix,"[query] (return) 'all' : ",data.length," element",data.length > 1 ?'s':'');
         return this.getAll();
@@ -87,7 +87,7 @@ module.exports.query = async (parsedQuery = {}) => {
     {   //On prend en compte la query transmise à l'API
         
         try {
-            var data = await mMessage.find().where(query);
+            var data = await mMessage.find().where(parsedQuery);
             var result = 
             data ? {
                 messages:data,
