@@ -159,21 +159,21 @@ export default function createPost() {
       <div 
         class=${style.articleContentDiv}
       >
-        <label htmlFor={content-file-${contentsCounter}} className={style.addContentMedia}>
+        <label htmlFor="content-file-${contentsCounter}" class=${style.addContentMedia}>
         +
         </label>
         <input 
-          id={content-file-${contentsCounter}} 
-          className={style.inputFile} 
+          id="content-file-${contentsCounter}" 
+          className=${style.inputFile} 
           type="file"                         
           accept="image/*, .pdf,video/*"
           onChange=${uploadContentMediasToClient()}>
         </input>
         <div >
           <img
-            id={output-content-${contentsCounter}}
-            src={contentsMediaObjectURL[${contentsCounter -1}]}
-            className={style.uploadImage}
+            id=output-content-${contentsCounter}
+            src={${contentsMediaObjectURL[contentsCounter -1]}}
+            class=${style.uploadImage}
           />
         </div>
       </div>
