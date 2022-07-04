@@ -1,5 +1,4 @@
 import Navigation from "../Navigation";
-import { renderToString } from 'react-dom/server'
 import style from "../../styles/crudPost.module.css";
 import categorieManager from "../utils/categorieManager";
 import Image from "next/dist/client/image";
@@ -38,6 +37,7 @@ export default function createPost() {
     newContents.push({});
     setContents(newContents);
     console.log("contents : ",contents)
+    displayArticleContents();
   }
 
   const uploadToClient = (event) => {
@@ -51,23 +51,30 @@ export default function createPost() {
   };
 
   const uploadContentMediasToClient = (event) => {
-    if (event.target.files && event.target.files[0]) {
+    console.log(event)
+    if(typeof(event) != typeof(undefined))
+    {
+      if (event.target.files && event.target.files[0]) {
+        console.log("files")
       
-      for (let i = 0; i < event.target.files.length; i++) {
+        for (let i = 0; i < event.target.files.length; i++) {
+          console.log("file: ",event.target.files[i]);
 
-        const media = event.target.files[i];
-
-        let newContentsMedia = contentsMedia;
-        newContentsMedia[event.target.id.replace()].push(newContentsMedia)
-        setContentsMedia(newContentsMedia);
-
-        let newContentsMediaObjectURL = contentsMediaObjectURL;
-        newContentsMediaObjectURL.push(URL.createObjectURL(media))
-        setContentsMediaObjectURL(newContentsMediaObjectURL);
+          const media = event.target.files[i];
+  
+          let newContentsMedia = contentsMedia;
+          newContentsMedia[event.target.id.replace()].push(newContentsMedia)
+          setContentsMedia(newContentsMedia);
+  
+          let newContentsMediaObjectURL = contentsMediaObjectURL;
+          newContentsMediaObjectURL.push(URL.createObjectURL(media))
+          setContentsMediaObjectURL(newContentsMediaObjectURL);
+        }
+        
+        console.log(event);
       }
-      
-      console.log(event);
     }
+    
   };
   const display = async () => {
     // create array with 2 images 
@@ -137,6 +144,47 @@ export default function createPost() {
       body: formdata,
     });
 
+  };
+
+  const displayArticleContents = () => {
+    let contentsCounter = 0;
+    var toReturn = "";               
+
+    document.getElementById("article-contents-div").innerHTML = "";
+    contents.forEach(content => {
+      contentsCounter++;
+      console.log(contentsCounter);
+      console.log(style.articleContentDiv);
+
+      document.getElementById("article-contents-div").innerHTML += `
+      <div 
+        class=${style.articleContentDiv}
+      >
+        <label htmlFor={content-file-${contentsCounter}} className={style.addContentMedia}>
+        +
+        </label>
+        <input 
+          id={content-file-${contentsCounter}} 
+          className={style.inputFile} 
+          type="file"                         
+          accept="image/*, .pdf,video/*"
+          onChange=${uploadContentMediasToClient()}>
+        </input>
+        <div >
+          <img
+            id={output-content-${contentsCounter}}
+            src={contentsMediaObjectURL[${contentsCounter -1}]}
+            className={style.uploadImage}
+          />
+        </div>
+      </div>
+      `
+      setTimeout(() => {
+        console.log(document.getElementById(`content-file-${contentsCounter}`));
+        
+        document.getElementById(`content-file-${contentsCounter}`).addEventListener("change",uploadContentMediasToClient())
+      }, 500);
+    });
   };
 
   function getType(value) {
@@ -253,52 +301,17 @@ export default function createPost() {
               <label htmlFor="condition">
                 Cette publication est privée
               </label>
-              <div>
-              
-              {(() => 
-              {
-                let contentsCounter = 0;
-                var toReturn = "";               
-
-                contents.forEach(content => {
-                  contentsCounter++;
-                  console.log(contentsCounter);
-                  renderToString(
-                  toReturn += `
-                    <div style="width:500px;height:500px;background-color:red;">
-                    </div>
-                    <label htmlFor={content-file-${contentsCounter}} className={style.addContentMedia}>
-                    +
-                    </label>
-                    <input 
-                      id={content-file-${contentsCounter}} 
-                      className={style.inputFile} 
-                      type="file"                         
-                      accept="image/*, .pdf,video/*"
-                      onChange={uploadContentMediasToClient}>
-                    </input>
-                    <div >
-                      <img
-                        id={output-content-${contentsCounter}}
-                        src={contentsMediaObjectURL[${contentsCounter -1}]}
-                        className={style.uploadImage}
-                      />
-                    </div>
-                  `)
-                });
-              }
-            )()}
             </div>
-            <div>
-              <button
-                  className={style.articleAddContent}
-                  type="button"
-                  onClick={addNewContent}
-                >
-                  Ajouter un élément
-                </button>
-            </div>
-            </div>
+                <div id="article-contents-div">
+                  
+                </div>
+                <button
+                    className={style.articleAddContent}
+                    type="button"
+                    onClick={addNewContent}
+                  >
+                    Ajouter un élément
+                  </button>
               <button
                 className={style.validateRessource}
                 type="submit"

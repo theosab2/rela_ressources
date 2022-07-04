@@ -101,7 +101,6 @@ const mComment = require('../models/comment');
             else
             {   //On prend en compte la query transmise à l'API
                 parsedQuery = await _queryParserService.parseObjectQuery(query);
-                
                 try {
                     var data = await mComment.find().where(query);
                     var result = 

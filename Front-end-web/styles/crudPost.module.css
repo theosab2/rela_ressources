@@ -112,6 +112,15 @@
   border-radius: 5px;
 }
 
+.articleContentDiv{
+  width: 90%;
+  border-style:solid;
+  border-width:1px;
+  border-radius:5%;
+  border-color:white;
+  background-color:white;
+}
+
 .privateRessource{
   color: #fff;
   margin: 10px;
