@@ -1,4 +1,5 @@
 import Navigation from "../Navigation";
+import { renderToString } from 'react-dom/server'
 import style from "../../styles/crudPost.module.css";
 import categorieManager from "../utils/categorieManager";
 import Image from "next/dist/client/image";
@@ -295,16 +296,15 @@ export default function createPost() {
               <label htmlFor="condition">
                 Cette publication est privée
               </label>
-              <div>
-              <label htmlFor="content-files" className={style.addContentMedia}>
-                +
-              </label>
-              <input id="content-files" 
-                className={style.inputFile} 
-                type="file"                         
-                accept="image/*, .pdf,video/*"
-                onChange={uploadContentMediasToClient}>
-              </input>
+
+            <div>
+              <button
+                  className={style.articleAddContent}
+                  type="button"
+                  onClick={addNewContent}
+                >
+                  Ajouter un élément
+                </button>
             </div>
             </div>
                 <div id="article-contents-div">
