@@ -36,7 +36,6 @@ export default function createPost() {
     let newContents = contents;
     newContents.push({});
     setContents(newContents);
-    console.log("contents : ",contents)
     displayArticleContents();
   }
 
