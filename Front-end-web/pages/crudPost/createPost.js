@@ -179,6 +179,7 @@ export default function createPost() {
       contentsCounter++;
     });
   };
+  
 
   function getType(value) {
     setTypeRessource(value.target.value);
