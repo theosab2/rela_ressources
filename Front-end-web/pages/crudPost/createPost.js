@@ -1,8 +1,9 @@
 import Navigation from "../Navigation";
+import { renderToString } from 'react-dom/server'
 import style from "../../styles/crudPost.module.css";
 import categorieManager from "../utils/categorieManager";
 import Image from "next/dist/client/image";
-import { useState } from "react";
+import React, { useState } from "react";
 import utils from "../utils";
 import { useEffect } from "react";
 
@@ -32,6 +33,13 @@ export default function createPost() {
     }
   }, []);
 
+  const addNewContent = () => {
+    let newContents = contents;
+    newContents.push({});
+    setContents(newContents);
+    console.log("contents : ",contents)
+  }
+
   const uploadToClient = (event) => {
     if (event.target.files && event.target.files[0]) {
       const i = event.target.files[0];
@@ -48,8 +56,14 @@ export default function createPost() {
       for (let i = 0; i < event.target.files.length; i++) {
 
         const media = event.target.files[i];
-        setContentsMedia(media);
-        setContentsMediaObjectURL(URL.createObjectURL(media));
+
+        let newContentsMedia = contentsMedia;
+        newContentsMedia[event.target.id.replace()].push(newContentsMedia)
+        setContentsMedia(newContentsMedia);
+
+        let newContentsMediaObjectURL = contentsMediaObjectURL;
+        newContentsMediaObjectURL.push(URL.createObjectURL(media))
+        setContentsMediaObjectURL(newContentsMediaObjectURL);
       }
       
       console.log(event);
@@ -240,15 +254,49 @@ export default function createPost() {
                 Cette publication est privée
               </label>
               <div>
-              <label htmlFor="content-files" className={style.addContentMedia}>
-                +
-              </label>
-              <input id="content-files" 
-                className={style.inputFile} 
-                type="file"                         
-                accept="image/*, .pdf,video/*"
-                onChange={uploadContentMediasToClient}>
-              </input>
+              
+              {(() => 
+              {
+                let contentsCounter = 0;
+                var toReturn = "";               
+
+                contents.forEach(content => {
+                  contentsCounter++;
+                  console.log(contentsCounter);
+                  renderToString(
+                  toReturn += `
+                    <div style="width:500px;height:500px;background-color:red;">
+                    </div>
+                    <label htmlFor={content-file-${contentsCounter}} className={style.addContentMedia}>
+                    +
+                    </label>
+                    <input 
+                      id={content-file-${contentsCounter}} 
+                      className={style.inputFile} 
+                      type="file"                         
+                      accept="image/*, .pdf,video/*"
+                      onChange={uploadContentMediasToClient}>
+                    </input>
+                    <div >
+                      <img
+                        id={output-content-${contentsCounter}}
+                        src={contentsMediaObjectURL[${contentsCounter -1}]}
+                        className={style.uploadImage}
+                      />
+                    </div>
+                  `)
+                });
+              }
+            )()}
+            </div>
+            <div>
+              <button
+                  className={style.articleAddContent}
+                  type="button"
+                  onClick={addNewContent}
+                >
+                  Ajouter un élément
+                </button>
             </div>
             </div>
               <button
