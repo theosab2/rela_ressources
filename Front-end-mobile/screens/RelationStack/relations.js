@@ -50,29 +50,21 @@ const Relations = ({ navigation }) => {
             });
             const res = await api.json();
             setSuggestions(res.users);
-            getDisplaySuggestion();
         } catch (e) {
             console.log(e)
         }
     }
     const getDisplaySuggestion = async () => {
-        displaySuggestion.splice(0, displaySuggestion.length)
-        demande.splice(0, demande.length);
-        displaySuggestion.push(suggestions.map(item => {
-            console.log('detail', item.friends_ids.find(friend => friend === userId))
-            if (item._id == userId) {
-                console.log('cest moi');
-                return;
-            }
-            else if (item.friends_ids.find(friend => friend === userId) != undefined) {
-                console.log('initialisation dune demande', item);
-                demande.push(item);
-            }
-            else if (friends.find(friend => friend === item._id)) {
-                return;
-            }
-            else {
-                return <TouchableOpacity style={styles.cardContainer} containerStyle={styles.cardContainerStyle}>
+
+        let tmpSuggestions = [];
+
+        tmpSuggestions = suggestions.filter(suggest => suggest._id !== userId).filter(suggest => friends.findIndex(f => f === suggest._id) === -1).map(item => {
+
+            if (!item.friends_ids.find(friend => friend === userId)) {
+                return <TouchableOpacity
+                    style={styles.cardContainer}
+                    containerStyle={styles.cardContainerStyle}
+                    onPress={() => addFriend(item._id)}>
                     <Image
                         style={styles.cardImg}
                         source={require('../../test_content/waiting.jpg')}
@@ -86,13 +78,17 @@ const Relations = ({ navigation }) => {
                     </TouchableOpacity>
                 </TouchableOpacity>
             }
-        }))
-        getDisplayDemande();;
+        })
+        setDisplaySuggestion(tmpSuggestions);
     }
     const getDisplayDemande = () => {
-        displayDemandes.splice(0, displayDemandes.length);
-        displayDemandes.push(demande.map(item => {
-            return <TouchableOpacity style={styles.cardContainer} containerStyle={styles.cardContainerStyle}>
+        let tmpDemandes = []
+
+        tmpDemandes = [...demande.map(item => {
+            return <TouchableOpacity
+                style={styles.cardContainer}
+                containerStyle={styles.cardContainerStyle}
+            >
                 <Image
                     style={styles.cardImg}
                     source={require('../../test_content/waiting.jpg')}
@@ -105,9 +101,7 @@ const Relations = ({ navigation }) => {
                     <Text>Accepter</Text>
                 </TouchableOpacity>
             </TouchableOpacity>
-        }))
-        //console.log(displayDemandes);
-        displayDemandes.push(friends.map(item => {
+        }), ...friends.map(item => {
             suggestions.find(friend => {
                 if (friend.friends_ids != undefined && friend.friends_ids == item) {
                     return <TouchableOpacity style={styles.cardContainer} containerStyle={styles.cardContainerStyle}>
@@ -125,75 +119,105 @@ const Relations = ({ navigation }) => {
                     </TouchableOpacity>
                 }
             })
-        }))
-        //console.log(displayDemandes);
+        })]
+
+        setDisplayDemandes(tmpDemandes)
 
     }
-    useEffect(() => {
-        if (userId == undefined) {
-            getUser()
+    const addFriend = async (idfriends) => {
+        try {
+            const api = await fetch(API_URL + '/user/' + userId, {
+                method: 'PUT',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    user: {
+                        username: username == '' ? res.username : username,
+                        firstname: firstname == '' ? res.firstname : firstname,
+                        lastname: lastname == '' ? res.lastname : lastname,
+                        location: {
+                            ville: city == '' ? res.location.city : city,
+                            region: region == '' ? res.location.region : region,
+                            zipcode: zipcode == '' ? res.location.zipcode : zipcode,
+                        },
+                    },
+                }),
+            });
+            const res = await api.json();
+        } catch (e) {
+            console.log(e)
         }
-        if (userId != undefined) {
-            console.log('bite',userId);
+    }
+    useEffect(() => {
+        if (!userId) {
+            getUser()
+        } else {
             getFriends();
             getSuggestionUser();
         }
 
-    }, [])
+    }, [userId]);
 
-    if (userId != undefined) {
-        console.log("Ha c'est marrent", userId)
-        return (
-            <View style={styles.container}>
-                <Header navigation={navigation} />
-                <View style={styles.titleContainer}>
-                    <Text style={styles.title}>Relations</Text>
-                    <Divider
-                        orientation='horizontal'
-                        color='#CE8686'
-                        style={styles.divider}
-                    />
-                </View>
-                <View style={styles.input}>
-                    <Icon name="search-outline" type="ionicon" color="#FFFFFF" style={styles.inputIcon} />
-                    <TextInput
-                        placeholder="Rechercher quelqu'un ici !"
-                        onChangeText={search => setSearch(search)}
-                        defaultValue={search}
+    useEffect(() => {
+        if (userId) {
+            getDisplayDemande();
+            getDisplaySuggestion();
+        }
 
-                    />
-                </View>
-                <SafeAreaView style={styles.scrollViewContainer}>
-                    <ScrollView style={styles.scrollView} contentContainerStyle={styles.postPosition}>
-                        <View style={styles.titleContainer}>
-                            <Text style={styles.title}>Demandes</Text>
-                            <Divider
-                                orientation='horizontal'
-                                color='#CE8686'
-                                style={styles.divider}
-                            />
-                        </View>
-                        <View>
-                            {displayDemandes}
-                        </View>
-                        <View style={styles.titleContainer}>
-                            <Text style={styles.title}>Suggestions</Text>
-                            <Divider
-                                orientation='horizontal'
-                                color='#CE8686'
-                                style={styles.divider}
-                            />
-                        </View>
-                        <View>
-                            {displaySuggestion}
-                        </View>
-                    </ScrollView>
-                </SafeAreaView>
-                <HomemadeNavBar route='Relation' navigation={navigation} />
-            </View>)
-    } else {
-        return <View></View>
-    }
+    }, [suggestions, demande, userId])
+
+    return (<>
+
+        {userId ? <View style={styles.container}>
+            <Header navigation={navigation} />
+            <View style={styles.titleContainer}>
+                <Text style={styles.title}>Relations</Text>
+                <Divider
+                    orientation='horizontal'
+                    color='#CE8686'
+                    style={styles.divider}
+                />
+            </View>
+            <View style={styles.input}>
+                <Icon name="search-outline" type="ionicon" color="#FFFFFF" style={styles.inputIcon} />
+                <TextInput
+                    placeholder="Rechercher quelqu'un ici !"
+                    onChangeText={search => setSearch(search)}
+                    defaultValue={search}
+
+                />
+            </View>
+            <SafeAreaView style={styles.scrollViewContainer}>
+                <ScrollView style={styles.scrollView} contentContainerStyle={styles.postPosition}>
+                    <View style={styles.titleContainer}>
+                        <Text style={styles.title}>Demandes</Text>
+                        <Divider
+                            orientation='horizontal'
+                            color='#CE8686'
+                            style={styles.divider}
+                        />
+                    </View>
+                    <View>
+                        {displayDemandes}
+                    </View>
+                    <View style={styles.titleContainer}>
+                        <Text style={styles.title}>Suggestions</Text>
+                        <Divider
+                            orientation='horizontal'
+                            color='#CE8686'
+                            style={styles.divider}
+                        />
+                    </View>
+                    <View>
+                        {displaySuggestion}
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
+            <HomemadeNavBar route='Relation' navigation={navigation} />
+        </View> : <View></View>}</>)
+
 }
 
 const styles = StyleSheet.create({
