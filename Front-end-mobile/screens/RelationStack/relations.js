@@ -106,7 +106,7 @@ const Relations = ({ navigation }) => {
                     <Text style={styles.name}>{item.username}</Text>
                     <Text style={styles.date}></Text>
                 </View>
-                <TouchableOpacity containerStyle={styles.buttonContainer}>
+                <TouchableOpacity containerStyle={[styles.buttonContainer,styles.accept]} onPress={() => addFriend(item._id)}>
                     <Text>Accepter</Text>
                 </TouchableOpacity>
             </TouchableOpacity>
@@ -127,9 +127,9 @@ const Relations = ({ navigation }) => {
                 <Text style={styles.name}>{user.username}</Text>
                 <Text style={styles.date}></Text>
             </View>
-            <TouchableOpacity containerStyle={styles.buttonContainer}>
-                <Text>En attente</Text>
-            </TouchableOpacity>
+            <View style={[styles.buttonContainer,styles.waiting]}>
+                <Text adjustsFontSizeToFit>En attente</Text>
+            </View>
         </TouchableOpacity>}
             else return;
 
@@ -149,6 +149,8 @@ const Relations = ({ navigation }) => {
             const res = await api.json();
             getFriends()
             getSuggestionUser();
+            getDisplaySuggestion();
+            getDisplayDemande();
         } catch (e) {
             console.log(e)
         }
@@ -303,6 +305,12 @@ const styles = StyleSheet.create({
     date: {
         color: '#BEC4D3',
         fontSize: 12
+    },
+    accept: {
+        backgroundColor: '#9EAF6C'
+    },
+    waiting: {
+        backgroundColor: '#635D5B'
     }
 })
 export default Relations
