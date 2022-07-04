@@ -281,9 +281,11 @@ router.get("/article/:id", async function (req, res, next) {
         ...JSON.parse(req.body.article),
         image : `${req.protocol}://${req.get('host')}/article-image/${req.file.filename}`
       };
+      /*
       for(i=0;i<=req.body.contents.length;i++){
         req.body.article.contents[i].mediaUrl =  `${req.protocol}://${req.get('host')}/content-images/${req.file.filename}`
       };  
+      */
     
     var articleCreationQueryResult = await _articleController.create(
       req.body
