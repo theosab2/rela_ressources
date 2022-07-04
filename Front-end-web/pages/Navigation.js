@@ -147,7 +147,7 @@ export default function Navigation(image) {
         break;      
       case "Profil":
         //setNavTitle("Profil");
-        return <Profil></Profil>;
+        return <Profil userId={userCookie}></Profil>;
         break;
       case "Amis":
         //setNavTitle("Amis");
@@ -203,13 +203,13 @@ export default function Navigation(image) {
             <div className={style.sidebarContent}>
               <div className={style.sidebarTitle}>Profil</div>
               <div className={style.sidebarChoice}>
-                <div className={style.inputDiv}>
+                <div className={style.inputDiv} onClick={() => setRenderPage((renderPage = "Connexion"))}>
                   <img src="/Image/key.png" className={style.InputImg}/>
-                  <button className={style.sidebarOpenPage}  onClick={() => setRenderPage((renderPage = "Connexion"))}>Connexion</button>
+                  <button className={style.sidebarOpenPage}>Connexion</button>
                 </div>
-                <div className={style.inputDiv}>
+                <div className={style.inputDiv} onClick={() => setRenderPage((renderPage = "Inscription"))}>
                   <img src="/Image/inscription.png" className={style.InputImg}/>
-                  <button className={renderPage == 'Inscription'? style.sidebarOpenPage : null} onClick={() => setRenderPage((renderPage = "Inscription"))}>Inscription</button>
+                  <button className={renderPage == 'Inscription'? style.sidebarOpenPage : null}>Inscription</button>
                 </div>
               </div>
             </div>
@@ -220,7 +220,8 @@ export default function Navigation(image) {
             </div>
             <div className={style.recentContent}>
               <div className={style.recentTitle}>Récent</div>
-                <div className={style.recentChoice}>
+              {allArticle && allArticle.reverse(0,5).map((articleInfo) => (
+                <div className={style.recentChoice} key={articleInfo._id}>
                     <img 
                     src="/Image/connexion.png"
                     alt="User picture"
@@ -228,9 +229,10 @@ export default function Navigation(image) {
                     />
                 <div className={style.recentInfo}>
                       <div className={style.recentUserName}>JeanMichel62</div>
-                      <div className={style.recentArticleTitle}>La terre est ovoidale</div>
+                      <div className={style.recentArticleTitle}>{articleInfo.title}</div>
                 </div>
               </div>
+              ))}
             </div>
           </div>
         </div>

@@ -5,21 +5,19 @@ import utils from "../utils";
 import {useRef} from 'react';
 import { isResSent } from "next/dist/next-server/lib/utils";
 
-export default function ProfilUpdate() {
-  const userCookie = utils();
-  console.log(userCookie)
+export default function ProfilUpdate(props) {
   const mailUser = useRef(null);
   const nameUser = useRef(null);
   const lastname = useRef(null);
   const username = useRef(null);
-
   let [userInfo, setUserInfo] = useState(null);
   //let userInfo;
   let idUser;
 
   async function getUser(){
-    idUser = userCookie._id;
-    await fetch("http://"+process.env.IP+":3001/user/" + idUser, {
+
+    console.log("http://"+process.env.IP+":3001/user/" + JSON.parse(props.userId)._id);
+    await fetch("http://"+process.env.IP+":3001/user/" + JSON.parse(props.userId)._id, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -31,12 +29,8 @@ export default function ProfilUpdate() {
       });
     }
 
-
-
-  
-
   async function updateUser() {
-    let res = await fetch("http://"+process.env.IP+":3001/user/" + idUser, {
+    let res = await fetch("http://"+process.env.IP+":3001/user/" + JSON.parse(props.userId)._id, {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -52,6 +46,7 @@ export default function ProfilUpdate() {
     });
     res = await res.json();
   }
+
   useEffect(() => {
     if (window) { 
       window.sessionStorage.setItem("Page", "Profil" );
@@ -59,7 +54,8 @@ export default function ProfilUpdate() {
     }
   }, []);
   
-    if (userCookie != null && userInfo != null) {
+    if (userInfo != null) {
+      console.log(userInfo)
       return (
         <>
           <div className={style.profilContainer}>
@@ -101,4 +97,4 @@ export default function ProfilUpdate() {
       );
     } else 
     return <div> Loading...</div>;
-}
+  }

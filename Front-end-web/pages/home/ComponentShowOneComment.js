@@ -19,7 +19,6 @@ export default function ComponentShowOneComment(props) {
           .then((res) => res.json())
           .then((data) => {
             setUserInfo(data);
-            console.log(data)
           });
       }
 
@@ -64,11 +63,15 @@ export default function ComponentShowOneComment(props) {
       },[]);
 
     function setTextAbonnement(){
+      if(userInfo){
         if(userInfo.relation_ids.includes(userCookie._id)){
             setTxtAbo(false);
         }else{
             setTxtAbo(true);
         }
+      }else{
+        setTxtAbo(true);
+      }
     }
 
     
@@ -77,9 +80,18 @@ export default function ComponentShowOneComment(props) {
     return (
         <div className={style.commentBlockContainer}>
             <div className={style.commentHeader}>
+              { userInfo.username ? 
+              <>
                 <Image src="/Image/comments.png" width={30} height={30}/>
                 <p>{userInfo.username}</p>
                 <button className={style.buttonSendComment} onClick={()=>abonnement(userInfo.relation_ids)}>{txtAbo ? "S'abonner" : "Désabonner"}</button>
+              </>
+                :
+              <>
+                <p>Cet utilisateur n'existe plus</p>
+                
+              </>
+              }
             </div>
                 
             <div className={style.commentContainer}>
