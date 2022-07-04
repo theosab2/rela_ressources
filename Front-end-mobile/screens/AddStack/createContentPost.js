@@ -22,6 +22,7 @@ const CreateContentPost = ({ navigation, route }) => {
 
   const [singleFile, setSingleFile] = useState(null);
   const [imageUri, setImageUri] = useState(null);
+  const [namePicture, setNamePicture] = useState('')
 
   console.log(route.params);
   const selectFile = async () => {
@@ -205,39 +206,36 @@ const CreateContentPost = ({ navigation, route }) => {
   }
   const sendToDB = async () => {
     const user = await AsyncStorage.getItem('@userId');
-    var article = {
+    var formdata = new FormData()
+    formdata.append("article-image",route.params.image)
+    var article = JSON.stringify({
       title: route.params.title,
       description: route.params.description,
-      /**tag_UTids:
-        [
-          { type: String }
-        ],*/
       category_UTid: route.params.category,
       contents: contentsData,
-      /**comment_ids:
-        [
-          { type: String }
-        ],*/
       creator: user,
-      /**votes: [
-        {
-          UT_id: { type: String, required: true, default: "DefaultTypeTT_id" }, //code : VOTE => (type,way)
-          number: { type: Number, required: true, default: 0 },
-        }
-      ],*/
       image: route.params.image,
-      /**isApproved: { type: Boolean, required: true, default: false },
-      isActive: { type: Boolean, required: true, default: false },
-      identifiedRelation_ids:
-        [
-          { type: String, required: false },
-        ],
-      privacyIsPublic: { type: Boolean, required: true, default: true },
-      _createdAt: { type: Date, required: true, default: Date.now() },
-      _updatedAt: { type: Date, requried: false, default: null }*/
+      isApproved: true,
+      isActive: true,
 
-    }
+    })
+    formdata.append("article", article);
     console.log(article)
+    const res = await fetch(API_URL + "/article/create", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "user-upload-GUID": user,
+      },
+      body: formdata,
+    });
+    
+    console.log(res.status);
+    if (res.status == 201 || res.status == 200) {
+      navigation.navigate('Home');
+    } else {
+      console.log(res.status)
+    }
   }
   const getIdContentByName = (contentName) => {
     return contentFront.find(item => item.name == contentName)._id
