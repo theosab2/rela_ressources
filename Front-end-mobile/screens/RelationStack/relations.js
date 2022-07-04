@@ -50,6 +50,13 @@ const Relations = ({ navigation }) => {
             });
             const res = await api.json();
             setSuggestions(res.users);
+
+            const currentUser = res.users.find(user => user._id === userId)
+            const demandes = res.users.filter(user => user.friends_ids.includes(userId) && !currentUser.friends_ids.includes(user._id))
+
+            setDemande(demandes)
+
+
         } catch (e) {
             console.log(e)
         }
@@ -64,7 +71,7 @@ const Relations = ({ navigation }) => {
                 return <TouchableOpacity
                     style={styles.cardContainer}
                     containerStyle={styles.cardContainerStyle}
-                    onPress={() => addFriend(item._id)}>
+                >
                     <Image
                         style={styles.cardImg}
                         source={require('../../test_content/waiting.jpg')}
@@ -73,7 +80,7 @@ const Relations = ({ navigation }) => {
                         <Text style={styles.name}>{item.username}</Text>
                         <Text style={styles.date}></Text>
                     </View>
-                    <TouchableOpacity containerStyle={styles.buttonContainer}>
+                    <TouchableOpacity containerStyle={styles.buttonContainer} onPress={() => addFriend(item._id)}>
                         <Text>Ajouter</Text>
                     </TouchableOpacity>
                 </TouchableOpacity>
@@ -82,7 +89,9 @@ const Relations = ({ navigation }) => {
         setDisplaySuggestion(tmpSuggestions);
     }
     const getDisplayDemande = () => {
-        let tmpDemandes = []
+        let tmpDemandes = [];
+
+        let currentUser = suggestions.find(u => u._id === userId)
 
         tmpDemandes = [...demande.map(item => {
             return <TouchableOpacity
@@ -102,50 +111,44 @@ const Relations = ({ navigation }) => {
                 </TouchableOpacity>
             </TouchableOpacity>
         }), ...friends.map(item => {
-            suggestions.find(friend => {
-                if (friend.friends_ids != undefined && friend.friends_ids == item) {
-                    return <TouchableOpacity style={styles.cardContainer} containerStyle={styles.cardContainerStyle}>
-                        <Image
-                            style={styles.cardImg}
-                            source={require('../../test_content/waiting.jpg')}
-                        />
-                        <View style={styles.infoContainer}>
-                            <Text style={styles.name}>{friends.username}</Text>
-                            <Text style={styles.date}></Text>
-                        </View>
-                        <TouchableOpacity containerStyle={styles.buttonContainer}>
-                            <Text>En attente</Text>
-                        </TouchableOpacity>
-                    </TouchableOpacity>
-                }
-            })
-        })]
+            
+            
 
-        setDisplayDemandes(tmpDemandes)
+            let user = suggestions.find(u => u._id === item);
+            if (!user) return;
+
+            if (!user.friends_ids.includes(userId) && currentUser.friends_ids.includes(user._id))
+            {return <TouchableOpacity style={styles.cardContainer} containerStyle={styles.cardContainerStyle}>
+            <Image
+                style={styles.cardImg}
+                source={require('../../test_content/waiting.jpg')}
+            />
+            <View style={styles.infoContainer}>
+                <Text style={styles.name}>{user.username}</Text>
+                <Text style={styles.date}></Text>
+            </View>
+            <TouchableOpacity containerStyle={styles.buttonContainer}>
+                <Text>En attente</Text>
+            </TouchableOpacity>
+        </TouchableOpacity>}
+            else return;
+
+        })]
+        setDisplayDemandes(tmpDemandes.filter(item => item !== undefined))
 
     }
-    const addFriend = async (idfriends) => {
+    const addFriend = async (idfriend) => {
         try {
-            const api = await fetch(API_URL + '/user/' + userId, {
-                method: 'PUT',
+            const api = await fetch(API_URL + '/user/toggle-friend/' + userId + '/' + idfriend, {
+                method: 'POST',
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    user: {
-                        username: username == '' ? res.username : username,
-                        firstname: firstname == '' ? res.firstname : firstname,
-                        lastname: lastname == '' ? res.lastname : lastname,
-                        location: {
-                            ville: city == '' ? res.location.city : city,
-                            region: region == '' ? res.location.region : region,
-                            zipcode: zipcode == '' ? res.location.zipcode : zipcode,
-                        },
-                    },
-                }),
             });
             const res = await api.json();
+            getFriends()
+            getSuggestionUser();
         } catch (e) {
             console.log(e)
         }
@@ -168,6 +171,7 @@ const Relations = ({ navigation }) => {
 
     }, [suggestions, demande, userId])
 
+    console.log({demande, suggestions})
     return (<>
 
         {userId ? <View style={styles.container}>
