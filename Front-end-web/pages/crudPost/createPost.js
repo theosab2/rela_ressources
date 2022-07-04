@@ -1,5 +1,4 @@
 import Navigation from "../Navigation";
-import { renderToString } from 'react-dom/server'
 import style from "../../styles/crudPost.module.css";
 import categorieManager from "../utils/categorieManager";
 import Image from "next/dist/client/image";
@@ -58,15 +57,16 @@ export default function createPost() {
     {
       if (event.target.files && event.target.files[0]) {
         console.log("files")
-        
+      
         for (let i = 0; i < event.target.files.length; i++) {
+          console.log("file: ",event.target.files[i]);
 
           const media = event.target.files[i];
-
+  
           let newContentsMedia = contentsMedia;
           newContentsMedia[event.target.id.replace()].push(newContentsMedia)
           setContentsMedia(newContentsMedia);
-
+  
           let newContentsMediaObjectURL = contentsMediaObjectURL;
           newContentsMediaObjectURL.push(URL.createObjectURL(media))
           setContentsMediaObjectURL(newContentsMediaObjectURL);
@@ -301,16 +301,6 @@ export default function createPost() {
               <label htmlFor="condition">
                 Cette publication est privée
               </label>
-
-            <div>
-              <button
-                  className={style.articleAddContent}
-                  type="button"
-                  onClick={addNewContent}
-                >
-                  Ajouter un élément
-                </button>
-            </div>
             </div>
                 <div id="article-contents-div">
                   
