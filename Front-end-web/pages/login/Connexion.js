@@ -31,7 +31,7 @@ export default function Connexion() {
     console.log(identifiant);
     console.log(mdp);
     ComponentConnexion(identifiant,mdp);
-    router.reload(window.location.pathname)
+    //router.reload(window.location.pathname)
   };
 
   return (

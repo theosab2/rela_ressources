@@ -5,9 +5,9 @@ import { useState, useEffect } from "react";
 import articleManager from "../utils/articleManager";
 import Image from "next/image";
 import ComponentArticle from "./ComponentArticle";
+import cookieManager from "../utils/cookieManager";
 
 export default function Home() {
-  
 
   useEffect(() => {
     if (window) { 
@@ -16,9 +16,10 @@ export default function Home() {
   }, []);
 
   let allArticle;
+
   let articlePopular = [];
   allArticle = articleManager();
-
+  
   for (let i = 0; i < 5; i++) {
     if (allArticle != null) {
       articlePopular.push(allArticle[i]);

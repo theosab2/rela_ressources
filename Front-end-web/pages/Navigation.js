@@ -5,7 +5,6 @@ import modalStyle from "../styles/modal.module.css";
 import { setCookies, getCookie, removeCookies } from "cookies-next";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import cookie from "cookie";
 import Home from "./home/Home";
 import Connexion from "./login/Connexion";
 import Inscription from "./login/Inscription";
@@ -25,6 +24,7 @@ import utils from "./utils";
 import articleManager from "./utils/articleManager";
 import Message from "./home/Message";
 import EntrerGroupe from "./home/EntrerGroupe";
+import cookieManager from "./utils/cookieManager";
 
 export default function Navigation(image) {
   const router = useRouter();
@@ -33,10 +33,10 @@ export default function Navigation(image) {
   var getId = null;
   let [renderPage, setRenderPage] = useState("");
   let [idPage, setIdPage] = useState("");
-
+  let cookie;
   let allArticle;
   allArticle = articleManager();
-
+  let isConnected = JSON.parse(utils());
   const showModal = () => {
     document.getElementById("myModal").style.display = "block";
   };
@@ -55,55 +55,7 @@ export default function Navigation(image) {
       setRenderPage(getSession);
       setIdPage(getId);
     }
-    switch (renderPage) {
-      case "Accueil":
-        setNavTitle("Accueil");
-        break;
-      case "Connexion":
-        setNavTitle("Connexion");
-        break;
-      case "Inscription":
-        setNavTitle("Inscription");
-        break;
-      case "Creer":
-        setNavTitle("Creation de post");
-        break;
-      case "Historique":
-        setNavTitle("Historique");
-        break;
-      case "Favorie":
-        setNavTitle("Favorie");
-        break;
-      case "Abonnement":
-        setNavTitle("Abonnement");
-        break;      
-      case "Profil":
-        setNavTitle("Profil");
-        break;
-      case "Amis":
-        setNavTitle("Amis");
-        break;
-      case "Groupe":
-        setNavTitle("Groupe");
-        break;
-      case "Evenement":
-        setNavTitle("Evenement");
-        break;
-      case "Moderation":
-        setNavTitle("Modération");
-        break;
-      case "Categorie":
-        setNavTitle("Categorie");
-        break;
-      case "Utilisateur":
-        setNavTitle("Utilisateur");
-        break;
-      case "Comment":
-        setNavTitle("Commentaire");
-        break;
-    }
   }, []);
-
 
   const deconnexionUtilisateur = () => {
     removeCookies("token");
@@ -147,7 +99,7 @@ export default function Navigation(image) {
         break;      
       case "Profil":
         //setNavTitle("Profil");
-        return <Profil userId={userCookie}></Profil>;
+        return <Profil userId={cookie}></Profil>;
         break;
       case "Amis":
         //setNavTitle("Amis");
@@ -188,8 +140,7 @@ export default function Navigation(image) {
     }
   }
 
-  const userCookie = utils();
-  if (userCookie == false) {
+  if (isConnected == null || isConnected == false) {
     return (
       <>
         <div className={style.navHeader}>
@@ -239,11 +190,11 @@ export default function Navigation(image) {
       </>
     );
   }else{
-    
+    console.log(isConnected)
     return(
     <>
         <div className={style.navHeader}>
-          <p className={style.username}>{userCookie.username}</p>
+          <p className={style.username}>{isConnected.username}</p>
           <button onClick={() => setRenderPage((renderPage = "Accueil"))} className={style.headerTitle}>Ressource Relationnelle</button>
           <p className={style.headerPageTitle}>{navTitle}</p>
           <img src="/Image/connexion.png" className={style.icon_connexion}/>
@@ -322,6 +273,7 @@ export default function Navigation(image) {
                 </div>
               </div>
             </div>
+            { isConnected.role == "Admin" ?
             <div className={style.sidebarContent}>
               <div className={style.sidebarTitle}>Administration</div>
                 <div className={style.sidebarChoice}>
@@ -343,6 +295,7 @@ export default function Navigation(image) {
                 </div>
               </div>
             </div>
+          :<></>}
           </div>
           <div className={style.navContentSeparator}>
             <div className={style.pageRender}>

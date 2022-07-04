@@ -3,20 +3,26 @@ import { useEffect, useState } from "react";
 
 export default function cookieManager() {
   const [userCookie, setUserCookie] = useState(getCookie("token"));
-  const [isLoading, setLoading] = useState(true);
-  let [pageAdmin, setPagAdmin] = useState("");
+  const [userData, setUserData] = useState(getCookie("token"));
+
+  const getUser = async () =>
+    fetch("http://"+process.env.IP+":3001/user/" + JSON.parse(userCookie)._id, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setUserData(data);
+        console.log("UserData = ",userData)
+      });
 
   useEffect(() => {
     if (userCookie) {
-      setLoading(true);
-      setUserCookie(userCookie);
-      setLoading(false);
+      getUser();
     }
   }, [userCookie]);
 
-  if (isLoading) {
-    return false;
-  } else {
-    return JSON.parse(userCookie);
-  }
+  return userData;
 }

@@ -31,7 +31,6 @@ export default async function ComponentConnexion(email,password) {
         console.log("Connexion");
         console.log(res.user);
         setCookies("token", res.user, 1 * 3600);
-        setConnection(true)
       }
       
       useEffect(function connect(){

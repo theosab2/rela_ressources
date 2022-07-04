@@ -1,7 +1,8 @@
 import style from "../../styles/Home.module.css";
 import { useState, useEffect } from "react";
-import cookieManager from "../utils/cookieManager";
+
 import { useRouter } from "next/router";
+import cookieManager from "../utils/cookieManager";
 //import {IP} from "@env";
 
 export default function ComponentArticle(props) {
@@ -10,7 +11,8 @@ export default function ComponentArticle(props) {
     const [nbDislike, setDislike] = useState(null);
     const [user, setUser] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
-    const userCookie = cookieManager();
+    let cookie;
+    cookie = cookieManager();
     const router = useRouter();
     async function downVote(id) {
         setDislike(nbDislike + 1);
@@ -75,8 +77,8 @@ export default function ComponentArticle(props) {
 
       const addFav = async(id) =>{
         
-        userCookie.favorites.push(id);
-        await fetch("http://"+process.env.IP+":3001/user/" + userCookie._id, {
+        props.connectUser.favorites.push(id);
+        await fetch("http://"+process.env.IP+":3001/user/" + props.connectUser._id, {
           method: "PUT",
           headers: {
             Accept: "application/json",
@@ -84,11 +86,10 @@ export default function ComponentArticle(props) {
           },
           body: JSON.stringify({
             user: {
-              favorites: userCookie.favorites,
+              favorites: props.connectUser.favorites,
             },
           }),
         });
-        console.log("aaa")
       }
 
       const getUser  = async (id) =>{
@@ -110,7 +111,6 @@ export default function ComponentArticle(props) {
     
 
     if(userInfo != null){
-      console.log(props.articleInfo)
     return (
         <div className={style.articleContainer} key={props.articleInfo._id}>
           <div className={style.firstPartContainer}>
@@ -137,12 +137,15 @@ export default function ComponentArticle(props) {
               <img src="/Image/like.png" className={style.dislike} onClick={() => downVote(props.articleInfo._id)}/>
             </div>
             <div className={style.articleOption}>
-              {userCookie.role == "admin" ?
+              {cookie != null?
+              cookie.role == "Admin" ?
               props.articleInfo.isApproved == true ?
               <img src="/Image/delete.png" className={style.warning} onClick={() => modererArticle(props.articleInfo._id,false)}/>
               :
               <img src="/Image/checkmark.png" className={style.warning} onClick={() => modererArticle(props.articleInfo._id,true)}/>
-              : <></>}
+              : <></> :
+              <></>
+              }
               <img src="/Image/alert.png" className={style.warning}/>
               <img src="/Image/forward.png" className={style.forward}/>
               <img src="/Image/plus.png" className={style.add} onClick={() => addFav(props.articleInfo._id)}/>
