@@ -49,7 +49,11 @@ const Home = ({navigation}) => {
       }
     }
     getStateUser();
-    
+    return () => {
+      setPost({})
+      setDisplay(<Text>Loading</Text>)
+      setUserId(null);
+    }
   }, [])
   return (
     <View style={styles.container}>
