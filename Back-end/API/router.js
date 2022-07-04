@@ -234,6 +234,16 @@ router.post("/user/toggle-friend/:userId/:friendId", async function (req, res, n
   res.status(updateResult.statusCode).json(updateResult);
 });
 
+//Ajout / suppression d'une ressource d'un utilisateur
+router.post("/user/toggle-favorite/:userId/:favoriteId", async function (req, res, next) {
+  var updateResult = await _userQueryService.toggleRessource(
+    req.params.userId,
+    req.params.favoriteId
+  );
+  _responseLogger(req);
+  res.status(updateResult.statusCode).json(updateResult);
+});
+
 //#endregion
 
 //#endregion
