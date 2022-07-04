@@ -1,40 +1,51 @@
 import style from "../../styles/Home.module.css";
-import {useRef} from 'react';
+import {useRef, useState, useEffect} from 'react';
 import cookieManager from "../utils/cookieManager";
 
 export default function Message(props) {
     const message = useRef(null);
-    const userCookie = cookieManager();
+    let cookie;
+    cookie = cookieManager();
+    console.log(cookie)
+    const  [allMessageSender,setAllMessageSender] = useState(null);
 
-    const getMessage = async () => {
-          await fetch("http://"+process.env.IP+":3001/all-by-relation/:relationId/" + props.UserId, {
-            method: "GET",
-            headers: {
-              Accept: "application/json",
-            },
-          })
-            .then((res) => res.json())
-            .then((data) => {
-          setArticle(data);
-      });
-    }
-
-    const sendMessage = async () => {
-      await fetch("http://"+process.env.IP+":3001/localhost:3001/message/create"), {
+    async function getMessage () {
+      console.log("AAA ->",cookie._id)
+      let res = await fetch("http://"+process.env.IP+":3001/messages/query" ,{
         method: "POST",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          message: {
-            sender_id: userCookie._id,
-            friend_id: props.UserId,
-            body: message.current.value
+          sender_id: cookie._id,
+        }),
+      })
+      res = await res.json();
+      setAllMessageSender(res);
+      console.log("AAA ->",res)
+    }
+
+    const sendMessage = async () => {
+      await fetch("http://"+process.env.IP+":3001/message/create", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          "message": {
+            "sender_id": userCookie._id,
+            "friend_id": props.UserId,
+            "body": message.current.value
           },
         }),
-      };
+      });
     }
+
+    useEffect(function connect(){
+          getMessage();
+    },[]);
 
     return (
         <div className={style.convContainer}>

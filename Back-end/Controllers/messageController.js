@@ -3,6 +3,7 @@ const _messageQueryService = require("../DAL/messageQueryService");
 
 //===== BLL =====//
 //const _utApplicationService = require("../BLL/utApplicationService");
+const _queryParserService = require("../BLL/global/queryParserService");
 
 const controllerLogPrefix = "    (message) CONTROLLER ";
 
