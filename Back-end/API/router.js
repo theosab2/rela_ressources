@@ -224,6 +224,16 @@ router.put("/user/:userId", async function (req, res, next) {
   res.status(updateResult.statusCode).json(updateResult);
 });
 
+//Ajout / suppression d'un amis d'un utilisateur
+router.post("/user/toggle-friend/:userId/:friendId", async function (req, res, next) {
+  var updateResult = await _userQueryService.toggleFriend(
+    req.params.userId,
+    req.params.friendId
+  );
+  _responseLogger(req);
+  res.status(updateResult.statusCode).json(updateResult);
+});
+
 //#endregion
 
 //#endregion
@@ -371,6 +381,8 @@ router.get("/comments/query", async function (req, res, next) {
 
 //Get list of comments from query in request body
 router.post("/comments/query", async function (req, res, next) {
+  console.log(req.body);
+
   var data = await _commentQueryService.queryComments(req.body);
   _responseLogger(req);
   res.status(200).json(data);

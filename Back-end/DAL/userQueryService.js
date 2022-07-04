@@ -92,7 +92,7 @@ const mUser = require('../models/user');
 
         //return users filtered by query
         module.exports.query = async (query = {}) => {
-            console.log("D.A.L [queryUsers] (paramètres) 'query' : ",query);
+            console.log(queryServiceLogPrefix,"[queryUsers] (paramètres) 'query' : ",query);
 
             //TODO application service check query template
             
@@ -591,6 +591,63 @@ const mUser = require('../models/user');
     };
     
     //Mets à jour l'utilisateur et renvoi le résultat de la mise à jour
+    module.exports.toggleFriend = async (userId,friendId) => {
+        console.log(queryServiceLogPrefix,"[toggleFriend] (paramètres) 'userId' :",userId,"'friendId' :",friendId);
+
+        //Validation des données reçues
+        var userIdExist = await this.checkUserIdExistence(userId);
+        var friendIdExist = await this.checkUserIdExistence(friendId);
+
+        //Si les deux données reçues sont valides 
+        if(userIdExist && friendIdExist)
+        {
+
+            var newUser = await this.getUserById(userId);
+            console.log(newUser);
+            if(newUser.friends_ids.filter(f => f == friendId).length <= 0){
+                //On ajoute si friend non présent
+                newUser.friends_ids.push(friendId);
+            }
+            else{
+                //Sinon on le retire
+                newUser.friends_ids = newUser.friends_ids.filter(f => f != friendId);
+
+            }
+
+            try 
+            {
+                await mUser.updateOne(
+                    {_id:userId},
+                    newUser
+                )
+                return({
+                    status:"SUCCESS",
+                    statusCode:201,
+                    message: "L'utilisateur : (ID)=\'"+userId+"\' a été mis à jour avec succès (ami:\'"+friendId+"\')",
+                })
+            } 
+            catch (exception) 
+            {
+                return({
+                    status:"EXCEPTION",
+                    statusCode:500,
+                    message: "Une erreur est survenue durant la mise à jour de l'utilisateur : (ID)=\'"+userId+"\' (ami:\'"+friendId+"\')",
+                    exception:exception
+                })
+            }
+
+            //TODO: Vérifier que la mise à jour a bien fonctionnée
+        }
+        else
+        {
+            return({
+                status:"NOT_FOUND",
+                statusCode:404,
+                message: "Erreur, vérifier userId et friendId",
+            })
+        }
+    };
+
     module.exports.updateUser = async (userId,userObject = {}) => {
         console.log("D.A.L [updateUser] (paramètres) 'userId' :",userId,"'userObject' :",userObject);
 
