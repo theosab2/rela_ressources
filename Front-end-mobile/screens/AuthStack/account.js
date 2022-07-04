@@ -78,13 +78,13 @@ const Account = ({ navigation }) => {
 
 
 
-
   return (
     <View style={styles.container}>
       <Header navigation={navigation} />
       <View style={styles.toolsButtons}>
         <TouchableOpacity
           style={styles.tool}
+          onPress={() => navigation.navigate('Auth',{screen: 'AccountUpdate'})}
         >
           <Icon
             name='pencil-outline'
@@ -122,7 +122,7 @@ const Account = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <Text style={styles.username}>{userData.username}</Text>
-        <Text style={styles.name}>{userData.name} {userData.firstname}</Text>
+        <Text style={styles.name}>{userData.firstname} {userData.lastname}</Text>
         <View style={styles.containerStats}>
           <View style={styles.containerStat}>
             <Text style={styles.stat}>42</Text>
@@ -134,7 +134,7 @@ const Account = ({ navigation }) => {
             style={styles.divider}
           />
           <View style={styles.containerStat}>
-            <Text style={styles.stat}>{friends.length}</Text>
+            <Text style={styles.stat}>{friends == undefined ? 0 : friends.length}</Text>
             <Text style={styles.libelleStat}>Relations</Text>
           </View>
         </View>
