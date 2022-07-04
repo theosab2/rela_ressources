@@ -10,6 +10,7 @@ import Card from '../../components/card';
 
 
 const Account = ({ navigation }) => {
+  const [userId, setUserId] = useState(null)
   const [userData, setUserData] = useState({});
   const[selectedTab,setSelectedTab] = useState('top');
   const [friends,setFriends] = useState([]);
@@ -18,63 +19,71 @@ const Account = ({ navigation }) => {
    */
   const [display, setDisplay] = useState(<Text>Loading</Text>);
 
+  const getLocalData = async () => {
+    try {
+      const storedId = await AsyncStorage.getItem('@userId');
+      if (storedId != null) {
+        setUserId(storedId)
+      } else {
+        navigation.navigate('Auth', {screen: 'Login'})
+      }
+    } catch (e) {
+      console.log('dommage',e);
+    }
+  }
+  const getUserData = async () => {
+    try {
+      const api = await fetch(API_URL + '/user/' + userId, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      });
+      const res = await api.json();
+      setUserData(res);
+      console.log('frinds',friends)
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  const getPost = async () => {
+    try{
+      const api = await fetch(API_URL + '/articles/all', {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+      });
+      const res = await api.json()
+      setDisplay(displayPost(res));
+    }catch(e){
+      console.log(e);
+    }
+  }
+  const displayPost = (data) => {
+    if(data.articles != undefined){
+      return data.articles.map(item => {
+        return <Card navigation={navigation} key={item._id} data={item}/>
+      })
+    }else{
+      return <View/>
+    }
+  }
+  
   useEffect(() => {
-    const getLocalData = async () => {
-      try {
-        const storedId = await AsyncStorage.getItem('@userId');
-        if (storedId != null) {
-          getUserData(storedId)
-        } else {
-          navigation.navigate('Auth', {screen: 'Login'})
-        }
-      } catch (e) {
-        console.log('dommage',e);
-      }
-    }
-    const getUserData = async (storedId) => {
-      try {
-        const api = await fetch(API_URL + '/user/' + storedId, {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-        });
-        const res = await api.json();
-        setUserData(res);
-        setFriends(userData.friends_ids)
-      } catch (e) {
-        console.log(e);
-      }
-    }
-    const getPost = async () => {
-      try{
-        const api = await fetch(API_URL + '/articles/all', {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-          },
-        });
-        const res = await api.json()
-        setDisplay(displayPost(res));
-      }catch(e){
-        console.log(e);
-      }
-    }
-    const displayPost = (data) => {
-      if(data.articles != undefined){
-        return data.articles.map(item => {
-          return <Card navigation={navigation} key={item._id} data={item}/>
-        })
+    if(userId == null){
+      getLocalData();
+    }else{
+      if(Object.keys(userData).length === 0){
+        getUserData()
+        getPost();
       }else{
-        return <View/>
+        setFriends(userData.friends_ids)
       }
-    }
-    getPost();
-    getLocalData();
-    
-  }, []);
+  }
+}, [userId,userData]);
 
 
 
@@ -134,7 +143,7 @@ const Account = ({ navigation }) => {
             style={styles.divider}
           />
           <View style={styles.containerStat}>
-            <Text style={styles.stat}>{friends == undefined ? 0 : friends.length}</Text>
+            <Text style={styles.stat}>{friends.length || 0}</Text>
             <Text style={styles.libelleStat}>Relations</Text>
           </View>
         </View>
