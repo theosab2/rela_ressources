@@ -1,6 +1,12 @@
 import { setCookies, getCookie } from "cookies-next";
+import { useRouter } from "next/router";
+import { useState,useEffect } from "react";
 
+  
 export default async function ComponentConnexion(email,password) {
+  //const [connection,setConnection] = useState(null);
+  
+  console.log("pas encore de problème")
     let res = await fetch("http://"+process.env.IP+":3001/auth/login", {
         method: "POST",
         headers: {
@@ -25,8 +31,14 @@ export default async function ComponentConnexion(email,password) {
         console.log("Connexion");
         console.log(res.user);
         setCookies("token", res.user, 1 * 3600);
-        window.sessionStorage.setItem("Page", "Accueil" );
-        router.reload(window.location.pathname)
+        setConnection(true)
       }
-
+      
+      useEffect(function connect(){
+        if(connection){
+          if (window) { 
+            window.sessionStorage.setItem("Page", "Accueil" );
+          }
+        }
+      },[connection]);
 }

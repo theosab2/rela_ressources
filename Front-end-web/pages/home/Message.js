@@ -7,7 +7,7 @@ export default function Message(props) {
     const userCookie = cookieManager();
 
     const getMessage = async () => {
-          await fetch("http://"+process.env.IP+":3001/article/" + props.articleId, {
+          await fetch("http://"+process.env.IP+":3001/all-by-relation/:relationId/" + props.UserId, {
             method: "GET",
             headers: {
               Accept: "application/json",

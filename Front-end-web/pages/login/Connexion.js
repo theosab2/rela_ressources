@@ -9,6 +9,7 @@ import Image from "next/dist/client/image";
 import ComponentConnexion from "./ComponentConnexion";
 import { useEffect } from "react";
 import ComponentAdminRole from "../administration/ComponentAdminRole";
+import { useRouter } from "next/router";
 
 export default function Connexion() {
   const sanityIoImageLoader = ({ src, width, quality }) => {
@@ -19,7 +20,7 @@ export default function Connexion() {
   const [mdp, setMdp] = useState("");
   const [load, setLoad] = useState(false);
   const [error, setError] = useState("");
-
+  const router = useRouter();
   useEffect(() => {
     if (window) { 
       window.sessionStorage.setItem("Page", "Connexion" );
@@ -29,20 +30,8 @@ export default function Connexion() {
   const display = async () => {
     console.log(identifiant);
     console.log(mdp);
-    function Modal() {
-      const [isBrowser, setIsBrowser] = useState(false);
-
-      useEffect(() => {
-        if (window) { 
-          window.sessionStorage.setItem("Page", "Connexion" );
-        }
-      }, []);
-
-      useEffect(() => {
-        setIsBrowser(true);
-      }, []);
-    }
-    setError(ComponentConnexion(identifiant,mdp));
+    ComponentConnexion(identifiant,mdp);
+    router.reload(window.location.pathname)
   };
 
   return (
@@ -83,8 +72,7 @@ export default function Connexion() {
                 onChange={(mdp) => setMdp(mdp.target.value)}
               />
               </div>
-
-                            <a className={style.link}>Mot de passe oublié</a>
+              <a className={style.link}>Mot de passe oublié</a>
             </div>
             {load ? <div className={style.errorMessage}>{error}</div>:<></>}
             </div>

@@ -44,13 +44,6 @@ export default function ComponentShowComment(props) {
             },
           }),
         })
-        console.log(JSON.stringify({
-          comment: {
-            creator: userCookie._id,
-            "article": props.article._id,
-            "content": commentContent.current.value,
-          },
-        }))
 
         res = await res.json();
         setRefreshComment("")
@@ -63,8 +56,9 @@ export default function ComponentShowComment(props) {
 
     useEffect(function showPost(){
       getComment(props.article._id)
-
-      if(userCookie == false){
+      
+      if(userCookie != false){
+        console.log(userCookie);
         setShowModal(true)
       }
     },[refreshComment]);
@@ -81,7 +75,7 @@ export default function ComponentShowComment(props) {
           }
           <div className={style.allCommentContainer}>
             {allComment.comments && allComment.comments.reverse().map((comment) => (
-              <ComponentShowOneComment comment={comment}/>
+              <ComponentShowOneComment comment={comment} key={comment._id}/>
             ))}
           </div>
         </div>
