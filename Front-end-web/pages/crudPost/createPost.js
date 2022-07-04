@@ -1,4 +1,5 @@
 import Navigation from "../Navigation";
+import { renderToString } from 'react-dom/server'
 import style from "../../styles/crudPost.module.css";
 import categorieManager from "../utils/categorieManager";
 import Image from "next/dist/client/image";
@@ -71,8 +72,6 @@ export default function createPost() {
           newContentsMediaObjectURL.push(URL.createObjectURL(media))
           setContentsMediaObjectURL(newContentsMediaObjectURL);
         }
-        
-        console.log(event);
       }
     }
     
@@ -302,6 +301,16 @@ export default function createPost() {
               <label htmlFor="condition">
                 Cette publication est privée
               </label>
+
+            <div>
+              <button
+                  className={style.articleAddContent}
+                  type="button"
+                  onClick={addNewContent}
+                >
+                  Ajouter un élément
+                </button>
+            </div>
             </div>
                 <div id="article-contents-div">
                   
@@ -323,5 +332,5 @@ export default function createPost() {
 
         </div>
     );
-  } else return <>loading...</>;
+  } else return <>loading...</>
 }
