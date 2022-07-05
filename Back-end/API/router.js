@@ -329,9 +329,9 @@ router.get("/article/:id", async function (req, res, next) {
   });
 
   router.post("/article/add-contents", _multer.contentMedias, async function (req, res, next) {     
-    console.log(req.body );
-    console.log(req.file );
-    console.log(req.files);
+    console.log('body : ',req.body );
+    console.log('file : ',req.file );
+    console.log('files : ',req.files);
 
     if(req.files != undefined & req.files != null || req.file != undefined & req.file != null){ //TEST with 1 content
       for(i=0;i<req.body.contents.length;i++){
@@ -339,7 +339,7 @@ router.get("/article/:id", async function (req, res, next) {
         {
           req.body.contents[i] = {
             ...JSON.parse(req.body.contents[i]),
-            mediaUrl : `${req.protocol}://${req.get('host')}/content-medias/${req.files[i].filename ?? req.file.filename}`
+            mediaUrl : `${req.protocol}://${req.get('host')}/contents-medias/${req.files[i].filename ?? req.file.filename}`
           };
         }
       }
