@@ -11,9 +11,12 @@ export default function ComponentArticle(props) {
     const [nbDislike, setDislike] = useState(null);
     const [user, setUser] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
+    const [approvedImg, setApprovedImg] = useState(props.articleInfo.isApproved);
+
     let cookie;
     cookie = cookieManager();
     const router = useRouter();
+
     async function downVote(id) {
         setDislike(nbDislike + 1);
         let res = await fetch("http://"+process.env.IP+":3001/article/" + id, {
@@ -60,6 +63,8 @@ export default function ComponentArticle(props) {
       }
 
       async function modererArticle(id, bool) {
+        console.log(id)
+        console.log(bool)
         let res = await fetch("http://"+process.env.IP+":3001/article/" + id, {
           method: "PUT",
           headers: {
@@ -68,17 +73,19 @@ export default function ComponentArticle(props) {
           },
           body: JSON.stringify({
             article: {
-              articleIsApproved: bool,
+              "isApproved": bool,
             },
           }),
         });
         res = await res.json();
+        console.log(res)
+        setApprovedImg(bool)
       }
 
       const addFav = async(id) =>{
-        
-        props.connectUser.favorites.push(id);
-        await fetch("http://"+process.env.IP+":3001/user/" + props.connectUser._id, {
+        console.log("Cookie ->",cookie)
+        cookie.favorites.push(id);
+        await fetch("http://"+process.env.IP+":3001/user/" + cookie._id, {
           method: "PUT",
           headers: {
             Accept: "application/json",
@@ -86,7 +93,7 @@ export default function ComponentArticle(props) {
           },
           body: JSON.stringify({
             user: {
-              favorites: props.connectUser.favorites,
+              favorites: cookie.favorites,
             },
           }),
         });
@@ -139,7 +146,7 @@ export default function ComponentArticle(props) {
             <div className={style.articleOption}>
               {cookie != null?
               cookie.role == "Admin" ?
-              props.articleInfo.isApproved == true ?
+              approvedImg == true ?
               <img src="/Image/delete.png" className={style.warning} onClick={() => modererArticle(props.articleInfo._id,false)}/>
               :
               <img src="/Image/checkmark.png" className={style.warning} onClick={() => modererArticle(props.articleInfo._id,true)}/>

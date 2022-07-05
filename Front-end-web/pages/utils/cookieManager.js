@@ -15,7 +15,6 @@ export default function cookieManager() {
       .then((res) => res.json())
       .then((data) => {
         setUserData(data);
-        console.log("UserData = ",userData)
       });
 
   useEffect(() => {

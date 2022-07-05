@@ -9,30 +9,56 @@ import cookieManager from "../utils/cookieManager";
 
 export default function Home() {
 
+  const [searchAllArticle,setSearchAllArticle] = useState(null);
+  let articleApproved = [];
+  
   useEffect(() => {
     if (window) { 
       window.sessionStorage.setItem("Page", "Accueil" );
     }
+    
   }, []);
 
-  let allArticle;
+  let allArticle = articleManager()
 
-  let articlePopular = [];
-  allArticle = articleManager();
-  
-  for (let i = 0; i < 5; i++) {
-    if (allArticle != null) {
-      articlePopular.push(allArticle[i]);
+  async function searchArticle (e) {
+    console.log(e.target.value)
+    let res = await fetch("http://"+process.env.IP+":3001/articles/query" ,{
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "title": "[LIKE][CI]"+e.target.value,
+      }),
+    })
+    res = await res.json();
+    setSearchAllArticle(res);
+    console.log("searchAllArticle ->",searchAllArticle)
+  }
+
+  if(searchAllArticle != null){
+    if(searchAllArticle.articles.length != 0){
+    allArticle = searchAllArticle.articles;
     }
   }
 
   if(allArticle != null){
+    console.log("allArticle ->",searchAllArticle)
+    allArticle.forEach(element => {
+      if(element.isApproved == true){
+        console.log(element.isApproved)
+      articleApproved.push(element)
+      }
+    }); 
+
   return (
     <>
       <div className={style.mainContainer}>
-        <input type="text" placeholder="Recherche" className={style.searchBar}></input>
-        {allArticle &&
-        allArticle
+        <input type="text" placeholder="Recherche" onChange={(e) => searchArticle(e)} className={style.searchBar}></input>
+        {articleApproved &&
+        articleApproved
         .reverse()
         .map((articleInfo) => (
         <ComponentArticle articleInfo={articleInfo} key={articleInfo._id}/>

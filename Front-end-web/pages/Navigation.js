@@ -99,7 +99,7 @@ export default function Navigation(image) {
         break;      
       case "Profil":
         //setNavTitle("Profil");
-        return <Profil userId={cookie}></Profil>;
+        return <Profil></Profil>;
         break;
       case "Amis":
         //setNavTitle("Amis");
@@ -190,7 +190,6 @@ export default function Navigation(image) {
       </>
     );
   }else{
-    console.log(isConnected)
     return(
     <>
         <div className={style.navHeader}>

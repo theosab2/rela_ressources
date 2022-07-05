@@ -4,20 +4,21 @@ import { useEffect, useState } from "react";
 import utils from "../utils";
 import {useRef} from 'react';
 import { isResSent } from "next/dist/next-server/lib/utils";
+import cookieManager from "../utils/cookieManager";
 
-export default function ProfilUpdate(props) {
+export default function ProfilUpdate() {
   const mailUser = useRef(null);
   const nameUser = useRef(null);
   const lastname = useRef(null);
   const username = useRef(null);
   let [userInfo, setUserInfo] = useState(null);
   //let userInfo;
-  let idUser;
+  let cookie;
+  cookie = cookieManager();
 
-  async function getUser(){
-
-    console.log("http://"+process.env.IP+":3001/user/" + JSON.parse(props.userId)._id);
-    await fetch("http://"+process.env.IP+":3001/user/" + JSON.parse(props.userId)._id, {
+  /*async function getUser(){
+    console.log("http://"+process.env.IP+":3001/user/" + cookie._id);
+    await fetch("http://"+process.env.IP+":3001/user/" + cookie._id, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -27,10 +28,10 @@ export default function ProfilUpdate(props) {
       .then((data) => {
         setUserInfo(data);
       });
-    }
+    }*/
 
   async function updateUser() {
-    let res = await fetch("http://"+process.env.IP+":3001/user/" + JSON.parse(props.userId)._id, {
+    let res = await fetch("http://"+process.env.IP+":3001/user/" + cookie._id, {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -50,12 +51,11 @@ export default function ProfilUpdate(props) {
   useEffect(() => {
     if (window) { 
       window.sessionStorage.setItem("Page", "Profil" );
-      getUser(); 
     }
   }, []);
   
-    if (userInfo != null) {
-      console.log(userInfo)
+    if (cookie != null) {
+      console.log(cookie)
       return (
         <>
           <div className={style.profilContainer}>
@@ -63,16 +63,16 @@ export default function ProfilUpdate(props) {
             <div className={style.profilInformation}>
               <div>
                 <label>Nom</label>
-                <input type="text" ref={lastname} defaultValue={userInfo.lastname} 
+                <input type="text" ref={lastname} defaultValue={cookie.lastname} 
                 ></input>
                 <label>Identifiant</label>
-                <input type="text" ref={username} defaultValue={userInfo.username} ></input>
+                <input type="text" ref={username} defaultValue={cookie.username} ></input>
               </div>
               <div>
                 <label>Prenom</label>
-                <input type="text" ref={nameUser} defaultValue={userInfo.firstname}></input>
+                <input type="text" ref={nameUser} defaultValue={cookie.firstname}></input>
                 <label>Email</label>
-                <input type="text" ref={mailUser} defaultValue={userInfo.email}></input>
+                <input type="text" ref={mailUser} defaultValue={cookie.email}></input>
               </div>  
             </div>
           </div>

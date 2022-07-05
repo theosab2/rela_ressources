@@ -15,7 +15,6 @@ export default function ComponentShowComment(props) {
   const [showModal, setShowModal] = useState(false);
   
       async function getComment (id) {
-        console.log(id);
         let res = await fetch("http://"+process.env.IP+":3001/comments/query" ,{
           method: "POST",
           headers: {
@@ -56,18 +55,13 @@ export default function ComponentShowComment(props) {
 
     useEffect(function showPost(){
       getComment(props.article._id)
-      
-      if(userCookie != false){
-        console.log(userCookie);
-        setShowModal(true)
-      }
+      setShowModal(userCookie ? true : false)
     },[refreshComment]);
 
     if(allComment != null){
-          console.log(allComment)
     return (
         <div>
-          {showModal ? <div className={style.falseCommentContainer} onClick={Connexion}>Connectez vous pour commenter cette publication</div> : 
+          {!showModal ? <div className={style.falseCommentContainer} onClick={Connexion}>Connectez vous pour commenter cette publication</div> : 
         <div className={style.writeCommentContainer}>
             <input type="text" placeholder="Commentaire" className={style.inputComment} ref={commentContent}></input>
             <button className={style.buttonComment} onClick={() => postComment()}>Valider</button>

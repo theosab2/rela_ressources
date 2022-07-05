@@ -9,35 +9,25 @@ import cookieManager from "../utils/cookieManager";
 
 export default function RessourceSave() {
   let allArticle;
+  let userCookie
   let array = [];
-  const userCookie = cookieManager();
-  console.log(userCookie)
+  
+  
   useEffect(() => {
     if (window) { 
       window.sessionStorage.setItem("Page", "Favorie" );
     }
   }, []);
 
-  const showModal = () => {
-    document.getElementById("myModal").style.display = "block";
-  };
-
-  const closeModal = () => {
-    document.getElementById("myModal").style.display = "none";
-  };
-
   allArticle = articleManager();
+  userCookie = cookieManager();
 
-  if(allArticle != null){
-
+  if(allArticle != null && userCookie.favorites != null){
     allArticle.forEach(element => {
-      console.log(element._id)
-      console.log(userCookie.favorites)
       if(userCookie.favorites.includes(element._id)){
-      array.push(element)
+        array.push(element)
       }
     });
-
   return (
     <>
       <div className={style.mainContainer}>

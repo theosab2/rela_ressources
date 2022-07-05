@@ -12,10 +12,6 @@ import ComponentAdminRole from "../administration/ComponentAdminRole";
 import { useRouter } from "next/router";
 
 export default function Connexion() {
-  const sanityIoImageLoader = ({ src, width, quality }) => {
-    return `https://cdn.sanity.io/${src}?w=${width}&q=${quality || 75}`;
-  };
-
   const [identifiant, setIdentifiant] = useState("");
   const [mdp, setMdp] = useState("");
   const [load, setLoad] = useState(false);
@@ -31,7 +27,8 @@ export default function Connexion() {
     console.log(identifiant);
     console.log(mdp);
     ComponentConnexion(identifiant,mdp);
-    //router.reload(window.location.pathname)
+    router.reload(window.location.pathname)
+    window.sessionStorage.setItem("Page", "Accueil" );
   };
 
   return (
