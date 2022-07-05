@@ -29,6 +29,7 @@ const _userApplicationService = require("../BLL/userApplicationService");
 
 //===== Initialisation du router =====//
 const express = require("express");
+const multer = require('multer');
 const router = express.Router();
 //====================================//
 
@@ -328,12 +329,16 @@ router.get("/article/:id", async function (req, res, next) {
         .json(articleCreationQueryResult);
   });
 
-  router.post("/article/add-contents", _multer.contentMedias, async function (req, res, next) {     
-    console.log('body : ',req.body );
-    console.log('file : ',req.file );
-    console.log('files : ',req.files);
+  router.post("/article/add-contents", async function (req, res, next) {     
+    console.log('body contents : ',req.body["contents"]);
+    console.log('body contentsMedias : ',req.body["contents-medias"]);
 
-    if(req.files != undefined & req.files != null || req.file != undefined & req.file != null){ //TEST with 1 content
+    req.files = req.body["contents-medias"];
+    _multer.contentsMedias(req,res,function err(err) {
+      console.log(err);
+    })
+
+    if(req.files != undefined & req.files != null || req.file != undefined & req.file != null){
       for(i=0;i<req.body.contents.length;i++){
         if(req.files[i].filename != null || req.file.filename != null)
         {
@@ -343,16 +348,16 @@ router.get("/article/:id", async function (req, res, next) {
           };
         }
       }
-      
-      var contentAddQueryResult = await _articleController.addContents(
-        req.body.contents
-      );
-      
-      _responseLogger(req);
-      res
-      .status(articleCreationQueryResult.statusCode)
-      .json(articleCreationQueryResult);
     }
+      
+    var contentAddQueryResult = await _articleController.addContents(
+      req.body.contents
+    );
+    
+    _responseLogger(req);
+    res
+    .status(articleCreationQueryResult.statusCode)
+    .json(articleCreationQueryResult);
 
   });
 

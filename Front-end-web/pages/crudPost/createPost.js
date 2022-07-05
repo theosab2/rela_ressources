@@ -57,19 +57,21 @@ export default function createPost() {
       if (event.target.files[0]) {
           console.log("target file", event.target.files[0])
       
-
           const media = event.target.files[0];
           console.log("media: ",media);
 
+          //set media name
+          let newContents = contents;
+          newContents[parseInt(event.target.id.replace("content-file-",""))].mediaName = media.name+"-"+event.target.id.replace("content-file-","")
+          setContents(newContents)
   
           let newContentsMedias = contentsMedias;
           newContentsMedias[parseInt(event.target.id.replace("content-file-",""))] = media
           setContentsMedias(newContentsMedias);
   
-          let newContentsMediaObjectURL = contentsMediasObjectURL;
+          let newContentsMediasObjectURL = contentsMediasObjectURL;
           var objUrl = URL.createObjectURL(media);
-          console.log("obj url",objUrl);
-          newContentsMediaObjectURL[parseInt(event.target.id.replace("content-file-",""))] = objUrl;
+          newContentsMediasObjectURL[parseInt(event.target.id.replace("content-file-",""))] = objUrl;
           setContentsMediasObjectURL(newContentsMediasObjectURL);
       }
     };
@@ -122,14 +124,15 @@ export default function createPost() {
 
   const sendArticleContents= async () => {
     var formdata = new FormData();
-
-
-    formdata.append("contents-medias", contentsMedia);
-
-    
-    var JSON_Object = JSON.stringify({
+    var contents_JSON_Object = JSON.stringify({
       contents
     });
+
+    console.log(contentsMedias);
+    console.log(contents);
+
+    formdata.append("contents-medias", contentsMedias);
+    formdata.append("contents", contents_JSON_Object);
 
     const res = await fetch("http://"+process.env.IP+":3001/article/add-contents", {
       method: "POST",
@@ -144,13 +147,9 @@ export default function createPost() {
 
   const displayArticleContents = () => {
     let contentsCounter = 0;
-    var toReturn = "";               
 
     document.getElementById("article-contents-div").innerHTML = "";
     contents.forEach(content => {
-      contentsCounter++;
-      console.log(contentsCounter);
-      console.log(style.articleContentDiv);
 
       document.getElementById("article-contents-div").innerHTML += `
       <div 
@@ -169,14 +168,16 @@ export default function createPost() {
         <div >
           <img
             id=output-content-${contentsCounter}
-            src=${contentsMediaObjectURL[contentsCounter]}
+            src=${contentsMediasObjectURL[contentsCounter]}
             class=${style.uploadImage}
           />
         </div>
       </div>
       `
       console.log(document.getElementById(`content-file-${contentsCounter}`));
-      document.getElementById(`content-file-${contentsCounter}`).addEventListener("change",uploadContentMediasToClient)
+      document.getElementById(`content-file-${contentsCounter}`).addEventListener("change",uploadContentsMediasToClient)
+
+      contentsCounter++;
     });
   };
 
