@@ -193,6 +193,7 @@ export default function Navigation(image) {
     return(
     <>
         <div className={style.navHeader}>
+          <img src="/" />
           <p className={style.username}>{isConnected.username}</p>
           <button onClick={() => setRenderPage((renderPage = "Accueil"))} className={style.headerTitle}>Ressource Relationnelle</button>
           <p className={style.headerPageTitle}>{navTitle}</p>
@@ -316,7 +317,7 @@ export default function Navigation(image) {
 
             <div className={style.recentContent}>
               <div className={style.recentTitle}>Récent</div>
-              {allArticle && allArticle.reverse(0,5).map((articleInfo) => (
+              {allArticle && allArticle.slice(0,7).map((articleInfo) => (
                 <div className={style.recentChoice} key={articleInfo._id}>
                     <img 
                     src="/Image/connexion.png"
@@ -324,7 +325,6 @@ export default function Navigation(image) {
                     className={style.recentUserPicture}
                     />
                 <div className={style.recentInfo}>
-                      <div className={style.recentUserName}>JeanMichel62</div>
                       <div className={style.recentArticleTitle}>{articleInfo.title}</div>
                 </div>
               </div>

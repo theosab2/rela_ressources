@@ -5,6 +5,7 @@ import Image from "next/dist/client/image";
 import React, { useState } from "react";
 import utils from "../utils";
 import { useEffect } from "react";
+import { create } from "../../../Back-end/models/article";
 
 export default function createPost() {
   
@@ -22,9 +23,11 @@ export default function createPost() {
   const [content, setContent] = useState(null);
   const [userId, setUserId] = useState(null);
 
+  const [createdArticleId,setCreatedArticleId] = useState(null)
+
   const [contents, setContents] = useState([]);
-  const [contentsMedia, setContentsMedia] = useState([]);
-  const [contentsMediaObjectURL, setContentsMediaObjectURL] = useState([]);
+  const [contentsMedias, setContentsMedias] = useState([]);
+  const [contentsMediasObjectURL, setContentsMediasObjectURL] = useState([]);
 
   useEffect(() => {
     if (window) { 
@@ -34,9 +37,10 @@ export default function createPost() {
 
   const addNewContent = () => {
     let newContents = contents;
-    newContents.push({});
+    newContents.push({
+      hasMedia:false
+    });
     setContents(newContents);
-    console.log("contents : ",contents)
     displayArticleContents();
   }
 
@@ -50,32 +54,35 @@ export default function createPost() {
     }
   };
 
-  const uploadContentMediasToClient = (event) => {
-    console.log(event)
+  const uploadContentsMediasToClient = (event) => {
+    console.log("evt",event)
     if(typeof(event) != typeof(undefined))
     {
-      if (event.target.files && event.target.files[0]) {
-        console.log("files")
+      if (event.target.files[0]) {
+          console.log("target file", event.target.files[0])
       
-        for (let i = 0; i < event.target.files.length; i++) {
-          console.log("file: ",event.target.files[i]);
+          const media = event.target.files[0];
+          console.log("media: ",media);
 
-          const media = event.target.files[i];
+          //set media name
+          let newContents = contents;
+          newContents[parseInt(event.target.id.replace("content-file-",""))].name = media.name
+          newContents[parseInt(event.target.id.replace("content-file-",""))].hasMedia = true
+          setContents(newContents)
   
-          let newContentsMedia = contentsMedia;
-          newContentsMedia[event.target.id.replace()].push(newContentsMedia)
-          setContentsMedia(newContentsMedia);
+          let newContentsMedias = contentsMedias;
+          newContentsMedias[parseInt(event.target.id.replace("content-file-",""))] = media
+          setContentsMedias(newContentsMedias);
   
-          let newContentsMediaObjectURL = contentsMediaObjectURL;
-          newContentsMediaObjectURL.push(URL.createObjectURL(media))
-          setContentsMediaObjectURL(newContentsMediaObjectURL);
-        }
-        
-        console.log(event);
+          let newContentsMediasObjectURL = contentsMediasObjectURL;
+          var objUrl = URL.createObjectURL(media);
+          newContentsMediasObjectURL[parseInt(event.target.id.replace("content-file-",""))] = objUrl;
+          setContentsMediasObjectURL(newContentsMediasObjectURL);
       }
-    }
-    
+    };
+    displayArticleContents();
   };
+  
   const display = async () => {
     // create array with 2 images 
     /*
@@ -97,7 +104,9 @@ export default function createPost() {
       isApproved: true,
       isActive: true,
       privacyIsPublic: true,
+      contents:contents
     });
+
     formdata.append("article", JSON_Object);
     const res = await fetch("http://"+process.env.IP+":3001/article/create", {
       method: "POST",
@@ -107,85 +116,103 @@ export default function createPost() {
       },
       body: formdata,
     });
-    
-    console.log(res.status);
-    if (res.status != "SUCESS") {
+    var responseBody = await res.json()
+
+    if (res.status != 201) {
       console.log(res.status);
-    } 
+    }
     else {
       console.log("Réussite");
+      console.log("response body", responseBody)
+      console.log("newlyCreatedArticle_id", responseBody.newlyCreatedArticle_id)
+      setCreatedArticleId(responseBody.newlyCreatedArticle_id);
+      sendArticleContents(responseBody.newlyCreatedArticle_id);
     }
-
-    sendArticleContents()
   };
 
-  const sendArticleContents= async () => {
-    var formdata = new FormData();
+  const sendArticleContents= async (newlyCreatedArticleId) => {
+    var contentsCounter = 0;
+    contents.forEach(async content => {
+      console.log(content);
+      if(content.hasMedia == true)
+      {
+        delete content.hasMedia
+        var formdata = new FormData();
+        var content_JSON_Object = JSON.stringify({
+          ...content,
+          contentIndex:contentsCounter
+        });
 
-    var contentMedia = image;
-    var contentMedias = [];
-    contentMedias.push(contentMedia)
+        console.log("content_JSON_Object :",content_JSON_Object)
 
-    formdata.append("content-images", contentMedias);
+        formdata.append("content", content_JSON_Object);  
+        formdata.append("content-media", contentsMedias[contentsCounter]);
+
+        const res = await fetch("http://"+process.env.IP+":3001/article/set-content-media/"+newlyCreatedArticleId, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "user-upload-GUID": userCookie._id,
+          },
+          body: formdata,
+        });
+
+        var responseBody = await res.json()
+
+        if (res.status != 201) {
+          console.log(res.status);
+        }
+        else {
+          console.log("ajout media content : Réussite");
+          console.log("response body", responseBody)
+        }
+
+      }
+      contentsCounter++;
+    });
+    
+    
+    
 
     
-    var JSON_Object = JSON.stringify({
-      contents:[
-        
-      ]//TODO : add content state
-    });
-
-    const res = await fetch("http://"+process.env.IP+":3001/article/add-contents", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "user-upload-GUID": userCookie._id,
-      },
-      body: formdata,
-    });
 
   };
 
   const displayArticleContents = () => {
     let contentsCounter = 0;
-    var toReturn = "";               
 
     document.getElementById("article-contents-div").innerHTML = "";
     contents.forEach(content => {
-      contentsCounter++;
-      console.log(contentsCounter);
-      console.log(style.articleContentDiv);
 
       document.getElementById("article-contents-div").innerHTML += `
       <div 
         class=${style.articleContentDiv}
       >
-        <label htmlFor={content-file-${contentsCounter}} className={style.addContentMedia}>
+        <label htmlFor="content-file-${contentsCounter}" class=${style.addContentMedia}>
         +
         </label>
         <input 
-          id={content-file-${contentsCounter}} 
-          className={style.inputFile} 
+          id="content-file-${contentsCounter}" 
+          className=${style.inputFile} 
           type="file"                         
-          accept="image/*, .pdf,video/*"
-          onChange=${uploadContentMediasToClient()}>
+          accept="image/*, .pdf,video/*"*
+        >
         </input>
         <div >
           <img
-            id={output-content-${contentsCounter}}
-            src={contentsMediaObjectURL[${contentsCounter -1}]}
-            className={style.uploadImage}
+            id=output-content-${contentsCounter}
+            src=${contentsMediasObjectURL[contentsCounter]}
+            class=${style.uploadImage}
           />
         </div>
       </div>
       `
-      setTimeout(() => {
-        console.log(document.getElementById(`content-file-${contentsCounter}`));
-        
-        document.getElementById(`content-file-${contentsCounter}`).addEventListener("change",uploadContentMediasToClient())
-      }, 500);
+      document.getElementById(`content-file-${contentsCounter}`).addEventListener("change",uploadContentsMediasToClient)
+
+      contentsCounter++;
     });
   };
+  
 
   function getType(value) {
     setTypeRessource(value.target.value);
@@ -322,5 +349,5 @@ export default function createPost() {
 
         </div>
     );
-  } else return <>loading...</>;
+  } else return <>loading...</>
 }

@@ -42,3 +42,29 @@
   margin-left: 40%;
   margin-bottom: 20px;
 }
+
+.addRessource{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  background-color: #CE8686;
+  border-radius: 5px;
+  color: #fff;
+  height: 50px;
+  font-size: 25px;
+  margin-right: 10px;
+  
+}
+
+.inputFile{
+  display: none;
+}
+
+.uploadImage{
+  width: auto;
+  height: 50px;
+
+  border-radius: 5px;
+  margin: 5px;
+}
