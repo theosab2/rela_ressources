@@ -23,8 +23,8 @@ export default function createPost() {
   const [userId, setUserId] = useState(null);
 
   const [contents, setContents] = useState([]);
-  const [contentsMedia, setContentsMedia] = useState([]);
-  const [contentsMediaObjectURL, setContentsMediaObjectURL] = useState([]);
+  const [contentsMedias, setContentsMedias] = useState([]);
+  const [contentsMediasObjectURL, setContentsMediasObjectURL] = useState([]);
 
   useEffect(() => {
     if (window) { 
@@ -50,29 +50,30 @@ export default function createPost() {
     }
   };
 
-  const uploadContentMediasToClient = (event) => {
-    
-    console.log(event)
+  const uploadContentsMediasToClient = (event) => {
+    console.log("evt",event)
     if(typeof(event) != typeof(undefined))
     {
-      if (event.target.files && event.target.files[0]) {
-        console.log("files")
+      if (event.target.files[0]) {
+          console.log("target file", event.target.files[0])
       
-        for (let i = 0; i < event.target.files.length; i++) {
-          console.log("file: ",event.target.files[i]);
 
-          const media = event.target.files[i];
+          const media = event.target.files[0];
+          console.log("media: ",media);
+
   
-          let newContentsMedia = contentsMedia;
-          newContentsMedia[event.target.id.replace()].push(newContentsMedia)
-          setContentsMedia(newContentsMedia);
+          let newContentsMedias = contentsMedias;
+          newContentsMedias[parseInt(event.target.id.replace("content-file-",""))] = media
+          setContentsMedias(newContentsMedias);
   
-          let newContentsMediaObjectURL = contentsMediaObjectURL;
-          newContentsMediaObjectURL.push(URL.createObjectURL(media))
-          setContentsMediaObjectURL(newContentsMediaObjectURL);
-        }
+          let newContentsMediaObjectURL = contentsMediasObjectURL;
+          var objUrl = URL.createObjectURL(media);
+          console.log("obj url",objUrl);
+          newContentsMediaObjectURL[parseInt(event.target.id.replace("content-file-",""))] = objUrl;
+          setContentsMediasObjectURL(newContentsMediasObjectURL);
       }
     };
+    displayArticleContents();
   };
   
   const display = async () => {
@@ -122,17 +123,12 @@ export default function createPost() {
   const sendArticleContents= async () => {
     var formdata = new FormData();
 
-    var contentMedia = image;
-    var contentMedias = [];
-    contentMedias.push(contentMedia)
 
-    formdata.append("content-images", contentMedias);
+    formdata.append("contents-medias", contentsMedia);
 
     
     var JSON_Object = JSON.stringify({
-      contents:[
-        
-      ]//TODO : add content state
+      contents
     });
 
     const res = await fetch("http://"+process.env.IP+":3001/article/add-contents", {
@@ -167,23 +163,20 @@ export default function createPost() {
           id="content-file-${contentsCounter}" 
           className=${style.inputFile} 
           type="file"                         
-          accept="image/*, .pdf,video/*"
-          onChange=${uploadContentMediasToClient()}>
+          accept="image/*, .pdf,video/*"*
+        >
         </input>
         <div >
           <img
             id=output-content-${contentsCounter}
-            src={${contentsMediaObjectURL[contentsCounter -1]}}
+            src=${contentsMediaObjectURL[contentsCounter]}
             class=${style.uploadImage}
           />
         </div>
       </div>
       `
-      setTimeout(() => {
-        console.log(document.getElementById(`content-file-${contentsCounter}`));
-        
-        document.getElementById(`content-file-${contentsCounter}`).addEventListener("change",uploadContentMediasToClient())
-      }, 500);
+      console.log(document.getElementById(`content-file-${contentsCounter}`));
+      document.getElementById(`content-file-${contentsCounter}`).addEventListener("change",uploadContentMediasToClient)
     });
   };
 

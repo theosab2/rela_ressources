@@ -71,7 +71,7 @@ module.exports = function (app, server) {
   
   app.use('/article-image',express.static(path.join(__dirname,"Assets/Uploads/Image/Article")));
   app.use('/avatar-image',express.static(path.join(__dirname,"Assets/Uploads/Image/Avatar")));
-  app.use('/content-medias',express.static(path.join(__dirname,"Assets/Uploads/Image/ContentMedias")));
+  app.use('/contents-medias',express.static(path.join(__dirname,"Assets/Uploads/Image/ContentsMedias")));
   // Ajout 'uplaoded-pdf'
   // Ajout 'uploaded-video'
 
