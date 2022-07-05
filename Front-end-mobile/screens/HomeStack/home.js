@@ -9,7 +9,7 @@ import { Divider } from 'react-native-elements';
 
 const Home = ({navigation}) => {
   const [post, setPost] = useState({});
-  const [display, setDisplay] = useState(<Text>Loading</Text>);
+  const [display, setDisplay] = useState(null);
   const [userId,setUserId] = useState(null);
   let excedTime = 0;
   console.log('ENV',API_URL);
@@ -51,7 +51,7 @@ const Home = ({navigation}) => {
     getStateUser();
     return () => {
       setPost({})
-      setDisplay(<Text>Loading</Text>)
+      setDisplay(null)
       setUserId(null);
     }
   }, [])
@@ -68,7 +68,7 @@ const Home = ({navigation}) => {
       </View>
       <SafeAreaView style={styles.scrollViewContainer}>
         <ScrollView style={styles.scrollView} contentContainerStyle={styles.postPosition}>
-          {display} 
+          {display || <Text>Loading</Text>} 
         </ScrollView>
       </SafeAreaView>
       <View style={styles.footer}>
