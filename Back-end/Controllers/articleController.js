@@ -228,6 +228,16 @@ module.exports.create = async (requestBody = null) => {
         })
     }
 
+    if(articleObject.title == undefined || articleObject.title == null){
+        console.log(controllerLogPrefix,"[create] (return) BAD_REQUEST : article title not found in request body");
+        return({
+            status:"BAD_REQUEST",
+            statusCode:400,
+            message: "Création du article impossible : Propriété \'article.title\' introuvable dans le body de la requête",
+            requiredFormat:"Format du body attendu : {article:{title:title's value,...}}",
+        })
+    }
+
     try //Sauvegarde du modèle Article dans la BDD
     {   
         console.log(controllerLogPrefix,"[create] (info) saving created article object in the database");
