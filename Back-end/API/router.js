@@ -332,9 +332,7 @@ router.get("/article/:id", async function (req, res, next) {
         .json(articleCreationQueryResult);
   });
 
-  router.post("/article/set-content-media/:articleId",_multer.contentMedia ,async function (req, res, next) {     
-    console.log('body content : ',req.body["content"]);
-    
+  router.post("/article/set-content-media/:articleId",_multer.contentMedia ,async function (req, res, next) {         
     if(req.file != undefined & req.file != null){
       req.body.content = {
         ...JSON.parse(req.body.content),

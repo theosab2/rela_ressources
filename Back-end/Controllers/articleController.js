@@ -145,7 +145,7 @@ module.exports.getOne = async (articleId) => {
 //#region [UPDATE RESSOURCES]
 
 module.exports.setContent = async (articleId,requestBody = null) => {
-    console.log(controllerLogPrefix,"[addContents] (paramètres) 'articleId' :\n",articleId,"'requestBody' :\n",requestBody);
+    console.log(controllerLogPrefix,"[setContent] (paramètres) 'articleId' :\n",articleId,"'requestBody' :\n",requestBody);
 
     let contentObject = requestBody.content;
     let contentWithoutIndex = requestBody.content;
@@ -169,7 +169,9 @@ module.exports.setContent = async (articleId,requestBody = null) => {
     //get des infos de l'article
     var articleObject = await _articleQueryService.getById(articleId);
 
-    console.log("this index",contentIndex)
+    console.log(controllerLogPrefix,"[setContent] update index :",contentIndex);
+    console.log(controllerLogPrefix,"[setContent] update index :",contentIndex);
+
 
     articleObject.contents[parseInt(contentIndex)] = contentWithoutIndex;
     console.log("this obj",articleObject);

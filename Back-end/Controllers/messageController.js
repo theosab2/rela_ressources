@@ -152,6 +152,7 @@ module.exports.create = async (requestBody = null) => {
     console.log(controllerLogPrefix,"[create] (paramètres) 'requestBody' :",requestBody);
 
     let messageObject = requestBody.message;
+    messageObject._createdAt = Date.now()
 
     if(messageObject == {} || messageObject == undefined || messageObject == null){
         console.log(controllerLogPrefix,"[create] (return) BAD_REQUEST : message not found in request body");

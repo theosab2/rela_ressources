@@ -132,12 +132,13 @@ export default function createPost() {
 
   const sendArticleContents= async (newlyCreatedArticleId) => {
     var contentsCounter = 0;
-    contents.forEach(async content => {
+    contents.forEach(content => {
       console.log(content);
       if(content.hasMedia == true)
       {
         delete content.hasMedia
         var formdata = new FormData();
+        console.log("counter",contentsCounter);
         var content_JSON_Object = JSON.stringify({
           ...content,
           contentIndex:contentsCounter
@@ -148,7 +149,7 @@ export default function createPost() {
         formdata.append("content", content_JSON_Object);  
         formdata.append("content-media", contentsMedias[contentsCounter]);
 
-        const res = await fetch("http://"+process.env.IP+":3001/article/set-content-media/"+newlyCreatedArticleId, {
+        const res = fetch("http://"+process.env.IP+":3001/article/set-content-media/"+newlyCreatedArticleId, {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -157,7 +158,7 @@ export default function createPost() {
           body: formdata,
         });
 
-        var responseBody = await res.json()
+        var responseBody = res
 
         if (res.status != 201) {
           console.log(res.status);
