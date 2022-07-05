@@ -105,6 +105,7 @@ const Login = ({ navigation }) => {
             titleStyle={{ fontWeight: 'bold', fontSize: 12 }}
             containerStyle={styles.buttonContainerStyle}
             onPress={dataAuth}
+            testID="loginButton"
           />
         </View>
         <View style={styles.createAccountContainer}>
