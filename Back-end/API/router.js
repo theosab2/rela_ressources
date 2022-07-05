@@ -29,6 +29,7 @@ const _userApplicationService = require("../BLL/userApplicationService");
 
 //===== Initialisation du router =====//
 const express = require("express");
+const multer = require('multer');
 const router = express.Router();
 //====================================//
 
@@ -307,15 +308,18 @@ router.get("/article/:id", async function (req, res, next) {
 //#region [UPDATE RESSOURCES]
   //Création d'un article
   router.post("/article/create", _multer.articleImage, async function (req, res, next) {     
-    console.log(req.body );
-    console.log(req.file );
-    console.log(req.files);
 
     if(req.file != undefined & req.file != null){
+      console.log(req);
       req.body.article = {
         ...JSON.parse(req.body.article),
         image : `${req.protocol}://${req.get('host')}/article-image/${req.file.filename}`
       };
+    }
+    else{
+      req.body.article = {
+        ...JSON.parse(req.body.article)
+      }
     }
 
     var articleCreationQueryResult = await _articleController.create(
@@ -328,31 +332,31 @@ router.get("/article/:id", async function (req, res, next) {
         .json(articleCreationQueryResult);
   });
 
-  router.post("/article/add-contents", _multer.contentMedias, async function (req, res, next) {     
-    console.log(req.body );
-    console.log(req.file );
-    console.log(req.files);
-
-    if(req.files != undefined & req.files != null || req.file != undefined & req.file != null){ //TEST with 1 content
-      for(i=0;i<req.body.contents.length;i++){
-        if(req.files[i].filename != null || req.file.filename != null)
-        {
-          req.body.contents[i] = {
-            ...JSON.parse(req.body.contents[i]),
-            mediaUrl : `${req.protocol}://${req.get('host')}/content-medias/${req.files[i].filename ?? req.file.filename}`
-          };
-        }
-      }
-      
-      var contentAddQueryResult = await _articleController.addContents(
-        req.body.contents
-      );
-      
-      _responseLogger(req);
-      res
-      .status(articleCreationQueryResult.statusCode)
-      .json(articleCreationQueryResult);
+  router.post("/article/set-content-media/:articleId",_multer.contentMedia ,async function (req, res, next) {     
+    console.log('body content : ',req.body["content"]);
+    
+    if(req.file != undefined & req.file != null){
+      req.body.content = {
+        ...JSON.parse(req.body.content),
+        mediaUrl : `${req.protocol}://${req.get('host')}/contents-medias/${req.file.filename}`
+      };
     }
+    else
+    {
+      req.body.content = {
+        ...JSON.parse(req.body.content)
+      };
+    }
+      
+    var contentSetQueryResult = await _articleController.setContent(
+      req.params.articleId,
+      req.body
+    );
+    
+    _responseLogger(req);
+    res
+    .status(contentSetQueryResult.statusCode)
+    .json(contentSetQueryResult);
 
   });
 
@@ -603,3 +607,4 @@ router.put("/comment/:commentId", async function (req, res, next) {
 //#endregion
 
 module.exports = router;
+

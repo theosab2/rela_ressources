@@ -144,10 +144,17 @@ module.exports.getOne = async (articleId) => {
 
 //#region [UPDATE RESSOURCES]
 
-module.exports.addContents = async (requestBody = null) => {
-    console.log(controllerLogPrefix,"[addContents] (paramètres) 'requestBody' :\n",requestBody);
+module.exports.setContent = async (articleId,requestBody = null) => {
+    console.log(controllerLogPrefix,"[addContents] (paramètres) 'articleId' :\n",articleId,"'requestBody' :\n",requestBody);
 
-    let contentObject = requestBody.contents;
+    let contentObject = requestBody.content;
+    let contentWithoutIndex = requestBody.content;
+    var contentIndex = contentObject.contentIndex;
+
+    if(typeof(contentObject.contentIndex) != undefined){
+        delete contentWithoutIndex.contentIndex;
+    }
+    
 
     if(contentObject == {} || contentObject == undefined || contentObject == null){
         console.log(controllerLogPrefix,"[create] (return) BAD_REQUEST : content not found in request body");
@@ -159,10 +166,18 @@ module.exports.addContents = async (requestBody = null) => {
         })
     }
 
+    //get des infos de l'article
+    var articleObject = await _articleQueryService.getById(articleId);
+
+    console.log("this index",contentIndex)
+
+    articleObject.contents[parseInt(contentIndex)] = contentWithoutIndex;
+    console.log("this obj",articleObject);
+
     try //Sauvegarde du modèle Article dans la BDD
     {   
-        console.log(controllerLogPrefix,"[create] (info) saving created message object in the database");
-        var saveAttempt = await _articleQueryService.updateArticle(articleObject);
+        console.log(controllerLogPrefix,"[create] (info) saving created article object in the database");
+        var saveAttempt = await _articleQueryService.updateOne(articleId,articleObject);
     }
     catch (exception) //ECHEC Sauvegarde du modèle Article dans la BDD
     {   
@@ -186,13 +201,12 @@ module.exports.addContents = async (requestBody = null) => {
         });    
     }
     else{
-        console.log(controllerLogPrefix,"[create] (error) exception occur while saving article object to the database : ",exception);
+        console.log(controllerLogPrefix,"[create] (error) exception occur while saving article object to the database");
         return ({
             status:"EXCEPTION",
             statusCode:500,
             message: "Une erreur est survenue durant l'enregistrement du modèle dans la base de données pour le nouvel article : \'"+articleObject.title+"\'",
-            articleInfoReceipted:articleObject,
-            exception:exception
+            articleInfoReceipted:articleObject
         });
     }
 }
@@ -214,7 +228,7 @@ module.exports.create = async (requestBody = null) => {
 
     try //Sauvegarde du modèle Article dans la BDD
     {   
-        console.log(controllerLogPrefix,"[create] (info) saving created message object in the database");
+        console.log(controllerLogPrefix,"[create] (info) saving created article object in the database");
         var saveAttempt = await _articleQueryService.saveOne(articleObject);
     }
     catch (exception) //ECHEC Sauvegarde du modèle Article dans la BDD
@@ -235,6 +249,7 @@ module.exports.create = async (requestBody = null) => {
             status:"SUCCESS",
             statusCode:201,
             articleCreated:articleObject,
+            newlyCreatedArticle_id:saveAttempt.newlyCreatedArticle_id,
             message: "Article : \'"+articleObject.title+"\' Créé avec succès"
         });    
     }
