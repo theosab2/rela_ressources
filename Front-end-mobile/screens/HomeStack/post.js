@@ -150,7 +150,8 @@ const styles = StyleSheet.create({
         width: '95%',
         height: 210,
         borderRadius: 10,
-        margin: 10
+        margin: 10,
+        resizeMode: 'contain'
       },
       title: {
         fontSize: 20,
