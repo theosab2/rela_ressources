@@ -131,53 +131,52 @@ export default function createPost() {
   };
 
   const sendArticleContents= async (newlyCreatedArticleId) => {
-    var contentsCounter = 0;
-    contents.forEach(content => {
-      console.log(content);
+    for (let index = 0; index < contents.length; index++) {
+      const content = contents[index];
       if(content.hasMedia == true)
       {
-        delete content.hasMedia
-        var formdata = new FormData();
-        console.log("counter",contentsCounter);
-        var content_JSON_Object = JSON.stringify({
-          ...content,
-          contentIndex:contentsCounter
-        });
-
-        console.log("content_JSON_Object :",content_JSON_Object)
-
-        formdata.append("content", content_JSON_Object);  
-        formdata.append("content-media", contentsMedias[contentsCounter]);
-
-        const res = fetch("http://"+process.env.IP+":3001/article/set-content-media/"+newlyCreatedArticleId, {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "user-upload-GUID": userCookie._id,
-          },
-          body: formdata,
-        });
-
-        var responseBody = res
-
-        if (res.status != 201) {
-          console.log(res.status);
-        }
-        else {
-          console.log("ajout media content : Réussite");
-          console.log("response body", responseBody)
-        }
-
+        await sendContent(newlyCreatedArticleId,content,index)
       }
-      contentsCounter++;
-    });
-    
-    
-    
-
-    
-
+    }
   };
+
+  const sendContent = async (newlyCreatedArticleId,content, contentsCounter) => {
+      console.log("send : ",contentsCounter)
+      
+      delete content.hasMedia
+      var formdata = new FormData();
+      var content_JSON_Object = JSON.stringify({
+        ...content,
+        contentIndex:contentsCounter
+      });
+
+      console.log("content_JSON_Object :",content_JSON_Object)
+
+      formdata.append("content", content_JSON_Object);  
+      formdata.append("content-media", contentsMedias[contentsCounter]);
+
+      const res = await fetch("http://"+process.env.IP+":3001/article/set-content-media/"+newlyCreatedArticleId, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "user-upload-GUID": userCookie._id,
+        },
+        body: formdata
+      });
+
+      var responseBody = await res.json();
+
+      if (res.status != 201) {
+        console.log(res.status);
+        return 0;
+      }
+      else {
+        console.log("ajout media content : Réussite");
+        console.log("response body", responseBody)
+        return 1;
+      }
+  }
+
 
   const displayArticleContents = () => {
     let contentsCounter = 0;
