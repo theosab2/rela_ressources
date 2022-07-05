@@ -12,9 +12,11 @@ export default function ProfilUpdate() {
   const lastname = useRef(null);
   const username = useRef(null);
   let [userInfo, setUserInfo] = useState(null);
+  const [image, setImage] = useState(null);
   //let userInfo;
   let cookie;
   cookie = cookieManager();
+  const [createObjectURL, setCreateObjectURL] = useState("");
 
   /*async function getUser(){
     console.log("http://"+process.env.IP+":3001/user/" + cookie._id);
@@ -42,10 +44,12 @@ export default function ProfilUpdate() {
           firstname: nameUser.current.value,
           name: lastname.current.value,
           email: mailUser.current.value,
+          photoUrl: createObjectURL
         },
       }),
     });
     res = await res.json();
+    console.log(res);
   }
 
   useEffect(() => {
@@ -54,8 +58,17 @@ export default function ProfilUpdate() {
     }
   }, []);
   
+  const uploadToClient = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      const i = event.target.files[0];
+      setImage(i);
+      setCreateObjectURL(URL.createObjectURL(i));
+      console.log(image);
+    }
+  };
+
     if (cookie != null) {
-      console.log(cookie)
+      console.log("Cookie ->",cookie)
       return (
         <>
           <div className={style.profilContainer}>
@@ -67,6 +80,28 @@ export default function ProfilUpdate() {
                 ></input>
                 <label>Identifiant</label>
                 <input type="text" ref={username} defaultValue={cookie.username} ></input>
+                <label htmlFor="file" className={style.addRessource}>
+                 +
+                 {createObjectURL?                  
+                 <img
+                        id="output"
+                        src={createObjectURL}
+                        className={style.uploadImage}
+                      />
+                      :
+                 <img
+                        id="output"
+                        src={"/Image/"+cookie.photoUrl+".png"}
+                        className={style.uploadImage}
+                      />
+                 }
+                </label>
+                <input id="file" 
+                className={style.inputFile} 
+                type="file"                         
+                accept="image/*, .pdf,video/*"
+                onChange={uploadToClient}>
+                </input>
               </div>
               <div>
                 <label>Prenom</label>
@@ -74,6 +109,7 @@ export default function ProfilUpdate() {
                 <label>Email</label>
                 <input type="text" ref={mailUser} defaultValue={cookie.email}></input>
               </div>  
+
             </div>
           </div>
           <button className={style.profilUpdateButton} onClick={()=>updateUser()}>Valider</button>
