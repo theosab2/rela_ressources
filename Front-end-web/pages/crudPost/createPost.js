@@ -5,6 +5,7 @@ import Image from "next/dist/client/image";
 import React, { useState } from "react";
 import utils from "../utils";
 import { useEffect } from "react";
+import { create } from "../../../Back-end/models/article";
 
 export default function createPost() {
   
@@ -22,6 +23,8 @@ export default function createPost() {
   const [content, setContent] = useState(null);
   const [userId, setUserId] = useState(null);
 
+  const [createdArticleId,setCreatedArticleId] = useState(null)
+
   const [contents, setContents] = useState([]);
   const [contentsMedias, setContentsMedias] = useState([]);
   const [contentsMediasObjectURL, setContentsMediasObjectURL] = useState([]);
@@ -34,7 +37,9 @@ export default function createPost() {
 
   const addNewContent = () => {
     let newContents = contents;
-    newContents.push({});
+    newContents.push({
+      hasMedia:false
+    });
     setContents(newContents);
     displayArticleContents();
   }
@@ -61,7 +66,8 @@ export default function createPost() {
 
           //set media name
           let newContents = contents;
-          newContents[parseInt(event.target.id.replace("content-file-",""))].mediaName = media.name+"-"+event.target.id.replace("content-file-","")
+          newContents[parseInt(event.target.id.replace("content-file-",""))].name = media.name
+          newContents[parseInt(event.target.id.replace("content-file-",""))].hasMedia = true
           setContents(newContents)
   
           let newContentsMedias = contentsMedias;
@@ -98,6 +104,7 @@ export default function createPost() {
       isApproved: true,
       isActive: true,
       privacyIsPublic: true,
+      contents:contents
     });
 
     formdata.append("article", JSON_Object);
@@ -109,38 +116,65 @@ export default function createPost() {
       },
       body: formdata,
     });
-    
-    console.log(res.status);
-    if (res.status != "SUCESS") {
+    var responseBody = await res.json()
+
+    if (res.status != 201) {
       console.log(res.status);
-    } 
+    }
     else {
       console.log("Réussite");
+      console.log("response body", responseBody)
+      console.log("newlyCreatedArticle_id", responseBody.newlyCreatedArticle_id)
+      setCreatedArticleId(responseBody.newlyCreatedArticle_id);
+      sendArticleContents(responseBody.newlyCreatedArticle_id);
     }
-
-    sendArticleContents()
   };
 
-  const sendArticleContents= async () => {
-    var formdata = new FormData();
-    var contents_JSON_Object = JSON.stringify({
-      contents
+  const sendArticleContents= async (newlyCreatedArticleId) => {
+    var contentsCounter = 0;
+    contents.forEach(async content => {
+      console.log(content);
+      if(content.hasMedia == true)
+      {
+        delete content.hasMedia
+        var formdata = new FormData();
+        var content_JSON_Object = JSON.stringify({
+          ...content,
+          contentIndex:contentsCounter
+        });
+
+        console.log("content_JSON_Object :",content_JSON_Object)
+
+        formdata.append("content", content_JSON_Object);  
+        formdata.append("content-media", contentsMedias[contentsCounter]);
+
+        const res = await fetch("http://"+process.env.IP+":3001/article/set-content-media/"+newlyCreatedArticleId, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "user-upload-GUID": userCookie._id,
+          },
+          body: formdata,
+        });
+
+        var responseBody = await res.json()
+
+        if (res.status != 201) {
+          console.log(res.status);
+        }
+        else {
+          console.log("ajout media content : Réussite");
+          console.log("response body", responseBody)
+        }
+
+      }
+      contentsCounter++;
     });
+    
+    
+    
 
-    console.log(contentsMedias);
-    console.log(contents);
-
-    formdata.append("contents-medias", contentsMedias);
-    formdata.append("contents", contents_JSON_Object);
-
-    const res = await fetch("http://"+process.env.IP+":3001/article/add-contents", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "user-upload-GUID": userCookie._id,
-      },
-      body: formdata,
-    });
+    
 
   };
 
@@ -173,7 +207,6 @@ export default function createPost() {
         </div>
       </div>
       `
-      console.log(document.getElementById(`content-file-${contentsCounter}`));
       document.getElementById(`content-file-${contentsCounter}`).addEventListener("change",uploadContentsMediasToClient)
 
       contentsCounter++;

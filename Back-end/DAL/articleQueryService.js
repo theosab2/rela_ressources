@@ -159,7 +159,7 @@ const mArticle = require('../models/article');
         try //Création du modèle à partir des données du body de la requête
         {
             console.log(queryServiceLogPrefix,"[create] (info) saving created article object in database");
-            await newArticle.save()
+            var saveAttempt = await newArticle.save()
         }
         catch (exception) //ECHEC Création du modèle à partir des données du body de la requête
         {   
@@ -176,6 +176,7 @@ const mArticle = require('../models/article');
         return ({
             status:"SUCCESS",
             statusCode:201,
+            newlyCreatedArticle_id: saveAttempt._id,
             articleCreated:newArticleModel,
             message: "Article : \'"+newArticleModel.title+"\' Ajouté à la base de données avec succès"
         });

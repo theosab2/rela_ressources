@@ -44,21 +44,16 @@ module.exports.avatarImage = _multer({storage: userAvatarStorage}).single('avata
 
 const contentMediaStorage = _multer.diskStorage({
 
-        destination: (req, file, callback) => {
-            callback(null /* TODO : insert error handling */, ('./Assets/Uploads/ContentsMedias'));
-        },
-        filename: (req, file, callback) => {
-            const match = ["image/png", "image/jpeg"];
-            if (match.indexOf(file.mimetype) === -1) {
-                var message = `${file.originalname} is invalid. Only accept png/jpeg.`;
-                return callback(message, null);
-            }
-            const fileName = req.body.contents.mediaName;
-            const fileExtension = MIME_TYPES[file.mimetype];
-            const dateTimeGUID = Date.now();
-            const userGUID = request.header("user-upload-GUID");
+    destination: (request, file, callback) => {
+        callback(null /* TODO : insert error handling */, ('./Assets/Uploads/ContentsMedias/'));
+    },
+    filename: (request, file, callback) => {
+        const fileName = file.originalname.split(' ').join('_').split('.')[0];
+        const fileExtension = MIME_TYPES[file.mimetype];
+        const dateTimeGUID = Date.now();
+        const userGUID = request.header("user-upload-GUID");
 
-            callback(null, `${dateTimeGUID}@${userGUID}__${fileName}.${fileExtension}`);
-        },
-    });
-module.exports.contentsMedias = _multer({storage: contentMediaStorage}).array('contents-medias',100);
+        callback(null, `${dateTimeGUID}@${userGUID}__${fileName}.${fileExtension}`);
+    },
+});
+module.exports.contentMedia = _multer({storage: articleImageStorage}).single('content-media');
