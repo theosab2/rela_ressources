@@ -46,15 +46,15 @@
 .addRessource{
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   width: auto;
   background-color: #CE8686;
   border-radius: 5px;
   color: #fff;
-  height: 50px;
-  font-size: 25px;
+  height: 100px;
+  font-size: 30px;
   margin-right: 10px;
-  
+  cursor: pointer;
 }
 
 .inputFile{

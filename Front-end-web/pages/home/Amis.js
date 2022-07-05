@@ -27,22 +27,38 @@ export default function Amis() {
 
   if (allUser != null) {
 
+    async function searchUser (e) {
+      let res = await fetch("http://"+process.env.IP+":3001/users/query" ,{
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          "username": "[LIKE][CI]"+e.target.value,
+        }),
+      })
+      res = await res.json();
+      setSearchFriend(res);
+    }
+  
+    if(searchFriend.length != 0){
+      if(searchFriend.users.length != 0){
+        allUser = searchFriend.users;
+      }
+    }
+
     if(allUser != null){
       allUser.forEach(element => {
-        if(searchFriend != ""){
-          if(element.username.includes(searchFriend)){
-          arrayUser.push(element);
-          }
-        }else{
         arrayUser.push(element);
-        }
       });
     }
+
 
     return (
     <>
       <div className={style.mainContainer}>
-      <input type="text" placeholder="Recherche" className={style.searchBar} onChange={(searchFriend) =>setSearchFriend(searchFriend.target.value)}></input>
+      <input type="text" placeholder="Recherche" className={style.searchBar} onChange={(e) => searchUser(e)}></input>
       {arrayUser && arrayUser.map((user) => (
         <ShowAmis userCookie={userCookie} friend={user} searchFriend={searchFriend} key={user._id}/>
       ))}

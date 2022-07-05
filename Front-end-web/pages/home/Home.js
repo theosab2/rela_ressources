@@ -22,7 +22,6 @@ export default function Home() {
   let allArticle = articleManager()
 
   async function searchArticle (e) {
-    console.log(e.target.value)
     let res = await fetch("http://"+process.env.IP+":3001/articles/query" ,{
       method: "POST",
       headers: {
@@ -35,7 +34,6 @@ export default function Home() {
     })
     res = await res.json();
     setSearchAllArticle(res);
-    console.log("searchAllArticle ->",searchAllArticle)
   }
 
   if(searchAllArticle != null){
@@ -45,10 +43,8 @@ export default function Home() {
   }
 
   if(allArticle != null){
-    console.log("allArticle ->",searchAllArticle)
     allArticle.forEach(element => {
       if(element.isApproved == true){
-        console.log(element.isApproved)
       articleApproved.push(element)
       }
     }); 

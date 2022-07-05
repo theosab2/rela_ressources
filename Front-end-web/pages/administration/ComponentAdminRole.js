@@ -58,11 +58,12 @@ export default function ComponentAdminRole(props) {
           <div>
           <select
             className={style.categorieSelect}
-            value={props.users.role}
+            defaultValue={props.users.role}
             onChange={(e) => setRole(e.target.value)}
           >
           <option value="User">User</option> 
           <option value="Admin">Admin</option> 
+          <option value="Moderateur">Moderateur</option> 
           </select>
           <button onClick={() => changeRole(role)}>Valider</button>
           </div>

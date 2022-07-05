@@ -26,24 +26,11 @@ export default function MesRessource() {
 
     if (allArticle != null) {
       allArticle.forEach((element) => {
-        console.log(element)
-        console.log(userCookie._id)
+        console.log("Article non filtré ->",element)
         if (element.creator == userCookie._id) {
           array.push(element);
         }
       });
-
-    function  deleteArticle(id){
-      console.log(id);
-        fetch("http://"+process.env.IP+":3001/article/delete/"+id, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      });
-      router.reload(window.location.pathname)
-    }
 
     return (
       <>

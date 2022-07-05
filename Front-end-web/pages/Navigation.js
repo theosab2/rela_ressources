@@ -36,7 +36,8 @@ export default function Navigation(image) {
   let cookie;
   let allArticle;
   allArticle = articleManager();
-  let isConnected = JSON.parse(utils());
+  //let isConnected = JSON.parse(utils());
+  let isConnected = cookieManager();
   const showModal = () => {
     document.getElementById("myModal").style.display = "block";
   };
@@ -108,10 +109,6 @@ export default function Navigation(image) {
       case "Groupe":
         //setNavTitle("Groupe");
         return <Groupe></Groupe>;
-        break;
-      case "Evenement":
-        //setNavTitle("Evenement");
-        return <Evenement></Evenement>;
         break;
       case "Moderation":
         //setNavTitle("Modération");
@@ -250,10 +247,6 @@ export default function Navigation(image) {
                   <img src="/Image/groupe.png" className={style.InputImg}/>
                   <button>Groupes</button>
                 </div>
-                <div className={renderPage == 'Evenement'?style.inputDivSelect:style.inputDiv} onClick={() => setRenderPage((renderPage = "Evenement"))}>
-                  <img src="/Image/evenement.png" className={style.InputImg}/>
-                  <button>Evenements</button>
-                </div>
               </div>
             </div>
             <div className={style.sidebarContent}>
@@ -273,7 +266,9 @@ export default function Navigation(image) {
                 </div>
               </div>
             </div>
-            { isConnected.role == "Admin" ?
+            { isConnected.role == "Moderateur" || 
+            isConnected.role == "Admin" ?  
+            isConnected.role == "Admin" ? 
             <div className={style.sidebarContent}>
               <div className={style.sidebarTitle}>Administration</div>
                 <div className={style.sidebarChoice}>
@@ -295,7 +290,27 @@ export default function Navigation(image) {
                 </div>
               </div>
             </div>
-          :<></>}
+            :
+            <div className={style.sidebarContent}>
+              <div className={style.sidebarTitle}>Administration</div>
+                <div className={style.sidebarChoice}>
+                <div className={renderPage == 'Moderation'?style.inputDivSelect:style.inputDiv} onClick={() => setRenderPage((renderPage = "Moderation"))}>
+                  <img src="/Image/moderator.png" className={style.InputImg}/>
+                  <button >Modération</button>
+                </div>
+                <div className={renderPage == 'Categorie'?style.inputDivSelect:style.inputDiv} onClick={() => setRenderPage((renderPage = "Categorie"))}>
+                  <img src="/Image/evenement.png" className={style.InputImg}/>
+                  <button >Catégorie</button>
+                </div>
+                <div className={renderPage == 'Utilisateur'?style.inputDivSelect:style.inputDiv} onClick={() => setRenderPage((renderPage = "Utilisateur"))}>
+                  <img src="/Image/utilisateur.png" className={style.InputImg}/>
+                  <button >Gérer utilisateurs</button>
+                </div>
+              </div>
+            </div>
+          :
+          <></>
+          }
           </div>
           <div className={style.navContentSeparator}>
             <div className={style.pageRender}>

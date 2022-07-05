@@ -6,11 +6,14 @@ import React, { useState } from "react";
 import utils from "../utils";
 import { useEffect } from "react";
 import { create } from "../../../Back-end/models/article";
+import cookieManager from "../utils/cookieManager";
 
 export default function createPost() {
   
   let allCategorie;
   allCategorie = categorieManager();
+
+  let cookie = cookieManager()
 
   const [typeRessource, setTypeRessource] = useState(null);
   const [CategorieRessource, setCategorieRessource] = useState(null);
@@ -100,7 +103,7 @@ export default function createPost() {
       articleCategory_TTids: CategorieRessource,
       title: title,
       description: content,
-      creator : userCookie._id,
+      creator : cookie._id,
       isApproved: true,
       isActive: true,
       privacyIsPublic: true,
@@ -112,7 +115,7 @@ export default function createPost() {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "user-upload-GUID": userCookie._id,
+        "user-upload-GUID": cookie._id,
       },
       body: formdata,
     });
@@ -222,8 +225,7 @@ export default function createPost() {
     setCategorieRessource(value.target.value);
   }
 
-  const userCookie = utils();
-  if (userCookie != false) {
+  if (cookie != false) {
     return (
         <div className={style.crudContainer}>
               <h1>Créer votre ressource</h1>
@@ -318,18 +320,8 @@ export default function createPost() {
                   ))}
               </select>
               <div className={style.privateRessource}>
-              <input
-                id="condition"
-                name="condition"
-                type="checkbox"
-                required
-
-              />
-              <label htmlFor="condition">
-                Cette publication est privée
-              </label>
             </div>
-                <div id="article-contents-div">
+                <div id="article-contents-div" className={style.articleAddContentContainer}>
                   
                 </div>
                 <button
@@ -337,7 +329,7 @@ export default function createPost() {
                     type="button"
                     onClick={addNewContent}
                   >
-                    Ajouter un élément
+                    + Ajouter un élément
                   </button>
               <button
                 className={style.validateRessource}

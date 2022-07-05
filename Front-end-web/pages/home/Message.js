@@ -1,6 +1,7 @@
 import style from "../../styles/Home.module.css";
 import {useRef, useState, useEffect} from 'react';
 import cookieManager from "../utils/cookieManager";
+import ComponentMessage from "./ComponentMessage";
 
 export default function Message(props) {
     const message = useRef(null);
@@ -11,7 +12,6 @@ export default function Message(props) {
     const  [allMessageReceiver,setAllMessageReceiver] = useState(null);
 
     async function getMessageUser () {
-      console.log("User -> ",JSON.parse(cookie))
       let res = await fetch("http://"+process.env.IP+":3001/messages/query" ,{
         method: "POST",
         headers: {
@@ -24,7 +24,6 @@ export default function Message(props) {
       })
       res = await res.json();
       setAllMessageSender(res);
-      console.log("AAA ->",res)
     }
 
     async function getMessageReceiver () {
@@ -41,7 +40,6 @@ export default function Message(props) {
       })
       res = await res.json();
       setAllMessageReceiver(res);
-      console.log("BBB ->",res)
     }
 
     const sendMessage = async () => {
@@ -53,7 +51,7 @@ export default function Message(props) {
         },
         body: JSON.stringify({
           "message": {
-            "sender_id": userCookie._id,
+            "sender_id": cookie._id,
             "friend_id": props.UserId,
             "body": message.current.value
           },
@@ -62,13 +60,24 @@ export default function Message(props) {
     }
 
     useEffect(function connect(){
-          getMessageUser();
-          getMessageReceiver();
+      //setInterval(() => {
+        getMessageUser();
+        getMessageReceiver();
+      //}, 3000);
     },[]);
+
+    if( allMessageSender != null && allMessageReceiver != null){
+      let concat = allMessageReceiver.messages.concat(allMessageSender.messages)
+      console.log("concat",concat)
+      console.log("SORT ->",concat.sort((a, b) => Number(a._createdAt) - Number(b._createdAt) ))
+      concat.sort((a, b) => Number(a._createdAt) - Number(b._createdAt) )
     return (
         <div className={style.convContainer}>
             <div className={style.convSubContainer}>
                 <div className={style.MessageContainer}>{props.UserId}</div>
+                {concat && concat.map((message) => (
+                  <ComponentMessage key={message._id} messageInfo={message}></ComponentMessage>
+                ))}
                 <div className={style.SendContainer}>
                 <textarea rows="5" ref={message}></textarea>
                 <button onClick={()=>sendMessage()}>Envoyer</button>
@@ -76,4 +85,9 @@ export default function Message(props) {
             </div>
         </div>
     );
+    }else{
+      return (
+      <>Loading...</>
+      )
+    }
 }

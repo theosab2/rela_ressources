@@ -63,8 +63,6 @@ export default function ComponentArticle(props) {
       }
 
       async function modererArticle(id, bool) {
-        console.log(id)
-        console.log(bool)
         let res = await fetch("http://"+process.env.IP+":3001/article/" + id, {
           method: "PUT",
           headers: {
@@ -78,12 +76,10 @@ export default function ComponentArticle(props) {
           }),
         });
         res = await res.json();
-        console.log(res)
         setApprovedImg(bool)
       }
 
       const addFav = async(id) =>{
-        console.log("Cookie ->",cookie)
         cookie.favorites.push(id);
         await fetch("http://"+process.env.IP+":3001/user/" + cookie._id, {
           method: "PUT",
