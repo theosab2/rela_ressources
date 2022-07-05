@@ -369,7 +369,7 @@ router.post("/article/delete/:articleId", async function (req, res, next) {
 
 //Mise à jour d'un article
 router.put("/article/:articleId", async function (req, res, next) {
-  var updateResult = await _articleQueryService.updateArticle(
+  var updateResult = await _articleQueryService.updateOne(
     req.params.articleId,
     req.body.article
   );
