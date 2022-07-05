@@ -56,34 +56,6 @@ const CreateContentPost = ({ navigation, route }) => {
       }
     }
   };
-  const sendFile = async () => {
-    const user = await AsyncStorage.getItem('@userId');
-    let formdata = new FormData();
-    formdata.append("article-image", singleFile);
-    let jsonData = JSON.stringify({
-      articleTitle: articleTitle,
-      articleDescription: articleDescritpion,
-      articleTag_TTids: articleTTags,
-      articleCategory_TTids: articleCategory,
-      articleContent: articleContents,
-      articleCreator: user,
-    })
-    formdata.append("article", jsonData);
-    try {
-      const api = await fetch(API_URL + '/article/create', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          "user-upload-GUID": user
-        },
-        body: formdata
-      });
-      const res = await api.json();
-      console.log(res);
-    } catch (err) {
-      console.log(err)
-    }
-  }
   const titleContent = (index) => {
     return (
       <View style={styles.input}>
@@ -214,7 +186,6 @@ const CreateContentPost = ({ navigation, route }) => {
       category_UTid: route.params.category,
       contents: contentsData,
       creator: user,
-      image: route.params.image,
       isApproved: true,
       isActive: true,
 

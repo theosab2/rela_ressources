@@ -7,6 +7,8 @@ import { API_URL } from "@env"
 import HomemadeNavBar from '../../components/homemadeNavBar';
 import Header from '../../components/header';
 import Card from '../../components/card';
+import DocumentPicker from 'react-native-document-picker';
+
 
 
 const Account = ({ navigation }) => {
@@ -15,7 +17,41 @@ const Account = ({ navigation }) => {
   const [selectedTab, setSelectedTab] = useState('top');
   const [friends, setFriends] = useState([]);
   const [singleFile, setSingleFile] = useState(null);
-  const [imageUri, setImageUri] = useState(null);
+  const [imageEdit, setImageEdit] = useState(null);
+  const editFront = <View style={styles.overlayImage}>
+    <TouchableOpacity
+      style={styles.profilImageSetting}
+      onPress={() => selectFile()}
+    >
+      <Icon
+        name='pencil-outline'
+        type='ionicon'
+        color='#FFFFFF'
+      />
+    </TouchableOpacity>
+  </View>
+  const validEditFront = <View style={styles.overlayImageEdit}>
+    <TouchableOpacity
+      style={[styles.profilImageSetting, { backgroundColor: '#9EAF6C' }]}
+      onPress={() => saveSelectedFile()}
+    >
+      <Icon
+        name='checkmark-outline'
+        type='ionicon'
+        color='#FFFFFF'
+      />
+    </TouchableOpacity>
+    <TouchableOpacity
+      style={[styles.profilImageSetting, { backgroundColor: '#635D5B' }]}
+      onPress={() => deleteSelectFile()}
+    >
+      <Icon
+        name='close-outline'
+        type='ionicon'
+        color='#FFFFFF'
+      />
+    </TouchableOpacity>
+  </View>
 
   /**
    * A modifier => Créer deux state pour new et top ressource
@@ -31,10 +67,9 @@ const Account = ({ navigation }) => {
       // Printing the log realted to the file
       console.log('res : ' + JSON.stringify(res));
       // Setting the state to show single file attributes
-      setNamePicture(res[0].name)
-      setImageUri(res[0].uri)
       setSingleFile(res[0]);
-      setImageUri(res[0].uri);
+      setImageEdit(res[0].uri);
+      console.log('uri', imageEdit)
     } catch (err) {
       setSingleFile(null);
       // Handling any exception (If any)
@@ -48,6 +83,33 @@ const Account = ({ navigation }) => {
       }
     }
   };
+  const deleteSelectFile = () => {
+    setSingleFile(null)
+    setImageEdit(null)
+  }
+  const saveSelectedFile = async () => {
+    var formdata = new FormData()
+    formdata.append("avatar-image", singleFile)
+    formdata.append('user','{}')
+    const res = await fetch(API_URL + "/user/" + userId, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "user-upload-GUID": userId,
+      },
+      body: formdata,
+    });
+
+    console.log(res.status);
+    if (res.status == 201 || res.status == 200) {
+      console.log(res);
+      setSingleFile(null)
+      setImageEdit(null)
+      getUserData()
+    } else {
+      console.log(res.status)
+    }
+  }
   const getLocalData = async () => {
     try {
       const storedId = await AsyncStorage.getItem('@userId');
@@ -146,19 +208,9 @@ const Account = ({ navigation }) => {
       >
         <Image
           style={styles.profilImage}
-          source={imageUri || require('../../test_content/waiting.jpg')}
+          source={imageEdit ? { uri: imageEdit } : userData.photoUrl ? {uri: userData.photoUrl} : require('../../test_content/waiting.jpg')}
         />
-        <View style={styles.overlayImage}>
-          <TouchableOpacity
-            style={styles.profilImageSetting}
-          >
-            <Icon
-              name='pencil-outline'
-              type='ionicon'
-              color='#FFFFFF'
-            />
-          </TouchableOpacity>
-        </View>
+        {singleFile ? validEditFront : editFront}
         <Text style={styles.username}>{userData.username}</Text>
         <Text style={styles.name}>{userData.firstname} {userData.lastname}</Text>
         <View style={styles.containerStats}>
@@ -267,6 +319,13 @@ const styles = StyleSheet.create({
   overlayImage: {
     flex: 1,
     position: 'absolute',
+    top: 150,
+    left: Dimensions.get('window').width / 2 + 15,
+  },
+  overlayImageEdit: {
+    flex: 1,
+    position: 'absolute',
+    flexDirection: 'row',
     top: 150,
     left: Dimensions.get('window').width / 2 + 15,
   },

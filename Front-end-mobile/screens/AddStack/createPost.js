@@ -37,7 +37,6 @@ const CreatePost = ({ navigation }) => {
       console.log('res : ' + JSON.stringify(res));
       // Setting the state to show single file attributes
       setNamePicture(res[0].name)
-      setImageUri(res[0].uri)
       setSingleFile(res[0]);
       setImageUri(res[0].uri);
     } catch (err) {
