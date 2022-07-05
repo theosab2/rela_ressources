@@ -107,6 +107,9 @@ module.exports.query = async (parsedQuery = {}) => {
 };
 
 module.exports.saveOne = async (newMessageModel) => {
+
+    newMessageModel._createdAt = Date.now()
+
     try //Création du modèle à partir des données du body de la requête
     {
         console.log(queryServiceLogPrefix,"[create] (info) creating message object before database insertion");

@@ -42,8 +42,8 @@ const UserSchema = mongoose.Schema({
       value:{type:String}
     }
   ],
-  _createdAt:{ type:Date, required: true, default: Date.now()},
-  _updatedAt:{ type:Date, required: false, default: Date.now()}
+  _createdAt:{ type:Date, required: true},
+  _updatedAt:{ type:Date, required: false}
 });
 
 UserSchema.methods.setPassword = function(password) { 
