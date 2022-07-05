@@ -32,6 +32,8 @@ export default function createPost() {
   const [contentsMedias, setContentsMedias] = useState([]);
   const [contentsMediasObjectURL, setContentsMediasObjectURL] = useState([]);
 
+  const [message,setMessage] = useState(null)
+
   useEffect(() => {
     if (window) { 
       window.sessionStorage.setItem("Page", "Creer" );
@@ -123,6 +125,7 @@ export default function createPost() {
 
     if (res.status != 201) {
       console.log(res.status);
+      setMessage("Erreur impossible d'enregistrer la ressource")
     }
     else {
       console.log("Réussite");
@@ -130,6 +133,7 @@ export default function createPost() {
       console.log("newlyCreatedArticle_id", responseBody.newlyCreatedArticle_id)
       setCreatedArticleId(responseBody.newlyCreatedArticle_id);
       sendArticleContents(responseBody.newlyCreatedArticle_id);
+      setMessage("Article envoyé")
     }
   };
 
@@ -247,7 +251,7 @@ export default function createPost() {
                   accept="image/*, .pdf,video/*"
                   onChange={uploadToClient}>
                   </input>
-              <select
+              {/*<select
                 name="typeRessource"
                 id="typeRessource"
                 onChange={getType}
@@ -257,47 +261,13 @@ export default function createPost() {
                 <option value="image">Image/Photo</option>
                 <option value="video">Video</option>
                 <option value="lien">Lien</option>
-              </select>
+              </select>*/}
               </div>
-              {(() => {
-                if (typeRessource == "image") {
-                  return (
-                    <div >
-                      <img
-                        id="output"
-                        src={createObjectURL}
-                        className={style.uploadImage}
-                      />
-                    </div>
-                  );
-                } 
-                else if (typeRessource == "video") {
-                  return (
-                    <div >
-                      <img
-                        id="output"
-                        src={createObjectURL}
-                        className={style.uploadImage}
-                      />
-                    </div>
-                  );
-                } 
-                else if (typeRessource == "lien") {
-                  return (
-                    <div >
-                      <p>Lien :</p>
-                      <input type="text" placeholder="Insérer un lien"></input>
-                    </div>
-                  );
-                } 
-                else {
-                  return <>              <img
+               <img
                   id="output"
                   src={createObjectURL}
                   className={style.uploadImage}
-                /></>;
-                }
-              })()}
+                />
               <div>
                 <textarea
                   className={style.descriptionRessource}
@@ -331,6 +301,10 @@ export default function createPost() {
                   >
                     + Ajouter un élément
                   </button>
+                  {message 
+                  ?<div className={style.messageReussite}>{message}</div>
+                  :<div className={style.messageErreur}>{message}</div>
+                  }
               <button
                 className={style.validateRessource}
                 type="submit"

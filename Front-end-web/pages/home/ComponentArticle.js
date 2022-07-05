@@ -1,6 +1,5 @@
 import style from "../../styles/Home.module.css";
 import { useState, useEffect } from "react";
-
 import { useRouter } from "next/router";
 import cookieManager from "../utils/cookieManager";
 //import {IP} from "@env";
@@ -124,7 +123,6 @@ export default function ComponentArticle(props) {
                   <div className={style.userName}>
                     {userInfo.username}
                   </div>
-                  <div className={style.publicationDate}>Publication : Il y a 4h</div>
                 </div>
               </div>
               <div className={style.articleTitle}>{props.articleInfo.title}</div>
@@ -140,13 +138,16 @@ export default function ComponentArticle(props) {
               <img src="/Image/like.png" className={style.dislike} onClick={() => downVote(props.articleInfo._id)}/>
             </div>
             <div className={style.articleOption}>
-              {cookie != null?
+              {
+              cookie != null?
               cookie.role == "Admin" ?
               approvedImg == true ?
               <img src="/Image/delete.png" className={style.warning} onClick={() => modererArticle(props.articleInfo._id,false)}/>
               :
               <img src="/Image/checkmark.png" className={style.warning} onClick={() => modererArticle(props.articleInfo._id,true)}/>
-              : <></> :
+              : 
+              <></> 
+              :
               <></>
               }
               <img src="/Image/alert.png" className={style.warning}/>

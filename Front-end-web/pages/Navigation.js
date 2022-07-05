@@ -28,6 +28,8 @@ import cookieManager from "./utils/cookieManager";
 
 export default function Navigation(image) {
   const router = useRouter();
+  const [id, setId] = useState(null);
+  const [hideBar, setBarHide] = useState(true);
   let [navTitle, setNavTitle] = useState("Accueil");
   var getSession = null;
   var getId = null;
@@ -35,6 +37,17 @@ export default function Navigation(image) {
   let [idPage, setIdPage] = useState("");
   let cookie;
   let allArticle;
+
+  useEffect(function showPost(){
+    if(id != null){
+      if (window) { 
+        window.sessionStorage.setItem("Page", "Comment" );
+        window.sessionStorage.setItem("id", id._id );
+        router.reload(window.location.pathname)
+      }
+    }
+  },[id]);
+
   allArticle = articleManager();
   //let isConnected = JSON.parse(utils());
   let isConnected = cookieManager();
@@ -138,14 +151,16 @@ export default function Navigation(image) {
   }
 
   if (isConnected == null || isConnected == false) {
+    console.log(hideBar)
     return (
       <>
         <div className={style.navHeader}>
-          <img src="/Image/burger-menu.png" className={style.burger_menu}/>
+          <img src="/Image/burger.png" className={style.burger_menu}/>
           <button onClick={() => setRenderPage((renderPage = "Accueil"))} className={style.headerTitle}>Ressource Relationnelle</button>
           <p className={style.headerPageTitle}>{navTitle}</p>
           <img src="/Image/connexion.png" className={style.icon_connexion}/>
         </div>
+      {hideBar ?
         <div className={style.navBody}>
           <div className={style.sideBar}>
             <div className={style.sidebarContent}>
@@ -184,18 +199,21 @@ export default function Navigation(image) {
             </div>
           </div>
         </div>
+        :<></>
+      }
       </>
     );
   }else{
     return(
     <>
         <div className={style.navHeader}>
-          <img src="/" />
+        <img src="/Image/burger.png" className={style.burger_menu} onClick={()=>setBarHide(!hideBar)}/>
           <p className={style.username}>{isConnected.username}</p>
           <button onClick={() => setRenderPage((renderPage = "Accueil"))} className={style.headerTitle}>Ressource Relationnelle</button>
           <p className={style.headerPageTitle}>{navTitle}</p>
           <img src="/Image/connexion.png" className={style.icon_connexion}/>
         </div>
+      
         <div className={style.navBody}>
           <div className={style.sideBar}>
             <div className={style.sidebarContent}>
@@ -302,15 +320,11 @@ export default function Navigation(image) {
                   <img src="/Image/evenement.png" className={style.InputImg}/>
                   <button >Catégorie</button>
                 </div>
-                <div className={renderPage == 'Utilisateur'?style.inputDivSelect:style.inputDiv} onClick={() => setRenderPage((renderPage = "Utilisateur"))}>
-                  <img src="/Image/utilisateur.png" className={style.InputImg}/>
-                  <button >Gérer utilisateurs</button>
-                </div>
               </div>
             </div>
-          :
-          <></>
-          }
+            :
+            <></>
+            }
           </div>
           <div className={style.navContentSeparator}>
             <div className={style.pageRender}>
@@ -328,14 +342,15 @@ export default function Navigation(image) {
             </div>
           </div>
             {pageRender()}
-            </div>
+        </div>
+
 
             <div className={style.recentContent}>
               <div className={style.recentTitle}>Récent</div>
               {allArticle && allArticle.slice(0,7).map((articleInfo) => (
-                <div className={style.recentChoice} key={articleInfo._id}>
+                <div className={style.recentChoice} key={articleInfo._id} onClick={() => setId(articleInfo._id)}>
                     <img 
-                    src="/Image/connexion.png"
+                    src={articleInfo.image}
                     alt="User picture"
                     className={style.recentUserPicture}
                     />
@@ -347,6 +362,7 @@ export default function Navigation(image) {
             </div>
           </div>
         </div>
+
       </>
     );
   }

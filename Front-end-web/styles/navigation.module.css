@@ -90,16 +90,19 @@
 
 .recentChoice{
   display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 10px;
-  margin-left: 10px;
+  padding: 5px;
   color: #fff;
   font-size: 20px;
   border-bottom: 1px solid #000;
   flex-direction: row;
+  cursor: pointer;
 }
 
 .recentUserPicture{
-  width: 50px;
+  width: auto;
   height: 50px;
   flex: 1;
 }
@@ -121,10 +124,8 @@
 }
 
 .burger_menu{
-    padding: 5px;
     width: 60px;
     height: 60px;
-    margin-left: 10px;
     color:#fff;
     cursor: pointer;
 }

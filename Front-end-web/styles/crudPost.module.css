@@ -11,6 +11,10 @@
   padding: 5px;
 }
 
+.crudContainer button:hover{
+  box-shadow: 0px 0px 5px #ddd;
+}
+
 .crudContainer h1{
   color: #fff;
 }
@@ -61,7 +65,7 @@
   height: 50px;
   font-size: 25px;
   margin-right: 10px;
-  
+  cursor: pointer;
 }
 
 .addContentMedia{
@@ -147,3 +151,11 @@
   flex-direction: column;
 }
 
+.messageErreur{
+  color: #ff5555;
+}
+
+.messageReussite{
+  color: #55ff55;
+  text-decoration:underline;
+}
