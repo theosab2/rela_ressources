@@ -30,7 +30,7 @@ const CreateContentPost = ({ navigation, route }) => {
     try {
       const res = await DocumentPicker.pick({
         // Provide which type of file you want user to pick
-        type: [DocumentPicker.types.allFiles],
+        type: [DocumentPicker.types.images],
         // There can me more options as well
         // DocumentPicker.types.allFiles
         // DocumentPicker.types.images

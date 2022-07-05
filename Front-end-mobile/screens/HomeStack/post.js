@@ -8,6 +8,7 @@ import ProfilCard from '../../components/profilCard';
 
 const Post = ({route, navigation}) => {
   const [post, setPost] = useState(null);
+  const [imageUrl, setImageUrl] = useState(require('../../test_content/waiting.jpg'))
 
   useEffect(() => {
     const getDataPost = async () => {
@@ -25,8 +26,12 @@ const Post = ({route, navigation}) => {
         console.log(e);
       }
     }
-    getDataPost();
-  },[])
+    const getImage = () => {
+      setImageUrl({uri: post.image})
+    }
+    if(!post){getDataPost();}
+    else{getImage()}
+  },[post])
   return (
     <View style={styles.container}>
       <Header />
@@ -63,7 +68,7 @@ const Post = ({route, navigation}) => {
         <ScrollView style={styles.scrollView} contentContainerStyle={styles.postPosition}>
           <Image
             style={styles.img}
-            source={require('../../test_content/waiting.jpg')}
+            source={imageUrl}
           />
           <Text style={styles.title}>{post != null ? post.title : '...' }</Text>
           <View style={styles.infoLine}>

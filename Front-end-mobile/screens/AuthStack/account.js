@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, Dimensions,ScrollView, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, Image, Dimensions, ScrollView, SafeAreaView } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Divider, Icon } from 'react-native-elements';
@@ -12,23 +12,52 @@ import Card from '../../components/card';
 const Account = ({ navigation }) => {
   const [userId, setUserId] = useState(null)
   const [userData, setUserData] = useState({});
-  const[selectedTab,setSelectedTab] = useState('top');
-  const [friends,setFriends] = useState([]);
+  const [selectedTab, setSelectedTab] = useState('top');
+  const [friends, setFriends] = useState([]);
+  const [singleFile, setSingleFile] = useState(null);
+  const [imageUri, setImageUri] = useState(null);
+
   /**
    * A modifier => Créer deux state pour new et top ressource
    */
   const [display, setDisplay] = useState(<Text>Loading</Text>);
-
+  const selectFile = async () => {
+    // Opening Document Picker to select one file
+    try {
+      const res = await DocumentPicker.pick({
+        // Provide which type of file you want user to pick
+        type: [DocumentPicker.types.images],
+      });
+      // Printing the log realted to the file
+      console.log('res : ' + JSON.stringify(res));
+      // Setting the state to show single file attributes
+      setNamePicture(res[0].name)
+      setImageUri(res[0].uri)
+      setSingleFile(res[0]);
+      setImageUri(res[0].uri);
+    } catch (err) {
+      setSingleFile(null);
+      // Handling any exception (If any)
+      if (DocumentPicker.isCancel(err)) {
+        // If user canceled the document selection
+        alert('Canceled');
+      } else {
+        // For Unknown Error
+        alert('Unknown Error: ' + JSON.stringify(err));
+        throw err;
+      }
+    }
+  };
   const getLocalData = async () => {
     try {
       const storedId = await AsyncStorage.getItem('@userId');
       if (storedId != null) {
         setUserId(storedId)
       } else {
-        navigation.navigate('Auth', {screen: 'Login'})
+        navigation.navigate('Auth', { screen: 'Login' })
       }
     } catch (e) {
-      console.log('dommage',e);
+      console.log('dommage', e);
     }
   }
   const getUserData = async () => {
@@ -42,13 +71,13 @@ const Account = ({ navigation }) => {
       });
       const res = await api.json();
       setUserData(res);
-      console.log('frinds',friends)
+      console.log('frinds', friends)
     } catch (e) {
       console.log(e);
     }
   }
   const getPost = async () => {
-    try{
+    try {
       const api = await fetch(API_URL + '/articles/all', {
         method: 'GET',
         headers: {
@@ -58,32 +87,32 @@ const Account = ({ navigation }) => {
       });
       const res = await api.json()
       setDisplay(displayPost(res));
-    }catch(e){
+    } catch (e) {
       console.log(e);
     }
   }
   const displayPost = (data) => {
-    if(data.articles != undefined){
+    if (data.articles != undefined) {
       return data.articles.map(item => {
-        return <Card navigation={navigation} key={item._id} data={item}/>
+        return <Card navigation={navigation} key={item._id} data={item} />
       })
-    }else{
-      return <View/>
+    } else {
+      return <View />
     }
   }
-  
+
   useEffect(() => {
-    if(userId == null){
+    if (userId == null) {
       getLocalData();
-    }else{
-      if(Object.keys(userData).length === 0){
+    } else {
+      if (Object.keys(userData).length === 0) {
         getUserData()
         getPost();
-      }else{
+      } else {
         setFriends(userData.friends_ids)
       }
-  }
-}, [userId,userData]);
+    }
+  }, [userId, userData]);
 
 
 
@@ -93,7 +122,7 @@ const Account = ({ navigation }) => {
       <View style={styles.toolsButtons}>
         <TouchableOpacity
           style={styles.tool}
-          onPress={() => navigation.navigate('Auth',{screen: 'AccountUpdate'})}
+          onPress={() => navigation.navigate('Auth', { screen: 'AccountUpdate' })}
         >
           <Icon
             name='pencil-outline'
@@ -103,7 +132,7 @@ const Account = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.tool}
-          onPress={() => navigation.navigate('Auth',{screen: 'Settings'})}
+          onPress={() => navigation.navigate('Auth', { screen: 'Settings' })}
         >
           <Icon
             name='settings-outline'
@@ -117,7 +146,7 @@ const Account = ({ navigation }) => {
       >
         <Image
           style={styles.profilImage}
-          source={require('../../test_content/zombie.png')}
+          source={imageUri || require('../../test_content/waiting.jpg')}
         />
         <View style={styles.overlayImage}>
           <TouchableOpacity
@@ -151,22 +180,22 @@ const Account = ({ navigation }) => {
       <View style={styles.buttonList}>
         <TouchableOpacity
           containerStyle={styles.containerRessourceType}
-          style={[styles.ressourceType,selectedTab == 'top' ? styles.selectedRessource : null]}
+          style={[styles.ressourceType, selectedTab == 'top' ? styles.selectedRessource : null]}
           onPress={() => setSelectedTab('top')}
         >
           <Text style={styles.ressourceTitle}>Top ressources</Text>
         </TouchableOpacity>
         <TouchableOpacity
           containerStyle={styles.containerRessourceType}
-          style={[styles.ressourceType,selectedTab == 'new' ? styles.selectedRessource : null]}
-          onPress={()=> setSelectedTab('new')}
+          style={[styles.ressourceType, selectedTab == 'new' ? styles.selectedRessource : null]}
+          onPress={() => setSelectedTab('new')}
         >
           <Text style={styles.ressourceTitle}>Les plus récentes</Text>
         </TouchableOpacity>
       </View>
       <SafeAreaView style={styles.scrollViewContainer}>
         <ScrollView style={styles.scrollView} contentContainerStyle={styles.postPosition}>
-          {display} 
+          {display}
         </ScrollView>
       </SafeAreaView>
       <HomemadeNavBar route='Relation' navigation={navigation} />
@@ -272,7 +301,7 @@ const styles = StyleSheet.create({
     width: "50%",
     alignItems: 'center',
   },
-  ressourceType:{
+  ressourceType: {
     borderBottomWidth: 1,
     width: "100%",
   },
@@ -282,7 +311,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     padding: 5
   },
-  selectedRessource:{
+  selectedRessource: {
     borderBottomWidth: 3,
     borderBottomColor: '#CE8686'
   },
