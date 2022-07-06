@@ -62,9 +62,10 @@ const HomemadeNavBar = ({ route, navigation }) => {
                     <Icon
                         name='folder-outline'
                         type='ionicon'
-                        color='#ffffff'
+                        color={route == 'Save' ? '#2F4077' : '#ffffff'}
                     />
                 }
+                onPress={() => { user == null ? navigation.navigate("Auth", { screen: 'Login' }) : navigation.navigate("Save", { screen: 'MySavedPost' }) }}
             />
             <Button
                 type='clear'
