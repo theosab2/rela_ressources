@@ -1,6 +1,8 @@
 #Using Node alpine image
 FROM node:alpine as node
 
+CMD ["apt","install","docker-compose"]
+
 #Setting Working directory
 WORKDIR /containerized/relaRessources_API
 
@@ -18,5 +20,4 @@ RUN npm cache clean --force
 COPY . .
 
 #Start node API application
-CMD ["apt","install","docker-compose"]
 CMD ["docker-compose","up"]
