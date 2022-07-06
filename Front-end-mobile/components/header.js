@@ -19,13 +19,7 @@ const Header = ({ navigation }) => {
   }
   return (
     <View style={styles.container}>
-      <Avatar
-        size={55}
-        icon={{ name: 'navicon', type: 'evilicon', size: 40 }}
-        onPress={() => {
-          console.log('Menu');
-        }}
-      />
+      <View></View><View/>
       <View style={styles.titleContainer}>
         <Text style={styles.title}>Ressources Relationnelles</Text>
       </View>
@@ -42,11 +36,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',
-    width: '100%',
   },
   titleContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    left: -15,
     width: '25%'
   },
   title: {
