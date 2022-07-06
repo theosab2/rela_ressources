@@ -78,10 +78,10 @@ const SaveStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: true
+        headerShown: false
       }}>
       <Stack.Screen
-        name='MyPost'
+        name='MySavedPost'
         component={PostSaved}
       />
     </Stack.Navigator>
