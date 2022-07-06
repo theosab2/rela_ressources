@@ -20,4 +20,4 @@ RUN npm cache clean --force
 COPY . .
 
 #Start node API application
-CMD ["docker-compose","up"]
+CMD ["npm","run","dev"]
