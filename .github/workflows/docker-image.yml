@@ -6,11 +6,10 @@ on:
       - master
 
 jobs:
-  deploy:
-    context: ./Back-end
-    working_dir: /Back-end
+  build:
     runs-on: ubuntu-latest
     steps:
+      working_directory: ./Back-end
       - uses: actions/checkout@v2
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:
