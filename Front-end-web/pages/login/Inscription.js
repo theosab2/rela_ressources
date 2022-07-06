@@ -20,7 +20,7 @@ export default function Inscription() {
     }
   }, []);
 
-  const display = async () => {
+  const inscription = async () => {
     console.log(password);
     console.log(email);
     if(check == true){
@@ -160,7 +160,7 @@ export default function Inscription() {
             <p className={style.errorMessage}>{error}</p>
             <button
               type="submit"
-              onClick={display}
+              onClick={inscription}
               className={style.buttonApproved}
             > 
               Valider

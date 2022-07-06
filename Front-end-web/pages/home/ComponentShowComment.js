@@ -37,7 +37,7 @@ export default function ComponentShowComment(props) {
           },
           body: JSON.stringify({
             comment: {
-              creator: userCookie._id,
+              "creator": userCookie._id,
               "article": props.article._id,
               "content": commentContent.current.value,
             },

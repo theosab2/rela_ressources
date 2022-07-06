@@ -30,6 +30,7 @@ export default function Navigation(image) {
   const router = useRouter();
   const [id, setId] = useState(null);
   const [hideBar, setBarHide] = useState(true);
+  const [modal, setModal] = useState(false);
   let [navTitle, setNavTitle] = useState("Accueil");
   var getSession = null;
   var getId = null;
@@ -151,11 +152,10 @@ export default function Navigation(image) {
   }
 
   if (isConnected == null || isConnected == false) {
-    console.log(hideBar)
     return (
       <>
         <div className={style.navHeader}>
-          <img src="/Image/burger.png" className={style.burger_menu}/>
+          <img src="/Image/home.png" className={style.burger_menu}/>
           <button onClick={() => setRenderPage((renderPage = "Accueil"))} className={style.headerTitle}>Ressource Relationnelle</button>
           <p className={style.headerPageTitle}>{navTitle}</p>
           <img src="/Image/connexion.png" className={style.icon_connexion}/>
@@ -183,7 +183,7 @@ export default function Navigation(image) {
             </div>
             <div className={style.recentContent}>
               <div className={style.recentTitle}>Récent</div>
-              {allArticle && allArticle.reverse(0,5).map((articleInfo) => (
+              {allArticle && allArticle.slice(0,6).map((articleInfo) => (
                 <div className={style.recentChoice} key={articleInfo._id}>
                     <img 
                     src="/Image/connexion.png"
@@ -207,9 +207,9 @@ export default function Navigation(image) {
     return(
     <>
         <div className={style.navHeader}>
-        <img src="/Image/burger.png" className={style.burger_menu} onClick={()=>setBarHide(!hideBar)}/>
+        <img src="/Image/home.png" className={style.burger_menu} onClick={() => setRenderPage((renderPage = "Accueil"))}/>
           <p className={style.username}>{isConnected.username}</p>
-          <button onClick={() => setRenderPage((renderPage = "Accueil"))} className={style.headerTitle}>Ressource Relationnelle</button>
+          <p  className={style.headerTitle}>Ressource Relationnelle</p>
           <p className={style.headerPageTitle}>{navTitle}</p>
           <img src="/Image/connexion.png" className={style.icon_connexion}/>
         </div>
@@ -248,7 +248,7 @@ export default function Navigation(image) {
                   <img src="/Image/profil.png" className={style.InputImg}/>
                   <button>Modifier le profil</button>
                 </div>                
-                <div className={style.inputDiv} onClick={() => showModal()}>
+                <div className={style.inputDiv} onClick={() => setModal(true)}>
                   <img src="/Image/se-deconnecter.png" className={style.InputImg}/>
                   <button>Deconnexion</button>
                 </div>
@@ -326,32 +326,33 @@ export default function Navigation(image) {
             <></>
             }
           </div>
-          <div className={style.navContentSeparator}>
-            <div className={style.pageRender}>
-          <div id="myModal" className={modalStyle.modalContainer}>
+        <div className={style.navContentSeparator}>
+        <div className={style.pageRender}>
+        {modal ?
+          <div className={modalStyle.modalContainer}>
             <div className={modalStyle.modalHeader}>
-            <div>Deconnexion</div>
-              <button onClick={closeModal}>
-                x
-              </button>
-              
+                <div>Deconnexion</div>
+                  <button onClick={() =>setModal(false)}>
+                    x
+                  </button>
+                </div>
+              <div className={modalStyle.modalBody}>
+                <button value="Annuler" onClick={() =>setModal(false)}>Annuler</button>
+                <button value="Valider" onClick={() => {deconnexionUtilisateur()}}>Valider</button>
+              </div>
             </div>
-            <div className={modalStyle.modalBody}>
-            <button value="Annuler" onClick={closeModal}>Annuler</button>
-            <button value="Valider" onClick={() => {deconnexionUtilisateur()}}>Valider</button>
-            </div>
-          </div>
-            {pageRender()}
+            :
+            <></>
+        }
+          {pageRender()}
         </div>
-
-
             <div className={style.recentContent}>
               <div className={style.recentTitle}>Récent</div>
-              {allArticle && allArticle.slice(0,7).map((articleInfo) => (
+              {allArticle && allArticle.slice(0,6).map((articleInfo) => (
                 <div className={style.recentChoice} key={articleInfo._id} onClick={() => setId(articleInfo._id)}>
                     <img 
                     src={articleInfo.image}
-                    alt="User picture"
+                    alt="Image article"
                     className={style.recentUserPicture}
                     />
                 <div className={style.recentInfo}>
@@ -362,7 +363,6 @@ export default function Navigation(image) {
             </div>
           </div>
         </div>
-
       </>
     );
   }

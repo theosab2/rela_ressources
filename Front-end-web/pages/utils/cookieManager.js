@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 export default function cookieManager() {
   const [userCookie, setUserCookie] = useState(getCookie("token"));
   const [userData, setUserData] = useState(getCookie("token"));
-
-  const getUser = async () =>
+  
+  const getUserConnected = async () =>
     fetch("http://"+process.env.IP+":3001/user/" + JSON.parse(userCookie)._id, {
       method: "GET",
       headers: {
@@ -19,9 +19,10 @@ export default function cookieManager() {
 
   useEffect(() => {
     if (userCookie) {
-      getUser();
+      getUserConnected();
     }
   }, [userCookie]);
 
+  
   return userData;
 }

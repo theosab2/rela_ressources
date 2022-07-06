@@ -43,7 +43,7 @@ export default function Evenement() {
                         <p>345</p>
                         </div>
                         <p>12/03/2023</p>
-                        <button>Rejoindre</button>
+                        
                     </div>
                     <div>
                         Je suis un titre d'evenement

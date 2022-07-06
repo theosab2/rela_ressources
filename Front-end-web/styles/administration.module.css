@@ -219,3 +219,8 @@ font-size: 15px;
   height: 30px;
   width: 30px;
 }
+
+.txtValidated{
+  margin: auto;
+  text-decoration: underline;
+}

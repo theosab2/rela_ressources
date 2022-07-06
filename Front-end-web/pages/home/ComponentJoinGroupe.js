@@ -13,7 +13,6 @@ export default function ComponentJoinGroupe(props) {
       if(!props.group.user_ids.includes(userCookie._id)){
         setTxtAbo(true)
         array.push(userCookie._id)
-        console.log(array)
         await fetch("http://"+process.env.IP+":3001/relations/" + props.group._id, {
           method: "PUT",
           headers: {
@@ -29,7 +28,10 @@ export default function ComponentJoinGroupe(props) {
       }else{
         setTxtAbo(false)
         array = array.filter(e => e !== userCookie._id);
-        console.log(array)
+        console.log("Array ->",props.group.user_ids)
+        console.log("Cookie ->",userCookie._id)
+        console.log("Group info ->",props.group._id)
+        console.log("URL ->","http://"+process.env.IP+":3001/relation/" + props.group._id)
         await fetch("http://"+process.env.IP+":3001/relations/" + props.group._id, {
           method: "PUT",
           headers: {

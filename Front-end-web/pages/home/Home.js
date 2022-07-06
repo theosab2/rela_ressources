@@ -41,7 +41,7 @@ export default function Home() {
     allArticle = searchAllArticle.articles;
     }
   }
-
+  console.log(allArticle)
   if(allArticle != null){
     allArticle.forEach(element => {
       if(element.isApproved == true){

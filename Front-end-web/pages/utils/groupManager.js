@@ -18,7 +18,6 @@ export default function getAllGroup() {
     useEffect(() => {
      getGroup();
     }, []);
-    console.log(allGroup)
     return allGroup;
 
 }

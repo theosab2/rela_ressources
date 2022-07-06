@@ -17,6 +17,7 @@ export default function Connexion() {
   const [load, setLoad] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
+
   useEffect(() => {
     if (window) { 
       window.sessionStorage.setItem("Page", "Connexion" );
@@ -24,11 +25,13 @@ export default function Connexion() {
   }, []);
 
   const display = async () => {
-    console.log(identifiant);
-    console.log(mdp);
     ComponentConnexion(identifiant,mdp);
-    router.reload(window.location.pathname)
-    window.sessionStorage.setItem("Page", "Accueil" );
+    //window.sessionStorage.setItem("Page", "Accueil");
+    setInterval(() => {
+      window.sessionStorage.setItem("Page", "Accueil" );
+      router.reload(window.location.pathname)
+    }, 2000);
+    
   };
 
   return (

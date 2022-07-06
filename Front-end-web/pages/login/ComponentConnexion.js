@@ -26,16 +26,7 @@ export default async function ComponentConnexion(email,password) {
         return "Votre compte a été bloqué";
       }
     } else {
-      console.log("Connexion");
-      console.log(res.user);
+      console.log("Connexion",res.user);
       setCookies("token", res.user, 1 * 3600);
     }
-    
-    useEffect(function connect(){
-      if(connection){
-        if (window) { 
-          window.sessionStorage.setItem("Page", "Accueil" );
-        }
-      }
-    },[]);
 }

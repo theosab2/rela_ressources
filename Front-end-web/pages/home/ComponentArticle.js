@@ -11,9 +11,11 @@ export default function ComponentArticle(props) {
     const [user, setUser] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
     const [approvedImg, setApprovedImg] = useState(props.articleInfo.isApproved);
+    const [favImg,setFavImg] = useState(true)
 
     let cookie;
     cookie = cookieManager();
+
     const router = useRouter();
 
     async function downVote(id) {
@@ -109,10 +111,12 @@ export default function ComponentArticle(props) {
     
         useEffect(function showPost(){
             getUser(props.articleInfo.creator)
+            
           },[]);
     
 
     if(userInfo != null){
+    
     return (
         <div className={style.articleContainer} key={props.articleInfo._id}>
           <div className={style.firstPartContainer}>
@@ -150,11 +154,12 @@ export default function ComponentArticle(props) {
               :
               <></>
               }
-              <img src="/Image/alert.png" className={style.warning}/>
-              <img src="/Image/forward.png" className={style.forward}/>
-              <img src="/Image/plus.png" className={style.add} onClick={() => addFav(props.articleInfo._id)}/>
+              {/*<img src="/Image/alert.png" className={style.warning}/>
+              <img src="/Image/forward.png" className={style.forward}/>*/}
+              
+              <img src="/Image/plus.png" className={style.add} onClick={() => addFav(props.articleInfo._id)} />
               <button onClick={() => setId(props.articleInfo)}>
-              <img src="/Image/comments.png" className={style.comment}/>
+                <img src="/Image/comments.png" className={style.comment}/>
               </button>
             </div>
           </div>

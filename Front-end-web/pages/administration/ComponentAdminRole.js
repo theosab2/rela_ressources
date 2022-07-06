@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 export default function ComponentAdminRole(props) {
 
     const [role,setRole] = useState(null);
+    const [txtValidated,setTxtValidated] = useState(false);
 
     const changeRole = async (newRole) => {
       console.log(newRole)
@@ -19,6 +20,7 @@ export default function ComponentAdminRole(props) {
           },
         }),
     });
+    setTxtValidated(newRole)
     }
 
     return (
@@ -68,6 +70,12 @@ export default function ComponentAdminRole(props) {
           <button onClick={() => changeRole(role)}>Valider</button>
           </div>
         </div>
-        </div>
+        {txtValidated ?
+          <p className={style.txtValidated}>L'utilisateur est maintenant {txtValidated}</p>
+          :
+          <p></p>
+        }
+      </div>
+
     );
 }

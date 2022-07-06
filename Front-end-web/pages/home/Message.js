@@ -63,21 +63,21 @@ export default function Message(props) {
       //setInterval(() => {
         getMessageUser();
         getMessageReceiver();
-      //}, 3000);
+      //}, 2000);
     },[]);
 
     if( allMessageSender != null && allMessageReceiver != null){
       let concat = allMessageReceiver.messages.concat(allMessageSender.messages)
-      console.log("concat",concat)
-      console.log("SORT ->",concat.sort((a, b) => Number(a._createdAt) - Number(b._createdAt) ))
-      concat.sort((a, b) => Number(a._createdAt) - Number(b._createdAt) )
+      const sort = concat.sort((a, b) => {
+      return new Date(a._createdAt) - new Date(b._createdAt)})
     return (
         <div className={style.convContainer}>
             <div className={style.convSubContainer}>
-                <div className={style.MessageContainer}>{props.UserId}</div>
+                <div className={style.MessageContainer}>
                 {concat && concat.map((message) => (
                   <ComponentMessage key={message._id} messageInfo={message}></ComponentMessage>
                 ))}
+                </div>
                 <div className={style.SendContainer}>
                 <textarea rows="5" ref={message}></textarea>
                 <button onClick={()=>sendMessage()}>Envoyer</button>

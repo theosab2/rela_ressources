@@ -58,12 +58,34 @@ export default function Groupe() {
       </div>
       :""}
       {allGroup && allGroup.map((group) => (
-        <ComponentJoinGroupe group={group} key={group._id}/>
-    ))};
+        <ComponentJoinGroupe group={group} key={group._id} />
+    ))}
      </div>
     </>
     );
   } else {
-    return <div>loading...</div>;
+    return(       
+    <>
+      <div className={style.mainContainer}>
+        <div className={style.searchBarContainer}>
+          <input type="text" placeholder="Recherche" className={style.searchBar}></input>
+          <button className={style.btnCreateGroupe} onClick={() => setShowCreate(!showCreate)}>+</button>
+        </div>
+        {showCreate ?
+          <div className={style.createGroupeContainer}>
+            <p>Créer un groupe</p>
+            <label>Nom du groupe</label>
+            <div>
+              <input ref={groupName} type="text"></input>
+            </div>
+            <button onClick={() => createGroupe()} >Valider</button>
+          </div>
+          :""}
+          {allGroup && allGroup.map((group) => (
+            <ComponentJoinGroupe group={group} key={group._id}/>
+        ))}
+      </div>
+    </>
+    );
   }
 }

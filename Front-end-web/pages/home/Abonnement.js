@@ -24,7 +24,6 @@ export default function abonnement() {
   allUser = userManager();
 
   if (allUser != null) {
-
       allUser.forEach(element => {
           if(element.relation_ids.includes(userCookie._id)){
             arrayUser.push(element);

@@ -50,7 +50,7 @@ useEffect(() => {
       <div className={style.adminRoleContainer}>
       <input type="text" placeholder="Recherche" className={style.searchBar}></input>
       {allUser && allUser.map((users) => (
-        <ComponentAdminRole users={users}/>
+        <ComponentAdminRole users={users} key={users._id}/>
         ))}
       </div>
     </>
