@@ -2,6 +2,10 @@
   "name": "nextup",
   "private": true,
   "server.js": "index.js",
+  "engines": {
+    "npm": "8.5.0",
+    "node": "v16.14.2"
+  },
   "scripts": {
     "testEcho": "echo \" Je suis un test qui est ici\"",
     "start": "node _app.js",
