@@ -3,7 +3,7 @@
   "private": true,
   "server.js": "index.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node ./bin/www",
     "dev": "next dev",
     "build": "next build",
     "lint": "next lint",
