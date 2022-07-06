@@ -36,7 +36,7 @@ const router = express.Router();
 //===== Global routes =====//
 router.get("/test", (req, res, next) => {
   _responseLogger(req);
-  res.status(200).json({ message: "L'API à répondu correctement" });
+  res.status(200).json({ message: "L'API à répondu correctement CI tested" });
 });
 
 //#region [SCHEMA]
