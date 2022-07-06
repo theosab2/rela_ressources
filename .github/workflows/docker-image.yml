@@ -7,10 +7,10 @@ on:
 
 jobs:
   deploy:
+    context: ./Back-end
+    working_dir: /Back-end
     runs-on: ubuntu-latest
     steps:
-      - context: ./Back-end
-        working_dir: /Back-end
       - uses: actions/checkout@v2
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:
