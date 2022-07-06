@@ -3,7 +3,8 @@
   "private": true,
   "server.js": "index.js",
   "scripts": {
-    "start": "node ./bin/www",
+    "testEcho": "echo \" Je suis un test qui est ici\"",
+    "start": "node _app.js",
     "dev": "next dev",
     "build": "next build",
     "lint": "next lint",
