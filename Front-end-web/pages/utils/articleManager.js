@@ -16,7 +16,6 @@ export default function allArticle(type) {
       .then((data) => {
         setAllArticles(data.articles);
       });
-
   useEffect(() => {
     getArticle();
   }, []);
