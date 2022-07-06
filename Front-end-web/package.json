@@ -1,10 +1,11 @@
 {
   "name": "nextup",
   "private": true,
+  "server.js": "index.js",
   "scripts": {
+    "start": "node server.js",
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
     "lint": "next lint",
     "test": "jest",
     "e2e-test": "cypress open"

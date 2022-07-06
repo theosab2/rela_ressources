@@ -1,9 +1,5 @@
 {
   "dependencies": {
     "dotenv": "^16.0.1"
-  },
-  "server.js": "index.js",
-  "scripts": {
-    "start": "node server.js"
   }
 }
