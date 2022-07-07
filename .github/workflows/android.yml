@@ -25,6 +25,8 @@ jobs:
       run: cd Front-end-mobile && npm install -g react-native-cli
     - name: react-native assets bundle update android
       run: cd Front-end-mobile && react-native bundle --platform android --dev false --entry-file index.js --bundle-output ./android/app/src/main/assets/index.android.bundle --assets-dest ./android/app/src/main/res/
+    - name: delete duplicate ressources
+      run: cd Front-end-mobile && rm -rf ./android/app/src/main/res/drawable-* && rm -rf ./android/app/src/main/res/raw
     - name: gradle clean cache
       run: cd Front-end-mobile/android && gradle clean
     - name: gradle version
