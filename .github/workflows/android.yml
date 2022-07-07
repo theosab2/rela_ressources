@@ -1,41 +1,43 @@
-name: Android Pull Request & Master CI
+name: Android CI
 
 on:
-  pull_request:
-    branches:
-      - 'master'
   push:
-    branches:
-      - 'master'
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
 jobs:
-  test:
-    name: Run Unit Tests
+  build:
+
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
-      - name: set up JDK 1.8
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.8
-      - name: Unit tests
-        run: cd Front-end-mobile && bash ./gradlew test --stacktrace
-
+    - uses: actions/checkout@v3
+    - name: set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: gradle
+    - name: gradle version
+      run: cd Front-end-mobile && gradle --version
+    - name: Grant execute permission for gradlew
+      run: cd Front-end-mobile/android && chmod +x gradlew
+    - name: Build with Gradle
+      run: cd Front-end-mobile/android && ./gradlew build
   apk:
     name: Generate APK
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v1
-      - name: set up JDK 1.8
+      - uses: actions/checkout@v3
+      - name: set up JDK 11
         uses: actions/setup-java@v1
         with:
-          java-version: 1.8
+          java-version: '11'
       - name: Build debug APK
-        run: cd Front-end-mobile && bash ./gradlew assembleDebug --stacktrace
+        run: cd Front-end-mobile/android && bash ./gradlew assembleDebug --stacktrace
       - name: Upload APK
         uses: actions/upload-artifact@v1
         with:
           name: app
-          path: app/build/outputs/apk/debug/app-debug.apk
+          path: cd Front-end-mobile/android && app/build/outputs/apk/debug/app-debug.apk
