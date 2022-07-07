@@ -14,20 +14,11 @@ const Post = ({ route, navigation }) => {
   const [savedUserArticles, setSavedUserArticles] = useState(null);
   const [post, setPost] = useState(null);
   const [imageUrl, setImageUrl] = useState(require('../../test_content/waiting.jpg'))
-  const [savedIcon, setSavedIcon] = useState(
-    <TouchableOpacity
-      style={styles.tool}
-      onPress={() => saveArticles()}
-    >
-      <Icon
-        name='save-outline'
-        type='ionicon'
-        color='#FFFFFF'
-      />
-    </TouchableOpacity>)
+  const [savedIcon, setSavedIcon] = useState(null)
+    
   const interval = () => {
     setInterval(() => {
-      console.log(userData);
+      console.log(idUser);
     }, 500);
   }
   //interval();
@@ -46,7 +37,6 @@ const Post = ({ route, navigation }) => {
       });
       const res = await api.json()
       setPost(res);
-      console.log('post', post)
     } catch (e) {
       console.log('erreur récupération d\'article', e);
     }
@@ -70,13 +60,12 @@ const Post = ({ route, navigation }) => {
     }
 
   }
-  const getSavedArticlesId = () => {
+  const getSavedArticlesId = async () => {
     const articles = userData.favorites;
     setSavedUserArticles(articles)
   }
   const saveArticles = async () => {
     //Problème par ici
-    console.log('userData',userData);
     if (userData.favorites.includes(route.params.idPost)) {
       console.log("l'article est contenu dans les favoris")
     } else {
@@ -98,7 +87,8 @@ const Post = ({ route, navigation }) => {
 
     }
   }
-  const changeIconSaved = () => {
+  const changeIconSaved = async () => {
+    console.log('user',userData)
     if (savedUserArticles.includes(route.params.idPost)) {
       setSavedIcon(<TouchableOpacity
         style={[styles.tool, { backgroundColor: '#9EAF6C' }]}
@@ -110,28 +100,29 @@ const Post = ({ route, navigation }) => {
           color='#FFFFFF'
         />
       </TouchableOpacity>)
-    } 
+    } else {
+      setSavedIcon(<TouchableOpacity
+        style={styles.tool}
+        onPress={() => saveArticles()}
+      >
+        <Icon
+          name='save-outline'
+          type='ionicon'
+          color='#FFFFFF'
+        />
+      </TouchableOpacity>)
+    }
   }
   useEffect(() => {
-    if (!idUser) {
-      getUserId()
-    } else {
-      if (!userData) {
-        getUserData();
-      }
-      else if (!savedUserArticles) { 
-        getSavedArticlesId();
-      }
-      else if (!post) { 
-        getDataPost(); 
-      }
-      else {
-        getImage()
-        changeIconSaved()
-      }
+    if (!idUser) {getUserId()} 
+    else {
+      if (!userData) {getUserData();}
+      else if (!savedUserArticles) { getSavedArticlesId();}
+      else if (!post) { getDataPost();}
+      else if (!savedIcon){changeIconSaved()}
+      else {getImage()}
     }
-    
-  }, [idUser, userData, savedUserArticles, post])
+  }, [idUser, userData, savedUserArticles, post,savedIcon])
 
   return (
     <View style={styles.container}>
