@@ -2,8 +2,6 @@ name: deploy_web
 on:
   push:
     branches: [master]
-  pull-request:
-    branches: [master]
 
 jobs:
   deploy:
