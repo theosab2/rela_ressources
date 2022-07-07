@@ -154,8 +154,6 @@ export default function ComponentArticle(props) {
               :
               <></>
               }
-              {/*<img src="/Image/alert.png" className={style.warning}/>
-              <img src="/Image/forward.png" className={style.forward}/>*/}
               
               <img src="/Image/plus.png" className={style.add} onClick={() => addFav(props.articleInfo._id)} />
               <button onClick={() => setId(props.articleInfo)}>
