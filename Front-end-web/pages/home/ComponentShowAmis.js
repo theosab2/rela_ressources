@@ -67,7 +67,7 @@ export default function ComponentShowAmis(props) {
               }
             }
         },[id]);
-
+        if(props.friend != null){
         return (
             <>
                 <div className={style.abonnementContainer} key={props.friend._id}>
@@ -86,4 +86,7 @@ export default function ComponentShowAmis(props) {
                 </div>
             </>
         );
+        }else{
+          <></>
+        }
 }
