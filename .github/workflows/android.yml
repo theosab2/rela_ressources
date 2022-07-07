@@ -19,8 +19,10 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: gradle
-    - name: npm install
+    - name: cd Front-end-mobile && npm install
       run: cd Front-end-mobile && npm i
+    - name: install react-native-cli
+      run: cd Front-end-mobile && npm install -g react-native-cli
     - name: react-native assets bundle update android
       run: cd Front-end-mobile && react-native bundle --platform android --dev false --entry-file index.js --bundle-output ./android/app/src/main/assets/index.android.bundle --assets-dest ./android/app/src/main/res/
     - name: gradle clean cache
@@ -42,6 +44,8 @@ jobs:
           java-version: '11'
       - name: npm install
         run: cd Front-end-mobile && npm i
+      - name: install react-native-cli
+        run: cd Front-end-mobile && npm install -g react-native-cli
       - name: react-native assets bundle update android
         run: cd Front-end-mobile && react-native bundle --platform android --dev false --entry-file index.js --bundle-output ./android/app/src/main/assets/index.android.bundle --assets-dest ./android/app/src/main/res/
       - name: gradle clean cache
