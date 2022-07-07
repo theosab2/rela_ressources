@@ -347,7 +347,7 @@ export default function Navigation(image) {
           {pageRender()}
         </div>
             <div className={style.recentContent}>
-              <div className={style.recentTitle}>Récent</div>
+              <div className={style.recentTitle}>Récents</div>
               {allArticle && allArticle.slice(0,6).map((articleInfo) => (
                 <div className={style.recentChoice} key={articleInfo._id} onClick={() => setId(articleInfo._id)}>
                     <img 
