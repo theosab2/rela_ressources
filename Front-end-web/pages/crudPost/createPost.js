@@ -162,7 +162,7 @@ export default function createPost() {
         method: "POST",
         headers: {
           Accept: "application/json",
-          "user-upload-GUID": userCookie._id,
+          "user-upload-GUID": cookie._id,
         },
         body: formdata
       });
@@ -191,7 +191,7 @@ export default function createPost() {
       <div 
         class=${style.articleContentDiv}
       >
-        <label htmlFor="content-file-${contentsCounter}" class=${style.addContentMedia}>
+        <label for="content-file-${contentsCounter}" class=${style.addContentMedia}>
         +
         </label>
         <input 
@@ -199,6 +199,7 @@ export default function createPost() {
           className=${style.inputFile} 
           type="file"                         
           accept="image/*, .pdf,video/*"*
+          style="display:none"
         >
         </input>
         <div >

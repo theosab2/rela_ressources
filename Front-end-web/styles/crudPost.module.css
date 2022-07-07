@@ -72,14 +72,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 150px;
+  width: 100px;
   height: 50px;
-
+  margin: 10px;
   background-color: #2a6faf;
   border-radius: 5px;
   color: #fff;
   font-size: 25px;
-  margin-right: 10px;
 }
 
 .inputFile{
@@ -117,12 +116,17 @@
 }
 
 .articleContentDiv{
-  width: 90%;
+  width: 100%;
   border-style:solid;
   border-width:1px;
   border-radius:5%;
   border-color:white;
   background-color:white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
 }
 
 .privateRessource{
@@ -136,6 +140,8 @@
   background-color: #CE8686;
   padding: 10px;
   border-radius: 5px;
+  margin: 5px;
+  margin-bottom: 10px;
 }
 
 .articleAddContentContainer{

@@ -112,7 +112,9 @@ export default function ComponentOneArticle(props) {
           {props.article.contents &&
     props.article.contents
       .map((content) => (
-        <div className={style.articleBody} key={content._id}>{content.body}</div>
+        <div className={style.articleBody} key={content._id}>
+          {content.mediaUrl ? <img src={content.mediaUrl} className={style.articlePicture}/> : content.body}
+        </div>
         ))}
           <div className={style.articleFooter}>
             <div className={style.articleRate}>
