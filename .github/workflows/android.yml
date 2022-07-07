@@ -21,10 +21,10 @@ jobs:
         cache: gradle
     - name: gradle version
       run: cd Front-end-mobile && gradle --version
-    - name: Grant execute permission for gradlew magueule
+    - name: Grant execute permission for gradlew
       run: cd Front-end-mobile && chmod +x gradlew
     - name: Build with Gradle
-      run: cd Front-end-mobile && ./gradlew build
+      run: ./gradlew build
   apk:
     name: Generate APK
     runs-on: ubuntu-latest
