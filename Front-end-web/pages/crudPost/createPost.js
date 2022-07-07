@@ -1,11 +1,7 @@
-import Navigation from "../Navigation";
 import style from "../../styles/crudPost.module.css";
 import categorieManager from "../utils/categorieManager";
-import Image from "next/dist/client/image";
 import React, { useState } from "react";
-import utils from "../utils";
 import { useEffect } from "react";
-import { create } from "../../../Back-end/models/article";
 import cookieManager from "../utils/cookieManager";
 
 export default function createPost() {
