@@ -16,7 +16,11 @@ export default function login(email,password) {
           }),
         });
         res = await res.json();
+        
+        if(res.statusCode == 200|| res.statusCode == 201){
         setCookies("token", res.user, 1 * 3600);
+        }
+        return res.statusCode;
       };
 
       

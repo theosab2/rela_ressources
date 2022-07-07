@@ -25,13 +25,15 @@ export default function Connexion() {
   }, []);
 
   const display = async () => {
-    login(identifiant,mdp);
+    let status = login(identifiant,mdp);
     //window.sessionStorage.setItem("Page", "Accueil");
+    
     setInterval(() => {
+      console.log(status)
       window.sessionStorage.setItem("Page", "Accueil" );
       router.reload(window.location.pathname)
+      
     }, 2000);
-    
   };
 
   return (
@@ -74,7 +76,7 @@ export default function Connexion() {
               </div>
               <a className={style.link}>Mot de passe oublié</a>
             </div>
-            {load ? <div className={style.errorMessage}>{error}</div>:<></>}
+            
             </div>
             <button
                 type="button"
@@ -83,6 +85,7 @@ export default function Connexion() {
               >
                 Valider
             </button>
+            {error ? <div className={style.errorMessage}>{error}</div>:<></>}
       </div>
   );
 }
