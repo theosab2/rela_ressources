@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import { setCookies, getCookie } from "cookies-next";
 import Inscription from "./Inscription";
 import Image from "next/dist/client/image";
-import ComponentConnexion from "./ComponentConnexion";
+import login from "./login";
 import { useEffect } from "react";
 import ComponentAdminRole from "../administration/ComponentAdminRole";
 import { useRouter } from "next/router";
@@ -25,7 +25,7 @@ export default function Connexion() {
   }, []);
 
   const display = async () => {
-    ComponentConnexion(identifiant,mdp);
+    login(identifiant,mdp);
     //window.sessionStorage.setItem("Page", "Accueil");
     setInterval(() => {
       window.sessionStorage.setItem("Page", "Accueil" );

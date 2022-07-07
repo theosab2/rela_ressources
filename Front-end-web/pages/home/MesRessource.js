@@ -26,7 +26,6 @@ export default function MesRessource() {
 
     if (allArticle != null) {
       allArticle.forEach((element) => {
-        console.log("Article non filtré ->",element)
         if (element.creator == userCookie._id) {
           array.push(element);
         }

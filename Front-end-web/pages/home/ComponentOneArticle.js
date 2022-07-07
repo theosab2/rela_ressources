@@ -124,7 +124,7 @@ export default function ComponentOneArticle(props) {
               <img src="/Image/like.png" className={style.dislike} onClick={() => downVote(props.article._id)}/>
             </div>
             <div className={style.articleOption}>
-              {userCookie.role == "admin" ?
+              {userCookie != null && userCookie.role == "admin" ?
               props.article.isApproved == true ?
               <img src="/Image/delete.png" className={style.warning} onClick={() => modererArticle(props.article._id,false)}/>
               :

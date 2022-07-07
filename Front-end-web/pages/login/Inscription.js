@@ -3,7 +3,7 @@ import Head from "next/head";
 import style from "../../styles/Inscription.module.css";
 import Link from "next/link";
 import React, { useEffect,useState } from "react";
-import ComponentConnexion from "./ComponentConnexion";
+import login from "./login";
 
 export default function Inscription() {
   const [pseudo, setUsername] = useState("");
@@ -48,7 +48,7 @@ export default function Inscription() {
     res = await res.json();
     console.log(res);
     if (res.status == "SUCCESS") {
-      ComponentConnexion(email,password)
+      login(email,password)
     } else {
       setError("Le nom d'utilisateurs ou adresse mail existe deja");
     }
