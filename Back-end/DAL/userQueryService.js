@@ -715,7 +715,7 @@ const mUser = require('../models/user');
 
             var newUser = await this.getUserById(userId);
             console.log(newUser);
-            if(newUser.re.filter(f => f == favoriteId).length <= 0){
+            if(newUser.favorites.filter(f => f == favoriteId).length <= 0){
                 //On ajoute si friend non présent
                 newUser.favorites.push(favoriteId);
             }
@@ -733,7 +733,7 @@ const mUser = require('../models/user');
                 return({
                     status:"SUCCESS",
                     statusCode:201,
-                    message: "L'utilisateur : (ID)=\'"+userId+"\' a été mis à jour avec succès (ami:\'"+friendId+"\')",
+                    message: "L'utilisateur : (ID)=\'"+userId+"\' a été mis à jour avec succès (favori :\'"+favoriteId+"\')",
                 })
             } 
             catch (exception) 
@@ -741,7 +741,7 @@ const mUser = require('../models/user');
                 return({
                     status:"EXCEPTION",
                     statusCode:500,
-                    message: "Une erreur est survenue durant la mise à jour de l'utilisateur : (ID)=\'"+userId+"\' (ami:\'"+friendId+"\')",
+                    message: "Une erreur est survenue durant la mise à jour de l'utilisateur : (ID)=\'"+userId+"\' (favori :\'"+favoriteId+"\')",
                     exception:exception
                 })
             }
@@ -753,7 +753,7 @@ const mUser = require('../models/user');
             return({
                 status:"NOT_FOUND",
                 statusCode:404,
-                message: "Erreur, vérifier userId et friendId",
+                message: "Erreur, vérifier userId et favoriteId",
             })
         }
     };
