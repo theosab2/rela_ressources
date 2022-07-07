@@ -553,6 +553,16 @@ router.put("/comment/:commentId", async function (req, res, next) {
     res.status(200).json(creationResult);
   });
 
+  router.put("/relation/:relationId", async function (req, res, next) {
+    
+    var updateResult = await _relationQueryService.updateOne(
+      req.params.relationId,
+      req.body.relation
+    );
+    _responseLogger(req);
+    res.status(updateResult.statusCode).json(updateResult);
+  });
+
   //#endregion
 
 //#endregion
