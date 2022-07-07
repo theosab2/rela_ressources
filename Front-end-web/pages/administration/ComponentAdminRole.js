@@ -22,7 +22,7 @@ export default function ComponentAdminRole(props) {
     });
     setTxtValidated(newRole)
     }
-
+    if(props.users != null){
     return (
         <div>
             <div className={style.adminRoleUserContainer}>
@@ -78,4 +78,9 @@ export default function ComponentAdminRole(props) {
       </div>
 
     );
+      }else{
+        return(
+          <>Loading...</>
+        )
+      }
 }

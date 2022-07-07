@@ -23,6 +23,9 @@ export default function cookieManager() {
     }
   }, [userCookie]);
 
-  
+  if(userData == null){
+  return null;
+  }else{
   return userData;
+  }
 }
