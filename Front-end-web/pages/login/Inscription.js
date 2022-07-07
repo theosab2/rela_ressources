@@ -11,6 +11,7 @@ export default function Inscription() {
   const [firstname, setFirstname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [validPassword, setValidPassword] = useState("");
   const [check,setCheck] = useState(false);
   const [error,setError] = useState("");
 
@@ -23,7 +24,7 @@ export default function Inscription() {
   const inscription = async () => {
     console.log(password);
     console.log(email);
-    if(check == true){
+    if(check == true && validPassword != "" && password != "" && email != "" && firstname != "" && name != "" && (validPassword == password)){
     let res = await fetch("http://"+process.env.IP+":3001/auth/register", {
       method: "POST",
       headers: {
@@ -45,11 +46,17 @@ export default function Inscription() {
     if (res.status == "FAILURE") {
       setError("Le nom d'utilisateurs ou adresse mail existe deja");
     } else {
-      console.log("Compte crée");
       ComponentConnexion(email,password)
     }
   }else{
-    setError("Vous devez accepter les conditions d'utilisation");
+    if((validPassword != password)){
+      setError("Mot de passe de validation invalide");
+    }else if(check != true){
+      setError("Vous devez accepter les conditions d'utilisation");
+    }else{
+      setError("Veuillez remplir l'ensemble des champs");
+    }
+    console.log(check)
   }
   };
 
@@ -142,6 +149,7 @@ export default function Inscription() {
                 name="confMdp"
                 type="password"
                 required
+                onChange={(password) => setPassword(password.target.value)}
               />
             </div>
           </div>
@@ -151,7 +159,7 @@ export default function Inscription() {
                 name="condition"
                 type="checkbox"
                 required
-                onClick={() => setCheck(true)}
+                onClick={() => setCheck(!check)}
               />
               <label htmlFor="condition">
                 J'accepte les conditions d'utilisation
