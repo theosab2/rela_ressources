@@ -35,8 +35,8 @@ const router = express.Router();
 
 //===== Global routes =====//
 router.get("/test", (req, res, next) => {
-  _responseLogger(req);
   res.status(200).json({ message: "L'API à répondu correctement CI tested" });
+  _responseLogger(req);
 });
 
 //#region [SCHEMA]
@@ -45,23 +45,23 @@ router.get("/test", (req, res, next) => {
   //Get user model schema
   router.get("/user/schema", async function (req, res, next) {
     var data = await _userQueryService.getSchema();
-    _responseLogger(req);
     res.status(200).json(data);
+    _responseLogger(req);
   });
 
   //Get user model schema
   router.get("/user/schema/detailled", async function (req, res, next) {
     var data = await _userQueryService.getDetailledSchema();
-    _responseLogger(req);
     res.status(200).json(data);
+    _responseLogger(req);
   });
 
   //ARTICLE
   //Get article model schema
   router.get("/article/schema", async function (req, res, next) {
     var data = await _articleController.getSchema();
-    _responseLogger(req);
     res.status(200).json(data);
+    _responseLogger(req);
   });
 
   //Get article model detailled schema

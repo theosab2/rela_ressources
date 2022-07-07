@@ -4,13 +4,16 @@ const requestLogger = (req,res,callback) => {
     const requestMethod = req.method;
     const requestUrl = req.url;
 
-    logRequest(remoteAddress,requestProtocol,requestMethod,requestUrl)
+    const now = new Date();
+    const timestamp = `${now.toLocaleDateString("fr-FR")}|${now.toLocaleTimeString("fr-FR")}`;
+
+    logRequest(timestamp,remoteAddress,requestProtocol,requestMethod,requestUrl)
 
     callback();
 };
 
-const logRequest = (rA,rP,rM,rU) => {
-    console.log(`${rA} => (${rP}) ${rM} ${rU}`);
+const logRequest = (tS,rA,rP,rM,rU) => {
+    console.log(`[${tS}] ${rA} => (${rP}) ${rM} ${rU}`);
 }
 
 module.exports = requestLogger;
