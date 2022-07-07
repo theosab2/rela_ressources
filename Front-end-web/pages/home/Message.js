@@ -12,6 +12,8 @@ export default function Message(props) {
     const  [allMessageReceiver,setAllMessageReceiver] = useState(null);
 
     async function getMessageUser () {
+      console.log(JSON.parse(cookie)._id)
+      console.log(props.UserId)
       let res = await fetch("http://"+process.env.IP+"/messages/query" ,{
         method: "POST",
         headers: {
@@ -20,6 +22,7 @@ export default function Message(props) {
         },
         body: JSON.stringify({
           "sender_id": JSON.parse(cookie)._id,
+          "relation_id": props.UserId,
         }),
       })
       res = await res.json();
@@ -27,7 +30,8 @@ export default function Message(props) {
     }
 
     async function getMessageReceiver () {
-      
+      console.log(JSON.parse(cookie)._id)
+      console.log(props.UserId)
       let res = await fetch("http://"+process.env.IP+"/messages/query" ,{
         method: "POST",
         headers: {
@@ -36,6 +40,7 @@ export default function Message(props) {
         },
         body: JSON.stringify({
           "sender_id": props.UserId,
+          "relation_id": JSON.parse(cookie)._id,
         }),
       })
       res = await res.json();

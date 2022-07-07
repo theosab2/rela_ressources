@@ -116,7 +116,7 @@ export default function ComponentArticle(props) {
     
 
     if(userInfo != null){
-    
+    console.log(props.articleInfo)
     return (
         <div className={style.articleContainer} key={props.articleInfo._id}>
           <div className={style.firstPartContainer}>

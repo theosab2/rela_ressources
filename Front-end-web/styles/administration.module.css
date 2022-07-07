@@ -230,3 +230,22 @@ font-size: 15px;
   margin: auto;
   text-decoration: underline;
 }
+
+.statistiquesContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.statistiquesSubContainer{
+  background-color: #2F4077;
+  width: 80%;
+  min-height: 600px;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.statistiquesSubContainer p{
+  color: #fff;
+  font-size: 25px;
+}

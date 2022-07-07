@@ -6,7 +6,7 @@ export default function cookieManager() {
   const [userData, setUserData] = useState(getCookie("token"));
   
   const getUserConnected = async () =>
-    fetch("http://"+process.env.IP+"/user/" + JSON.parse(userCookie)._id, {
+    await fetch("http://"+process.env.IP+"/user/" + JSON.parse(userCookie)._id, {
       method: "GET",
       headers: {
         Accept: "application/json",

@@ -34,7 +34,6 @@ export default function Connexion() {
 
   const display = async () => {
     setResult(await useLogin(identifiant,mdp))
-
   };
 
   return (

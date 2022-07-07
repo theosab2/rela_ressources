@@ -4,6 +4,7 @@ import userManager from "../utils/userManager";
 import Image from "next/dist/client/image";
 import ComponentAdminRole from "./ComponentAdminRole";
 
+
 export default function Role(props) {
   let [adminPage, setAdminPage] = useState("");
   let [idUser, setIdUser] = useState(null);
