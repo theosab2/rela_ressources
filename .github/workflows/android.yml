@@ -29,8 +29,6 @@ jobs:
       run: cd Front-end-mobile && rm -rf ./android/app/src/main/res/drawable-* && rm -rf ./android/app/src/main/res/raw
     - name: gradle clean cache
       run: cd Front-end-mobile/android && gradle clean
-    - name: gradle version
-      run: cd Front-end-mobile && gradle --version
     - name: Grant execute permission for gradlew
       run: cd Front-end-mobile/android && chmod +x gradlew
     - name: Build with Gradle
