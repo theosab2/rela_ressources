@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import { setCookies, getCookie } from "cookies-next";
 import Inscription from "./Inscription";
 import Image from "next/dist/client/image";
-import login from "./login";
+import useLogin from "./login";
 import { useEffect } from "react";
 import ComponentAdminRole from "../administration/ComponentAdminRole";
 import { useRouter } from "next/router";
@@ -16,24 +16,25 @@ export default function Connexion() {
   const [mdp, setMdp] = useState("");
   const [load, setLoad] = useState(false);
   const [error, setError] = useState("");
+  const [result, setResult] = useState(null);
   const router = useRouter();
-
   useEffect(() => {
     if (window) { 
       window.sessionStorage.setItem("Page", "Connexion" );
     }
-  }, []);
+    if(result == true){
+      setInterval(() => {
+        window.sessionStorage.setItem("Page", "Accueil" );
+        router.reload(window.location.pathname)
+      }, 2000);
+    }if(result == false){
+      setError("Mauvais identifiant ou mot de passe")
+    }
+  }, [result]);
 
   const display = async () => {
-    let status = login(identifiant,mdp);
-    //window.sessionStorage.setItem("Page", "Accueil");
-    
-    setInterval(() => {
-      console.log(status)
-      window.sessionStorage.setItem("Page", "Accueil" );
-      router.reload(window.location.pathname)
-      
-    }, 2000);
+    setResult(await useLogin(identifiant,mdp))
+
   };
 
   return (

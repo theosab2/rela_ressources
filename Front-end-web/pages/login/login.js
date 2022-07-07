@@ -1,7 +1,8 @@
 import { setCookies, getCookie } from "cookies-next";
 import { useEffect} from "react";
 
-export default function login(email,password) {
+export default function useLogin(email,password) {
+
 
 
       const auth = async () => {
@@ -16,15 +17,15 @@ export default function login(email,password) {
           }),
         });
         res = await res.json();
-        
         if(res.statusCode == 200|| res.statusCode == 201){
         setCookies("token", res.user, 1 * 3600);
+        return true;
         }
-        return res.statusCode;
+        return false;
       };
 
-      
-        auth();
+      return auth();
+        
 
     /*await fetch("http://"+process.env.IP+"/auth/login", {
       method: "POST",
