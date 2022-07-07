@@ -3,9 +3,11 @@ const responseLogger = (request) => {
     const rP = request.protocol;
     const rM = request.method;
     const rU = request.url;
-    const dT = Date.toString();
+
+    const now = new Date();
+    const Ts = `${now.toLocaleDateString("fr-FR")}|${now.toLocaleTimeString("fr-FR")}`;
     
-    console.log(`[${dT}]${rA} <= (${rP}) ${rM} ${rU}`);
+    console.log(`[${Ts}] ${rA} <= (${rP}) ${rM} ${rU}`);
     console.log(``); //Ligne vide pour la lisibilité des logs
 
 }
