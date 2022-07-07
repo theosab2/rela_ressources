@@ -10,7 +10,7 @@ export default function ComponentShowOneComment(props) {
 
     const getUser  = async (id) =>{
         
-        await fetch("http://"+process.env.IP+":3001/user/"+id ,{
+        await fetch("http://"+process.env.IP+"/user/"+id ,{
           method: "GET",
           headers: {
             Accept: "application/json",
@@ -26,7 +26,7 @@ export default function ComponentShowOneComment(props) {
         if(!array.includes(userCookie._id)){
             setTextAbonnement()
             array.push(userCookie._id)
-            await fetch("http://"+process.env.IP+":3001/user/" + userInfo._id, {
+            await fetch("http://"+process.env.IP+"/user/" + userInfo._id, {
             method: "PUT",
             headers: {
                 Accept: "application/json",
@@ -42,7 +42,7 @@ export default function ComponentShowOneComment(props) {
             setTextAbonnement()
             array = array.filter(e => e !== userCookie._id);
             console.log(array)
-            await fetch("http://"+process.env.IP+":3001/user/" + userCookie._id, {
+            await fetch("http://"+process.env.IP+"/user/" + userCookie._id, {
               method: "PUT",
               headers: {
                 Accept: "application/json",

@@ -19,8 +19,8 @@ export default function ProfilUpdate() {
   const [createObjectURL, setCreateObjectURL] = useState("");
 
   /*async function getUser(){
-    console.log("http://"+process.env.IP+":3001/user/" + cookie._id);
-    await fetch("http://"+process.env.IP+":3001/user/" + cookie._id, {
+    console.log("http://"+process.env.IP+"/user/" + cookie._id);
+    await fetch("http://"+process.env.IP+"/user/" + cookie._id, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -33,7 +33,7 @@ export default function ProfilUpdate() {
     }*/
 
   async function updateUser() {
-    let res = await fetch("http://"+process.env.IP+":3001/user/" + cookie._id, {
+    let res = await fetch("http://"+process.env.IP+"/user/" + cookie._id, {
       method: "PUT",
       headers: {
         Accept: "application/json",

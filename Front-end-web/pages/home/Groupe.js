@@ -23,7 +23,7 @@ export default function Groupe() {
   const userCookie = cookieManager();
   let allGroup = groupManager();
     async function createGroupe(){
-      const res = await fetch("http://"+process.env.IP+":3001/relation/create", {
+      const res = await fetch("http://"+process.env.IP+"/relation/create", {
         method: "POST",
         headers: {
           Accept: "application/json",

@@ -14,7 +14,7 @@ export default function ComponentShowComment(props) {
   const [showModal, setShowModal] = useState(false);
   
       async function getComment (id) {
-        let res = await fetch("http://"+process.env.IP+":3001/comments/query" ,{
+        let res = await fetch("http://"+process.env.IP+"/comments/query" ,{
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -29,7 +29,7 @@ export default function ComponentShowComment(props) {
       }
 
       async function postComment (id) {
-        let res = await fetch("http://"+process.env.IP+":3001/comment/create" ,{
+        let res = await fetch("http://"+process.env.IP+"/comment/create" ,{
           method: "POST",
           headers: {
             "Content-Type": "application/json",

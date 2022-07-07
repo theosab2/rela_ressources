@@ -5,7 +5,7 @@ export default function allCategorie() {
   const [allCategorie, setallCategorie] = useState(null);
 
   const getCategorie = async () =>
-    fetch("http://"+process.env.IP+":3001/uts/all/CATEGORY", {
+    fetch("http://"+process.env.IP+"/uts/all/CATEGORY", {
       method: "GET",
       headers: {
         Accept: "application/json",

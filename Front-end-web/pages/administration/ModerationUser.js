@@ -17,7 +17,7 @@ export default function () {
   };
 
   const getUser = async () =>
-    fetch("http://"+process.env.IP+":3001/users/all", {
+    fetch("http://"+process.env.IP+"/users/all", {
       method: "GET",
       headers: {
         Accept: "application/json",

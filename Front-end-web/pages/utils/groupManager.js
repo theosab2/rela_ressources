@@ -4,7 +4,7 @@ export default function getAllGroup() {
     const [allGroup,setAllGroup] = useState(null)
 
     const getGroup = async () =>
-    await fetch("http://"+process.env.IP+":3001/relations/all", {
+    await fetch("http://"+process.env.IP+"/relations/all", {
         method: "GET",
         headers: {
         Accept: "application/json",

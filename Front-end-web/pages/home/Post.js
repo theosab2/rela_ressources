@@ -10,7 +10,7 @@ export default function Post(props) {
 
   const getUser = async () =>
     fetch(
-      "http://"+process.env.IP+":3001/user/" + props.allArticleDetail.articleCreator,
+      "http://"+process.env.IP+"/user/" + props.allArticleDetail.articleCreator,
       {
         method: "GET",
         headers: {
@@ -31,7 +31,7 @@ export default function Post(props) {
 
   async function upVote(id) {
     setLike(nbLike + 1);
-    let res = await fetch("http://"+process.env.IP+":3001/article/" + id, {
+    let res = await fetch("http://"+process.env.IP+"/article/" + id, {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -48,7 +48,7 @@ export default function Post(props) {
 
   async function downVote(id) {
     setDislike(nbDislike + 1);
-    let res = await fetch("http://"+process.env.IP+":3001/article/" + id, {
+    let res = await fetch("http://"+process.env.IP+"/article/" + id, {
       method: "PUT",
       headers: {
         Accept: "application/json",

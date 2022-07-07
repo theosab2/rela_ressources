@@ -13,7 +13,7 @@ export default function Post(props) {
   
 
   const getArticle = async () =>
-      await fetch("http://"+process.env.IP+":3001/article/" + props.articleId, {
+      await fetch("http://"+process.env.IP+"/article/" + props.articleId, {
         method: "GET",
         headers: {
           Accept: "application/json",

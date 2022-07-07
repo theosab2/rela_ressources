@@ -28,7 +28,7 @@ export default function Amis() {
   if (allUser != null) {
 
     async function searchUser (e) {
-      let res = await fetch("http://"+process.env.IP+":3001/users/query" ,{
+      let res = await fetch("http://"+process.env.IP+"/users/query" ,{
         method: "POST",
         headers: {
           Accept: "application/json",

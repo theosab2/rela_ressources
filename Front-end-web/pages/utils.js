@@ -24,7 +24,7 @@ export default function utils() {
 export function allArticle() {
   const [allArticle, setAllArticle] = useState(null);
   const getArticle = async () =>
-    fetch("http://"+process.env.IP+":3001/articles/all", {
+    fetch("http://"+process.env.IP+"/articles/all", {
       method: "GET",
       headers: {
         Accept: "application/json",

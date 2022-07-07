@@ -4,7 +4,7 @@ export default function ComponentMessage(props) {
     const [user,setUser] = useState("");
     const getUser = async () =>
     fetch(
-      "http://"+process.env.IP+":3001/user/" + props.messageInfo.sender_id,
+      "http://"+process.env.IP+"/user/" + props.messageInfo.sender_id,
       {
         method: "GET",
         headers: {

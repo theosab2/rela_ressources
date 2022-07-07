@@ -14,7 +14,7 @@ export default function ComponentShowAmis(props) {
         setTextAbonnement(!props.friend.relation_ids.includes(props.userCookie._id))
         array.push(props.userCookie._id)
         
-        await fetch("http://"+process.env.IP+":3001/user/" + props.friend._id, {
+        await fetch("http://"+process.env.IP+"/user/" + props.friend._id, {
           method: "PUT",
           headers: {
             Accept: "application/json",
@@ -30,7 +30,7 @@ export default function ComponentShowAmis(props) {
         }else{
             setTextAbonnement(!props.friend.relation_ids.includes(props.userCookie._id))
             array = array.filter(e => e !== props.userCookie._id);
-            await fetch("http://"+process.env.IP+":3001/user/" + props.friend._id, {
+            await fetch("http://"+process.env.IP+"/user/" + props.friend._id, {
               method: "PUT",
               headers: {
                 Accept: "application/json",

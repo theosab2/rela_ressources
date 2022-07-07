@@ -29,7 +29,7 @@ export default function Inscription() {
     console.log(name);
     
     if(check == true && password != "" && email != "" && firstname != "" && name != "" && (validPassword == password)){
-    let res = await fetch("http://"+process.env.IP+":3001/auth/register", {
+    let res = await fetch("http://"+process.env.IP+"/auth/register", {
       method: "POST",
       headers: {
         Accept: "application/json",

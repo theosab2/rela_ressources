@@ -22,7 +22,7 @@ export default function Home() {
   let allArticle = articleManager()
 
   async function searchArticle (e) {
-    let res = await fetch("http://"+process.env.IP+":3001/articles/query" ,{
+    let res = await fetch("http://"+process.env.IP+"/articles/query" ,{
       method: "POST",
       headers: {
         Accept: "application/json",

@@ -109,7 +109,7 @@ export default function createPost() {
     });
 
     formdata.append("article", JSON_Object);
-    const res = await fetch("http://"+process.env.IP+":3001/article/create", {
+    const res = await fetch("http://"+process.env.IP+"/article/create", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -158,7 +158,7 @@ export default function createPost() {
       formdata.append("content", content_JSON_Object);  
       formdata.append("content-media", contentsMedias[contentsCounter]);
 
-      const res = await fetch("http://"+process.env.IP+":3001/article/set-content-media/"+newlyCreatedArticleId, {
+      const res = await fetch("http://"+process.env.IP+"/article/set-content-media/"+newlyCreatedArticleId, {
         method: "POST",
         headers: {
           Accept: "application/json",

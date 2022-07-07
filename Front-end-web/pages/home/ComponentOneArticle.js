@@ -6,7 +6,7 @@ export default function ComponentOneArticle(props) {
     const [userInfo, setUserInfo] = useState(null);
     async function downVote(id) {
         setDislike(nbDislike + 1);
-        let res = await fetch("http://"+process.env.IP+":3001/article/" + id, {
+        let res = await fetch("http://"+process.env.IP+"/article/" + id, {
           method: "PUT",
           headers: {
             Accept: "application/json",
@@ -24,7 +24,7 @@ export default function ComponentOneArticle(props) {
 
       async function upVote(id) {
         setLike(nbLike + 1);
-        let res = await fetch("http://"+process.env.IP+":3001/article/" + id, {
+        let res = await fetch("http://"+process.env.IP+"/article/" + id, {
           method: "PUT",
           headers: {
             Accept: "application/json",
@@ -40,7 +40,7 @@ export default function ComponentOneArticle(props) {
       }
 
       async function modererArticle(id, bool) {
-        let res = await fetch("http://"+process.env.IP+":3001/article/" + id, {
+        let res = await fetch("http://"+process.env.IP+"/article/" + id, {
           method: "PUT",
           headers: {
             Accept: "application/json",
@@ -57,7 +57,7 @@ export default function ComponentOneArticle(props) {
 
       const addFav = async(id) =>{
         userCookieJson.favorites.push(id);
-        await fetch("http://"+process.env.IP+":3001/user/" + userCookieJson._id, {
+        await fetch("http://"+process.env.IP+"/user/" + userCookieJson._id, {
           method: "PUT",
           headers: {
             Accept: "application/json",
@@ -72,7 +72,7 @@ export default function ComponentOneArticle(props) {
       }
 
       const getUser  = async (id) =>{
-        await fetch("http://"+process.env.IP+":3001/user/"+id ,{
+        await fetch("http://"+process.env.IP+"/user/"+id ,{
           method: "GET",
           headers: {
             Accept: "application/json",

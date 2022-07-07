@@ -12,7 +12,7 @@ export default function Message(props) {
     const  [allMessageReceiver,setAllMessageReceiver] = useState(null);
 
     async function getMessageUser () {
-      let res = await fetch("http://"+process.env.IP+":3001/messages/query" ,{
+      let res = await fetch("http://"+process.env.IP+"/messages/query" ,{
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -28,7 +28,7 @@ export default function Message(props) {
 
     async function getMessageReceiver () {
       
-      let res = await fetch("http://"+process.env.IP+":3001/messages/query" ,{
+      let res = await fetch("http://"+process.env.IP+"/messages/query" ,{
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -43,7 +43,7 @@ export default function Message(props) {
     }
 
     const sendMessage = async () => {
-      await fetch("http://"+process.env.IP+":3001/message/create", {
+      await fetch("http://"+process.env.IP+"/message/create", {
         method: "POST",
         headers: {
           Accept: "application/json",
