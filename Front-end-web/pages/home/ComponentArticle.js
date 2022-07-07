@@ -10,7 +10,7 @@ export default function ComponentArticle(props) {
     const [nbDislike, setDislike] = useState(null);
     const [user, setUser] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
-    const [approvedImg, setApprovedImg] = useState(props.articleInfo.isApproved);
+    const [approvedImg, setApprovedImg] = useState(null);
     const [favImg,setFavImg] = useState(true)
 
     let cookie;
@@ -116,7 +116,7 @@ export default function ComponentArticle(props) {
     
 
     if(userInfo != null){
-    
+    setApprovedImg(props.articleInfo.isApproved);
     return (
         <div className={style.articleContainer} key={props.articleInfo._id}>
           <div className={style.firstPartContainer}>

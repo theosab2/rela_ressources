@@ -1,9 +1,7 @@
-import Navigation from "../Navigation";
+
 import style from "../../styles/administration.module.css";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import articleManager from "../utils/articleManager";
-import Link from "next/link";
 import ComponentArticle from "../home/ComponentArticle";
 
 export default function Moderation() {
