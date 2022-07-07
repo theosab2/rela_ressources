@@ -24,9 +24,8 @@ export default async function ComponentConnexion(email,password) {
       }
     } else {
       setCookies("token", res.user, 1 * 3600);
+      return "SUCCESS"
     }
-  
-
   }
   }catch(e){
     console.log(e)
