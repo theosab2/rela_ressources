@@ -220,6 +220,12 @@ font-size: 15px;
   width: 30px;
 }
 
+.userIconDelete{
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+}
+
 .txtValidated{
   margin: auto;
   text-decoration: underline;

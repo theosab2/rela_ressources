@@ -31,6 +31,7 @@ export default function Navigation(image) {
   const [id, setId] = useState(null);
   const [hideBar, setBarHide] = useState(true);
   const [modal, setModal] = useState(false);
+  const [modalDeleteUser, setModalDeleteUser] = useState(false);
   let [navTitle, setNavTitle] = useState("Accueil");
   var getSession = null;
   var getId = null;
@@ -77,6 +78,16 @@ export default function Navigation(image) {
     setRenderPage((renderPage = "Accueil"));
     router.reload(window.location.pathname)
   };
+
+  const deleteUtilisateur = async () => {
+    await fetch("http://"+process.env.IP+"/user/delete/" + isConnected._id, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+    });
+    }
 
   const moderationUtilisateur = () => {
     router.push("/administration/AdministrationHome");
@@ -273,7 +284,7 @@ export default function Navigation(image) {
                   <img src="/Image/options.png" className={style.InputImg}/>
                   <button>Préférences</button>
                 </div>
-                <div className={renderPage == 'Supprimer'?style.inputDivSelect:style.inputDiv} onClick={() => setRenderPage((renderPage = "Supprimer"))}>
+                <div className={renderPage == 'Supprimer'?style.inputDivSelect:style.inputDiv} onClick={() => setModalDeleteUser(true)}>
                   <img src="/Image/delete-account.png" className={style.InputImg}/>
                   <button>Supprimer compte</button>
                 </div>
@@ -338,6 +349,22 @@ export default function Navigation(image) {
               <div className={modalStyle.modalBody}>
                 <button value="Annuler" onClick={() =>setModal(false)}>Annuler</button>
                 <button value="Valider" onClick={() => {deconnexionUtilisateur()}}>Valider</button>
+              </div>
+            </div>
+            :
+            <></>
+        }
+        {modalDeleteUser ?
+          <div className={modalStyle.modalContainer}>
+            <div className={modalStyle.modalHeader}>
+                <div>Supprimer votre compte ?</div>
+                  <button onClick={() =>setModalDeleteUser(false)}>
+                    x
+                  </button>
+                </div>
+              <div className={modalStyle.modalBody}>
+                <button value="Annuler" onClick={() =>setModalDeleteUser(false)}>Annuler</button>
+                <button value="Valider" onClick={() =>deleteUtilisateur()}>Valider</button>
               </div>
             </div>
             :

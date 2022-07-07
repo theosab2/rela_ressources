@@ -22,6 +22,19 @@ export default function ComponentAdminRole(props) {
     });
     setTxtValidated(newRole)
     }
+
+    const deleteUser = async () => {
+      await fetch("http://"+process.env.IP+"/user/delete/" + props.users._id, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+      });
+  
+      setTxtValidated("Supprimé")
+      }
+
     if(props.users != null){
     return (
         <div>
@@ -47,15 +60,11 @@ export default function ComponentAdminRole(props) {
             className={style.userIcon}
           />
           <div>
-          <img
-            src={"/Image/warning.png"}
-            className={style.userIcon}
-          />
-          <p>0</p>
           </div>
           <img
             src={"/Image/delete.png"}
-            className={style.userIcon}
+            className={style.userIconDelete}
+            onClick={()=>deleteUser()}
           />
           <div>
           <select
