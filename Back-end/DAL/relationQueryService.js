@@ -51,6 +51,23 @@ module.exports.getAll = async () => {
 
 //#endregion
 
+//#region [CHECK RESSOURCES]
+
+//return Boolean representing existence of the provide article id in database
+module.exports.checkRelationIdExistence = async (relationId) => {
+    console.log("D.A.L [checkRelationIdExistence] (paramètres) 'relationId' : ",relationId);
+    try {
+        var result = await (mRelation.findById(relationId)).count() > 0;
+        console.log("D.A.L [checkRelationIdExistence] (return) 'result' : ",result);
+        return result;
+    } 
+    catch (error) {
+        console.log("D.A.L [checkRelationIdExistence] (return) 'err' : ",error);
+        return {message:"une erreur est survenue",error};
+    }     
+};
+//#endregion
+
 //#region [QUERY RESSOURCES]
 
 module.exports.query = async (query = {}) => {
@@ -127,5 +144,53 @@ module.exports.saveOne = async (newRelationModel) => {
         })
     }
 }
+
+module.exports.updateOne = async (relationId,relationObject = null) => {
+    console.log(queryServiceLogPrefix,"[updateOne] (paramètres) 'relationId' :",relationId,"'relationObject' :",relationObject);
+
+    if(relationObject == {} || relationObject == undefined || relationObject == null){
+        return({
+            status:"BAD_REQUEST",
+            statusCode:400,
+            message: "Mise à jour de la relation impossible : Objet \'relation\' introuvable dans le body de la requête",
+            requiredFormat:"Format du body attendu : {relation:{...relation's informations...}}",
+        })
+    }
+
+    //Validation des données reçues
+    var relationIdExist = await this.checkRelationIdExistence(relationId);
+
+    //Si les deux données reçues sont valides 
+    if(!relationIdExist)
+    {
+        return({
+            status:"NOT_FOUND",
+            statusCode:404,
+            message: "La relation : (ID)=\'"+relationId+"\' n'a pas été trouvé dans la base de données",
+        })
+    }
+
+    try 
+    {
+        await mRelation.updateOne(
+            {_id:relationId},
+            relationObject
+        )
+        return({
+            status:"SUCCESS",
+            statusCode:201,
+            message: "La relation : (ID)=\'"+relationId+"\' a été mis à jour avec succès",
+        })
+    } 
+    catch (exception) 
+    {
+        return({
+            status:"EXCEPTION",
+            statusCode:500,
+            message: "Une erreur est survenue durant la mise à jour de le relation : (ID)=\'"+relationId+"\'",
+            exception:exception
+        })
+    }
+};
 
 //#endregion
