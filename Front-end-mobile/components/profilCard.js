@@ -6,25 +6,25 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 const ProfilCard = ({userId,date}) => {
     const [userData,setUserData] = useState(null);
 
+    const getUserData = async () => {
+        try {
+            const api = await fetch(API_URL + '/user/' + userId, {
+                method: 'GET',
+                headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json'
+                },
+              });
+              const res = await api.json()
+              setUserData(res);
+        } catch (e) {
+            console.log('error',e);
+        }
+    }
+
     useEffect(() => {
-        const getUserData = async () => {
-                try {
-                    const api = await fetch(API_URL + '/user/' + userId, {
-                        method: 'GET',
-                        headers: {
-                          Accept: 'application/json',
-                          'Content-Type': 'application/json'
-                        },
-                      });
-                      const res = await api.json()
-                      setUserData(res);
-                      console.log("user",userData);
-                } catch (e) {
-                    console.log('error',e);
-                }
-            }
-        getUserData();
-    },[userId])
+        if(!userData){getUserData();}
+    },[userData])
 
   return (
     <TouchableOpacity style={styles.container} containerStyle={styles.containerStyle}>
@@ -33,8 +33,8 @@ const ProfilCard = ({userId,date}) => {
         source={require('../test_content/waiting.jpg')}
       />
       <View style={styles.infoContainer}>
-          <Text style={styles.name}>{userId != null && userData.username != null ? userData.username : "..."}</Text>
-          <Text style={styles.date}>{date != null ? date : "..."}</Text>
+          <Text style={styles.name}>{userData ? userData.username : "..."}</Text>
+          <Text style={styles.date}>{date && userData ? date : "..."}</Text>
       </View>
       <TouchableOpacity containerStyle={styles.buttonContainer}>
           <Text>Add</Text>

@@ -260,7 +260,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#2F4077'
+    backgroundColor: '#2F4077',
+    width: '100%'
   },
   toolsButtons: {
     width: '100%',

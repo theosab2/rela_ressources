@@ -8,7 +8,7 @@ const Header = ({ navigation }) => {
   const LoginState = async () => {
     try {
       const storedId = await AsyncStorage.getItem('@userId');
-      if (storedId != null) {
+      if (storedId != null || storedId == undefined) {
         navigation.navigate('Auth', { screen: 'Account' })
       } else {
         navigation.navigate('Auth', { screen: 'Login' })
