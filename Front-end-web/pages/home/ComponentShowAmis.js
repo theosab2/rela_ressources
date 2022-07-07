@@ -87,6 +87,8 @@ export default function ComponentShowAmis(props) {
             </>
         );
         }else{
-          <></>
+          return(
+          <>Loading...</>
+          )
         }
 }
