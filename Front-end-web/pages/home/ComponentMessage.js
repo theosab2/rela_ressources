@@ -28,6 +28,8 @@ export default function ComponentMessage(props) {
         </div>
     );
     }else{
-        <></>
+      return(
+        <>Loading...</>
+      )
     }
 }
