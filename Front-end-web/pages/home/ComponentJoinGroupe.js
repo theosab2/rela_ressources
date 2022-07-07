@@ -21,7 +21,7 @@ export default function ComponentJoinGroupe(props) {
           },
           body: JSON.stringify({
             relation: {
-              user_ids: array
+              "user_ids": array
             },
           }),
         });
@@ -40,7 +40,7 @@ export default function ComponentJoinGroupe(props) {
           },
           body: JSON.stringify({
             relation: {
-              user_ids: array
+              "user_ids": array
             },
           }),
         });
@@ -48,7 +48,9 @@ export default function ComponentJoinGroupe(props) {
     }
 
     useEffect(function showPost(){
+      if(props.group != null){
       setTxtAbo(props.group.user_ids.includes(userCookie._id));
+      }
       if(id != null){
         if (window) { 
           window.sessionStorage.setItem("Page", "EnterGroup" );
@@ -58,7 +60,7 @@ export default function ComponentJoinGroupe(props) {
       }
   },[id]);
     
-
+    if(props.group != null ){
     return (
         <div className={style.groupeContainer} >
             <div className={style.groupContainerImage}>
@@ -83,4 +85,9 @@ export default function ComponentJoinGroupe(props) {
             </div>
         </div>
     );
+    }else{
+      return(
+        <>Loading...</>
+      );
+    }
 }

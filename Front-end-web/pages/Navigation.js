@@ -155,9 +155,9 @@ export default function Navigation(image) {
     return (
       <>
         <div className={style.navHeader}>
-          <img src="/Image/home.png" className={style.burger_menu}/>
-          <button onClick={() => setRenderPage((renderPage = "Accueil"))} className={style.headerTitle}>Ressource Relationnelle</button>
-          <p className={style.headerPageTitle}>{navTitle}</p>
+          <img src="/Image/home.png" className={style.burger_menu} onClick={() => setRenderPage((renderPage = "Accueil"))}/>
+          <div className={style.headerTitle}>Ressource Relationnelle</div>
+          <div className={style.headerPageTitle}>{navTitle}</div>
           <img src="/Image/connexion.png" className={style.icon_connexion}/>
         </div>
       {hideBar ?
@@ -210,7 +210,6 @@ export default function Navigation(image) {
         <img src="/Image/home.png" className={style.burger_menu} onClick={() => setRenderPage((renderPage = "Accueil"))}/>
           <p className={style.username}>{isConnected.username}</p>
           <p  className={style.headerTitle}>Ressource Relationnelle</p>
-          <p className={style.headerPageTitle}>{navTitle}</p>
           <img src="/Image/connexion.png" className={style.icon_connexion}/>
         </div>
       
