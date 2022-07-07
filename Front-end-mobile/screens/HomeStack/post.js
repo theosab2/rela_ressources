@@ -7,7 +7,6 @@ import Header from '../../components/header';
 import ProfilCard from '../../components/profilCard';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
 const Post = ({ route, navigation }) => {
   const [idUser, setIdUser] = useState(null)
   const [userData, setUserData] = useState(null);
@@ -16,12 +15,6 @@ const Post = ({ route, navigation }) => {
   const [imageUrl, setImageUrl] = useState(require('../../test_content/waiting.jpg'))
   const [savedIcon, setSavedIcon] = useState(null)
     
-  const interval = () => {
-    setInterval(() => {
-      console.log(idUser);
-    }, 500);
-  }
-  //interval();
   const getUserId = async () => {
     const userId = await AsyncStorage.getItem('@userId')
     setIdUser(userId)
@@ -122,7 +115,7 @@ const Post = ({ route, navigation }) => {
       else if (!savedIcon){changeIconSaved()}
       else {getImage()}
     }
-  }, [idUser, userData, savedUserArticles, post,savedIcon])
+  }, [idUser, userData, savedUserArticles, post, savedIcon])
 
   return (
     <View style={styles.container}>
