@@ -253,7 +253,7 @@ router.post("/user/toggle-friend/:userId/:friendId", async function (req, res, n
 
 //Ajout / suppression d'une ressource d'un utilisateur
 router.post("/user/toggle-favorite/:userId/:favoriteId", async function (req, res, next) {
-  var updateResult = await _userQueryService.toggleRessource(
+  var updateResult = await _userQueryService.toggleFavorite(
     req.params.userId,
     req.params.favoriteId
   );
