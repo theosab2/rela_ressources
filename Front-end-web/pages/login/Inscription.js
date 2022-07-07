@@ -23,8 +23,12 @@ export default function Inscription() {
 
   const inscription = async () => {
     console.log(password);
+    console.log(validPassword);
     console.log(email);
-    if(check == true && validPassword != "" && password != "" && email != "" && firstname != "" && name != "" && (validPassword == password)){
+    console.log(firstname);
+    console.log(name);
+    
+    if(check == true && password != "" && email != "" && firstname != "" && name != "" && (validPassword == password)){
     let res = await fetch("http://"+process.env.IP+":3001/auth/register", {
       method: "POST",
       headers: {
@@ -33,20 +37,20 @@ export default function Inscription() {
       },
       body: JSON.stringify({
         user: {
-          username: pseudo,
-          firstname: firstname,
-          lastname: name,
-          password: password,
-          email: email,
+          "username": pseudo,
+          "firstname": firstname,
+          "lastname": name,
+          "password": password,
+          "email": email,
         },
       }),
     });
     res = await res.json();
     console.log(res);
-    if (res.status == "FAILURE") {
-      setError("Le nom d'utilisateurs ou adresse mail existe deja");
-    } else {
+    if (res.status == "SUCCESS") {
       ComponentConnexion(email,password)
+    } else {
+      setError("Le nom d'utilisateurs ou adresse mail existe deja");
     }
   }else{
     if((validPassword != password)){
@@ -149,7 +153,8 @@ export default function Inscription() {
                 name="confMdp"
                 type="password"
                 required
-                onChange={(password) => setPassword(password.target.value)}
+                defaultValue={validPassword}
+                onChange={(validPassword) => setValidPassword(validPassword.target.value)}
               />
             </div>
           </div>

@@ -40,7 +40,7 @@ export default function ComponentJoinGroupe(props) {
           },
           body: JSON.stringify({
             relation: {
-              user_ids: array
+              "user_ids": array
             },
           }),
         });
@@ -58,7 +58,7 @@ export default function ComponentJoinGroupe(props) {
       }
   },[id]);
     
-
+    if(props.group.user_ids != null){
     return (
         <div className={style.groupeContainer} >
             <div className={style.groupContainerImage}>
@@ -83,4 +83,9 @@ export default function ComponentJoinGroupe(props) {
             </div>
         </div>
     );
+    }else{
+      return(
+        <>Loading...</>
+      );
+    }
 }
