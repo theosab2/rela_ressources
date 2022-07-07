@@ -14,10 +14,19 @@ export default function Inscription() {
   const [validPassword, setValidPassword] = useState("");
   const [check,setCheck] = useState(false);
   const [error,setError] = useState("");
+  const [result, setResult] = useState(null);
 
   useEffect(() => {
     if (window) { 
       window.sessionStorage.setItem("Page", "Inscription" );
+    }
+    if(result == true){
+      setInterval(() => {
+        window.sessionStorage.setItem("Page", "Accueil" );
+        router.reload(window.location.pathname)
+      }, 2000);
+    }if(result == false){
+      setError("Mauvais identifiant ou mot de passe")
     }
   }, []);
 
@@ -48,7 +57,7 @@ export default function Inscription() {
     res = await res.json();
     console.log(res);
     if (res.status == "SUCCESS") {
-      login(email,password)
+      setResult(login(email,password))
     } else {
       setError("Le nom d'utilisateurs ou adresse mail existe deja");
     }

@@ -25,6 +25,7 @@ import articleManager from "./utils/articleManager";
 import Message from "./home/Message";
 import EntrerGroupe from "./home/EntrerGroupe";
 import cookieManager from "./utils/cookieManager";
+import Statistiques from "./administration/Statistiques";
 
 export default function Navigation(image) {
   const router = useRouter();
@@ -159,6 +160,10 @@ export default function Navigation(image) {
           //setNavTitle("Commentaire");
           return <EntrerGroupe GroupId={idPage}></EntrerGroupe>;
           break;
+      case "Statistiques":
+        //setNavTitle("Commentaire");
+        return <Statistiques></Statistiques>;
+        break;
     }
   }
 
@@ -312,7 +317,7 @@ export default function Navigation(image) {
                   <img src="/Image/utilisateur.png" className={style.InputImg}/>
                   <button >Gérer utilisateurs</button>
                 </div>
-                <div className={renderPage == 'Statiques'?style.inputDivSelect:style.inputDiv} onClick={() => setRenderPage((renderPage = "Statiques"))}>
+                <div className={renderPage == 'Statistiques'?style.inputDivSelect:style.inputDiv} onClick={() => setRenderPage((renderPage = "Statistiques"))}>
                   <img src="/Image/statistiques.png" className={style.InputImg}/>
                   <button>Statistiques</button>
                 </div>
