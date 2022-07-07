@@ -11,7 +11,6 @@ const Home = ({navigation}) => {
   const [post, setPost] = useState({});
   const [display, setDisplay] = useState(null);
   const [userId,setUserId] = useState(null);
-  let excedTime = 0;
   console.log('ENV',API_URL);
   useEffect(() => {
     const getStateUser = async () => {
