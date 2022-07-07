@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import style from "../../styles/Home.module.css";
 import { useEffect, useState } from "react";
-import article from "../../../Back-end/models/article";
 import cookieManager from "../utils/cookieManager";
 import {useRef} from 'react';
 import ComponentShowOneComment from "./ComponentShowOneComment";
