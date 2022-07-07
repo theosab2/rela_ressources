@@ -359,6 +359,7 @@ const mUser = require('../models/user');
     //Crée un nouvel utilisateur
     module.exports.saveOne = async (userObject) => {
         console.log("D.A.L [saveOne] (paramètres) 'userObject' :",userObject);
+        userObject._createdAt = Date.now()
 
         if(userObject == {} || userObject == undefined || userObject == null){
             return({
