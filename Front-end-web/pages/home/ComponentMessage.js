@@ -21,7 +21,7 @@ export default function ComponentMessage(props) {
         getUser();
       }, []);
 
-    if(user != null){
+    if(user != null && props.messageInfo != null){
     return (
         <div>
             <b>{user.username}</b> : {props.messageInfo.body}
