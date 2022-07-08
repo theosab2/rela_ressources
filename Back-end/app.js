@@ -4,6 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require('path');
 const $reqLogger = require('./MiddleWares/req-logger-config');
+const $frscAuthenticate = require('./MiddleWares/frsc-authenticate');
 
 module.exports = function (app, server) {
   if(process.env.devMode == "true" && process.env.devMode != null && process.env.devMode != undefined)
@@ -60,6 +61,7 @@ module.exports = function (app, server) {
 
   app.use(express.json());
   app.use($reqLogger);
+  //app.use($frscAuthenticate);
 
   //=========//
   //   API   //
