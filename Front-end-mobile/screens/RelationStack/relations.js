@@ -68,7 +68,6 @@ const Relations = ({ navigation }) => {
         tmpSuggestions = suggestions.filter(suggest => suggest._id !== userId).filter(suggest => friends.findIndex(f => f === suggest._id) === -1).map(item => {
 
             if (!item.friends_ids.find(friend => friend === userId)) {
-                console.log("PHOTO",item.photoUrl)
                 return <TouchableOpacity
                     style={styles.cardContainer}
                     containerStyle={styles.cardContainerStyle}

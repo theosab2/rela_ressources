@@ -60,7 +60,7 @@ export default function Inscription() {
     res = await res.json();
     console.log(res);
     if (res.status == "SUCCESS") {
-      setResult(await login(email,password))
+      setResult( login(email,password))
     } else {
       setError("Le nom d'utilisateurs ou adresse mail existe deja");
     }

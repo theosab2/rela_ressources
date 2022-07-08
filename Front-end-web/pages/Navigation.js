@@ -168,6 +168,7 @@ export default function Navigation(image) {
   }
 
   if (isConnected == null || isConnected == false) {
+    console.log("Article =>",allArticle)
     return (
       <>
         <div className={style.navHeader}>
