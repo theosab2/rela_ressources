@@ -16,6 +16,10 @@
                 return false;
             }
         }
+        else
+        {
+            return false;
+        }
     };
 
     //Verifie que le paramètre est un numéro de téléphone
@@ -33,6 +37,10 @@
                 console.log("B.L.L [isPhoneNumber] (return) bool : ",false);
                 return false;
             }
+        }
+        else
+        {
+            return false;
         }
         
     };
