@@ -14,8 +14,7 @@ const PostSaved = ({ navigation }) => {
   const [userData, setUserData] = useState(null);
   const [savedArticlesId, setSavedArticlesId] = useState(null);
   const [savedArticles, setSavedArticles] = useState(null);
-  const [displayArticles, setDisplayArticles] = useState(null);
-  const [noPostSaved,setNoPostSaved] = useState(null);
+  const [reload,setReload] = useState(0);
 
   const getUserData = async () => {
     const idUser = await AsyncStorage.getItem('@userId');
@@ -35,13 +34,13 @@ const PostSaved = ({ navigation }) => {
 
   }
   const getSavedArticlesId = () => {
-    const articles = userData.favorites;
+    let articles = []
+    articles = [...userData.favorites];
     setSavedArticlesId(articles)
   }
+  //IMPORTANT DE OUF
   const getDataSavedArticles = async () => {
-    const articles = [];
-    savedArticlesId.map(async savedArticleId => {
-      try {
+    let articles = await Promise.all(savedArticlesId.map(async savedArticleId => {
         const api = await fetch(API_URL + '/article/' + savedArticleId, {
           method: 'GET',
           headers: {
@@ -49,30 +48,30 @@ const PostSaved = ({ navigation }) => {
             'Content-Type': 'application/json'
           }
         });
-        const res = await api.json();
-        articles = [...res]
-      } catch (e) {
-        console.log(e)
-      } 
-    })
+        return await api.json()
+    }))
     setSavedArticles(articles)
   }
-  const displayPost = (articleArray) => {
-    if (articleArray.articles) {
-      return articleArray.articles.map(item => {
+  const displayPost = (articles) => {
+    if (articles.length > 0) {
+      return articles.map(item => {
         return <Card navigation={navigation} key={item._id} data={item} />
       })
-    } else {
-      return <View />
+    } else if (articles.length <= 0) {
+      return <Text>Aucun article a été sauvegardé</Text>
     }
   }
+
   useEffect(() => {
     if(!userData){getUserData()}
     else if(!savedArticlesId){getSavedArticlesId()}
-    else if(!savedArticles && savedArticlesId.length <= 0){getDataSavedArticles()}
-    else if(!displayArticles <= 0){setDisplay(displayPost(savedArticles))}
-    else if(savedArticlesId.length <= 0){setNoPostSaved(<Text>Aucun article a été sauvegardé</Text>)}
-  }, [userData,savedArticlesId])
+    else if(!savedArticles && savedArticlesId.length >= 0){getDataSavedArticles()}
+    else if(!display && savedArticles.length > 0){
+      setDisplay(displayPost(savedArticles))
+    }
+    console.log(reload)
+  }, [userData,savedArticlesId, savedArticles, display])
+
   return (
     <View style={styles.container}>
       <Header navigation={navigation} />
@@ -86,7 +85,7 @@ const PostSaved = ({ navigation }) => {
       </View>
       <SafeAreaView style={styles.scrollViewContainer}>
         <ScrollView style={styles.scrollView} contentContainerStyle={styles.postPosition}>
-          {display || noPostSaved || <Text>Loading</Text>}
+          {display || <Text>Loading</Text>}
         </ScrollView>
       </SafeAreaView>
       <View style={styles.footer}>

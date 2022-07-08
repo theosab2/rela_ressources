@@ -1,3 +1,6 @@
+//============= ======= =============//
+const CryptoJS = require('crypto-js');
+
 //Import du modèle relatif
 const mUser = require('../models/user');
 
@@ -42,7 +45,7 @@ module.exports.handleAuthenticationRequest = async (identifier,passwordProvided)
     }
 
     //Si l'identifier n'a pas été reçu ou est vide    
-    if(identifier == undefined || identifier == null || identifier == "")
+    if(identifier == undefined || identifier == null || identifier == "" || identifier == {})
     {
         console.log("B.L.L [handleAuthenticationRequest] (return) 'err-missing-entry' : 'identifier' is missing");
         return{
@@ -54,7 +57,7 @@ module.exports.handleAuthenticationRequest = async (identifier,passwordProvided)
     }
 
     //Si le mot de passe n'a pas été reçu ou qu'il est vide
-    if(passwordProvided == undefined || passwordProvided == null || passwordProvided == "")
+    if(passwordProvided == undefined || passwordProvided == null || passwordProvided == "" ||  passwordProvided == {})
     {
         console.log("B.L.L [handleAuthenticationRequest] (return) 'err-missing-entry' : 'password' is missing");
         return{
@@ -103,11 +106,14 @@ module.exports.handleAuthenticationRequest = async (identifier,passwordProvided)
     
     if(passwordIsValid){ //Le mot de passe entré est correct
         //Retourne l'utilisateur connecté
-        var userFromConnectionAttempt = await _userQueryService.connectUser(userIdRequest.id);
+        const userFromConnectionAttempt = await _userQueryService.connectUser(userIdRequest.id);
+        const csrf_token = await generateRoleScopedCsrfToken(userFromConnectionAttempt._id.toString(),userFromConnectionAttempt.username,userFromConnectionAttempt.role);
+        
         delete userFromConnectionAttempt.password;
         authenticationResult = {
             status:"SUCCESS",
             statusCode:200,
+            frsc:csrf_token,
             message:"User \'"+userFromConnectionAttempt.username+"\' successfully connected",
             user:userFromConnectionAttempt
         }
@@ -123,5 +129,22 @@ module.exports.handleAuthenticationRequest = async (identifier,passwordProvided)
     }
 
     return authenticationResult;
+};
+
+const generateRoleScopedCsrfToken = async (userId,username,role) => {
+
+    const now = Date.now();
+    const generationDate = `${now.toString()}`;
+    console.log("generationDate",generationDate);
+    console.log("userId",userId);
+    console.log("username",username);
+    console.log("role",role);
+
+    const clearToken = `[${generationDate}]_${username}_{${userId}}`
+
+    const encryptedToken = CryptoJS.AES.encrypt(clearToken,role)
+    const STRencryptedToken = encryptedToken.toString();
+
+    return STRencryptedToken;
 };
 

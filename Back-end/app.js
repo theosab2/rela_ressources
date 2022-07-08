@@ -4,6 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require('path');
 const $reqLogger = require('./MiddleWares/req-logger-config');
+const $frscAuthenticate = require('./MiddleWares/frsc-authenticate');
 
 module.exports = function (app, server) {
   if(process.env.devMode == "true" && process.env.devMode != null && process.env.devMode != undefined)
@@ -46,7 +47,9 @@ module.exports = function (app, server) {
         });
     }, 100); //Timeout to log DB connection status after listened port's log
   }
-  
+  const cors = require("cors");
+  const corsOptions = { origin: ["https://rela-ressources-api.herokuapp.com"], credentials: true }
+  app.use(cors(corsOptions));
 
   app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -60,6 +63,7 @@ module.exports = function (app, server) {
 
   app.use(express.json());
   app.use($reqLogger);
+  //app.use($frscAuthenticate);
 
   //=========//
   //   API   //
