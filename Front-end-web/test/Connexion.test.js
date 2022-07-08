@@ -1,5 +1,8 @@
-const allArticle = require('../pages/login/login');
+import { login } from "../pages/login/login";
 
-test('allArticle get all article', () => {
-  expect(() => ComponentConnexion("Mauvais mail","Mauvais mdp")).toEqual("Mauvais identifiant ou mot de passe");
+describe("login function", () => {
+  it("should return false when user | password is wrong", async () => {
+    const data = await login("co", "coui");
+    expect(data).toBe(false);
+  });
 });

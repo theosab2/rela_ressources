@@ -148,11 +148,11 @@ export default function ajouterCategorie() {
             >
               <option>Séléctionner une catégorie</option>
               {allCategorie &&
-                allCategorie.map((categorie) => (
-                  <option value={categorie._id} key={categorie._id}>
-                    {categorie.categoryName}
-                  </option>
-                ))}
+              allCategorie.map((categorie) => (
+                <option key={categorie._id} value={categorie._id}>
+                  {categorie.name}
+                </option>
+              ))}
             </select>
             <button
               className={style.buttonValiderCategorie}

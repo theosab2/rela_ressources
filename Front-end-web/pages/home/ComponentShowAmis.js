@@ -10,6 +10,7 @@ export default function ComponentShowAmis(props) {
     const router = useRouter();
 
     const abonnement = async (array) => {
+      console.log(array)
         if(!props.friend.relation_ids.includes(props.userCookie._id)){
         setTextAbonnement(!props.friend.relation_ids.includes(props.userCookie._id))
         array.push(props.userCookie._id)
@@ -21,8 +22,8 @@ export default function ComponentShowAmis(props) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            user: {
-              relation_ids: array
+            "user": {
+              "relation_ids": array
             },
           }),
         });
@@ -37,8 +38,8 @@ export default function ComponentShowAmis(props) {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                user: {
-                  relation_ids: array
+                "user": {
+                  "relation_ids": array
                 },
               }),
             });

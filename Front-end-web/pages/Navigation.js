@@ -174,7 +174,6 @@ export default function Navigation(image) {
           <img src="/Image/home.png" className={style.burger_menu} onClick={() => setRenderPage((renderPage = "Accueil"))}/>
           <div className={style.headerTitle}>Ressource Relationnelle</div>
           <div className={style.headerPageTitle}>{navTitle}</div>
-          <img src="/Image/connexion.png" className={style.icon_connexion}/>
         </div>
       {hideBar ?
         <div className={style.navBody}>

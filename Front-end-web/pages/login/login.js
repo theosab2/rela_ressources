@@ -1,38 +1,34 @@
 import { setCookies, getCookie } from "cookies-next";
-import { useEffect} from "react";
+import { useEffect } from "react";
 
-export default async function useLogin(email,password) {
+export default async function useLogin(email, password) {
+  try {
+    let res = await fetch("http://" + process.env.IP + "/auth/login", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        identifier: email,
+        password: password,
+      }),
+    });
+    let body = await res.json();
+    if (res.status == 200 || res.status == 201) {
+      setCookies("token", body.user, 1 * 3600);
+      return true;
+    } else {
+      console.log(res, body)
+      return false;
+    }
+  } catch (e) {
+    console.error(e)
+    return false;
+  }
+}
 
-
-
-      const auth = async () => {
-        try{
-        let res = await fetch("http://"+process.env.IP+"/auth/login", {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },body: JSON.stringify({
-            "identifier": email,
-            "password": password,
-          }),
-        });
-        res = await res.json();
-        if(res.statusCode == 200|| res.statusCode == 201){
-        setCookies("token", res.user, 1 * 3600);
-          return true;
-        }else{
-          return false;
-        }
-      }catch(e){
-        return false
-      }
-      };
-
-      return await auth();
-        
-
-    /*await fetch("http://"+process.env.IP+"/auth/login", {
+/*await fetch("http://"+process.env.IP+"/auth/login", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -60,4 +56,5 @@ export default async function useLogin(email,password) {
       setCookies("token", res.user, 1 * 3600);
       return "SUCCESS";
     }*/
-}
+
+export const login = useLogin;

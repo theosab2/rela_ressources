@@ -2,6 +2,7 @@ import style from "../../styles/Home.module.css";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import cookieManager from "../utils/cookieManager";
+import Image from "next/dist/client/image";
 //import {IP} from "@env";
 
 export default function ComponentArticle(props) {
@@ -12,7 +13,6 @@ export default function ComponentArticle(props) {
     const [userInfo, setUserInfo] = useState(null);
     const [approvedImg, setApprovedImg] = useState("");
     const [favImg,setFavImg] = useState(true)
-
     let cookie;
     cookie = cookieManager();
 
@@ -116,7 +116,7 @@ export default function ComponentArticle(props) {
     
 
     if(userInfo != null){
-    console.log(props.articleInfo)
+    console.log(props.articleInfo.image)
     return (
         <div className={style.articleContainer} key={props.articleInfo._id}>
           <div className={style.firstPartContainer}>
@@ -131,7 +131,25 @@ export default function ComponentArticle(props) {
               </div>
               <div className={style.articleTitle}>{props.articleInfo.title}</div>
             </div>
-            <img src={props.articleInfo.image} className={style.articlePicture}/>
+            {/*props.articleInfo.image ?
+              <Image
+              src={props.articleInfo.image }
+              atl={"icon connexion"}
+              width={100}
+              height={100}
+            /> :
+              <Image
+              src={ "/Image/connexion.png"}
+              atl={"icon connexion"}
+              width={100}
+              height={100}
+            />
+    */}
+            {
+            props.articleInfo.image ?<img src={props.articleInfo.image} className={style.articlePicture}/>
+            :
+            <></>
+            }
           </div>
           <div className={style.articleBody}>{props.articleInfo.description}</div>
           <div className={style.articleFooter}>
@@ -144,7 +162,7 @@ export default function ComponentArticle(props) {
             <div className={style.articleOption}>
               {
               cookie != null?
-              cookie.role == "Admin" ?
+              (cookie.role == "Admin") || (props.articleInfo.creator.includes(cookie._id))?
               approvedImg == true ?
               <img src="/Image/delete.png" className={style.warning} onClick={() => modererArticle(props.articleInfo._id,false)}/>
               :

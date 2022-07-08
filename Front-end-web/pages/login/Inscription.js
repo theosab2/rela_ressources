@@ -4,6 +4,7 @@ import style from "../../styles/Inscription.module.css";
 import Link from "next/link";
 import React, { useEffect,useState } from "react";
 import login from "./login";
+import { useRouter } from "next/router";
 
 export default function Inscription() {
   const [pseudo, setUsername] = useState("");
@@ -15,8 +16,10 @@ export default function Inscription() {
   const [check,setCheck] = useState(false);
   const [error,setError] = useState("");
   const [result, setResult] = useState(null);
-
+  const router = useRouter();
+  
   useEffect(() => {
+    console.log(result)
     if (window) { 
       window.sessionStorage.setItem("Page", "Inscription" );
     }
@@ -28,7 +31,7 @@ export default function Inscription() {
     }if(result == false){
       setError("Mauvais identifiant ou mot de passe")
     }
-  }, []);
+  }, [result]);
 
   const inscription = async () => {
     console.log(password);
@@ -57,7 +60,7 @@ export default function Inscription() {
     res = await res.json();
     console.log(res);
     if (res.status == "SUCCESS") {
-      setResult(login(email,password))
+      setResult(await login(email,password))
     } else {
       setError("Le nom d'utilisateurs ou adresse mail existe deja");
     }

@@ -1,5 +1,5 @@
 .crudContainer{
-  height: 90%;
+  height: auto;
   display: flex;
   justify-content: space-around;
   align-items: center;

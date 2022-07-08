@@ -99,9 +99,8 @@ export default function ComponentOneArticle(props) {
                 <img src="/Image/connexion.png" className={style.userPicture}/>
                 <div className={style.userPostInfoContainer}>
                   <div className={style.userName}>
-                    
+                    <p>{userInfo.username}</p>
                   </div>
-                  <div className={style.publicationDate}>Publication : Il y a 4h</div>
                 </div>
               </div>
               <div className={style.articleTitle}>{props.article.title}</div>
@@ -124,14 +123,12 @@ export default function ComponentOneArticle(props) {
               <img src="/Image/like.png" className={style.dislike} onClick={() => downVote(props.article._id)}/>
             </div>
             <div className={style.articleOption}>
-              {userCookie != null && userCookie.role == "admin" ?
+              {(userCookie != null && userCookie.role == "admin") || (props.article.creator.includes(userCookie._id))?
               props.article.isApproved == true ?
               <img src="/Image/delete.png" className={style.warning} onClick={() => modererArticle(props.article._id,false)}/>
               :
               <img src="/Image/checkmark.png" className={style.warning} onClick={() => modererArticle(props.article._id,true)}/>
               : <></>}
-              <img src="/Image/alert.png" className={style.warning}/>
-              <img src="/Image/forward.png" className={style.forward}/>
               <img src="/Image/plus.png" className={style.add} onClick={() => addFav(props.article._id)}/>
               <button onClick={() => setId(props.article._id)}>
               <img src="/Image/comments.png" className={style.comment}/>

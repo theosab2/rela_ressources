@@ -12,8 +12,6 @@ export default function Message(props) {
     const  [allMessageReceiver,setAllMessageReceiver] = useState(null);
 
     async function getMessageUser () {
-      console.log(JSON.parse(cookie)._id)
-      console.log(props.UserId)
       let res = await fetch("http://"+process.env.IP+"/messages/query" ,{
         method: "POST",
         headers: {
@@ -30,8 +28,6 @@ export default function Message(props) {
     }
 
     async function getMessageReceiver () {
-      console.log(JSON.parse(cookie)._id)
-      console.log(props.UserId)
       let res = await fetch("http://"+process.env.IP+"/messages/query" ,{
         method: "POST",
         headers: {
@@ -40,7 +36,7 @@ export default function Message(props) {
         },
         body: JSON.stringify({
           "sender_id": props.UserId,
-          "relation_id": JSON.parse(cookie)._id,
+          //"friend_id": JSON.parse(cookie)._id,
         }),
       })
       res = await res.json();
@@ -73,10 +69,12 @@ export default function Message(props) {
 
     if( allMessageSender != null && allMessageReceiver != null){
       let concat = allMessageReceiver.messages.concat(allMessageSender.messages)
+      console.log(concat)
       const sort = concat.sort((a, b) => {
       return new Date(a._createdAt) - new Date(b._createdAt)})
     return (
         <div className={style.convContainer}>
+          <h1>Envoyer un message</h1>
             <div className={style.convSubContainer}>
                 <div className={style.MessageContainer}>
                 {concat && concat.map((message) => (

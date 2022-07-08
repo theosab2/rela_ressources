@@ -11,7 +11,6 @@ export default function ComponentJoinGroupe(props) {
 
     const joinGroup = async (array) => {
       if(!props.group.user_ids.includes(userCookie._id)){
-        setTxtAbo(true)
         array.push(userCookie._id)
         await fetch("http://"+process.env.IP+"/relation/" + props.group._id, {
           method: "PUT",
@@ -26,7 +25,6 @@ export default function ComponentJoinGroupe(props) {
           }),
         });
       }else{
-        setTxtAbo(false)
         array = array.filter(e => e !== userCookie._id);
         await fetch("http://"+process.env.IP+"/relation/" + props.group._id, {
           method: "PUT",
