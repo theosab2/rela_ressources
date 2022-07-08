@@ -41,10 +41,10 @@ export default function ProfilUpdate() {
       },
       body: JSON.stringify({
         user: {
-          firstname: nameUser.current.value,
-          name: lastname.current.value,
-          email: mailUser.current.value,
-          photoUrl: createObjectURL
+          "firstname": nameUser.current.value,
+          "name": lastname.current.value,
+          "email": mailUser.current.value,
+          "photoUrl": createObjectURL
         },
       }),
     });

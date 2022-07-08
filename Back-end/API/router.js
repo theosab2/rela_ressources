@@ -233,9 +233,14 @@ router.put("/user/:userId",_multer.avatarImage, async function (req, res, next) 
     };
   }
   else{
-    req.body.user = {
-      ...JSON.parse(req.body.user)
-    };
+    try {
+      req.body.user = {
+        ...JSON.parse(req.body.user)
+      };
+    } catch (error) {
+      console.log(error)
+    }
+    
   }
   
   var updateResult = await _userQueryService.updateUser(
