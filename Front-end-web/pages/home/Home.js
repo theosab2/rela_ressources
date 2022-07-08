@@ -43,7 +43,7 @@ export default function Home() {
   }
   
   if(allArticle != null){
-    
+    console.log(allArticle)
     allArticle.forEach(element => {
       if(element.isApproved == true){
         articleApproved.push(element)

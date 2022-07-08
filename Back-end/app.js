@@ -47,9 +47,6 @@ module.exports = function (app, server) {
         });
     }, 100); //Timeout to log DB connection status after listened port's log
   }
-  const cors = require("cors");
-  const corsOptions = { origin: ["https://rela-ressources-api.herokuapp.com"], credentials: true }
-  app.use(cors(corsOptions));
 
   app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
