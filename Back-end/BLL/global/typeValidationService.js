@@ -5,21 +5,19 @@
         console.log("B.L.L [isEmail] (paramètres) 'input' :",input);
 
         var regex= /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-        if(input != {})
-        {
-            if(input !== '' && input != null && input.match(regex)){
-                console.log("B.L.L [isEmail] (return) bool : ",true);
-                return true;
-            }
-            else{
-                console.log("B.L.L [isEmail] (return) bool : ",false);
+            try {
+                if(input !== '' && input != null && input.match(regex)){
+                    console.log("B.L.L [isEmail] (return) bool : ",true);
+                    return true;
+                }
+                else{
+                    console.log("B.L.L [isEmail] (return) bool : ",false);
+                    return false;
+                }
+            } catch (error) {
                 return false;
             }
-        }
-        else
-        {
-            return false;
-        }
+           
     };
 
     //Verifie que le paramètre est un numéro de téléphone
@@ -27,8 +25,7 @@
         console.log("B.L.L [isPhoneNumber] (paramètres) 'input' :",input);
 
         var regex= /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
-        if(input != {})
-        {
+        try {
             if(input != "" && input != null && input.match(regex)){
                 console.log("B.L.L [isPhoneNumber] (return) bool : ",true);
                 return true;
@@ -36,13 +33,11 @@
             else{
                 console.log("B.L.L [isPhoneNumber] (return) bool : ",false);
                 return false;
-            }
-        }
-        else
-        {
+            }        
+        } catch (error) {
             return false;
         }
-        
+            
     };
 
 //#endregion
