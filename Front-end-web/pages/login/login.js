@@ -1,7 +1,7 @@
 import { setCookies, getCookie } from "cookies-next";
 import { useEffect} from "react";
 
-export default async function useLogin(email,password) {
+export default function useLogin(email,password) {
 
       const auth = async () => {
         try{
@@ -28,7 +28,7 @@ export default async function useLogin(email,password) {
       }
       };
 
-      return await auth();
+      return auth();
         
 
     /*await fetch("http://"+process.env.IP+"/auth/login", {
