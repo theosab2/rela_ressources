@@ -232,6 +232,11 @@ router.put("/user/:userId",_multer.avatarImage, async function (req, res, next) 
       photoUrl : `${req.protocol}://${req.get('host')}/avatar-image/${req.file.filename}`
     };
   }
+  else{
+    req.body.user = {
+      ...JSON.parse(req.body.user)
+    };
+  }
   
   var updateResult = await _userQueryService.updateUser(
     req.params.userId,

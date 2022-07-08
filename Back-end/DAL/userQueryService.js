@@ -773,7 +773,6 @@ const mUser = require('../models/user');
 
         //Hashage du mot de passe
         var hashedPassword = CryptoJS.AES.encrypt(userObject.password, "the-super-secret-key");
-
         userObject.password = hashedPassword.toString();
 
         //Validation des données reçues
