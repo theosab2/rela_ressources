@@ -40,7 +40,7 @@ const Home = ({navigation}) => {
     }
     const displayPost = (data) => {
       if(data.articles != undefined){
-        return data.articles.map(item => {
+        return data.articles.reverse().map(item => {
           return <Card navigation={navigation} key={item._id} data={item}/>
         })
       }else{
