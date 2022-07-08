@@ -152,12 +152,12 @@ const Post = ({ route, navigation }) => {
   const getDisplayContent = () => {
     const display = post.contents.map(content => {
       const type = contentType.find(contentType => contentType._id == content.UT_id)
-      if(type.name == "title"){
+      if(type && type.name == "title"){
         return <Text style={styles.titleContent}>{content.body}</Text>
-      }else if(type.name == "text"){
+      }else if(type && type.name == "text"){
         return <Text style={styles.textContent}>{content.body}</Text>
-      }else if(type.name == "img"){
-        return <Text style={styles.textContent}>{content.name}</Text>
+      }else if(type && type.name == "img"){
+        return <View></View>
       }else{
         return <></>
       }

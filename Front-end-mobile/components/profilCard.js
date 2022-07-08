@@ -30,7 +30,7 @@ const ProfilCard = ({userId,date}) => {
     <TouchableOpacity style={styles.container} containerStyle={styles.containerStyle}>
       <Image
         style={styles.img}
-        source={require('../test_content/waiting.jpg')}
+        source={userData ? {uri: userData.photoUrl} : require('../test_content/waiting.jpg')}
       />
       <View style={styles.infoContainer}>
           <Text style={styles.name}>{userData ? userData.username : "..."}</Text>
