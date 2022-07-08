@@ -34,7 +34,7 @@ export default function() {
             <div className={style.statistiquesSubContainer}>
                 <p>Nombre d'utilisateur dans l'application : {allUser}</p>
                 <p>Nombre d'article dans l'application : {allArticle.length}</p>
-                <p>Nombre de groupe dans l'application : {allGroup.length}</p>
+                
             </div>
         </div>
     );

@@ -8,7 +8,6 @@ import ComponentArticle from "./ComponentArticle";
 import cookieManager from "../utils/cookieManager";
 
 export default function RessourceSave() {
-  let allArticle;
   let userCookie
   let array = [];
   
@@ -16,10 +15,11 @@ export default function RessourceSave() {
   useEffect(() => {
     if (window) { 
       window.sessionStorage.setItem("Page", "Favorie" );
+      
     }
   }, []);
 
-  allArticle = articleManager();
+  let allArticle = articleManager();
   userCookie = cookieManager();
 
   if(allArticle != null && userCookie.favorites != null){
