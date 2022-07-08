@@ -375,7 +375,20 @@ router.post("/article/delete/:articleId", async function (req, res, next) {
 });
 
 //Mise à jour d'un article
-router.put("/article/:articleId", async function (req, res, next) {
+router.put("/article/:articleId",_multer.articleImage, async function (req, res, next) {
+  if(req.file != undefined & req.file != null){
+    console.log(req);
+    req.body.article = {
+      ...JSON.parse(req.body.article),
+      image : `${req.protocol}://${req.get('host')}/article-image/${req.file.filename}`
+    };
+  }
+  else{
+    req.body.article = {
+      ...JSON.parse(req.body.article)
+    }
+  }
+  
   var updateResult = await _articleQueryService.updateOne(
     req.params.articleId,
     req.body.article

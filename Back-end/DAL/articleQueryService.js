@@ -183,7 +183,7 @@ const mArticle = require('../models/article');
     }
 
     //Mets à jour l'article et renvoi le résultat de la mise à jour
-    module.exports.updateOne = async (articleId,articleObject = null) => {
+    module.exports.updateOne = async (articleId,articleObject) => {
         console.log("D.A.L [updateArticle] (paramètres) 'articleId' :",articleId,"'articleObject' :",articleObject);
 
         if(articleObject == {} || articleObject == undefined || articleObject == null){
