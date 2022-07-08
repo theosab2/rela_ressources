@@ -17,7 +17,6 @@
             } catch (error) {
                 return false;
             }
-           
     };
 
     //Verifie que le paramètre est un numéro de téléphone
