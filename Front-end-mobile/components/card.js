@@ -7,32 +7,59 @@ import { color } from 'react-native-reanimated';
 const Card = props => {
   const [pseudo, setPseudo] = useState('');
   const [imageTmp,setImageTmp] = useState(require('../test_content/waiting.jpg'))
-  useEffect(() => {
-    console.log(props.data)
-    const getPseudoUser = async () => {
-      const api = await fetch(API_URL + '/user/' + props.data.articleCreator, {
+  const [categories, setCategories] = useState(null);
+  const [category, setCategory] = useState(null)
+
+  const getPseudoUser = async () => {
+    const api = await fetch(API_URL + '/user/' + props.data.articleCreator, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
+    const res = await api.json();
+    setPseudo(res.username);
+  }
+  const getImage = async () => {
+    try {
+      if(props.data.image != '' || props.data.image != null || props.data.image != undefined ){
+        setImageTmp({uri : props.data.image})
+      }
+    } catch (e) {
+      console.log('error')
+      console.log(e)
+    }
+  }
+  const getCategories = async () => {
+    try {
+      const api = await fetch(API_URL + '/uts/all/CATEGORY', {
         method: 'GET',
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
       });
-      const res = await api.json();
-      setPseudo(res.username);
+      const res = await api.json()
+      setCategories(res.ut);
+    } catch (e) {
+      console.log(e);
     }
-    const getImage = async () => {
-      try {
-        if(props.data.image != '' || props.data.image != null || props.data.image != undefined ){
-          setImageTmp({uri : props.data.image})
-        }
-      } catch (e) {
-        console.log('error')
-        console.log(e)
-      }
+  }
+  const findCategory = () => {
+    const cat = categories.find(cat => cat._id == props.data.category_UTid)
+    if(cat){
+      setCategory(cat.name);
     }
+    
+  }
+  useEffect(() => {
+    if(!categories){getCategories();}
+    else if (!category){findCategory()}
     getImage();
     getPseudoUser();
-  }, [])
+  }, [categories])
+
   return (
     <TouchableOpacity
       style={styles.container}
@@ -42,8 +69,8 @@ const Card = props => {
         <View style={styles.topPart}>
           <View style={styles.titleContainer}>
             <View style={styles.categoryContainer}>
-              <Text style={styles.categorieIcon}>CA</Text>
-              <Text>Categorie</Text>
+              <Text style={styles.categorieIcon}>{category ? (category[0] + category[1]).toUpperCase() :"CA"}</Text>
+              <Text>{category || "Categorie"}</Text>
             </View>
             <Text style={styles.titlePost}>{props.data.title}</Text>
             <Text style={styles.date}>{props.data._createdAt}</Text>
