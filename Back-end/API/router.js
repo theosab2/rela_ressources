@@ -35,7 +35,7 @@ const router = express.Router();
 
 //===== Global routes =====//
 router.get("/test", (req, res, next) => {
-  res.status(200).json({ message: "L'API à répondu correctement CI tested" });
+  res.status(200).json({ message: "L'API à répondu correctement bonjour" });
   _responseLogger(req);
 });
 
